@@ -1,0 +1,86 @@
+import {balanceLineBreak,textCoordinates} from './line-pagination.mjs';
+import {normalizeLayout} from './document-model.mjs';
+import {typographyCSS} from './document-styles.mjs';
+import {sectionAttrs} from './sections.mjs';
+import {rowSpanGroups} from './table-pagination.mjs';
+export const MM=96/25.4;
+export function pageGeometry(settings={}){const l=normalizeLayout(settings),paper=l.size==='Letter'?[215.9,279.4]:[210,297],[width,height]=l.orientation==='landscape'?[paper[1],paper[0]]:paper;return {width:width*MM,height:height*MM,margin:l.margin*MM,contentWidth:(width-2*l.margin)*MM,contentHeight:(height-2*l.margin)*MM}}
+// Split a DOM block at a text offset while retaining inline marks and attributes.
+export function splitTextBlock(element,offset){const doc=element.ownerDocument,walker=doc.createTreeWalker(element,4);let node,remaining=offset,target=null;while(node=walker.nextNode()){if(remaining<=node.textContent.length){target=node;break}remaining-=node.textContent.length}if(!target)return null;if(remaining>0&&/[\uDC00-\uDFFF]/.test(target.textContent[remaining]||''))remaining--;const leftRange=doc.createRange(),rightRange=doc.createRange();leftRange.selectNodeContents(element);leftRange.setEnd(target,remaining);rightRange.selectNodeContents(element);rightRange.setStart(target,remaining);const left=element.cloneNode(false),right=element.cloneNode(false);left.append(leftRange.cloneContents());right.append(rightRange.cloneContents());return [left,right]}
+export async function paginateDocument(root,html,settings,{signal,onProgress=()=>{}}={}){
+ const parsed=new DOMParser().parseFromString(html,'text/html'),article=parsed.querySelector('article')||parsed.body,notes=parsed.querySelector('.forge-footnotes');if(notes&&!article.contains(notes))article.append(notes.cloneNode(true));
+ root.replaceChildren();root.onclick=event=>{const link=event.target.closest('a');const href=link?.getAttribute('href');if(href?.startsWith('#sf-')){event.preventDefault();const target=[...root.querySelectorAll('[data-source-id]')].find(el=>el.dataset.sourceId===href.slice(1));target?.scrollIntoView({block:'center'})}};root.classList.add('paginated-document');const source=document.createElement('div');source.style.cssText='position:fixed;left:-100000px;top:0;visibility:hidden;width:'+pageGeometry(settings).contentWidth+'px';source.inert=true;source.setAttribute('aria-hidden','true');source.append(article);document.body.append(source);const style=document.createElement('style');root.append(style);try{const pages=[],warnings=[],styles=new Map();let page=null,body=null,layout=normalizeLayout(settings),columns=1,settingsKey='',steps=0;
+ function check(){if(signal?.aborted)throw Error('Page preview cancelled.');if(pages.length>200)throw Error('Preview is limited to 200 pages. Use DOCX for larger documents.');if(++steps>50000)throw Error('Document layout is too complex for page preview.')}
+ const overflow=()=>body.scrollHeight>body.clientHeight+2||body.scrollWidth>body.clientWidth+2;
+ function newPage(force=false){check();if(!force&&page&&!body.childNodes.length)return;const g=pageGeometry(layout),key=JSON.stringify([layout,columns]);if(!styles.has(key)){const id='forgepage'+styles.size;styles.set(key,id);style.textContent+='@page '+id+'{size:'+g.width/MM+'mm '+g.height/MM+'mm;margin:0}\n'+typographyCSS(layout,'.preview-page[data-page-style="'+id+'"] .preview-body')}
+  settingsKey=key;const id=styles.get(key),sheet=document.createElement('div');sheet.className='preview-sheet';sheet.style.page=id;sheet.style.setProperty('--page-width',g.width+'px');sheet.style.setProperty('--page-height',g.height+'px');page=document.createElement('section');page.className='preview-page';page.dataset.pageStyle=id;page.style.page=id;page.style.width=g.width+'px';page.style.height=g.height+'px';page.style.padding=g.margin+'px';page.setAttribute('aria-label','Page '+(pages.length+1));const header=document.createElement('div');header.className='preview-header';header.textContent=layout.header;header.style.left=header.style.right=g.margin+'px';header.style.maxHeight=(g.margin-6*MM)+'px';const footer=document.createElement('div');footer.className='preview-footer';footer.textContent=layout.footer;footer.style.left=footer.style.right=g.margin+'px';footer.style.maxHeight=(g.margin-6*MM)+'px';if(layout.pageNumbers){const number=document.createElement('span');number.textContent=String(pages.length+1);number.className='preview-page-number';footer.append(number)}body=document.createElement('div');body.className='preview-body tiptap';body.style.cssText='height:'+g.contentHeight+'px;width:'+g.contentWidth+'px;font-family:'+layout.font+';line-height:'+layout.line+';column-count:'+columns;page.append(header,body,footer);sheet.append(page);root.append(sheet);pages.push(page);onProgress(pages.length)}
+ function clean(element){for(const node of [element,...element.querySelectorAll('*')]){if(node.id){node.dataset.sourceId=node.id;node.removeAttribute('id')}node.removeAttribute('contenteditable');node.classList.remove('ProseMirror-selectednode','search-match','focus-block');if(node.matches('button')){const span=document.createElement('span');span.textContent=node.textContent;node.replaceWith(span)}}element.querySelectorAll('.forge-change.delete').forEach(el=>el.remove());element.querySelectorAll('.forge-change.insert,.forge-comment,.forge-format-change,.forge-paragraph-change').forEach(el=>{el.className=''});return element}
+ function shrink(element){const box=element.getBoundingClientRect(),g=pageGeometry(layout),scale=Math.min(1,g.contentHeight/Math.max(box.height,1),g.contentWidth/Math.max(box.width,1));const wrapper=document.createElement('div');wrapper.className='preview-scaled-block';wrapper.style.cssText='position:relative;height:'+(box.height*scale)+'px;width:100%;clear:both';element.replaceWith(wrapper);wrapper.append(element);element.style.cssText+=';position:absolute;top:0;left:0;transform-origin:top left;transform:scale('+scale+');width:'+g.contentWidth+'px';warnings.push('An oversized object or table row was scaled to fit a page. Review it before printing.')}
+ // Carry trailing headings only when the next block cannot contribute even a
+ // line to this page. The retry flag prevents impossible groups from looping.
+ function contentPage(carry=true){
+  const headings=[];
+  if(carry)while(body.lastElementChild?.matches('h1,h2,h3,h4,h5,h6,[data-keep-next="true"]')){const heading=body.lastElementChild;headings.unshift(heading);heading.remove()}
+  else if(body.lastElementChild?.matches('h1,h2,h3,h4,h5,h6,[data-keep-next="true"]'))warnings.push('A heading group is too tall to keep with following content. Shorten it or add a page break.');
+  newPage(true);body.append(...headings);return headings.length>0;
+ }
+ async function add(element,carry=true){check();if(!page)newPage();if(element.getAttribute('data-break-before')==='true'){if(body.childNodes.length)newPage(true);element.removeAttribute('data-break-before');element.style.removeProperty('break-before');carry=false;}if(element.matches('.forge-footnotes')&&element.querySelector(':scope > ol > li')){await addNotes(element);return}const hadContent=!!body.childNodes.length;body.append(element);if(!overflow())return;
+  if(element.matches('table')&&element.querySelectorAll('tr').length>1){element.remove();await addTable(element);return}
+  if(element.matches('h1,h2,h3,h4,h5,h6')&&hadContent){element.remove();contentPage(carry);body.append(element);if(!overflow())return}
+  if(element.getAttribute('data-keep-together')==='true'){if(hadContent){element.remove();contentPage(carry);body.append(element)}if(overflow())shrink(element);return}
+  if(element.textContent.length>1&&!element.matches('table,figure,[data-forge-design]')&&!element.querySelector('img,svg,table,[data-forge-design]')){
+   element.remove();let low=1,high=element.textContent.length-1,best=0;
+   while(low<=high){check();const n=Math.floor((low+high)/2),parts=splitTextBlock(element,n);if(!parts)break;body.append(parts[0]);const fits=!overflow();parts[0].remove();if(fits){best=n;low=n+1}else high=n-1}
+   if(best){let cut=best;const before=element.textContent.slice(0,best),space=before.lastIndexOf(' ');if(space>best*.65)cut=space+1;
+    // Measure the complete paragraph at the current width before choosing a
+    // line boundary. Lists/columns/nested layouts retain their existing path.
+    if(element.getAttribute('data-widow-control')!=='false'&&element.matches('p,h1,h2,h3,h4,h5,h6')&&columns===1&&!element.querySelector('br')){body.append(element);const measured=textCoordinates(element);if(measured){const balanced=balanceLineBreak(0,measured.length-1,best,measured.coords);if(balanced===0&&!hadContent)warnings.push('A paragraph could not keep two lines on each side of a page break. Review it before printing.');else cut=balanced}element.remove()}
+    const parts=cut?splitTextBlock(element,cut):null;if(parts&&parts[0].textContent&&parts[1].textContent){body.append(parts[0]);parts[1].classList.add('preview-continuation');if(parts[1].matches('ol,ul'))parts[1].querySelector('li')?.style.setProperty('list-style','none');newPage(true);await add(parts[1]);return}}
+   if(hadContent){const carried=contentPage(carry);await add(element,!carried);return}body.append(element);shrink(element);return;
+  }
+  if(hadContent){element.remove();const carried=contentPage(carry);body.append(element);if(carried&&overflow()){element.remove();contentPage(false);body.append(element)}}if(overflow())shrink(element)
+ }
+ async function addNotes(section){
+  const notes=[...section.querySelectorAll(':scope > ol > li')],heading=section.querySelector(':scope > h2');let fragment,list,count=0;
+  function begin(index){fragment=section.cloneNode(false);if(heading)fragment.append(heading.cloneNode(true));list=document.createElement('ol');list.start=index+1;fragment.append(list);body.append(fragment);count=0}
+  begin(0);
+  for(const [i,note]of notes.entries()){
+   check();const clone=note.cloneNode(true);list.append(clone);
+   if(overflow()){
+    clone.remove();const carried=!count?(fragment.remove(),contentPage()):(newPage(true),false);begin(i);list.append(clone);if(carried&&overflow()){fragment.remove();contentPage(false);begin(i);list.append(clone)}
+    if(overflow()){shrink(fragment);warnings.push('An oversized note was scaled to fit a page.');if(i<notes.length-1){newPage(true);begin(i+1)}continue}
+   }
+   count++;
+  }
+ }
+ async function addTable(table){
+  const rows=[...table.querySelectorAll(':scope > tbody > tr,:scope > thead > tr,:scope > tr')];
+  const groups=rowSpanGroups(rows.map(row=>[...row.children].map(cell=>cell.getAttribute('rowspan')))).map(group=>rows.slice(group.from,group.to));
+  const headers=groups[0]?.every(row=>[...row.children].every(cell=>cell.tagName==='TH'))?groups.shift():[];
+  let fragment,tbody,groupsHere=0;
+  function begin(){fragment=table.cloneNode(false);fragment.style.width='100%';const cols=table.querySelector(':scope > colgroup');if(cols)fragment.append(cols.cloneNode(true));if(headers.length){const thead=document.createElement('thead');headers.forEach(row=>thead.append(row.cloneNode(true)));fragment.append(thead)}tbody=document.createElement('tbody');fragment.append(tbody);body.append(fragment);groupsHere=0}
+  begin();for(const group of groups){check();const clones=group.map(row=>row.cloneNode(true));tbody.append(...clones);
+   if(overflow()){clones.forEach(row=>row.remove());const carried=!groupsHere?(fragment.remove(),contentPage()):(newPage(true),false);begin();tbody.append(...clones);if(carried&&overflow()){fragment.remove();contentPage(false);begin();tbody.append(...clones)}
+    if(overflow()){shrink(fragment);warnings.push('A table row group is taller than the printable area.');if(group!==groups.at(-1)){newPage(true);begin()}}
+   }
+   groupsHere++;if(++steps%20===0)await new Promise(resolve=>setTimeout(resolve,0));
+  }
+  if(!groups.length&&overflow())shrink(fragment);
+ }
+
+ let blockCount=0;
+ async function blocks(nodes){for(const input of nodes){if(input.nodeType!==1)continue;check();if(++blockCount>10000)throw Error('Preview is limited to 10,000 document blocks.');if(input.matches('[data-page-break],.page-break')){if(page&&body.childNodes.length)newPage(true);continue}
+   if(input.matches('[data-forge-section]')){const previous={layout,columns};let attrs={};try{attrs=sectionAttrs(JSON.parse(decodeURIComponent(input.getAttribute('data-forge-section'))))}catch{attrs=sectionAttrs()}const nextLayout=normalizeLayout({...layout,orientation:attrs.orientation,header:attrs.header||layout.header,footer:attrs.footer||layout.footer}),sectionContent=input.querySelector('[data-forge-section-content],.forge-section-content')||input,compatible=columns===1&&nextLayout.orientation===layout.orientation&&nextLayout.header===layout.header&&nextLayout.footer===layout.footer;
+    const complexColumns=attrs.columns>1&&sectionContent.querySelector('table,img,svg,[data-forge-design],[data-forge-section],[data-page-break],[data-break-before="true"],[data-keep-together="true"],[data-keep-next="true"]');
+    if(!attrs.pageBreak&&compatible&&!complexColumns){if(attrs.columns===1){await blocks([...sectionContent.children])}else{const group=document.createElement('div');group.className='preview-continuous-columns';group.style.columnCount=String(attrs.columns);group.style.columnGap='24px';group.style.columnFill='balance';group.style.display='flow-root';group.style.clear='both';blockCount+=sectionContent.querySelectorAll('p,h1,h2,h3,h4,h5,h6,li').length;if(blockCount>10000)throw Error('Preview is limited to 10,000 document blocks.');for(const child of [...sectionContent.children])group.append(child.cloneNode(true));await add(clean(group))}continue}
+    layout=nextLayout;columns=attrs.columns;if(!attrs.pageBreak)warnings.push(complexColumns?'A continuous section with objects, nested sections or explicit paragraph pagination starts on a new page in this preview.':'A continuous section that changes page geometry or headers/footers starts on a new page in this preview.');if(page&&body.childNodes.length)newPage(true);else if(page){page.parentElement.remove();pages.pop();page=null;body=null}await blocks([...(input.querySelector('[data-forge-section-content],.forge-section-content')||input).children]);layout=previous.layout;columns=previous.columns;page=null;body=null;continue}
+   if(!page)newPage();const element=clean(input.cloneNode(true));if(element.matches('ol,ul')){const children=[...element.children];for(const [i,item]of children.entries()){const list=element.cloneNode(false);if(list.tagName==='OL')list.setAttribute('start',String((Number(element.getAttribute('start'))||1)+i));list.append(item);await add(list)}}else await add(element);
+   if(blockCount%10===0){onProgress(pages.length);await new Promise(resolve=>setTimeout(resolve,0))}
+  }}
+ // Image dimensions must be known before measuring page breaks.
+ const images=[...article.querySelectorAll('img')];await Promise.all(images.map(image=>{image.loading='eager';return image.decode?.().catch(()=>{warnings.push('An image could not be decoded.')})}));await document.fonts?.ready;await blocks([...article.children]);if(!pages.length)newPage();
+
+ for(const p of pages)for(const furniture of p.querySelectorAll('.preview-header,.preview-footer'))if(furniture.scrollHeight>furniture.clientHeight+2)warnings.push('A header or footer is too long for the chosen margins. Shorten it or increase page margins.');return {pages:pages.length,warnings:[...new Set(warnings)]}}finally{source.remove()}
+}
+export function fitPreview(root,zoom='fit'){const available=Math.max(180,root.parentElement.clientWidth-32);for(const sheet of root.querySelectorAll('.preview-sheet')){const page=sheet.firstElementChild,w=parseFloat(page.style.width),h=parseFloat(page.style.height),scale=zoom==='fit'?Math.min(1,available/w):Number(zoom)/100;sheet.style.width=w*scale+'px';sheet.style.height=h*scale+'px';page.style.transform='scale('+scale+')'}}
+export function printPreview(root){document.getElementById('printPages')?.remove();const target=root.cloneNode(true);target.id='printPages';document.body.append(target);document.body.classList.add('printing-pages');const cleanup=()=>{document.body.classList.remove('printing-pages');target.remove()};window.addEventListener('afterprint',cleanup,{once:true});window.print();return cleanup}

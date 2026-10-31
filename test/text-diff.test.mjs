@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {compareText} from '../src/text-diff.mjs';
+function check(a,b){const result=compareText(a,b);assert.equal(result.parts.filter(p=>p.kind!=='insert').map(p=>p.text).join(''),a);assert.equal(result.parts.filter(p=>p.kind!=='delete').map(p=>p.text).join(''),b);return result}
+test('diff identifies insertions/deletions while retaining Unicode and paragraph spacing',()=>{for(const [a,b]of [['','new'],['old',''],['same','same'],['A red fox.\nNext','A blue fox!\nNext'],['日本語 😀 é','日本語 🦊 é'],['a a b','a b a'],['<script>','<img>']])check(a,b);assert.ok(check('red fox','blue fox').parts.some(p=>p.kind==='equal'&&p.text.includes('fox')))});
+test('large comparisons use bounded whole-passage replacements without dropping text',()=>{assert.equal(check('old '.repeat(1500),'new '.repeat(1500)).coarse,true)});

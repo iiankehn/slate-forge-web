@@ -1,0 +1,226 @@
+# Slate Forge navigation and writing batch · 2026-10-29
+
+This release makes the expanding toolset and saved text documents easier to find. The Site remains owner-private and local-first; existing origins, documents and storage identifiers are preserved.
+
+## Included
+
+- **Complete command search:** Ctrl/Cmd+K searches the desktop/mobile menu catalog, deduplicates repeated actions and shows each command’s category and shortcut. Search accepts multiple words in any order and common aliases such as colour, download and drawing. Arrow keys move between enabled results, Home/End navigate the focused result list, and Enter from the search input runs the first enabled match. Unavailable page navigation, updates and undo/redo remain visibly disabled. IME confirmation does not execute a command. The palette and print shortcuts do not replace an already open tool dialog.
+- **Document library:** Search saved text documents by body text, title and tags, with title-only and tag-only scopes. Search ignores accents and case and excludes deleted revisions and generated contents. Sort by recent edits, oldest edits or title. Sorting and scope are remembered on this browser when preference storage is available; search queries are not saved. Results show full edit dates, tags, an active-document indication and a match count. PDF workspaces retain their existing separate library.
+- **Searchable outline:** Filter heading titles and choose heading depth, preserving navigable source positions and the actual current-section indication. All imported heading levels through six are shown by default; the toolbar still exposes headings one through three.
+- **Consistent writing counts:** Word count, character count, reading estimate, selection metrics and word-goal progress use visible body text including inserted revisions and excluding deleted revisions. Generated contents, canvas text and note text are excluded. Empty/deleted-only paragraphs are excluded from paragraph counts. Tools now exposes Word count and writing goal, and shortcut help comes from the same menu catalog with updated device-save guidance.
+
+## Verification
+
+All **171 automated tests pass**, including seven new discovery/model tests and an expanded full-app DOM integration test. Checks cover menu catalog completeness/deduplication, command ranking and aliases, Unicode filtering, revision-safe metrics, library scopes/sorting/non-mutation, imported deep headings, keyboard navigation and unavailable actions, empty results, IME, remembered library preferences, outline filtering/jumps and protection of open modals from global shortcuts. Existing editing, review, storage, export and pagination suites pass.
+
+The production build and source whitespace checks pass. Generated JavaScript retains an intentional Markdown hard-break string with two spaces before a newline. The DOM integration harness uses fake IndexedDB and stubbed layout/dialog methods; it is source integration evidence, not browser rendering or physical-device evidence.
+
+## Verification limits
+
+Automated browser access remains blocked by the session URL policy. There are no new screenshots or claims of target-browser certification. Actual downloads/reimports, printed PDFs, physical mobile/desktop input and accessibility, installed/offline behavior, real service-worker updates and storage-pressure/suspension checks remain launch gates in DEVICE_QA.md. No public-launch certification or Word parity is claimed.
+
+The previous consolidated offline/save/review release is recorded in [RELIABILITY_BATCH.md](RELIABILITY_BATCH.md). Broader known layout, OCR, PDF and import limits remain in RELEASE_READINESS.md.
+
+## Encrypted backup follow-up
+
+File → Encrypted workspace backup creates a password-protected `.sfbackup` containing the complete ZIP payload, including PDF originals and editable changes. Open a document accepts the encrypted format, prompts for its password and passes decrypted bytes through existing ZIP/PDF validation before restoring. Decryption does not make ordinary restored device storage encrypted. Passwords are not persisted; forgotten passwords cannot be reset. Closing/switching the dialog or workspace prevents late asynchronous results from being applied.
+
+Uses AES-256-GCM with fresh 16-byte salt and 12-byte nonce, PBKDF2-SHA256 at 600,000 iterations, and an authenticated version header. Input limits are checked before decryption. All 173 tests and the production build pass. New tests cover complete PDF/edit round trips, randomized ciphertext, wrong passwords, altered ciphertext, invalid headers and password bounds. This is not an independent cryptographic audit. Actual browser download/reimport is still open. Automatic encrypted device recovery remains text-only.
+
+See ROADMAP.md for the remaining authorized work; this follow-up does not complete the entire roadmap.
+
+## Review follow-up
+
+Comparison now highlights added/removed text with a bounded word diff. Both source strings reconstruct exactly from diff segments; changed passages above the computation budget use whole-passage replacements. Comparison explicitly reports its 200,000-character-per-document range and excludes formatting/structure. Output uses textContent, retaining literal markup safely. Placeholder checks now inspect footnotes and canvas text and open the relevant object editor. All 177 tests pass. Browser rendering and physical-device verification remain open.
+
+## Recovery and OCR continuation
+
+Automatic encrypted recovery now collects PDF originals and editable models alongside text snapshots. The restore path validates each PDF, normalizes its edit model and atomically imports copies with new IDs before changing text state; existing PDFs are retained and total storage capacity is checked. Legacy text-only recovery remains readable. The encrypted payload limit is 120 MB to accommodate text plus encoded PDF bytes; saved PDF originals retain their 40 MB limit. PDF save failures schedule recovery of available drafts.
+
+A separate IndexedDB PDF journal is written before committing PDF edits. Failed writes survive tool/browser reopening as separate recovered copies in the PDF selector and complete backups, preserving the committed original. Matching successful saves clear the journal; stale acknowledgements cannot remove a newer draft. End session tombstones the journal against late saves. A forced shutdown before the journal transaction finishes or actual storage failure can still lose changes.
+
+OCR supports full-page PDF ranges, sequential local recognition, cancellation and bounded output. Corrected text saves separately in workspace-scoped IndexedDB and returns when reopening the tool. End session removes it and blocks late writes. Source scans/crop settings remain transient; correction drafts are not included in workspace backup/recovery.
+
+181 automated tests pass, including encrypted PDF recovery/legacy handling, journal reopening/stale acknowledgements/end-session protection and OCR correction persistence/scoping. The production build passes. Browser and physical-device execution of these workflows remains unverified.
+
+## Formats, scan persistence and workflow skills
+
+ODT is available in Open and Export. Content import/export covers headings, text, inline bold/italic/underline, lists, ordinary tables, embedded images and native footnotes. Exported tracked deletions are excluded. Export refuses unsupported advanced objects/sections/contents and vertically merged cells instead of silently dropping them. Import remains content-focused and may simplify external styles, numbering, repeated cells and layout. Archive expansion, entry sizes, node/depth bounds, XML entity declarations, links and image paths are constrained. ODT does not currently preserve review metadata or full page design.
+
+OCR drafts now retain the original scan/PDF Blob and crop/rotation/page controls as well as correction text, without changing database identity. Correction writes preserve scans. End session removes both and blocks late writes. Scan drafts remain outside complete document/PDF backups.
+
+Two personal skills were installed: Slate Forge Release (test/build/evidence workflow with a tested validation script), and Slate Forge Storage Checks (storage/recovery regression invariants). These supplement current Sites instructions rather than replacing them.
+
+185 automated tests and the production build pass. Actual ODT opening in external editors and real browser scan-reopen workflows remain unverified.
+
+## Pressure-sensitive drawing
+
+Canvas pen strokes retain bounded per-point pressure and render variable-width segments. Mouse/touch and existing two-coordinate strokes remain fixed-width. Pressure survives editable scene serialization and follows the existing HTML/JSON/image/DOCX raster paths. Automated tests cover variable widths, scene round trips, malformed pressure bounds and legacy strokes. Physical pen feel, touch rejection and target-device rendering remain unverified. All 187 tests and the build pass.
+
+## Paragraph pagination and heading depth
+
+Paragraph settings now offer Keep paragraph together, Keep with next paragraph and Start on a new page. Attributes persist in document JSON and sanitized HTML, and export as native DOCX keepLines/keepNext/pageBreakBefore properties. Live pagination applies them to measured text blocks, honors explicit break-before over keep-next, and falls back visibly when a kept group is taller than the page. Measured preview moves kept paragraphs intact; an impossible oversized paragraph can be scaled with the existing preview warning. Nested lists/tables and complex layouts still require parity work; full widow/orphan balancing is not implemented.
+
+The toolbar and sanitized HTML import now retain headings 4–6, matching existing outline support. Preview keeps deep headings with their following content. Contents fields retain their existing three-level configuration.
+
+192 tests pass, production build and source whitespace checks pass. New tests cover whole-paragraph movement, impossible groups, explicit break precedence, sanitized attribute/deep-heading round trips, and native DOCX fields. Real browser rendering and physical-device QA remain open.
+
+## Imported PDF field geometry
+
+Supported existing PDF fields expose numeric widget x/y/width/height controls in PDF points, using a bottom-left origin. Multi-widget fields have individual controls. Geometry persists in the PDF edit model, normal saves, backups and encrypted recovery; the existing undo/redo path restores prior models. Export applies rectangles and regenerates appearances while retaining field identity and values. Readonly and unsupported fields are protected. The UI covers the existing first 300 fields and up to 20 widgets per field; edit models are bounded to 1,000 geometry overrides. Coordinates are PDF coordinates rather than rotated screen coordinates. This is not existing page-text editing or signature support.
+
+195 tests pass, with production build and source whitespace checks passing. New generated-PDF round trips cover two widgets with separate geometry, preserved values, checked checkboxes, readonly protection, bounds and unknown field references. Actual browser rendering/interaction and external PDF-reader checks remain open.
+
+## OCR portability and ODT merged tables
+
+Complete ZIP and password-encrypted exports now include the saved OCR source scan, preprocessing controls and correction text. Automatic encrypted recovery includes the same payload. A single database read captures the OCR snapshot; changing saved OCR drafts schedules recovery. Legacy backups without OCR remain readable. Scan types/signatures, encoded sizes, correction length and control keys are validated before restoration. Existing OCR drafts are preserved: restore reports that the OCR portion was skipped rather than silently overwriting current work. OCR restore itself is atomic and refuses ended workspaces or concurrent draft changes. Document/PDF and OCR databases are independent; an OCR restoration error is explicitly reported after documents/PDFs restore, and does not roll those restored files back. Current 20 MB scan, 50 MB workspace JSON and overall archive/recovery limits remain enforced.
+
+ODT export now emits covered-cell positions for horizontal and vertical merges, with bounds/overlap checks; import retains their spans. General external ODT styles and repeated rows/cells still need fidelity work.
+
+198 tests pass, production build and source whitespace checks pass. New coverage checks OCR ZIP/encrypted recovery round trips, scan bytes/settings, occupied/ended draft protection, signature validation and merged ODT spans. Real downloaded-file/reimport, external-editor rendering and physical-device workflows remain unverified.
+
+## iOS theme edges and focus zoom
+
+The recording showed a light system/status area above a dark app. Theme application now paints the root canvas and updates root color-scheme as well as theme-color and the standalone iOS status-bar hint. Browser chrome colors match White/Grey/Dark panel colors and the Colored theme's accent tint. A small head bootstrap applies saved appearance before the app bundle starts to reduce light startup flashes. Header/footer landscape safe-area padding is explicit.
+
+On touch iOS, screen-only rules give native text controls and the editable document root a 16px font to mitigate automatic focus zoom. This changes the mobile editing presentation, not saved document font metadata or print output. Explicit child text formatting and manual page zoom retain their existing behavior. Pinch zoom remains available; no maximum-scale/user-scalable restriction was added.
+
+201 tests pass, build and source whitespace checks pass. New tests cover theme transitions, startup appearance, matching colored accents, standalone status hints and an unrestricted viewport. CSS checks are source checks, not a Safari zoom test. Actual iOS behavior remains unverified; installed status-bar metadata can depend on a fresh app launch. Use Tools → Update app when available, then close/reopen the installed app to check both changes.
+
+## DOCX compatibility and editable review import
+
+The DOCX import path preserves supported run fonts and sizes, paragraph alignment and indentation, empty paragraphs, heading depth, A4/Letter orientation and supported margins. Native text insertions/deletions become local review marks with author/date and accept/reject behavior; comment ranges become local comment marks with author/body. Lists, tables, images and existing footnote conversion retain their content import paths. DOCX export now preserves headings 4–6 rather than reducing them to Heading 3.
+
+Import performs existing archive preflight, disables embedded style maps/external file access, validates XML and emits allowlisted HTML through the app sanitizer. Formatting decoration maps are deduplicated and capped at 2,500 styles. Structural revisions are imported as content with a warning; overlapping comments are simplified. Point comments, exact section/header/footer layout, unsupported fonts, inherited styles/colors, full paragraph pagination settings and live contents fields are not reconstructed. Indentation/margins map to the app's supported settings. This is not exact Word layout or a Word certification.
+
+206 tests pass; production build and source whitespace checks pass. Five new generated-DOCX checks cover fonts/sizes, alignment/indentation, empty paragraphs, page settings, heading 4, native revisions with accept/reject, native comments, numbered lists, tables, literal markup and invalid XML. Browser file-picker/download/reimport and Microsoft Word verification remain open.
+
+## Image masks and contour wrapping
+
+Image design now offers Rectangle, Oval and Diamond masks. Left/right floats use matching CSS shape-outside contours and the existing bounded gap control. Above/below images retain the visual mask without text wrapping. Shape attributes survive JSON/device saves, sanitized HTML and ordinary undo. The existing supported float-group pagination behavior remains in place; unsupported complex groups still fall back. This is not arbitrary page coordinates or two-sided text flow.
+
+Export preparation clips each shaped variant to a transparent PNG and uses a distinct key for each source/shape pair. DOCX/ODT select that variant, preventing differently shaped copies of one original from sharing the wrong raster. Missing prepared DOCX images now fail export instead of silently inserting an omission placeholder. HTML retains editable masks; DOCX/ODT reimport retains the masked raster rather than an editable mask attribute. DOCX keeps its existing square floating wrap; ODT keeps its existing inline image behavior, so export contour flow is not identical to browser flow.
+
+210 tests pass, production build and source whitespace checks pass. New coverage checks sanitized shape/gap round trips, unknown-value normalization, mask path geometry, variant keys and DOCX image selection/missing variants. These tests do not certify canvas pixel output or browser contour layout. Actual browser/physical-device rendering and print/download checks remain open.
+
+## Continuous preview sections and ODT repetition
+
+Compatible continuous sections no longer force a new preview page. One-column sections use normal block flow; plain-text two/three-column sections use balanced inline column groups and split over pages when necessary, retaining text/inline marks. Following ordinary content can use the remainder of the page. Groups clear preceding floats. Current page orientation and header/footer content must remain compatible. Explicit page breaks, changed geometry/furniture, complex objects/nested sections and explicit paragraph pagination inside multicolumn sections retain page-start behavior with an explanatory warning. Mixed-section live editing and full nested keep rules remain unfinished.
+
+ODT repeated rows/cells now expand rather than appearing only once. Repetition counts, cumulative expansion units and repeated output length are bounded before expansion; invalid/oversized counts fail explicitly. General external styles and layout still require fidelity work.
+
+215 tests pass, production build and source whitespace checks pass. Four synthetic-capacity preview tests cover shared-page sections, balanced group attributes/marks, Unicode retention across splits and explicit/fallback page starts. One ODT test covers row/cell expansion and oversized rejection. Synthetic capacity tests exercise decisions, not browser font/column measurements. Actual browser layout, printed PDF, external editors and physical-device verification remain open.
+
+## Photo insertion fix
+
+The screenshot showed the original 1.5 MB/type gate rejecting an image before processing. Document and design-canvas image pickers now accept image selections up to 20 MB and share a local preparation path. Byte signatures identify PNG/JPEG/WebP/GIF and HEIF-family images even with a missing MIME type; non-image/SVG inputs are refused. Browser-decoded images are proportionally reduced to a 2,400-pixel document edge or 1,200-pixel canvas edge, then reduced further if necessary to keep embedded data below 1.5 million characters. PNG/WebP/GIF processing uses PNG to retain transparency; JPEG/HEIF photo processing uses JPEG. Small supported originals remain unchanged. Optimized GIFs become still images. HEIC/HEIF decoding depends on the browser; unsupported decoding reports a JPEG/PNG fallback rather than the old misleading size message.
+
+Object URLs/canvas buffers are released. Async document insertion maps its saved selection through concurrent edits and discards results if the document/workspace/editor changed. No image processing is uploaded. File/pixel/output limits remain enforced rather than expanding ordinary storage payloads to original photo sizes.
+
+219 tests pass, production build and source whitespace checks pass. New tests cover large-image downscaling/retry, bounded output and dimensions, unchanged small originals, signature detection/missing MIME, HEIF conversion selection, decode errors and resource cleanup. Image decode/encode adapters are stubbed in source tests; actual iPhone Photos/HEIC and camera behavior remain unverified.
+
+## 1 GB source-image allowance
+
+Document and canvas image preparation accept source files up to 1,073,741,824 bytes (at least 1 GB). UI guidance reflects the larger allowance. Large originals are passed to the native decoder through an object URL rather than copied wholesale into a JavaScript ArrayBuffer/base64 string; the app's initial signature/dimension read is 64 bytes. Known PNG/GIF/extended-WebP dimensions are checked before decoding. The existing 80-megapixel decoded-dimension check and optimized embedded data limit remain enforced. This changes the source-image allowance, not DOCX/PDF/backup limits or a guarantee that a browser can decode every 1 GB image.
+
+221 tests pass, build/source whitespace checks pass. Added tests use a synthetic file at the exact 1 GB boundary and verify bounded reads, original-base64 avoidance and oversize rejection; a PNG dimension test verifies rejection before decoder invocation. Real gigabyte native decoding and physical iOS memory behavior are not verified.
+
+## Editable contents and inherited DOCX styles
+
+Standard body-level Word contents controls containing TOC instructions now become editable Slate Forge contents nodes rather than cached text. Supported heading ranges start at Heading 1 and are capped at Heading 3; custom start ranges remain static with a warning. Cached entries are removed and rebuilt by the existing reference plugin. The common exported contents-title paragraph is incorporated into the node title. Other field/container forms are not reconstructed yet. Heading 4–6 retain their actual levels in the reference index, so they no longer incorrectly appear at contents depth 3.
+
+DOCX import resolves supported document-default, based-on paragraph and character-style properties into direct run/paragraph formatting before conversion. Supported fonts, sizes, bold/italic/underline, explicit RGB colors, alignment/indent and heading outline levels are retained through the existing allowlisted converter/sanitizer. Direct properties take precedence; style cycles/depth are bounded with warnings. Complex Word toggle semantics, partial property merging, theme-font/color resolution, headers/footers, exact section layout and structural revisions remain outside this pass. RGB colors produced by HTML import now export as native DOCX hex colors.
+
+225 tests pass, build and source whitespace checks pass. Four new cases cover contents reconstruction, inherited styles, live heading updates/depth filtering, RGB export and cyclic styles. Source-generated DOCX tests are not Microsoft Word or physical-browser certification; actual browser downloads/prints and target-device checks remain open.
+
+## Review-aware replacement and bulk decisions
+
+Find/Replace now detects matched text with unresolved revisions and presents a confirmation listing affected changes. Confirming accepts each complete affected change ID, including related deletion/insertion spans outside the selection, then replaces the original matched spans with correctly mapped positions. Unrelated revisions remain unresolved. With tracking enabled, replacement creates new revisions; with tracking off, it performs a direct edit. Deleted revision text cannot be targeted. Cancel does not modify the document. Snapshot/workspace guards reject stale confirmations. Other writing transformations retain the existing manual conflict restriction.
+
+Review adds Accept all and Reject all text changes. Both confirm whole-document scope and commit one undoable transaction. Comments on retained text survive; comments whose complete anchor text is removed cannot remain anchored. Formatting/structure/object edits retain their existing direct-edit behavior.
+
+231 tests and the production build pass; source whitespace checks pass. Added coverage checks conflict metadata, complete-ID resolution, mapped cross-paragraph replacements, tracking-off behavior, deleted-text refusal, unrelated changes, comments and exact undo. The full-app DOM integration test covers Cancel/Confirm/Undo wiring. DOM stubs do not certify browser focus/visual behavior; physical-browser QA remains open.
+
+## DOCX theme and paragraph design fidelity
+
+DOCX import resolves the document relationship's local theme part, including custom part names, supported major/minor Latin fonts and theme colors with tint/shade adjustments. Cached font/color values are replaced by the selected supported theme values. External theme links are not fetched; selected malformed/DOCTYPE theme parts fail before conversion. Unsupported theme fonts and unresolved colors retain a supported/stored fallback with a warning. This does not add fonts to the existing six-font allowlist or implement script-specific theme typography.
+
+Default paragraph/character styles now apply when no explicit style is selected. Font, indentation and spacing properties inherit per attribute, preserving base values when a child overrides only one attribute. Direct font declarations override inherited theme references. General Word toggle semantics and complex style behavior remain open.
+
+Supported space-after and automatic line spacing, keep-together, keep-with-next and page-break-before import into ordinary paragraphs and headings, survive sanitized HTML/editor parsing and re-export to native DOCX. Explicit false keep values override inherited true values. Supported values match the current paragraph controls; unsupported spacing uses document defaults with a warning. List paragraph spacing/keep rules remain simplified, and before-spacing/exact line-height/full Word layout parity are not implemented.
+
+237 tests pass, production build and source whitespace checks pass. Six new cases cover local custom theme selection, cached-value precedence, theme tint/shade, unsupported fallbacks, default/partial property inheritance, sanitizer/editor attributes, explicit false overrides, a second DOCX export and external/malformed theme inputs. This is source-level fidelity evidence; physical browsers, actual downloads/printing and Microsoft Word round-trip certification remain open.
+
+## Paragraph widow/orphan control
+
+Live paged editing now uses bounded line-boundary searches to leave at least two lines on each side of supported paragraph breaks. Three-line paragraphs move intact when splitting would leave an isolated line. Heading/keep-next lookahead accounts for a balanced start of the next paragraph. Natural coordinate reads are cached within a planning pass. Impossible two-line capacity selects the existing continuous-editing fallback with a reason; no document text or history is altered by page gaps.
+
+Measured preview applies the same balancing to ordinary single-column paragraphs/headings without explicit hard breaks. It uses glyph Ranges across nested inline marks and protects surrogate pairs. Short paragraphs move intact, and trailing headings follow them. If a fresh page cannot meet the minimum, preview retains a progressing split with a warning. Lists, multi-column groups, wrapped/complex objects and full nested-layout/complex-typography parity retain existing behavior and are not certified by this change.
+
+Paragraph design adds “Prevent isolated first or last lines,” enabled by default. The per-paragraph opt-out survives ordinary JSON/device state, sanitized HTML and DOCX export/import, including inherited native widowControl properties. Disabling it restores direct splitting. Keep-together and explicit breaks remain independent controls.
+
+246 tests pass; production build and source whitespace checks pass. Nine new cases cover two-line balance, short paragraphs, repeated continuations, heading lookahead, impossible capacity, bounded searches, synthetic measured preview, Unicode/marks, opt-out behavior and HTML/native DOCX round trips. Full-app DOM integration covers the checkbox, reopening its controls and Undo. Coordinate/DOM fixtures do not establish actual browser layout: physical Safari/Chrome/Firefox, IME, print/PDF and target-device checks remain open.
+
+## ODT document design and style compatibility
+
+ODT import now reads both content.xml and styles.xml. Supported paragraph/text default styles, parent chains, font-face aliases and automatic styles resolve into allowlisted editor formatting. Explicit normal/off values override inherited bold/italic and other supported properties. Supported fonts/sizes, RGB text colors, underline, strike, super/subscript and highlighting survive. Colored highlights now remain editable in the app; the existing DOCX exporter still reduces highlights to yellow. Unsupported fonts use the document fallback with a warning. Style XML rejects malformed content and DOCTYPE/entity declarations; inheritance depth/cycles and named/export style counts are bounded.
+
+Paragraph alignment, supported indent/spacing/line-height values, keep-together/keep-next/new-page controls and widow/orphan opt-out round trip through native ODT, sanitized HTML and editor attributes. Identical export styles are deduplicated. Named list styles may live in styles.xml; per-level number/bullet types and supported starts 1–100 are retained. Exports declare ten levels for both list types. List continuation fields and per-item numbering restarts remain incomplete.
+
+ODT exports now include styles.xml with supported A4/Letter page size, portrait/landscape, supported margins/default font/line spacing, simple headers/footers and native page-number fields. Import applies the corresponding single page design to the new document rather than ignoring it. Unsupported paper sizes/custom or unequal margins and multiple master pages produce simplification warnings. Complex master-page selection, fields, sections, objects and exact ODF layout/style semantics remain unfinished.
+
+255 tests pass, production build and source whitespace checks pass. Nine new tests cover native style/paragraph/page round trips, default/named inheritance and explicit off values, font aliases, nested lists/starts, unsafe/malformed/cyclic styles, deduplication, simplification warnings and editable colored highlights. The full-app DOM harness imports an ODT through the file-input handler and checks content and page-design controls.
+
+The installed LibreOfficeDev 26.8.0.0.alpha0 opened and resaved a source-exported ODT fixture. Reimport assertions retained heading level/text, Verdana 18 pt/bold/RGB color, paragraph keep/spacing/widow settings, list start 7, landscape Letter, 15 mm margins, Arial/double default typography, simple header/footer and page numbering. LibreOffice added explicit black to previously uncolored text. This is one development-build compatibility fixture, not broad editor certification or browser download/print/device evidence.
+
+## Larger review, formatting and document-comparison batch
+
+Track changes now covers supported inline formatting and paragraph design as well as text. Formatting revisions retain original allowlisted marks/properties, author/date and a stable revision ID across later edits to a pending suggestion. Returning to the original formatting clears the suggestion. Paragraph alignment, indent, supported line/space-after values, keep/new-page rules and widow control are included; heading-level changes within headings are locally reviewable. Text/formatting changes can coexist with comments. Review offers individual accept/reject, navigation and confirmed bulk formatting decisions. Bulk decisions are one-step Undo, preserve text revisions/comments, and reject stale document/workspace confirmations. Structural/object changes remain direct edits.
+
+Formatting metadata survives editor JSON, ordinary device/backup payloads and sanitized HTML. Final-content extraction/print preview removes review decoration. Clearing formatting preserves comments/revisions and becomes a formatting suggestion with tracking enabled. Formatting-only detection uses unchanged block geometry/text, so mixed structural operations are not advertised as tracked formatting. Native typing/paste tracking retains its existing 5,000 changed-character per-transaction bound; larger native text edits remain direct.
+
+DOCX exports native rPrChange/pPrChange earlier properties and imports supported native formatting revisions, including theme fonts/colors in earlier run properties. Native properties cannot retain local tracked hyperlink-target or heading-level changes faithfully; export explicitly asks for a decision or HTML instead. Earlier named-style/script-specific properties, list paragraph design/revisions and complex layout remain simplified with warnings. The existing DOCX highlighting exporter still reduces colors to yellow.
+
+Code blocks and inline code now allow review annotations to coexist with code text. Code-block native/bulk text replacements, comments and accept/reject behavior work through the same local review paths. Format adds Code block, and the paragraph-style selector gains Code block. Unsupported rich-format controls are disabled while inside a code block. Converting paragraphs with unresolved formatting through these controls is refused until those suggestions are decided, preventing silent metadata loss. DOCX code blocks use a named paragraph style, tracked native runs and actual br/tab elements; import recognizes the original and LibreOffice-renamed code styles and reconstructs newlines inside review spans. General structural edits/type changes remain direct.
+
+Comparison now adds a bounded design/structure report alongside the existing highlighted text diff. It reports paragraph/heading properties, inline formatting where block text is unchanged, object changes, structural paths and normalized page design. Equivalent mark splitting/default paragraph attributes and review/generated reference metadata are ignored. Structural paths are positional: inserted/moved blocks can shift later reports. Processing is capped at 10,000 nodes and 200 displayed details, with limits shown. Inline formatting in simultaneously changed-text blocks and semantic moved-block matching remain open. Embedded image data is not printed in reports. Text generation now uses the editor's root extension configuration, avoiding duplicate-extension warnings.
+
+276 tests pass, production build and source whitespace checks pass. Twenty-one new cases cover formatting/paragraph original snapshots and accept/reject/Undo/Redo, comments and pending edits, sanitized HTML/final content, code native/bulk/inline review, native DOCX formatting/code/theme round trips and explicit unsupported export cases, bounded comparison and normalization. Full-app DOM integration exercises formatting creation, bulk Cancel/Confirm, stale-confirmation refusal, Undo, expanded comparison, guarded code conversion and code creation.
+
+A LibreOfficeDev 26.8.0.0.alpha0 fixture retained native run/paragraph revision containers, code text revisions and (after a line-break export fix) exact code newlines through resaving. Its renamed code style is recognized. Paragraph prior alignment/keep values returned. LibreOffice removed several earlier Latin font/color/italic properties from the run-format history; script-specific remnants produce a simplification warning on import. This is documented partial external-editor evidence, not Word certification. Browser/device, actual downloads/printing, screen readers/IME and broad external-editor fidelity remain open.
+
+## Larger local workspaces and storage-pressure handling
+
+Active workspace capacity increases from 30 to 200 documents. Creation, trash restore, ZIP/legacy JSON import and encrypted recovery use the larger bound. Shared validation also checks combined imported deleted-document counts before writes, preventing a merged workspace from exceeding its 200-trash bound. Backup and ordinary device writes enforce document counts. Existing database names/version, workspace tokens, origin and file-format identifiers remain unchanged; PDF/OCR and backup byte limits do not increase.
+
+The library renders 50 matching documents at a time with Show next controls and focus on newly revealed entries. Search/sort/workspace changes reset the display batch. Full-text search caches normalized visible body text by content reference, reuses unchanged indexes across queries and rebuilds changed document references. Title/tag values remain fresh. Saved-workspace dialogs retain metadata summaries rather than every document body; latest-workspace selection uses cursor iteration instead of loading all records simultaneously.
+
+When the full synchronous tab cache cannot be written and ordinary device saving is available, the cache reduces to a small workspace pointer. Subsequent cache saves avoid serializing all document bodies. Reopening resolves the pointer through IndexedDB; missing/ended copies do not become pointer-shaped fake workspaces. If device storage is unavailable, tab-cache failure remains an error. A successful current device write clears tab-cache-only failures, while pending/newer writes remain pending. Save timestamps advance monotonically. Ordinary IndexedDB saving remains independent of encrypted recovery. Closure before a pending IndexedDB transaction commits is still a browser limitation; the reduced cache is not an unsaved full-workspace journal.
+
+Device storage shows document/trash/history counts, serialized text/image/history size and the browser's estimated site usage/quota. Estimates include offline components/tools and may be unavailable or change. At 80% usage the dialog offers export/removal guidance; it never automatically deletes data. Quota-aborted device writes retain the previous committed revision and produce an actionable message; synchronous put failures are caught and the transaction aborted. Existing conflict/End-session guards remain in force.
+
+287 tests pass and the production build/source whitespace checks pass. Eleven new cases cover 200-document save/reopen/ZIP, a multi-megabyte text/history fixture, encrypted recovery, combined capacity limits, reduced/unavailable tab caches, metadata summaries/End session, an injected quota-abort and retry, body-index reuse, capacity accounting, and a full-app DOM scenario. The DOM scenario reopens a 200-document workspace from a pointer under simulated cache quota, exercises every display batch/search, blocks restore at capacity, shows a 90%-usage warning, saves and reopens again. Fake IndexedDB/quota/DOM fixtures do not certify real browser storage pressure, eviction or physical mobile performance. The app still snapshots whole workspaces; incremental per-document writes and larger byte-heavy workloads need further performance work.
+
+## Editable design canvases in DOCX
+
+DOCX exports can retain the full normalized Slate Forge canvas scene alongside the existing PNG preview. Text boxes, shapes, images/crops/flips, groups, hidden/locked layers and pressure strokes reopen as editable canvas objects in Slate Forge. Other word processors display the image preview; this does not create native editable Word drawing/text-box objects. Export shows a checked “Keep design canvases editable in Slate Forge” option when a canvas exists, explicitly explaining that hidden layers and uncropped embedded images are included. Turning it off produces an image-only DOCX without scene metadata.
+
+Data uses standard DOCX custom-XML relationships and tagged content controls, with named-preview fallback when an editor removes the wrapper. Import discovers design parts by namespace/relationship even when another editor renames the part. Scenes are bound to a preview SHA-256 and image geometry. Missing/malformed/unsupported/ambiguous data, duplicate previews/IDs, changed image bytes or meaningful resize/crop/rotation changes preserve an ordinary image with a warning. Deleted previews are not resurrected. Dimension-only EMU rounding up to 254 EMU (0.02 pt) is accepted; crop/rotation/offsets/flips/positioning stay exact. These checks detect stale bindings; they are not an authenticity signature.
+
+Editable export/import is bounded at 50 canvases, 10 MB aggregate XML scene data, the existing scene normalization limits and existing DOCX 30 MB expanded archive limits. Unsupported scene values/entities and external resource links are refused or ignored. Source scene data is sanitized and reconstructed through the existing canvas node; arbitrary SVG/HTML from the file is not executed. Payload overflow offers image-only export rather than silently omitting designs.
+
+DOCX source-file allowance increases to 20 MB to accommodate the additional data; expanded archive limits remain unchanged. Installed OS DOCX/HTML launches now match the picker's 20 MB allowance, while text/ODT stay at 5 MB. Large imported raster pictures use the existing local preparation path so oversized previews are resized instead of silently removed. Preparation/type failures stop import before a new document is added. Actual browser decoding/resolution behavior remains a device QA item.
+
+302 tests and the production build/source whitespace checks pass. Fifteen new cases cover editable second-export round trips, image-only copies, hidden/group/image/ink fields, multiple identical/table-cell canvases, changed/duplicated/deleted previews, unknown/missing/entity/unsafe metadata, renamed/duplicate custom parts, dimension rounding, scene-count/data limits, large-image preparation/failure and native file-launch limits. Full-app DOM integration imports an editable DOCX through the actual file handler, opens its design editor and checks the export choice/hidden-layer explanation.
+
+LibreOfficeDev 26.8.0.0.alpha0 opened and resaved a synthetic PNG-preview fixture, renamed the custom XML part and removed the content-control wrapper. Its 15/160-EMU dimension rounding is within the bounded tolerance. Import then restored the exact full scene and surrounding paragraphs. This verifies metadata preservation for one development-build fixture; it does not certify visual preview rendering, Microsoft Word, actual browser downloads/printing or physical devices. Native Word shape editing and broader cross-editor object/layout fidelity remain open.
+
+## Move-aware document comparison and edited-text formatting
+
+Comparison matches exact-content sibling blocks before reporting changes. Inserting/removing a paragraph no longer makes every following path appear changed. A longest ordered subset distinguishes offsets from moved blocks; unique reordered paragraphs, sections and table rows report their prior and current paths, while their contents retain their own formatting/object checks. Matching ignores paragraph formatting for identity, so moving a paragraph and changing its design can report both. Equivalent mark splitting, generated note/contents data and review decorations remain excluded. Reports do not expose embedded image data.
+
+Within edited paragraphs, bounded word alignment now compares formatting on shared text rather than skipping the paragraph. Added/removed text has no formatting counterpart. Unicode, comments/revisions and inline note positions retain the shared-text mapping. Changed blocks pair within ordered anchors when compatible candidates are unique or replacement gaps have equal lengths; unmatched gaps remain additions/removals. Repeated exact blocks use occurrence order and explicitly mark unresolved ordering ambiguity. This is exact-content matching within a parent, not meaning-based inference of rewritten sections or cross-parent moves.
+
+Comparison is read-only. Processing is bounded to 10,000 visited nodes and 200,000 text characters per input, depth 100, 200 displayed details and an aggregate two-million-unit word-alignment budget. Large alignments retain available shared prefix/suffix checks, while other unmatched shared passages may be omitted. Partial results are labeled for ambiguity or computation/detail limits. Text comparison retains its separate existing 200,000-character display bound. No storage identifiers, file formats, audience or account-free behavior change.
+
+313 tests pass, production build and source whitespace checks pass. Ten new comparison regressions cover insertion/removal stability, unique moves plus formatting, nested moved table rows, edits with shared marks, added/removed-only formatting, repeated paragraphs, changed images beside new objects, Unicode/inline notes, aggregate/character/node limits and non-mutation. An additional full-app DOM test opens Compare, verifies moved paths and edited-paragraph formatting alongside text highlights, reruns without duplicate rows and confirms unchanged editor content. DOM/source evidence does not certify physical-browser rendering, screen readers, actual downloads/print or target-device performance. Meaning-based matching, cross-parent moves and ambiguous unequal replacement gaps remain open.

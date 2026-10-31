@@ -1,0 +1,8 @@
+node_modules/
+dist/app.js
+dist/pdf-workspace.js
+dist/ocr-workspace.js
+dist/sw.js
+dist/chunks/
+dist/vendor/
+dist/THIRD-PARTY-NOTICES.txt

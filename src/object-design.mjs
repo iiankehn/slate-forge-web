@@ -1,0 +1,28 @@
+import {imageShape} from './image-shapes.mjs';
+import Image from '@tiptap/extension-image';
+import {Extension} from '@tiptap/core';
+export const TABLE_PALETTES={sage:{accent:'286453',tint:'E8F0E9',stripe:'F3F7F2',border:'BACDBE'},ink:{accent:'334155',tint:'E7ECF3',stripe:'F3F5F8',border:'BBC5D2'},warm:{accent:'956B32',tint:'FBF2DF',stripe:'FCF8EE',border:'DCC9A7'}};
+export const normalizeImageDesign=(attrs={})=>({imageShape:imageShape(attrs.imageShape),imageGap:Number.isFinite(Number(attrs.imageGap))?Math.max(0,Math.min(48,Math.round(Number(attrs.imageGap)))):18,imageWidth:Number.isInteger(Number(attrs.imageWidth))&&Number(attrs.imageWidth)>=15&&Number(attrs.imageWidth)<=100?Number(attrs.imageWidth):100,imageAlign:['left','center','right'].includes(attrs.imageAlign)?attrs.imageAlign:'left',imageWrap:['left','right'].includes(attrs.imageWrap)?attrs.imageWrap:'none'});
+export const normalizeTableDesign=(attrs={})=>({tableStyle:['grid','striped','minimal'].includes(attrs.tableStyle)?attrs.tableStyle:'grid',tablePalette:Object.hasOwn(TABLE_PALETTES,attrs.tablePalette)?attrs.tablePalette:'sage',tableDensity:['compact','comfortable','spacious'].includes(attrs.tableDensity)?attrs.tableDensity:'comfortable'});
+export const TABLE_PADDING={compact:4,comfortable:8,spacious:12};
+export const DesignedImage=Image.extend({addAttributes(){return {...this.parent?.(),imageShape:{default:'rectangle',parseHTML:el=>imageShape(el.getAttribute('data-image-shape')),renderHTML:a=>({'data-image-shape':imageShape(a.imageShape)})},imageGap:{default:18,parseHTML:el=>normalizeImageDesign({imageGap:el.getAttribute('data-image-gap')??18}).imageGap,renderHTML:a=>({'data-image-gap':normalizeImageDesign(a).imageGap})},imageWidth:{default:100,parseHTML:el=>normalizeImageDesign({imageWidth:el.getAttribute('data-image-width')}).imageWidth,renderHTML:a=>({'data-image-width':normalizeImageDesign(a).imageWidth})},imageWrap:{default:'none',parseHTML:el=>normalizeImageDesign({imageWrap:el.getAttribute('data-image-wrap')}).imageWrap,renderHTML:a=>({'data-image-wrap':normalizeImageDesign(a).imageWrap})},imageAlign:{default:'left',parseHTML:el=>normalizeImageDesign({imageAlign:el.getAttribute('data-image-align')}).imageAlign,renderHTML:a=>({'data-image-align':normalizeImageDesign(a).imageAlign})}}}});
+export const TableDesign=Extension.create({name:'tableDesign',addGlobalAttributes(){return [{types:['table'],attributes:Object.fromEntries([['tableStyle','data-table-style'],['tablePalette','data-table-palette'],['tableDensity','data-table-density']].map(([name,attr])=>[name,{default:normalizeTableDesign()[name],parseHTML:el=>normalizeTableDesign({[name]:el.getAttribute(attr)})[name],renderHTML:a=>({[attr]:normalizeTableDesign(a)[name]})}]))}]}});
+export const OBJECT_CSS=`
+img[data-image-width]{display:block;max-width:100%;height:auto;margin-top:16px;margin-bottom:16px}
+${Array.from({length:86},(_,i)=>i+15).map(w=>`img[data-image-width="${w}"]{width:${w}%}`).join('')}
+img[data-image-align="left"]{margin-left:0;margin-right:auto}img[data-image-align="center"]{margin-left:auto;margin-right:auto}img[data-image-align="right"]{margin-left:auto;margin-right:0}
+img[data-image-wrap="left"]{float:left;margin:6px 18px 10px 0}img[data-image-wrap="right"]{float:right;margin:6px 0 10px 18px}${Array.from({length:49},(_,gap)=>`img[data-image-gap="${gap}"][data-image-wrap="left"]{margin-right:${gap}px}img[data-image-gap="${gap}"][data-image-wrap="right"]{margin-left:${gap}px}`).join('')}
+img[data-image-shape="ellipse"]{clip-path:ellipse(50% 50% at 50% 50%);shape-outside:ellipse(50% 50% at 50% 50%) border-box}
+img[data-image-shape="diamond"]{clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);shape-outside:polygon(50% 0,100% 50%,50% 100%,0 50%) border-box}
+${Array.from({length:49},(_,gap)=>`img[data-image-gap="${gap}"][data-image-shape="ellipse"],img[data-image-gap="${gap}"][data-image-shape="diamond"]{shape-margin:${gap}px}`).join('')}
+article::after,.tiptap::after{content:"";display:block;clear:both}
+table[data-table-style]{--table-accent:#286453;--table-tint:#E8F0E9;--table-stripe:#F3F7F2;--table-border:#BACDBE;border-collapse:collapse;width:100%}
+${Object.entries(TABLE_PALETTES).map(([key,p])=>`table[data-table-palette="${key}"]{--table-accent:#${p.accent};--table-tint:#${p.tint};--table-stripe:#${p.stripe};--table-border:#${p.border}}`).join('')}
+table[data-table-style] td,table[data-table-style] th{border:1px solid var(--table-border);padding:8px}
+table[data-table-style] th{background:var(--table-tint);color:var(--table-accent)}
+table[data-table-style="striped"] td,table[data-table-style="striped"] th{border-left:0;border-right:0}
+table[data-table-style="striped"] tr:nth-child(even) td{background:var(--table-stripe)}
+table[data-table-style="minimal"] td,table[data-table-style="minimal"] th{border:0;background:transparent}
+table[data-table-style="minimal"] th{border-bottom:2px solid var(--table-accent)}
+${Object.entries(TABLE_PADDING).map(([k,v])=>`table[data-table-density="${k}"] td,table[data-table-density="${k}"] th{padding:${v}px}`).join('')}
+`;
