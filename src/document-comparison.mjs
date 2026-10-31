@@ -6,7 +6,7 @@ const stable=value=>{if(Array.isArray(value))return value.map(stable);if(value&&
 const signature=value=>JSON.stringify(stable(value));
 const paragraphTypes=new Set(['paragraph','heading','codeBlock']);
 const objectNames={image:'Image',designCanvas:'Design canvas',footnote:'Note',tableOfContents:'Contents'};
-const designKeys=['size','orientation','margin','font','line','theme','headingColor','header','footer','pageNumbers','language'];
+const designKeys=['notePlacement','size','orientation','margin','font','line','theme','headingColor','header','footer','pageNumbers','language'];
 
 // A longest ordered subset distinguishes a move from offsets caused by insertion.
 function orderedMatches(pairs){

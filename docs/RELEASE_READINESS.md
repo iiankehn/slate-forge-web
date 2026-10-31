@@ -138,3 +138,7 @@ The roadmap remains incomplete. General structural/object tracking, arbitrary an
 ## Grouped structural/object revision continuation
 
 Local block/object edits and paragraph-type conversions now retain protected deleted/inserted top-level copies, with individual/bulk decisions, Undo and HTML/device/ZIP/encrypted recovery persistence. All 60 test-file runners, production build and source whitespace checks passed. Generated trailing paragraphs are excluded from tracking. Final content omits deleted copies; DOCX/ODT require structural decisions first. See the latest RELEASE_BATCH.md for bounds and evidence. Fine-grained nested/move-specific revision semantics and native DOCX structural revisions remain open. This is GitHub-only development; browser/device/accessibility and long-document gates are unchanged.
+
+## Page-bottom note continuation
+
+Optional page-bottom notes are implemented for supported paged editing and measured print preview. All 61 test-file runners, production build and source whitespace checks passed. Existing layouts retain endnotes. Page capacity is reserved per reference, notes are read-only on sheets and editable through existing controls, and temporary note DOM is excluded from saving. The 500-reference bound, monotonic planner whitespace, oversized-note fallback/error and unfinished split/complex-section cases are documented in RELEASE_BATCH.md. DOM and planner coverage does not replace physical rendering/print or accessibility/IME verification. This work is not deployed to the live Site.

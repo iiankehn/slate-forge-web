@@ -25,7 +25,7 @@ Source image inputs allow up to 1 GB but native decoding and an 80 MP cap still 
 
 Latest GitHub development also includes overlapping/point comments, wrapped paragraph tails, multilingual OCR, embedded PDF fonts, password protection/unlock and single-certificate final PDF signatures. These changes are not deployed to the live Site.
 
-Native Word drawing objects, free page-coordinate images with surrounding text, arbitrary/two-sided wrap, complex live sections/pagination and footnotes, fine-grained/native-DOCX structural revision interoperability, advanced format fidelity and larger PDF capacity remain open. Local structural/object changes now use protected deleted/inserted top-level block groups with HTML/device persistence and review decisions. Keep the guard against treating editor-generated trailing paragraphs as new revisions. DOCX/ODT require structural decisions first, and old builds do not understand blockRevision metadata. Provider sign-in, cloud collaboration and separate notes/coding apps are deferred scope, not required for the account-free release.
+Native Word drawing objects, free page-coordinate images with surrounding text, arbitrary/two-sided wrap, complex live sections/pagination and oversized/split footnotes, fine-grained/native-DOCX structural revision interoperability, advanced format fidelity and larger PDF capacity remain open. Local structural/object changes now use protected deleted/inserted top-level block groups with HTML/device persistence and review decisions. Keep the guard against treating editor-generated trailing paragraphs as new revisions. DOCX/ODT require structural decisions first, and old builds do not understand blockRevision metadata. Provider sign-in, cloud collaboration and separate notes/coding apps are deferred scope, not required for the account-free release.
 
 ## Continuing work
 
@@ -36,3 +36,5 @@ Prior reusable startup/release/storage skills were installed in the original Wor
 ## GitHub source packaging
 
 The GitHub repository tracks all editable source, tests, canonical HTML/CSS/PWA manifest/icons and documentation. Reproducible generated JavaScript chunks, service worker, license notices and npm-provided PDF/OCR vendor bundles are ignored; npm ci followed by npm run build regenerates them. The original complete Sites history remains in its original source repository; the GitHub import starts a new history with this recorded baseline.
+
+Page-bottom notes are an optional notePlacement layout value (page/end), defaulting to end for older documents. Supported live pages and measured print preview reserve note space per reference page; live reservations are monotonic to prevent oscillation and can leave extra whitespace. At most 500 references and existing page caps apply. Temporary page-note DOM is excluded from stored content, and leaving paged mode restores the original accessible endnotes list. Split notes/complex sections and physical rendering/accessibility remain open.

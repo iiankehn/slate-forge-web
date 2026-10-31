@@ -21,7 +21,8 @@ User authorized completion of the remaining roadmap on 2026-10-29. This checklis
 - [x] Paragraph keep-together, keep-with-next and page-break-before controls in HTML/DOCX and supported paginated blocks.
 - [x] Two-line widow/orphan balancing for supported ordinary text in live pages and preview, with a persisted paragraph opt-out and DOCX round trip.
 - [ ] Full widow/orphan balancing across nested layouts/columns/complex typography and nested-layout keep-rule parity.
-- [ ] Page-bottom footnotes in editor/print.
+- [x] Optional page-bottom notes in supported paged editing and measured print preview, with bounded reservations and preserved endnote defaults.
+- [ ] Notes split across pages, complex-section/nested note parity and physical-reader/rendering certification.
 - [x] Compatible continuous one-column and plain-text column sections can share preview pages.
 - [ ] Continuous sections with complex objects, geometry/furniture changes and full nested keep-rule parity.
 - [ ] Editor/preview/Word pagination consistency.
