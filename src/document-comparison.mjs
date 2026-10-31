@@ -14,7 +14,7 @@ function orderedMatches(pairs){
  const result=new Set();let item=indices.at(-1);while(item){result.add(item);item=previous.get(item)}return result;
 }
 export function compareDocuments(before,after,beforeLayout={},afterLayout={}, {maxNodes=10000,maxDetails=200,maxCharacters=200000,maxWork=2000000}={}){
- const counts={structure:0,formatting:0,objects:0,page:0},details=[];let limited=false,work=maxWork;
+ const counts={structure:0,formatting:0,objects:0,page:0},details=[],removed=[],added=[];let limited=false,work=maxWork,indexLimited=false;
  const emit=(kind,path,description,extra={})=>{counts[kind]++;if(details.length<maxDetails)details.push({kind,path,description,...extra});else limited=true};
  function index(source){let visited=0,characters=0;function visit(node,path,depth){
   if(!node||typeof node!=='object')return null;if(++visited>maxNodes||depth>100){limited=true;return null}
@@ -52,16 +52,36 @@ export function compareDocuments(before,after,beforeLayout={},afterLayout={}, {m
   // Pair changed blocks only inside stable ordered anchors. Unmatched insertions
   // cannot shift formatting/object reports for the following exact matches.
   const anchors=[{i:-1,j:-1},...pairs.filter(p=>ordered.has(p)),{i:a.length,j:b.length}];
-  for(let k=1;k<anchors.length;k++){const left=anchors[k-1],right=anchors[k],old=[],current=[];for(let i=left.i+1;i<right.i;i++)if(!usedA.has(i))old.push(i);for(let j=left.j+1;j<right.j;j++)if(!usedB.has(j))current.push(j);const compatible=(i,j)=>a[i].type===b[j].type||paragraphTypes.has(a[i].type)&&paragraphTypes.has(b[j].type);
+  // Do not consume a globally unique exact counterpart as a rewritten local
+  // block. This preserves cross-container swaps and moves beside replacements.
+  const reserved=node=>!indexLimited&&oldIdentities.get(node.key)===1&&newIdentities.get(node.key)===1;
+  for(let k=1;k<anchors.length;k++){const left=anchors[k-1],right=anchors[k],old=[],current=[];for(let i=left.i+1;i<right.i;i++)if(!usedA.has(i))old.push(i);for(let j=left.j+1;j<right.j;j++)if(!usedB.has(j))current.push(j);const compatible=(i,j)=>!reserved(a[i])&&!reserved(b[j])&&(a[i].type===b[j].type||paragraphTypes.has(a[i].type)&&paragraphTypes.has(b[j].type));
    // A single compatible candidate per side is unambiguous even when an
    // unrelated object was inserted into the gap. Equal-size replacement gaps
    // otherwise retain order; we do not guess changed-text moves.
    if(old.length*current.length<=10000)for(const i of old){if(usedA.has(i))continue;const candidates=current.filter(j=>!usedB.has(j)&&compatible(i,j));if(candidates.length!==1)continue;const j=candidates[0];if(old.filter(n=>!usedA.has(n)&&compatible(n,j)).length!==1)continue;usedA.add(i);usedB.add(j);compareNode(a[i],b[j])}
    const restA=old.filter(i=>!usedA.has(i)),restB=current.filter(j=>!usedB.has(j));if(restA.length!==restB.length)continue;for(let n=0;n<restA.length;n++){const i=restA[n],j=restB[n];if(compatible(i,j)){usedA.add(i);usedB.add(j);compareNode(a[i],b[j])}}}
-  for(let i=0;i<a.length;i++)if(!usedA.has(i))emit('structure',a[i].path,'Removed '+a[i].type);
-  for(let j=0;j<b.length;j++)if(!usedB.has(j))emit('structure',b[j].path,'Added '+b[j].type);
+  for(let i=0;i<a.length;i++)if(!usedA.has(i))removed.push(a[i]);
+  for(let j=0;j<b.length;j++)if(!usedB.has(j))added.push(b[j]);
  }
- const a=index(before),b=index(after);if(a&&b)compareNode(a,b);
+ const a=index(before),b=index(after);indexLimited=limited;
+ // Count identities in the complete indexes. A repeated block elsewhere must
+ // not become a supposedly unique move just because its local copy matched.
+ const identities=root=>{const groups=new Map();function visit(node){if(!node)return;groups.set(node.key,(groups.get(node.key)||0)+1);for(const child of node.children)visit(child)}visit(root);return groups};
+ const oldIdentities=identities(a),newIdentities=identities(b);
+ if(a&&b)compareNode(a,b);
+ // Local matching runs first. Only unmatched roots from compared containers
+ // participate, so an added/removed whole container remains one aggregate edit.
+ // Comparing a moved root can expose further unmatched children; drain those
+ // in subsequent rounds without ever matching a node more than once.
+ const movedA=new Set(),movedB=new Set();
+ const pendingKeys=new Set(added.map(node=>node.key));
+ for(const node of removed)if(pendingKeys.has(node.key)&&(oldIdentities.get(node.key)!==1||newIdentities.get(node.key)!==1))limited=true;
+ if(!indexLimited){let cursor=0;while(cursor<removed.length){const end=removed.length,targets=new Map();for(const node of added)if(!movedB.has(node)&&newIdentities.get(node.key)===1)targets.set(node.key,node);
+  for(;cursor<end;cursor++){const old=removed[cursor],current=targets.get(old.key);if(!current||oldIdentities.get(old.key)!==1)continue;movedA.add(old);movedB.add(current);targets.delete(old.key);emit('structure',current.path,'Moved '+old.type+' from '+old.path,{beforePath:old.path,moved:true});compareNode(old,current)}
+ }}
+ for(const node of removed)if(!movedA.has(node))emit('structure',node.path,'Removed '+node.type);
+ for(const node of added)if(!movedB.has(node))emit('structure',node.path,'Added '+node.type);
  const oldLayout=normalizeLayout(beforeLayout),newLayout=normalizeLayout(afterLayout);for(const key of designKeys)if(signature(oldLayout[key])!==signature(newLayout[key]))emit('page','Page design',key+' changed');
- return {counts,details,limited,hasDifferences:Object.values(counts).some(Boolean),formattingScope:'Exact-content blocks are matched across moves within their parent. Formatting is compared on aligned shared text, including edited paragraphs; formatting of added or removed text has no counterpart. Repeated blocks and changed blocks in unequal gaps can be ambiguous. Matching does not infer meaning or cross-parent moves.'};
+ return {counts,details,limited,hasDifferences:Object.values(counts).some(Boolean),formattingScope:'Exact-content blocks are matched across moves within their parent. Globally unique unmatched blocks also match between compared containers, retaining formatting checks and both paths. Formatting is compared on aligned shared text, including edited paragraphs; formatting of added or removed text has no counterpart. Repeated blocks and changed blocks in unequal gaps can be ambiguous. Matching does not infer meaning, rewritten moves or moves into or out of unmatched whole containers.'};
 }

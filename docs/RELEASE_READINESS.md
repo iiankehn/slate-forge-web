@@ -124,3 +124,7 @@ Slate Forge canvas data now survives DOCX export/reopen using bounded custom XML
 ## Move-aware comparison update
 
 Exact-content blocks now match across moves within a parent, avoiding positional cascades after insertion/removal. Formatting on shared aligned text is compared even when a paragraph was edited. Nested rows, Unicode and inline objects are covered; reports remain read-only and bounded, and partial/ambiguous matching is labeled. 313 tests and production build pass, including full-app Compare dialog wiring. Rewritten/meaning-based and cross-parent move matching remain open. Browser/device, screen-reader and real long-document performance checks remain outstanding.
+
+## Cross-container comparison in GitHub development
+
+Globally unique unmatched exact-content blocks can now match between compared containers, with both paths and retained formatting checks. Swaps and moves beside replacements are supported. Repeated counterparts label the report partial, and truncated indexes disable this matching. Rewritten moves and moves into/out of unmatched whole containers remain open. The full suite (53 test-file runners), production build and source whitespace checks passed. Focused and full-app DOM coverage is documented in RELEASE_BATCH.md; physical-browser/device and accessibility gates remain open. This batch has not been deployed to the live Site.

@@ -48,7 +48,8 @@ User authorized completion of the remaining roadmap on 2026-10-29. This checklis
 - [x] Accept all / Reject all text changes with confirmation and one-step undo.
 - [x] Highlighted text comparison plus bounded formatting, structure, object and page-design difference reports.
 - [x] Exact-content move matching within parents, insertion-resistant structural reports and inline formatting comparison on shared text inside edited blocks.
-- [ ] Meaning-based matching of rewritten/moved blocks, cross-parent moves and ambiguous repeated/unequal replacement gaps.
+- [x] Globally unique exact-content moves between compared containers, including swaps and retained formatting checks.
+- [ ] Meaning-based matching of rewritten/moved blocks, moves into/out of unmatched whole containers and ambiguous repeated/unequal replacement gaps.
 - [x] Placeholder checks covering notes and canvas text, with navigation to the owning editor.
 
 ## PDF, OCR and drawing

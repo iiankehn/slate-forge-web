@@ -47,3 +47,54 @@ test('format alignment work and character bounds produce explicit partial result
 test('input documents and review metadata remain unchanged by comparison',()=>{
  const a=doc(p([t('Keep',[{type:'reviewChange',attrs:{kind:'insert',id:'i'}},{type:'comment',attrs:{id:'c'}}]),t('gone',[{type:'reviewChange',attrs:{kind:'delete',id:'d'}}])])),b=doc(p([t('New '),t('Keep',[{type:'bold'}])]));const snapshot=JSON.stringify([a,b]);assert.equal(compareDocuments(a,b).counts.formatting,1);assert.equal(JSON.stringify([a,b]),snapshot);
 });
+
+const quote=(...content)=>({type:'blockquote',content});
+test('unique paragraphs moved between matched quotations retain formatting and both paths',()=>{
+ const before=doc(quote(p('Left anchor'),p('Move me')),quote(p('Right anchor')));
+ const after=doc(quote(p('Left anchor')),quote(p('Right anchor'),p([t('Move me',[{type:'bold'}])],{textAlign:'center'})));
+ const snapshot=JSON.stringify([before,after]),result=compareDocuments(before,after);
+ assert.equal(result.counts.structure,1);assert.equal(result.counts.formatting,2);
+ const move=result.details.find(d=>d.moved);assert.equal(move.beforePath,'Document/1/2');assert.equal(move.path,'Document/2/2');assert.equal(result.limited,false);
+ assert.equal(JSON.stringify([before,after]),snapshot);
+ const reverse=compareDocuments(after,before);assert.equal(reverse.counts.structure,1);assert.equal(reverse.counts.formatting,2);assert.equal(reverse.details.find(d=>d.moved).path,'Document/1/2');
+});
+test('cross-cell moves are reported once without moving the matching table containers',()=>{
+ const table=(left,right)=>({type:'table',content:[{type:'tableRow',content:[{type:'tableCell',content:left},{type:'tableCell',content:right}]}]});
+ const result=compareDocuments(doc(table([p('Left'),p('Transfer')],[p('Right')])),doc(table([p('Left')],[p('Right'),p('Transfer')])));
+ assert.equal(result.counts.structure,1);assert.equal(result.counts.formatting,0);assert.equal(result.details[0].beforePath,'Document/1/1/1/2');assert.equal(result.details[0].path,'Document/1/1/2/2');assert.ok(result.details[0].moved);
+});
+test('cross-container swaps are not consumed as unrelated local replacements',()=>{
+ const result=compareDocuments(doc(quote(p('Left'),p('Alpha')),quote(p('Right'),p('Beta'))),doc(quote(p('Left'),p('Beta')),quote(p('Right'),p([t('Alpha',[{type:'bold'}])]))));
+ assert.equal(result.counts.structure,2);assert.equal(result.counts.formatting,1);assert.equal(result.details.filter(d=>d.moved).length,2);
+});
+test('a local replacement does not steal a unique exact counterpart in another container',()=>{
+ const result=compareDocuments(doc(quote(p('Left'),p('Transfer')),quote(p('Right'))),doc(quote(p('Left'),p('Replacement')),quote(p('Right'),p('Transfer'))));
+ assert.equal(result.counts.structure,2);assert.equal(result.details.filter(d=>d.moved).length,1);assert.equal(result.details.filter(d=>/Added paragraph/.test(d.description)).length,1);
+});
+test('moved nested containers produce one move while retaining descendant formatting checks',()=>{
+ const list=marks=>({type:'bulletList',content:[{type:'listItem',content:[p([t('Nested unique',marks)])]}]});
+ const result=compareDocuments(doc(quote(p('Left'),list([])),quote(p('Right'))),doc(quote(p('Left')),quote(p('Right'),list([{type:'italic'}]))));
+ assert.equal(result.counts.structure,1);assert.equal(result.counts.formatting,1);assert.match(result.details.find(d=>d.moved).description,/Moved bulletList/);
+});
+test('cross-container object moves do not reveal embedded data',()=>{
+ const image={type:'image',attrs:{src:'data:image/png;base64,PRIVATE',alt:'Picture'}};
+ const result=compareDocuments(doc(quote(p('Left'),image),quote(p('Right'))),doc(quote(p('Left')),quote(p('Right'),image)));
+ assert.equal(result.counts.structure,1);assert.equal(result.counts.objects,0);assert.ok(result.details[0].moved);assert.ok(!JSON.stringify(result.details).includes('PRIVATE'));
+});
+test('global repeats cannot become unique moves when another occurrence matched locally',()=>{
+ const result=compareDocuments(doc(quote(p('Left'),p('Repeat')),quote(p('Right')),p('Repeat')),doc(quote(p('Left')),quote(p('Right'),p('Repeat')),p('Repeat')));
+ assert.equal(result.details.some(d=>d.moved),false);assert.equal(result.counts.structure,2);assert.equal(result.limited,true);
+});
+test('new and deleted whole containers remain aggregate changes',()=>{
+ const result=compareDocuments(doc(quote(p('Left'),p('Transfer')),quote(p('Right'))),doc(quote(p('Left')),quote(p('Right')),{type:'bulletList',content:[{type:'listItem',content:[p('Transfer')]}]}));
+ assert.equal(result.details.some(d=>d.moved),false);assert.equal(result.counts.structure,2);
+});
+test('rewritten cross-container paragraphs remain additions and removals',()=>{
+ const result=compareDocuments(doc(quote(p('Left'),p('Old wording')),quote(p('Right'))),doc(quote(p('Left')),quote(p('Right'),p('New wording'))));
+ assert.equal(result.details.some(d=>d.moved),false);assert.equal(result.counts.structure,2);
+});
+test('truncated indexes do not claim globally unique moves',()=>{
+ const before=doc(quote(p('Left'),p('Transfer')),quote(p('Right')),p('Tail')),after=doc(quote(p('Left')),quote(p('Right'),p('Transfer')),p('Tail'));
+ for(const options of [{maxNodes:10},{maxCharacters:15}]){const result=compareDocuments(before,after,{}, {},options);assert.ok(result.limited);assert.equal(result.details.some(d=>d.moved),false)}
+ const limited=compareDocuments(before,after,{}, {},{maxDetails:0});assert.equal(limited.counts.structure,1);assert.equal(limited.details.length,0);assert.ok(limited.limited);
+});
