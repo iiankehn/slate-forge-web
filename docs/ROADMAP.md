@@ -28,7 +28,8 @@ The public beta is deployed at https://slate-web.iiankehn.com/ through GitHub Pa
 - [x] Page-bottom note continuations across live/preview pages, preserving literal text, reference identity and source notes without scaling.
 - [ ] Complex-section/nested note parity and physical-reader/rendering certification.
 - [x] Compatible continuous one-column and plain-text column sections can share preview pages.
-- [ ] Continuous sections with complex objects, geometry/furniture changes and full nested keep-rule parity.
+- [x] Compatible continuous columns with fitting tables/images/canvases and bounded object-aware text fragmentation in measured preview.
+- [ ] Continuous sections with geometry/furniture changes, nested sections and full nested keep-rule parity; live mixed-section pagination remains open.
 - [ ] Editor/preview/Word pagination consistency.
 
 ## Formats and review
@@ -67,7 +68,8 @@ The public beta is deployed at https://slate-web.iiankehn.com/ through GitHub Pa
 - [x] In-place replacement of supported simple existing PDF text (unembedded standard Latin Type1 fonts, printable ASCII, direct page content text operators), with Undo/Redo and backup/recovery persistence.
 - [ ] General PDF text/font editing, embedded/subset/complex text, automatic text reflow and XFA.
 - [x] International PDF annotation/form appearances using an embedded local TTF/OTF with glyph-coverage checks.
-- [ ] Broad complex-script/bidirectional PDF layout and cross-reader font certification.
+- [x] Bidirectional/script-run ordering and explicit fontkit glyph advances/offsets for generated PDF annotation/form appearances, with embedded local fonts and preserved logical field values.
+- [ ] Broad script/font coverage, paragraph-level typography controls and cross-reader font/render certification.
 - [x] Numeric geometry editing for supported imported PDF widgets; readonly/unsupported fields remain protected.
 - [x] Final PDF export with one detached SHA-256/RSA PKCS#12 certificate signature; signed inputs are view/export-only.
 - [x] Append additional detached RSA/SHA-256 signatures as incremental revisions while preserving and cryptographically testing earlier signed byte ranges; certified/locked-field policies are refused.
