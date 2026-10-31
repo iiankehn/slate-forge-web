@@ -1,3 +1,4 @@
+import {finalDocumentJSON} from './review.mjs';
 import {formattingSnapshot} from './format-review.mjs';
 import {normalizeLayout} from './document-model.mjs';
 import {compareText} from './text-diff.mjs';
@@ -65,7 +66,7 @@ export function compareDocuments(before,after,beforeLayout={},afterLayout={}, {m
   for(let i=0;i<a.length;i++)if(!usedA.has(i))removed.push(a[i]);
   for(let j=0;j<b.length;j++)if(!usedB.has(j))added.push(b[j]);
  }
- const a=index(before),b=index(after);indexLimited=limited;
+ const a=index(finalDocumentJSON(before)),b=index(finalDocumentJSON(after));indexLimited=limited;
  // Count identities in the complete indexes. A repeated block elsewhere must
  // not become a supposedly unique move just because its local copy matched.
  const identities=root=>{const groups=new Map();function visit(node){if(!node)return;groups.set(node.key,(groups.get(node.key)||0)+1);for(const child of node.children)visit(child)}visit(root);return groups};

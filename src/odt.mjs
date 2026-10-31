@@ -1,3 +1,4 @@
+import {assertNoBlockRevisions} from './block-review.mjs';
 import {createOdtStyles,odtColor,odtAttr} from './odt-styles.mjs';
 import {normalizeLayout,FONTS} from './document-model.mjs';
 import {imageExportKey} from './image-shapes.mjs';
@@ -5,6 +6,7 @@ import {zipSync,unzipSync,strToU8,strFromU8} from 'fflate';
 const mime='application/vnd.oasis.opendocument.text',esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
 const ns='xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"';
 export function exportODT(content,layout={},title='Document',images=new Map()){
+ assertNoBlockRevisions(content);
  const files={},styles=[],pictures=[],styleCache=new Map();layout=normalizeLayout(layout);let note=0;
  function styleId(family,properties){const key=family+properties;if(styleCache.has(key))return styleCache.get(key);if(styles.length>=2500)throw Error('ODT has too many distinct formatting styles.');const id='Forge'+styles.length;styleCache.set(key,id);styles.push(`<style:style style:name="${id}" style:family="${family}">${properties}</style:style>`);return id}
  function paragraphStyle(a={}){let props='';if(['left','right','center','justify'].includes(a.textAlign))props+=` fo:text-align="${a.textAlign}"`;if(['0pt','6pt','12pt','18pt','24pt'].includes(a.paragraphSpacing))props+=` fo:margin-bottom="${a.paragraphSpacing}"`;if(['1.3','1.65','2'].includes(String(a.paragraphLine)))props+=` fo:line-height="${Number(a.paragraphLine)*100}%"`;if(a.indent)props+=` fo:margin-left="${Math.min(6,Math.max(0,Number(a.indent)||0))*24}pt"`;if(a.keepTogether)props+=' fo:keep-together="always"';if(a.keepWithNext)props+=' fo:keep-with-next="always"';if(a.pageBreakBefore)props+=' fo:break-before="page"';props+=a.widowControl===false?' fo:orphans="1" fo:widows="1"':' fo:orphans="2" fo:widows="2"';return styleId('paragraph','<style:paragraph-properties'+props+'/>')}

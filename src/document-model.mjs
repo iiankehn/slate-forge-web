@@ -15,6 +15,7 @@ export function findMatches(doc, query, matchCase=false, {wholeWord=false,scope=
   if(!query) return [];
   let matches=[];
   doc.descendants((block,pos)=>{
+    if(block.type.name==='blockRevision'&&block.attrs.kind==='delete')return false;
     if(!block.isTextblock) return;
     let text='',positions=[];
     block.descendants((node,offset)=>{
@@ -45,5 +46,5 @@ export function textStatistics(text){
  }else{words=(text.match(/[\p{L}\p{N}]+(?:['’][\p{L}\p{N}]+)*/gu)||[]).length;for(let character of text){characters++;if(!/\s/u.test(character))charactersWithoutSpaces++}}
  return {words,characters,charactersWithoutSpaces,readingMinutes:words?Math.ceil(words/200):0};
 }
-export function documentOutline(doc){let result=[];doc.descendants((node,pos)=>{if(node.type.name==='heading')result.push({pos,level:node.attrs.level||1,title:bodyText(node).trim()||'Untitled heading'})});return result}
-export function documentStatistics(doc){let paragraphs=0;doc.descendants(node=>{if(node.type.name==='paragraph'&&bodyText(node).trim())paragraphs++});return {...textStatistics(bodyText(doc)),paragraphs,headings:documentOutline(doc).length}}
+export function documentOutline(doc){let result=[];doc.descendants((node,pos)=>{if(node.type.name==='blockRevision'&&node.attrs.kind==='delete')return false;if(node.type.name==='heading')result.push({pos,level:node.attrs.level||1,title:bodyText(node).trim()||'Untitled heading'})});return result}
+export function documentStatistics(doc){let paragraphs=0;doc.descendants(node=>{if(node.type.name==='blockRevision'&&node.attrs.kind==='delete')return false;if(node.type.name==='paragraph'&&bodyText(node).trim())paragraphs++});return {...textStatistics(bodyText(doc)),paragraphs,headings:documentOutline(doc).length}}

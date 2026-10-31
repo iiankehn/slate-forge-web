@@ -25,7 +25,7 @@ Source image inputs allow up to 1 GB but native decoding and an 80 MP cap still 
 
 Latest GitHub development also includes overlapping/point comments, wrapped paragraph tails, multilingual OCR, embedded PDF fonts, password protection/unlock and single-certificate final PDF signatures. These changes are not deployed to the live Site.
 
-Native Word drawing objects, free page-coordinate images with surrounding text, arbitrary/two-sided wrap, complex live sections/pagination and footnotes, structural/object revision tracking, advanced format fidelity, additional OCR languages and larger PDF capacity remain open. Provider sign-in, cloud collaboration and separate notes/coding apps are deferred scope, not required for the account-free release.
+Native Word drawing objects, free page-coordinate images with surrounding text, arbitrary/two-sided wrap, complex live sections/pagination and footnotes, fine-grained/native-DOCX structural revision interoperability, advanced format fidelity and larger PDF capacity remain open. Local structural/object changes now use protected deleted/inserted top-level block groups with HTML/device persistence and review decisions. Keep the guard against treating editor-generated trailing paragraphs as new revisions. DOCX/ODT require structural decisions first, and old builds do not understand blockRevision metadata. Provider sign-in, cloud collaboration and separate notes/coding apps are deferred scope, not required for the account-free release.
 
 ## Continuing work
 

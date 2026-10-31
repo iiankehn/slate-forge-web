@@ -45,7 +45,8 @@ User authorized completion of the remaining roadmap on 2026-10-29. This checklis
 - [ ] Microsoft Word round-trip certification.
 - [x] Supported inline and paragraph formatting revisions, individual/bulk decisions, Undo, HTML/device persistence and native DOCX properties revisions.
 - [x] Text revisions and comments in code blocks; code menu/style controls and native DOCX line-break/tab handling.
-- [ ] Track structural and object edits; general paragraph-type conversion revisions.
+- [x] Grouped structural/object edits and paragraph-type conversions, retaining original top-level blocks for individual/bulk decisions and Undo through HTML/device state.
+- [ ] Fine-grained nested/move-specific structural decisions and native DOCX structural-revision interoperability.
 - [x] Confirmed Find/Replace through unresolved revisions: accept complete affected changes, then replace in one undoable operation.
 - [x] Accept all / Reject all text changes with confirmation and one-step undo.
 - [x] Highlighted text comparison plus bounded formatting, structure, object and page-design difference reports.
