@@ -9,7 +9,7 @@ async function write(page){await page.locator('#title').fill('Release smoke docu
 async function download(page,testInfo,extension){const link=page.locator('.download-link[download$=".'+extension+'"]');await expect(link).toBeVisible();const event=page.waitForEvent('download');await link.click();const result=await event,file=testInfo.outputPath(result.suggestedFilename());await result.saveAs(file);expect(await result.failure()).toBeNull();return file}
 async function open(page,file){await menu(page,'File','import');await page.locator('#nativeFileInput').setInputFiles(file)}
 
-test.beforeEach(async({page,context})=>{const errors=[],external=[];page.on('pageerror',error=>errors.push(error.message));await context.route('**/*',route=>{const url=new URL(route.request().url());if(['http:','https:'].includes(url.protocol)&&url.origin!=='http://127.0.0.1:4173'){external.push(url.origin);return route.abort()}return route.continue()});page.__releaseErrors=errors;page.__externalRequests=external});
+test.beforeEach(async({page,context})=>{const errors=[],external=[];page.on('pageerror',error=>errors.push(error.stack||error.message));context.on('request',request=>{const url=new URL(request.url());if(['http:','https:'].includes(url.protocol)&&url.origin!=='http://127.0.0.1:4173')external.push(url.origin)});page.__releaseErrors=errors;page.__externalRequests=external});
 test.afterEach(async({page})=>{expect(page.__releaseErrors).toEqual([]);expect(page.__externalRequests).toEqual([])});
 
 test('write, reload, download HTML and reopen the exact downloaded file',async({page},testInfo)=>{
