@@ -1,5 +1,7 @@
 # Slate Forge
 
+> **Codex continuation:** Start with [docs/CODEX_HANDOFF.md](docs/CODEX_HANDOFF.md) and [AGENTS.md](AGENTS.md). The imported runtime baseline passed 313 tests and its rebuilt release output matched the existing live Site byte for byte. [docs/ROADMAP.md](docs/ROADMAP.md) and the final sections of [docs/RELEASE_BATCH.md](docs/RELEASE_BATCH.md) contain current status; older feature and test-count notes below are historical. Generated bundles are rebuilt with `npm ci` and `npm run build`. GitHub commits do not automatically deploy the existing Site.
+
 The account-free, local-first web edition of Slate Forge. This is a working development build, not a production-certified release. No paid services, application accounts, cloud document backend, analytics or external account providers are configured. Hosting access remains owner-private.
 
 ## Build
