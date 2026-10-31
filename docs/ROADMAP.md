@@ -64,7 +64,8 @@ The public beta is deployed at https://slate-web.iiankehn.com/ through GitHub Pa
 
 ## PDF, OCR and drawing
 - [x] AES-256 password-protected PDF export and explicit unlock-to-device-copy import, without retaining passwords.
-- [ ] Existing PDF text editing and XFA.
+- [x] In-place replacement of supported simple existing PDF text (unembedded standard Latin Type1 fonts, printable ASCII, direct page content text operators), with Undo/Redo and backup/recovery persistence.
+- [ ] General PDF text/font editing, embedded/subset/complex text, automatic text reflow and XFA.
 - [x] International PDF annotation/form appearances using an embedded local TTF/OTF with glyph-coverage checks.
 - [ ] Broad complex-script/bidirectional PDF layout and cross-reader font certification.
 - [x] Numeric geometry editing for supported imported PDF widgets; readonly/unsupported fields remain protected.
