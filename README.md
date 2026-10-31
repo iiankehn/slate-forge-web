@@ -2,7 +2,7 @@
 
 > **Codex continuation:** Start with [docs/CODEX_HANDOFF.md](docs/CODEX_HANDOFF.md) and [AGENTS.md](AGENTS.md). The imported runtime baseline passed 313 tests and its rebuilt release output matched the existing live Site byte for byte. [docs/ROADMAP.md](docs/ROADMAP.md) and the final sections of [docs/RELEASE_BATCH.md](docs/RELEASE_BATCH.md) contain current status; older feature and test-count notes below are historical. Generated bundles are rebuilt with `npm ci` and `npm run build`. GitHub commits do not automatically deploy the existing Site.
 
-The account-free, local-first web edition of Slate Forge. This is a working development build, not a production-certified release. No paid services, application accounts, cloud document backend, analytics or external account providers are configured. Hosting access remains owner-private.
+The account-free, local-first web edition of Slate Forge. This is a working development build, not a production-certified release. No paid services, application accounts, cloud document backend, analytics or external account providers are configured. The public beta is hosted at https://slate-web.iiankehn.com/. The original private Site remains separate.
 
 ## Public beta
 
@@ -24,7 +24,7 @@ View → Paged editing adds editable page boundaries, automatic line flow, headi
 
 Interface appearance offers White, Colored, Grey, Dark and System. Theme, custom accent color and dark-page viewing preferences are saved in localStorage separately from documents. The accent works across all themes; very light/dark choices adapt for readable controls. System follows the OS light/dark setting. An optional dark page follows Dark or System-dark mode. It uses screen-only color adaptation and compensates images to retain their colors. Printing and exported files retain original document colors; this viewing preference is never written into document content/layout.
 
-Images support continuous 15–100% width, alignment, left/right text wrapping and a 0–48 px text-flow gap, retained in HTML/JSON/DOCX. Drag an image near a paragraph's left/right edge to anchor it there; a center drop removes wrapping. Move-earlier/later buttons provide an alternative to dragging. Wrapped images need space for text; narrow the image when necessary. This is paragraph-anchored flow, not arbitrary page x/y positioning or text wrapping on both sides. HTML/JSON preserve wrapping; DOCX exports square-wrapped paragraph anchors. Rendering varies between DOCX applications.
+Images support custom polygon contours with 3–32 numeric percentage points, alongside rectangle/oval/diamond masks, continuous 15–100% width, alignment, left/right text wrapping and a 0–48 px text-flow gap, retained in HTML/JSON/DOCX. Drag an image near a paragraph's left/right edge to anchor it there; a center drop removes wrapping. Move-earlier/later buttons provide an alternative to dragging. Wrapped images need space for text; narrow the image when necessary. This is paragraph-anchored flow, not arbitrary page x/y positioning or text wrapping on both sides. HTML/JSON preserve wrapping; DOCX exports square-wrapped paragraph anchors. Rendering varies between DOCX applications.
 
 Tables support grid, striped and minimal styles; sage/ink/warm palettes; cell padding; header toggles; and merge/split commands. Merge/split require a suitable cell selection. Shared normalized style rules drive editor/HTML output and DOCX formatting.
 

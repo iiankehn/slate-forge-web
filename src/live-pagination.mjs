@@ -1,5 +1,5 @@
 import {referenceIndex} from './references.mjs';
-import {pageNoteSection} from './page-notes.mjs';
+import {pageNoteSection,allocatePageNotes} from './page-notes.mjs';
 import {balanceLineBreak,firstBalancedLinesBottom,lineStart,nextLineStart} from './line-pagination.mjs';
 import {Extension} from '@tiptap/core';
 import {Plugin,PluginKey} from '@tiptap/pm/state';
@@ -45,10 +45,16 @@ export function planFootnotedPages(blocks,geometry,coords,notes,measure,{maxPage
  for(let pass=0;pass<=maxPages;pass++){
   const plan=planPageBreaks(blocks,geometry,coords,{maxPages,reserves}),groups=Array.from({length:plan.pages},()=>[]);
   for(const note of notes){let page=0;for(const gap of plan.breaks){if(gap.pos<=note.pos)page=gap.page-1;else break}groups[page].push(note)}
-  let changed=false;const notePages=groups.map((items,index)=>{const height=items.length?measure(items):0;if(!Number.isFinite(height)||height<0||height>geometry.height-2*geometry.margin-48)throw Error('Page footnotes leave too little room for text. Shorten notes or choose endnotes.');if(height>(reserves[index]||0)+.5){reserves[index]=height;changed=true}return {notes:items,height}});
+  let changed=false,pending=[];const notePages=[];const limit=(geometry.height-2*geometry.margin)/2;
+  for(let index=0;index<groups.length||pending.length;index++){
+   if(index>=maxPages)throw Error('Page footnote continuations exceed the '+maxPages+' page limit.');
+   const allocation=allocatePageNotes([...pending,...(groups[index]||[])],limit,measure);pending=allocation.pending;
+   if(allocation.height>(reserves[index]||0)+.5){reserves[index]=allocation.height;changed=true}
+   notePages.push({notes:allocation.notes,height:allocation.height});
+  }
   // Keep reservations monotonic. Releasing a previous page's space could pull
   // the same reference backwards forever. Unused reserved space is harmless.
-  if(!changed)return {...plan,notePages,reserves:reserves.slice()};
+  if(!changed){const pages=Math.max(plan.pages,notePages.length);return {...plan,pages,height:pages*geometry.height+(pages-1)*PAGE_GAP,notePages,reserves:reserves.slice()}}
  }
  throw Error('Page-bottom note layout did not stabilize. Shorten notes or choose endnotes.');
 }
@@ -115,7 +121,7 @@ export class LivePageController{
   view.state.doc.descendants(visit);
   const notes=this.root.querySelector('#page-notes'),items=notes?[...notes.querySelectorAll(':scope > ol > li')]:[];
   if(settings.notePlacement!=='page')for(const [i,item]of items.entries())blocks.push({type:'note',target:i?item:notes,pos:view.state.doc.content.size,top:offset((i?item:notes).getBoundingClientRect()).top,bottom:offset(item.getBoundingClientRect()).bottom});
-  const coords=pos=>offset(view.coordsAtPos(Math.min(pos,view.state.doc.content.size),1)),grouped=groupWrappedBlocks(blocks,coords),measurements=new Map(),measureNotes=entries=>{const key=entries.map(note=>note.number).join(',');if(measurements.has(key))return measurements.get(key);const section=pageNoteSection(entries,view.dom.ownerDocument);section.style.cssText='position:absolute;left:-100000px;top:0;width:'+geometry.contentWidth+'px;margin:0;visibility:hidden';this.root.append(section);let height;try{height=section.getBoundingClientRect().height/scale+12}finally{section.remove()}measurements.set(key,height);return height},plan=settings.notePlacement==='page'?planFootnotedPages(grouped,geometry,coords,this.options.references?this.options.references():referenceIndex(view.state.doc).notes,measureNotes):planPageBreaks(grouped,geometry,coords);
+  const coords=pos=>offset(view.coordsAtPos(Math.min(pos,view.state.doc.content.size),1)),grouped=groupWrappedBlocks(blocks,coords),measurements=new Map(),measureNotes=entries=>{const key=JSON.stringify(entries.map(note=>[note.number,note.text,note.continued]));if(measurements.has(key))return measurements.get(key);const section=pageNoteSection(entries,view.dom.ownerDocument);section.style.cssText='position:absolute;left:-100000px;top:0;width:'+geometry.contentWidth+'px;margin:0;visibility:hidden';this.root.append(section);let height;try{height=section.getBoundingClientRect().height/scale+12}finally{section.remove()}measurements.set(key,height);return height},plan=settings.notePlacement==='page'?planFootnotedPages(grouped,geometry,coords,this.options.references?this.options.references():referenceIndex(view.state.doc).notes,measureNotes):planPageBreaks(grouped,geometry,coords);
   view.dispatch(view.state.tr.setMeta(livePageKey,pageDecorations(view.state.doc,plan.breaks,view.dom.ownerDocument)).setMeta('addToHistory',false));if(settings.notePlacement==='page'&&plan.notePages?.some(page=>page.notes.length))notes?.classList.add('live-page-notes-accessible');
   // Inserting gaps can trigger browser scroll anchoring. Re-read the origin
   // before checking rendered bounds rather than mixing two scroll positions.

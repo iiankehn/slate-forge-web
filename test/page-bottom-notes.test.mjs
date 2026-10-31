@@ -1,4 +1,4 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {JSDOM} from 'jsdom';import {paginateDocument,splitTextBlock} from '../src/pagination.mjs';import {collectPageNotes} from '../src/page-notes.mjs';import {normalizeLayout} from '../src/document-model.mjs';
+import test from 'node:test';import assert from 'node:assert/strict';import {JSDOM} from 'jsdom';import {paginateDocument,splitTextBlock} from '../src/pagination.mjs';import {collectPageNotes,allocatePageNotes} from '../src/page-notes.mjs';import {normalizeLayout} from '../src/document-model.mjs';
 import {planFootnotedPages,LivePageController,livePageKey,LivePagination} from '../src/live-pagination.mjs';
 import {getSchema,generateHTML} from '@tiptap/core';import StarterKit from '@tiptap/starter-kit';import {EditorState} from '@tiptap/pm/state';import {FootnoteNode} from '../src/references.mjs';
 import {exportHTMLDocument,readHTMLDocument} from '../src/html-documents.mjs';
@@ -12,8 +12,8 @@ test('page-bottom preview reserves body capacity and places each note with its r
 test('note labels remain atomic when a paragraph is split',async()=>{
  await fixture('',async(root)=>{root.innerHTML='<p>A'+marker(12,'Note')+'B</p>';const [left,right]=splitTextBlock(root.firstChild,2);assert.equal(left.textContent,'A');assert.equal(right.textContent,'12B');assert.equal(left.querySelectorAll('[data-forge-footnote]').length,0);assert.equal(right.querySelectorAll('[data-forge-footnote]').length,1)})
 });
-test('oversized page notes fail explicitly without enabling an overflowing print layout',async()=>{
- await fixture('<p data-keep-together="true">Reference'+marker(1,'N'.repeat(2000))+'</p>',async(root,html)=>{await assert.rejects(paginateDocument(root,html,{notePlacement:'page'}),/too tall|too complex/)})
+test('oversized page notes continue on later sheets without scaling, loss or duplicate anchors',async()=>{
+ const text='Long note café 😀 '.repeat(180);await fixture('<p data-keep-together="true">Reference'+marker(1,text)+'</p>',async(root,html)=>{const result=await paginateDocument(root,html,{notePlacement:'page'}),fragments=[...root.querySelectorAll('.preview-page-notes .note-fragment')];assert.ok(result.pages>2);assert.equal(fragments.map(item=>item.textContent).join(''),text);assert.equal(root.querySelectorAll('[data-source-id="sf-note-1"]').length,1);assert.equal(root.querySelectorAll('.preview-scaled-block').length,0);assert.equal(root.querySelector('[data-forge-footnote]').closest('.preview-page'),fragments[0].closest('.preview-page'));assert.ok(root.querySelector('[data-note-continued="true"]'));for(const page of root.querySelectorAll('.preview-page')){const area=page.querySelector('.preview-page-notes');if(area)assert.ok(area.getBoundingClientRect().height<500)}})
 });
 test('legacy layouts retain endnotes and note collection refuses conflicting numbering',async()=>{
  assert.equal(normalizeLayout({}).notePlacement,'end');assert.equal(normalizeLayout({notePlacement:'unknown'}).notePlacement,'end');await fixture(marker(1,'One')+marker(1,'Other'),async(root,html)=>{root.innerHTML=html;assert.throws(()=>collectPageNotes(root),/Conflicting/)});
@@ -23,7 +23,7 @@ test('live note planner reserves page bottoms and keeps notes with their shifted
  assert.ok(plan.pages>=3);for(const [index,page]of plan.notePages.entries())for(const note of page.notes){const earlier=plan.breaks.filter(gap=>gap.pos<=note.pos).at(-1);assert.equal(index,earlier?earlier.page-1:0);assert.ok(page.height<=800-48)}assert.equal(plan.notePages.flatMap(page=>page.notes).length,2);
 });
 test('live note planner refuses impossible notes and bounds stabilization work',()=>{
- const geometry={height:1000,margin:100},coords=()=>({top:100,bottom:120}),blocks=[{type:'text',pos:0,from:1,to:2,top:100,bottom:120,textblock:true}];assert.throws(()=>planFootnotedPages(blocks,geometry,coords,[{pos:1}],()=>900),/too little room/);assert.throws(()=>planFootnotedPages(blocks,geometry,coords,Array.from({length:501},()=>({pos:1})),()=>10),/500 references/);
+ const geometry={height:1000,margin:100},coords=()=>({top:100,bottom:120}),blocks=[{type:'text',pos:0,from:1,to:2,top:100,bottom:120,textblock:true}];assert.throws(()=>planFootnotedPages(blocks,geometry,coords,[{pos:1}],()=>900),/footnote line/);assert.throws(()=>planFootnotedPages(blocks,geometry,coords,Array.from({length:501},()=>({pos:1})),()=>10),/500 references/);
 });
 test('live page-note DOM lifecycle is read-only and restores accessible endnotes on exit',()=>{
  const dom=new JSDOM('<div id="page"><div id="editor"></div><section id="page-notes" class="forge-footnotes"><h2>Notes</h2><ol><li><button>Local note</button></li></ol></section></div>'),w=dom.window,originals={document:globalThis.document,window:globalThis.window};Object.assign(globalThis,{document:w.document,window:w});let controller;
@@ -34,4 +34,13 @@ test('live page-note DOM lifecycle is read-only and restores accessible endnotes
 });
 test('page note placement round trips through normalized HTML layout without trusting note markup',async()=>{
  await fixture('',async(root)=>{const html=exportHTMLDocument('<p>Body</p>','Notes',{notePlacement:'page'}),result=readHTMLDocument(html,text=>text);assert.equal(result.layout.notePlacement,'page');root.innerHTML=marker(1,'<img src=x onerror=alert(1)>');const notes=collectPageNotes(root);assert.equal(notes[0].text,'<img src=x onerror=alert(1)>');const {pageNoteSection}=await import('../src/page-notes.mjs');const section=pageNoteSection(notes);assert.equal(section.querySelector('img'),null);assert.ok(section.textContent.includes('<img'))})
+});
+
+test('fragment allocation retains ordered notes, Unicode and continuation identity',()=>{
+ const original=[{number:1,text:'First 😀 '.repeat(30),pos:4},{number:2,text:'Second'.repeat(30),pos:10}],measure=items=>20+items.reduce((n,item)=>n+item.text.length+8,0);let queue=structuredClone(original),fragments=[],passes=0;
+ while(queue.length){assert.ok(++passes<20);const result=allocatePageNotes(queue,110,measure);assert.ok(result.height<=110.5);assert.ok(result.notes.length);fragments.push(...result.notes);queue=result.pending}
+ for(const note of original){const pieces=fragments.filter(item=>item.number===note.number);assert.equal(pieces.map(item=>item.text).join(''),note.text);assert.equal(pieces[0].continued,undefined);assert.ok(pieces.slice(1).every(item=>item.continued&&item.pos===note.pos));assert.ok(pieces.every(item=>!/[\uD800-\uDBFF]$/.test(item.text)&&!/^([\uDC00-\uDFFF])/.test(item.text)))}assert.deepEqual(original[0],{number:1,text:'First 😀 '.repeat(30),pos:4});assert.throws(()=>allocatePageNotes(original,100,()=>NaN),/measured/);
+});
+test('live notes continue beyond the final body page while keeping the first fragment with its reference',()=>{
+ const geometry={height:1000,margin:100},coords=()=>({top:100,bottom:120}),blocks=[{type:'text',pos:0,from:1,to:2,top:100,bottom:120,textblock:true}],text='Z'.repeat(1500),plan=planFootnotedPages(blocks,geometry,coords,[{pos:1,number:1,text}],items=>20+items.reduce((n,note)=>n+note.text.length,0));assert.ok(plan.pages>=4);assert.equal(plan.notePages[0].notes[0].continued,undefined);assert.equal(plan.notePages.flatMap(page=>page.notes).map(note=>note.text).join(''),text);assert.equal(plan.height,plan.pages*1000+(plan.pages-1)*28);assert.throws(()=>planFootnotedPages(blocks,geometry,coords,[{pos:1,number:1,text:'Z'.repeat(10000)}],items=>20+items.reduce((n,note)=>n+note.text.length,0),{maxPages:3}),/page limit/);
 });

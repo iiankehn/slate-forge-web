@@ -1,5 +1,11 @@
 # Slate Forge web — Codex handoff
 
+## Current continuation — public host and resumed feature roadmap
+
+Public beta host: https://slate-web.iiankehn.com/ . Pages workflow deployment 41244967161 succeeded; live index/app.js/help.html returned HTTP 200 and index matched the build. Repository is public, Pages uses workflow source, custom domain/HTTPS are configured. The older private Sites identity is preserved separately. Historical paragraphs below describing unpublished/private GitHub status are superseded by this section.
+
+User now wants remaining feature implementation; physical-device testing is explicitly deferred. The first resumed batch adds split page-bottom notes, custom polygon contours and rewritten/cross-wrapper comparison matching. Notes remain single unchanged source nodes; only displayed fragments are split, with bounded note-space and page counts. Contours accept 3–32 bounded numeric points and export the same clipped raster; left/right paragraph wrapping remains, arbitrary coordinates/two-sided exclusions remain open. Rewritten matching uses bounded mutual-best word overlap, not semantic inference; repeated/weak/equally scored matches stay unresolved. See the final release-batch section for current validation.
+
 Verified release runtime: commit `338be73`; [GitHub CI run 41241670375](https://github.com/iiankehn/slate-forge-web/actions/runs/41241670375) passed all 61 Node test-file runners, production/static checks and all 20 browser scenarios across desktop Chromium/Firefox/WebKit and phone Chromium/WebKit. Actual downloaded-file restoration and offline French OCR passed. Physical-device/manual gates remain open; no public deployment is claimed.
 
 ## Current release priority
