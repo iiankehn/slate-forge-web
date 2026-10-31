@@ -70,7 +70,8 @@ The public beta is deployed at https://slate-web.iiankehn.com/ through GitHub Pa
 - [ ] Broad complex-script/bidirectional PDF layout and cross-reader font certification.
 - [x] Numeric geometry editing for supported imported PDF widgets; readonly/unsupported fields remain protected.
 - [x] Final PDF export with one detached SHA-256/RSA PKCS#12 certificate signature; signed inputs are view/export-only.
-- [ ] Multiple/incremental signatures, trusted timestamps, revocation and long-term signature validation.
+- [x] Append additional detached RSA/SHA-256 signatures as incremental revisions while preserving and cryptographically testing earlier signed byte ranges; certified/locked-field policies are refused.
+- [ ] Trusted timestamps, revocation, long-term signature validation and certified/locked-field permission-policy support.
 - [ ] Larger PDF capacity with performance/storage validation.
 - [x] PDF page-range OCR using the local English engine.
 - [x] Local Arabic, simplified Chinese, French, German, Italian, Japanese, Portuguese, Russian and Spanish OCR, optionally combined with English.
