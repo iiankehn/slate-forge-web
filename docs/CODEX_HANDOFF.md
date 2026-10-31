@@ -1,5 +1,7 @@
 # Slate Forge web — Codex handoff
 
+Verified release runtime: commit `338be73`; [GitHub CI run 41241670375](https://github.com/iiankehn/slate-forge-web/actions/runs/41241670375) passed all 61 Node test-file runners, production/static checks and all 20 browser scenarios across desktop Chromium/Firefox/WebKit and phone Chromium/WebKit. Actual downloaded-file restoration and offline French OCR passed. Physical-device/manual gates remain open; no public deployment is claimed.
+
 ## Current release priority
 
 The user narrowed the immediate goal to a usable first public beta, then iteration. Follow [PUBLIC_BETA.md](PUBLIC_BETA.md) for release scope and [GITHUB_PAGES.md](GITHUB_PAGES.md) for static hosting; advanced roadmap items below remain later work. Node/npm are build-time tools, not a hosting server requirement. Release preparation adds a getting-started guide, startup help, project-relative PWA URLs, scoped offline caches and automated browser CI. Browser CI results and publication must be verified separately; the private Site is unchanged.

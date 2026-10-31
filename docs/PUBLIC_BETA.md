@@ -1,5 +1,7 @@
 # First public beta
 
+Verified release runtime: commit `338be73`; [GitHub CI run 41241670375](https://github.com/iiankehn/slate-forge-web/actions/runs/41241670375) passed all 61 Node test-file runners, production/static checks and all 20 browser scenarios across desktop Chromium/Firefox/WebKit and phone Chromium/WebKit. Actual downloaded-file restoration and offline French OCR passed. Physical-device/manual gates remain open; no public deployment is claimed.
+
 The immediate goal is usable everyday writing with clear saving and recovery. The full roadmap is not a prerequisite.
 
 ## Release scope
