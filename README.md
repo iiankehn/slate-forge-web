@@ -4,9 +4,13 @@
 
 The account-free, local-first web edition of Slate Forge. This is a working development build, not a production-certified release. No paid services, application accounts, cloud document backend, analytics or external account providers are configured. Hosting access remains owner-private.
 
+## Public beta
+
+The current release target is dependable everyday editing, device saving and independent backup/restore. See [public-beta scope](docs/PUBLIC_BETA.md), the [user guide](dist/help.html) and [GitHub Pages hosting](docs/GITHUB_PAGES.md). Advanced roadmap work can follow after this release.
+
 ## Build
 
-Run `npm ci`, `npm run build`, and `npm test`. Serve `dist/` over HTTPS. Dependencies are pinned in package-lock.json and bundled without a CDN. Build generates third-party notices and a versioned service worker.
+Use Node 24 (`.nvmrc`). Run `npm ci`, `npm run build`, `npm test` and `npm run check:dist`. Serve `dist/` over HTTPS. Node/npm are development and build tools; the deployed application is static and needs no Node server. Dependencies are pinned in package-lock.json and bundled without a CDN. Build generates third-party notices and a versioned service worker.
 
 Editor: Tiptap/ProseMirror. DOCX export: docx. DOCX content import: Mammoth. HTML sanitization: DOMPurify with a restricted formatting and URL policy. Archive preflight: fflate. Build: esbuild. Tests use Node, jsdom and fake-indexeddb.
 

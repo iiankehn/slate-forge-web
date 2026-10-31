@@ -1,5 +1,10 @@
 # Slate Forge web — Codex handoff
 
+## Current release priority
+
+The user narrowed the immediate goal to a usable first public beta, then iteration. Follow [PUBLIC_BETA.md](PUBLIC_BETA.md) for release scope and [GITHUB_PAGES.md](GITHUB_PAGES.md) for static hosting; advanced roadmap items below remain later work. Node/npm are build-time tools, not a hosting server requirement. Release preparation adds a getting-started guide, startup help, project-relative PWA URLs, scoped offline caches and automated browser CI. Browser CI results and publication must be verified separately; the private Site is unchanged.
+
+
 ## Project and baseline
 
 GitHub destination: iiankehn/slate-forge-web, private. This is a migration of the existing web application, not either Android repository. Source baseline is Sites commit 3e8348a9734ee1195c661ed997f98af7c79a1107. All 313 automated tests, production build and source whitespace checks passed for that baseline. Migration instructions/docs do not change runtime behavior.

@@ -1,5 +1,10 @@
 # Slate Forge release assessment
 
+## Current release priority
+
+The user narrowed the immediate goal to a usable first public beta, then iteration. Follow [PUBLIC_BETA.md](PUBLIC_BETA.md) for release scope and [GITHUB_PAGES.md](GITHUB_PAGES.md) for static hosting; advanced roadmap items below remain later work. Node/npm are build-time tools, not a hosting server requirement. Release preparation adds a getting-started guide, startup help, project-relative PWA URLs, scoped offline caches and automated browser CI. Browser CI results and publication must be verified separately; the private Site is unchanged.
+
+
 The app is an owner-private beta candidate. The latest consolidated changes and validation are recorded in [RELEASE_BATCH.md](RELEASE_BATCH.md). No application accounts, cloud documents, paid APIs or telemetry were introduced. Existing origin and storage identifiers remain compatible.
 
 ## Completed in the reliability/layout update

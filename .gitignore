@@ -6,3 +6,6 @@ dist/sw.js
 dist/chunks/
 dist/vendor/
 dist/THIRD-PARTY-NOTICES.txt
+
+playwright-report/
+test-results/

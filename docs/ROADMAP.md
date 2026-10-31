@@ -1,5 +1,10 @@
 # Slate Forge remaining roadmap
 
+## Current release priority
+
+The user narrowed the immediate goal to a usable first public beta, then iteration. Follow [PUBLIC_BETA.md](PUBLIC_BETA.md) for release scope and [GITHUB_PAGES.md](GITHUB_PAGES.md) for static hosting; advanced roadmap items below remain later work. Node/npm are build-time tools, not a hosting server requirement. Release preparation adds a getting-started guide, startup help, project-relative PWA URLs, scoped offline caches and automated browser CI. Browser CI results and publication must be verified separately; the private Site is unchanged.
+
+
 User authorized completion of the remaining roadmap on 2026-10-29. This checklist is the continuation record. Completion requires implementation and appropriate evidence; physical checks cannot be marked complete using DOM stubs. Account/cloud work and separate applications require product scope decisions before introducing services or changing the current private audience.
 
 ## Storage and recovery
