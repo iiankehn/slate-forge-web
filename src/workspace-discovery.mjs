@@ -1,6 +1,6 @@
 // Search and navigation stay local. Never index deleted revisions or generated contents.
 export const searchText=value=>String(value??'').normalize('NFKD').replace(/\p{M}/gu,'').toLowerCase().trim();
-const hidden=node=>node.marks?.some(mark=>(mark.type.name||mark.type)==='reviewChange'&&mark.attrs?.kind==='delete');
+const hidden=node=>(node.type?.name||node.type)==='blockRevision'&&node.attrs?.kind==='delete'||node.marks?.some(mark=>(mark.type.name||mark.type)==='reviewChange'&&mark.attrs?.kind==='delete');
 export function bodyText(node){
  if(!node||hidden(node))return '';
  const type=node.type?.name||node.type;
@@ -8,7 +8,7 @@ export function bodyText(node){
  if(type==='text')return node.text||'';
  if(type==='hardBreak')return '\n';
  const children=Array.isArray(node.content)?node.content:node.content?.content||[];
- return children.map(bodyText).join(node.isTextblock||['paragraph','heading','codeBlock'].includes(type)?'':'\n');
+ return children.filter(child=>!hidden(child)).map(bodyText).join(node.isTextblock||['paragraph','heading','codeBlock'].includes(type)?'':'\n');
 }
 export function commandCatalog(menus){
  const seen=new Set(),result=[];

@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import vm from 'node:vm';
+const directory=path.resolve(process.argv[2]||'dist'),base=new URL('https://example.github.io/slate-forge-web/');
+function requireFile(name){const file=path.resolve(directory,name);if(!file.startsWith(directory+path.sep)||!fs.statSync(file).isFile())throw Error('Missing or invalid built file: '+name);return file}
+for(const file of ['index.html','help.html','app.css','app.js','sw.js','manifest.webmanifest','icon-192.png','icon-512.png','THIRD-PARTY-NOTICES.txt'])requireFile(file);
+const html=fs.readFileSync(requireFile('index.html'),'utf8'),manifest=JSON.parse(fs.readFileSync(requireFile('manifest.webmanifest'),'utf8'));
+for(const value of [manifest.id,manifest.start_url,manifest.scope,...manifest.shortcuts.map(item=>item.url),...manifest.file_handlers.map(item=>item.action)])if(!new URL(value,base).href.startsWith(base.href))throw Error('PWA launch escapes the project directory: '+value);
+for(const icon of manifest.icons)requireFile(icon.src);
+for(const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)){const target=new URL(match[1],base);if(target.origin===base.origin){if(!target.pathname.startsWith(base.pathname))throw Error('HTML asset escapes the project directory: '+match[1]);requireFile(decodeURIComponent(target.pathname.slice(base.pathname.length)))}}
+const events={},self={location:new URL('sw.js',base),addEventListener(type,listener){events[type]=listener}};vm.runInNewContext(fs.readFileSync(requireFile('sw.js'),'utf8'),{self,URL});let inventory;events.message({data:{type:'OFFLINE_MANIFEST'},ports:[{postMessage(value){inventory=value}}]});if(inventory?.root!==base.href)throw Error('Service worker root is not project-relative.');for(const file of inventory.assets)requireFile(file.replace(/^\.\//,''));
+let bytes=0,files=0;function walk(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){if(entry.name==='.git'||entry.name==='.openai'||entry.name.startsWith('.env'))throw Error('Unexpected configuration in built site: '+entry.name);if(entry.isSymbolicLink())throw Error('Built site must not contain symbolic links.');const target=path.join(dir,entry.name);if(entry.isDirectory())walk(target);else{const size=fs.statSync(target).size;if(size>25000000)throw Error('Built file exceeds the 25 MB asset budget: '+path.relative(directory,target));bytes+=size;files++}}}walk(directory);if(bytes>250000000)throw Error('Built site exceeds the 250 MB release budget.');
+console.log(`Static site verified: ${files} files, ${(bytes/1048576).toFixed(1)} MiB; project-relative launch and offline assets present.`);

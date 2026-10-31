@@ -1,5 +1,12 @@
 # Slate Forge release assessment
 
+Verified release runtime: commit `338be73`; [GitHub CI run 41241670375](https://github.com/iiankehn/slate-forge-web/actions/runs/41241670375) passed all 61 Node test-file runners, production/static checks and all 20 browser scenarios across desktop Chromium/Firefox/WebKit and phone Chromium/WebKit. Actual downloaded-file restoration and offline French OCR passed. Physical-device/manual gates remain open; no public deployment is claimed.
+
+## Current release priority
+
+The user narrowed the immediate goal to a usable first public beta, then iteration. Follow [PUBLIC_BETA.md](PUBLIC_BETA.md) for release scope and [GITHUB_PAGES.md](GITHUB_PAGES.md) for static hosting; advanced roadmap items below remain later work. Node/npm are build-time tools, not a hosting server requirement. Release preparation adds a getting-started guide, startup help, project-relative PWA URLs, scoped offline caches and automated browser CI. Browser CI results and publication must be verified separately; the private Site is unchanged.
+
+
 The app is an owner-private beta candidate. The latest consolidated changes and validation are recorded in [RELEASE_BATCH.md](RELEASE_BATCH.md). No application accounts, cloud documents, paid APIs or telemetry were introduced. Existing origin and storage identifiers remain compatible.
 
 ## Completed in the reliability/layout update
@@ -124,3 +131,21 @@ Slate Forge canvas data now survives DOCX export/reopen using bounded custom XML
 ## Move-aware comparison update
 
 Exact-content blocks now match across moves within a parent, avoiding positional cascades after insertion/removal. Formatting on shared aligned text is compared even when a paragraph was edited. Nested rows, Unicode and inline objects are covered; reports remain read-only and bounded, and partial/ambiguous matching is labeled. 313 tests and production build pass, including full-app Compare dialog wiring. Rewritten/meaning-based and cross-parent move matching remain open. Browser/device, screen-reader and real long-document performance checks remain outstanding.
+
+## Cross-container comparison in GitHub development
+
+Globally unique unmatched exact-content blocks can now match between compared containers, with both paths and retained formatting checks. Swaps and moves beside replacements are supported. Repeated counterparts label the report partial, and truncated indexes disable this matching. Rewritten moves and moves into/out of unmatched whole containers remain open. The full suite (53 test-file runners), production build and source whitespace checks passed. Focused and full-app DOM coverage is documented in RELEASE_BATCH.md; physical-browser/device and accessibility gates remain open. This batch has not been deployed to the live Site.
+
+## Local PDF/OCR/review and wrapped paragraph continuation
+
+Ten local OCR languages with optional English and persisted scan/range controls, embedded local PDF fonts, AES-256 protected export/unlocked device copies, one-certificate SHA-256/RSA final PDF signatures, overlapping/point comments and supported wrapped-paragraph tails are implemented in GitHub development. Signing and encryption have independent Node/OpenSSL/Poppler fixture evidence, not physical-reader/browser certification. XFA is refused before data can be removed. Signed inputs remain view/export-only. All 59 test-file runners, production build and source whitespace checks passed. Full implementation boundaries, test evidence and the encryption string adapter are recorded in the latest RELEASE_BATCH.md section. This batch is not deployed to the live Site.
+
+The roadmap remains incomplete. General structural/object tracking, arbitrary and nested image wrapping, mixed live sections/page-bottom notes, broad Word/ODT fidelity and real-device/browser/PWA/storage/download/print/accessibility verification remain open. No unavailable certification has been marked complete.
+
+## Grouped structural/object revision continuation
+
+Local block/object edits and paragraph-type conversions now retain protected deleted/inserted top-level copies, with individual/bulk decisions, Undo and HTML/device/ZIP/encrypted recovery persistence. All 60 test-file runners, production build and source whitespace checks passed. Generated trailing paragraphs are excluded from tracking. Final content omits deleted copies; DOCX/ODT require structural decisions first. See the latest RELEASE_BATCH.md for bounds and evidence. Fine-grained nested/move-specific revision semantics and native DOCX structural revisions remain open. This is GitHub-only development; browser/device/accessibility and long-document gates are unchanged.
+
+## Page-bottom note continuation
+
+Optional page-bottom notes are implemented for supported paged editing and measured print preview. All 61 test-file runners, production build and source whitespace checks passed. Existing layouts retain endnotes. Page capacity is reserved per reference, notes are read-only on sheets and editable through existing controls, and temporary note DOM is excluded from saving. The 500-reference bound, monotonic planner whitespace, oversized-note fallback/error and unfinished split/complex-section cases are documented in RELEASE_BATCH.md. DOM and planner coverage does not replace physical rendering/print or accessibility/IME verification. This work is not deployed to the live Site.

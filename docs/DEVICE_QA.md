@@ -87,3 +87,16 @@ Synthetic quota and multi-megabyte regression cases passed; physical-browser/OS 
 - Import 5–20 MB DOCX through picker and installed OS launch; verify large raster images resize on-device, errors preserve the open workspace, and no file processing is uploaded. Test real HEIF/unsupported sources and memory pressure independently of the synthetic source adapters.
 
 One LibreOffice development-build metadata fixture passed. Physical-browser/download/visual-quality and broad target-editor checks remain open.
+
+## Latest local PDF/OCR/review work
+
+- Prepare all ten OCR models offline, restart installed apps without a connection, and recognize camera/PDF scans in each selected language with and without English. Check restored language/page-range settings. Node WASM French/Russian fixtures do not certify camera accuracy or target-device memory.
+- Download/reopen password-protected PDFs in target readers; test wrong/correct passwords and explicit unlocked-copy consent. Confirm passwords and certificates are absent from device records/backups. Test quota failures while retaining an export path.
+- Test international PDF annotations and new/existing form values with representative local TTF/OTF fonts. Verify selected fonts' glyph coverage, complex-script/bidirectional layout and recipient-reader appearances. Current fixtures cover Latin/Greek/Cyrillic, not all scripts.
+- Sign a final PDF with a real local RSA PKCS#12 identity and verify in recipient readers. Check trust/expiry messaging; timestamp/revocation/LTV/multiple signatures remain unsupported. Verify importing/exporting signed sources preserves exact bytes and blocks edits.
+- Exercise overlapping and cursor comments with keyboards/screen readers and Word round trips, including empty ranges. Cursor anchors are omitted from final print text.
+- Verify long top-level wrapped paragraphs on successive pages after the float ends. Check caret navigation, Undo, IME and scaling; active-float splits and nested wraps still require further implementation.
+
+- For grouped structural review, test table/canvas/image changes, block moves, rich paragraph/code conversions, protected deleted copies and edits inside inserted copies. Check caret/IME behavior around isolating wrappers, ordinary editor-generated trailing paragraphs, Undo/Redo, bulk stale-context guards and quota/backup recovery. Reopen HTML/JSON only with a build that supports blockRevision. Decide structural groups before Word/ODT export; native structural revision interop is not implemented.
+
+- With Page design → Note placement set to Bottom of reference page, inspect actual body/note boundaries, note numbering/navigation and the same downloaded/printed PDF across target browsers. Include multiple notes near a page break, wrapped paragraphs, keep rules and tables; test note changes, fonts, rotation/Fit and IME. Check keyboard access to original note controls and cleanup when returning to Continuous editing. Endnote defaults must remain unchanged for old documents. Split/oversized notes and complex-section parity are not complete.

@@ -40,3 +40,24 @@ test('adjacent blocks after a float ends remain independently pageable',()=>{
  const groups=groupWrappedBlocks(blocks);assert.equal(groups.length,2);assert.equal(groups[0].members.length,2);assert.equal(groups[1],blocks[2]);
  assert.throws(()=>groupWrappedBlocks([image(0,100,300),{type:'row',pos:1,top:150,bottom:200}]),/beside tables/);
 });
+
+function longWrapped({imageTop=100,imageBottom=300,lineTop=100,lines=100,attrs={}}={}){
+ const from=2,to=from+lines*10-1,paragraph={type:'text',pos:1,from,to,textblock:true,top:lineTop,bottom:lineTop+lines*20,...attrs};
+ const coords=pos=>{const top=lineTop+Math.floor((pos-from)/10)*20;return {top,bottom:top+20}};
+ return {blocks:[image(0,imageTop,imageBottom),paragraph],coords};
+}
+test('a long wrapped paragraph paginates after its float ends without altering source positions',()=>{
+ const {blocks,coords}=longWrapped(),snapshot=structuredClone(blocks),groups=groupWrappedBlocks(blocks,coords);
+ assert.equal(groups.length,2);const prefix=groups[0].members[1],tail=groups[1];assert.ok(prefix.measuredText);assert.equal(tail.from,prefix.to+1);assert.equal(prefix.from,blocks[1].from);assert.equal(tail.to,blocks[1].to);assert.ok(tail.top>=blocks[0].flowBottom);
+ const plan=planPageBreaks(groups,geometry,coords);assert.equal(plan.pages,3);assert.ok(plan.breaks.every(item=>item.pos>=tail.from));assert.deepEqual(blocks,snapshot);
+});
+test('a wrapped prefix moves intact before the full-width tail paginates',()=>{
+ const {blocks,coords}=longWrapped({imageTop:700,imageBottom:950,lineTop:700}),groups=groupWrappedBlocks([{type:'block',pos:0,top:100,bottom:680},...blocks],coords),plan=planPageBreaks(groups,geometry,coords);
+ assert.equal(plan.breaks[0].kind,'block');assert.equal(plan.breaks[0].pos,0);assert.ok(plan.breaks.slice(1).every(item=>item.pos>=groups[2].from));
+});
+test('wrapped paragraph split honors keep rules and does not strand a single trailing line',()=>{
+ for(const attrs of [{keepTogether:true},{keepWithNext:true},{pageBreakBefore:true},{heading:true}]){const {blocks,coords}=longWrapped({attrs});assert.equal(groupWrappedBlocks(blocks,coords).length,1)}
+ const {blocks,coords}=longWrapped({lines:12});assert.equal(groupWrappedBlocks(blocks,coords).length,1);
+ const optedOut=longWrapped({lines:12,attrs:{widowControl:false}});assert.equal(groupWrappedBlocks(optedOut.blocks,optedOut.coords).length,2);
+ const shortFloat=longWrapped({imageBottom:110});assert.ok(groupWrappedBlocks(shortFloat.blocks,shortFloat.coords)[0].members[1].to>=shortFloat.blocks[1].from+19);
+});

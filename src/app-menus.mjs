@@ -18,7 +18,7 @@ export const APP_MENUS=[
  ['Tools',[
   ['Word count and writing goal…','stats'],['Document checks…','documentChecks'],['Writing tools…','writingTools'],['Snippets and custom templates…','productivity'],['Design templates…','productivity:openDesignTemplates'],null,
   ['PDF & forms…','pdfTools'],['Scan & OCR…','ocrTools'],null,
-  ['Offline preparation…','offlineTools'],['App status…','appStatus'],['Install app…','installApp'],['Update app','updateApp'],['Workspace privacy…','privacy'],['Open-source licenses','licenses'],['Keyboard shortcuts…','shortcuts']]],
+  ['Getting started…','gettingStarted'],['Offline preparation…','offlineTools'],['App status…','appStatus'],['Install app…','installApp'],['Update app','updateApp'],['Workspace privacy…','privacy'],['Open-source licenses','licenses'],['Keyboard shortcuts…','shortcuts']]],
  ['Review',[
   ['Comments and tracked changes…','reviewTools'],['Comment on selection…','reviewTools:addComment'],['Track changes settings…','reviewTools'],['Compare documents…','reviewTools:compareDocs']]]
 ];

@@ -4,7 +4,7 @@ import {styleKey} from './document-styles.mjs';
 export const FONTS = ['Georgia','Arial','Verdana','Times New Roman','Courier New','system-ui'];
 export function normalizeLayout(value={}) {
   if(!value||typeof value!=='object'||Array.isArray(value))value={};
-  return {headingColor:/^#[a-f\d]{6}$/i.test(value.headingColor||'')?value.headingColor:null,trackChanges:value.trackChanges===true,reviewAuthor:String(value.reviewAuthor||'Reviewer').slice(0,80),language:normalizeLanguage(value.language),theme:styleKey(value.theme),size:value.size==='Letter'?'Letter':'A4',orientation:value.orientation==='landscape'?'landscape':'portrait',
+  return {notePlacement:value.notePlacement==='page'?'page':'end',headingColor:/^#[a-f\d]{6}$/i.test(value.headingColor||'')?value.headingColor:null,trackChanges:value.trackChanges===true,reviewAuthor:String(value.reviewAuthor||'Reviewer').slice(0,80),language:normalizeLanguage(value.language),theme:styleKey(value.theme),size:value.size==='Letter'?'Letter':'A4',orientation:value.orientation==='landscape'?'landscape':'portrait',
     margin:[15,22,30].includes(Number(value.margin))?Number(value.margin):22,
     font:FONTS.includes(value.font)?value.font:'Georgia',line:['1.3','1.65','2'].includes(String(value.line))?String(value.line):'1.65',
     header:String(value.header||'').slice(0,120),footer:String(value.footer||'').slice(0,120),pageNumbers:value.pageNumbers===true};
@@ -15,6 +15,7 @@ export function findMatches(doc, query, matchCase=false, {wholeWord=false,scope=
   if(!query) return [];
   let matches=[];
   doc.descendants((block,pos)=>{
+    if(block.type.name==='blockRevision'&&block.attrs.kind==='delete')return false;
     if(!block.isTextblock) return;
     let text='',positions=[];
     block.descendants((node,offset)=>{
@@ -45,5 +46,5 @@ export function textStatistics(text){
  }else{words=(text.match(/[\p{L}\p{N}]+(?:['’][\p{L}\p{N}]+)*/gu)||[]).length;for(let character of text){characters++;if(!/\s/u.test(character))charactersWithoutSpaces++}}
  return {words,characters,charactersWithoutSpaces,readingMinutes:words?Math.ceil(words/200):0};
 }
-export function documentOutline(doc){let result=[];doc.descendants((node,pos)=>{if(node.type.name==='heading')result.push({pos,level:node.attrs.level||1,title:bodyText(node).trim()||'Untitled heading'})});return result}
-export function documentStatistics(doc){let paragraphs=0;doc.descendants(node=>{if(node.type.name==='paragraph'&&bodyText(node).trim())paragraphs++});return {...textStatistics(bodyText(doc)),paragraphs,headings:documentOutline(doc).length}}
+export function documentOutline(doc){let result=[];doc.descendants((node,pos)=>{if(node.type.name==='blockRevision'&&node.attrs.kind==='delete')return false;if(node.type.name==='heading')result.push({pos,level:node.attrs.level||1,title:bodyText(node).trim()||'Untitled heading'})});return result}
+export function documentStatistics(doc){let paragraphs=0;doc.descendants(node=>{if(node.type.name==='blockRevision'&&node.attrs.kind==='delete')return false;if(node.type.name==='paragraph'&&bodyText(node).trim())paragraphs++});return {...textStatistics(bodyText(doc)),paragraphs,headings:documentOutline(doc).length}}

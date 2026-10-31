@@ -1,5 +1,12 @@
 # Slate Forge web — Codex handoff
 
+Verified release runtime: commit `338be73`; [GitHub CI run 41241670375](https://github.com/iiankehn/slate-forge-web/actions/runs/41241670375) passed all 61 Node test-file runners, production/static checks and all 20 browser scenarios across desktop Chromium/Firefox/WebKit and phone Chromium/WebKit. Actual downloaded-file restoration and offline French OCR passed. Physical-device/manual gates remain open; no public deployment is claimed.
+
+## Current release priority
+
+The user narrowed the immediate goal to a usable first public beta, then iteration. Follow [PUBLIC_BETA.md](PUBLIC_BETA.md) for release scope and [GITHUB_PAGES.md](GITHUB_PAGES.md) for static hosting; advanced roadmap items below remain later work. Node/npm are build-time tools, not a hosting server requirement. Release preparation adds a getting-started guide, startup help, project-relative PWA URLs, scoped offline caches and automated browser CI. Browser CI results and publication must be verified separately; the private Site is unchanged.
+
+
 ## Project and baseline
 
 GitHub destination: iiankehn/slate-forge-web, private. This is a migration of the existing web application, not either Android repository. Source baseline is Sites commit 3e8348a9734ee1195c661ed997f98af7c79a1107. All 313 automated tests, production build and source whitespace checks passed for that baseline. Migration instructions/docs do not change runtime behavior.
@@ -13,17 +20,19 @@ The existing Site remains the live host. GitHub development and publication are 
 
 ## Architecture and commands
 
-Plain JavaScript ES modules with a Tiptap/ProseMirror rich-text editor. app.mjs integrates menus, workspace state and dialogs; src/ holds editor extensions, import/export, layout/pagination, local storage/recovery, PDF, OCR and canvas models. test/ contains Node and JSDOM/fake-indexeddb tests. Production builds use esbuild. dist/index.html is retained source, and dist/ includes generated production assets and local PDF/OCR components. npm ci; npm test; npm run build. Dependencies are pinned by package-lock.json. OCR uses local English Tesseract assets; PDF uses PDF.js/pdf-lib. No paid service or application account is required.
+Plain JavaScript ES modules with a Tiptap/ProseMirror rich-text editor. app.mjs integrates menus, workspace state and dialogs; src/ holds editor extensions, import/export, layout/pagination, local storage/recovery, PDF, OCR and canvas models. test/ contains Node and JSDOM/fake-indexeddb tests. Production builds use esbuild. dist/index.html is retained source, and dist/ includes generated production assets and local PDF/OCR components. npm ci; npm test; npm run build. Dependencies are pinned by package-lock.json. OCR has ten local Tesseract language models. PDF uses PDF.js/pdf-lib, optional embedded local fonts, node-forge for RSA certificate signing, and a pinned @cantoo/pdf-lib AES-256 security adapter. The adapter explicitly encrypts standalone/dictionary strings, which the pinned non-object-stream writer otherwise leaves plaintext; preserve the field-recovery and plaintext-exposure regressions. Signed PDFs are view/export-only. Unlocked PDFs require an explicit device-storage choice; passwords/certificates are not retained. No paid service or application account is required.
 
 Settings retain White/Colored/Grey/Dark/System themes, independent accents and screen-only dark paper. Desktop menus and mobile hamburger share a catalog; command search is Ctrl/Cmd+K. Ordinary IndexedDB autosave is independent of encrypted recovery. Workspace tokens provide local namespacing, not account identity. End-session tombstones and optimistic revisions prevent late writers from resurrecting ended work. Preserve document-studio identifiers for compatibility.
 
-Existing capabilities and limitations are recorded in docs/ROADMAP.md and docs/RELEASE_READINESS.md; docs/RELEASE_BATCH.md is chronological release evidence, so its final sections supersede older limitations. docs/DEVICE_QA.md lists physical checks. Latest batch adds exact-content sibling move matching and shared-text formatting checks in edited paragraphs; rewritten/cross-parent/ambiguous matching remains incomplete. The full app supports rich text/review/comments, DOCX/ODT/HTML/JSON/ZIP/encrypted exports, editable canvases, PDF forms/ink, local OCR drafts, backups/recovery and 200-document local workspaces.
+Existing capabilities and limitations are recorded in docs/ROADMAP.md and docs/RELEASE_READINESS.md; docs/RELEASE_BATCH.md is chronological release evidence, so its final sections supersede older limitations. docs/DEVICE_QA.md lists physical checks. Latest GitHub batch adds globally unique exact-content moves between compared containers, including swaps, with retained formatting checks. Sibling moves and shared-text formatting in edited paragraphs remain supported; rewritten moves, moves into/out of unmatched whole containers and ambiguous repeated matching remain incomplete. GitHub changes have not been deployed to the existing live Site. The full app supports rich text/review/comments, DOCX/ODT/HTML/JSON/ZIP/encrypted exports, editable canvases, PDF forms/ink, local OCR drafts, backups/recovery and 200-document local workspaces.
 
 ## Important boundaries
 
 Source image inputs allow up to 1 GB but native decoding and an 80 MP cap still apply; embedded images are optimized. DOCX input allows 20 MB with expanded-archive bounds. PDF capacity/backup byte limits remain bounded; see source/docs. Do not raise a cap and claim device validation without evidence. DOCX custom XML retains editable Slate Forge canvas scenes, including hidden layers/uncropped images when enabled; other word processors see image previews rather than native editable shapes.
 
-Native Word drawing objects, free page-coordinate images with surrounding text, arbitrary/two-sided wrap, complex live sections/pagination and footnotes, structural/object revision tracking, advanced format fidelity, additional OCR languages and larger PDF capacity remain open. Provider sign-in, cloud collaboration and separate notes/coding apps are deferred scope, not required for the account-free release.
+Latest GitHub development also includes overlapping/point comments, wrapped paragraph tails, multilingual OCR, embedded PDF fonts, password protection/unlock and single-certificate final PDF signatures. These changes are not deployed to the live Site.
+
+Native Word drawing objects, free page-coordinate images with surrounding text, arbitrary/two-sided wrap, complex live sections/pagination and oversized/split footnotes, fine-grained/native-DOCX structural revision interoperability, advanced format fidelity and larger PDF capacity remain open. Local structural/object changes now use protected deleted/inserted top-level block groups with HTML/device persistence and review decisions. Keep the guard against treating editor-generated trailing paragraphs as new revisions. DOCX/ODT require structural decisions first, and old builds do not understand blockRevision metadata. Provider sign-in, cloud collaboration and separate notes/coding apps are deferred scope, not required for the account-free release.
 
 ## Continuing work
 
@@ -34,3 +43,5 @@ Prior reusable startup/release/storage skills were installed in the original Wor
 ## GitHub source packaging
 
 The GitHub repository tracks all editable source, tests, canonical HTML/CSS/PWA manifest/icons and documentation. Reproducible generated JavaScript chunks, service worker, license notices and npm-provided PDF/OCR vendor bundles are ignored; npm ci followed by npm run build regenerates them. The original complete Sites history remains in its original source repository; the GitHub import starts a new history with this recorded baseline.
+
+Page-bottom notes are an optional notePlacement layout value (page/end), defaulting to end for older documents. Supported live pages and measured print preview reserve note space per reference page; live reservations are monotonic to prevent oscillation and can leave extra whitespace. At most 500 references and existing page caps apply. Temporary page-note DOM is excluded from stored content, and leaving paged mode restores the original accessible endnotes list. Split notes/complex sections and physical rendering/accessibility remain open.

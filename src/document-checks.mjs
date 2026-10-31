@@ -6,6 +6,7 @@ export function checkDocument(doc,{title='',maxIssues=200}={}){
  function add(category,message,detail,from,to,target='text',excerpt=''){if(issues.length>=limit){truncated=true;return false}issues.push({id:'check-'+issues.length,category,message,detail,from,to,target,excerpt:String(excerpt).slice(0,140)});return true}
  if(!String(title).trim()||/^untitled(?: document)?(?: \d+)?$/i.test(String(title).trim()))add('structure','Give this document a title','A descriptive title makes saved documents easier to find.',0,0,'title');
  doc.descendants((node,pos)=>{
+  if(node.type.name==='blockRevision'&&node.attrs.kind==='delete')return false;
   if(issues.length>=limit){truncated=true;return false}
   if(node.type.name==='footnote'||node.type.name==='designCanvas'){
    const texts=node.type.name==='footnote'?[String(node.attrs.text||'')]:(node.attrs.scene?.objects||[]).filter(o=>o.type==='text').map(o=>String(o.text||''));
