@@ -18,6 +18,7 @@ export function compareDocuments(before,after,beforeLayout={},afterLayout={}, {m
  const emit=(kind,path,description,extra={})=>{counts[kind]++;if(details.length<maxDetails)details.push({kind,path,description,...extra});else limited=true};
  function index(source){let visited=0,characters=0;function visit(node,path,depth){
   if(!node||typeof node!=='object')return null;if(++visited>maxNodes||depth>100){limited=true;return null}
+  if(node.type==='commentAnchor')return null;
   if(node.marks?.some(m=>m.type==='reviewChange'&&m.attrs?.kind==='delete'))return null;
   const attrs={...node.attrs};delete attrs.paragraphChange;for(const key of Object.keys(attrs))if(attrs[key]===null||attrs[key]===undefined||attrs[key]===false||key==='indent'&&attrs[key]===0||key==='widowControl'&&attrs[key]===true)delete attrs[key];if(node.attrs?.widowControl===false)attrs.widowControl=false;if(node.type==='tableOfContents')delete attrs.entries;if(node.type==='footnote')delete attrs.number;
   if(node.type==='text'){const available=Math.max(0,maxCharacters-characters),text=String(node.text||'').slice(0,available);characters+=text.length;if(text.length!==String(node.text||'').length)limited=true;return {type:'text',text,marks:formattingSnapshot(node.marks)}}

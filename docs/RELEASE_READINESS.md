@@ -128,3 +128,9 @@ Exact-content blocks now match across moves within a parent, avoiding positional
 ## Cross-container comparison in GitHub development
 
 Globally unique unmatched exact-content blocks can now match between compared containers, with both paths and retained formatting checks. Swaps and moves beside replacements are supported. Repeated counterparts label the report partial, and truncated indexes disable this matching. Rewritten moves and moves into/out of unmatched whole containers remain open. The full suite (53 test-file runners), production build and source whitespace checks passed. Focused and full-app DOM coverage is documented in RELEASE_BATCH.md; physical-browser/device and accessibility gates remain open. This batch has not been deployed to the live Site.
+
+## Local PDF/OCR/review and wrapped paragraph continuation
+
+Ten local OCR languages with optional English and persisted scan/range controls, embedded local PDF fonts, AES-256 protected export/unlocked device copies, one-certificate SHA-256/RSA final PDF signatures, overlapping/point comments and supported wrapped-paragraph tails are implemented in GitHub development. Signing and encryption have independent Node/OpenSSL/Poppler fixture evidence, not physical-reader/browser certification. XFA is refused before data can be removed. Signed inputs remain view/export-only. All 59 test-file runners, production build and source whitespace checks passed. Full implementation boundaries, test evidence and the encryption string adapter are recorded in the latest RELEASE_BATCH.md section. This batch is not deployed to the live Site.
+
+The roadmap remains incomplete. General structural/object tracking, arbitrary and nested image wrapping, mixed live sections/page-bottom notes, broad Word/ODT fidelity and real-device/browser/PWA/storage/download/print/accessibility verification remain open. No unavailable certification has been marked complete.

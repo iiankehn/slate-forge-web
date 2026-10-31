@@ -16,7 +16,8 @@ User authorized completion of the remaining roadmap on 2026-10-29. This checklis
 - [ ] Two-sided and arbitrary-shape wrapping; objects outside canvas blocks.
 - [ ] Mixed orientations/columns in live pagination.
 - [ ] Nested images, images beside tables and wrapping across page breaks.
-- [ ] Split long wrapped paragraphs.
+- [x] Split supported top-level wrapped paragraphs after the float ends; the wrapped prefix stays with its image.
+- [ ] Split text through an active float, nested wraps and arbitrary wrap/page-break interactions.
 - [x] Paragraph keep-together, keep-with-next and page-break-before controls in HTML/DOCX and supported paginated blocks.
 - [x] Two-line widow/orphan balancing for supported ordinary text in live pages and preview, with a persisted paragraph opt-out and DOCX round trip.
 - [ ] Full widow/orphan balancing across nested layouts/columns/complex typography and nested-layout keep-rule parity.
@@ -31,7 +32,8 @@ User authorized completion of the remaining roadmap on 2026-10-29. This checklis
 - [x] Live contents import for standard body-level Word contents controls with Heading 1–3 ranges.
 - [x] Supported DOCX theme Latin fonts/colors, tint/shade resolution, default styles and partial font/spacing/indent inheritance.
 - [x] DOCX import of supported paragraph spacing and keep/new-page rules for ordinary paragraphs and headings.
-- [ ] Exact DOCX layout, unsupported/script-specific theme fonts, complex style semantics, overlapping/point comments and other contents-field forms.
+- [x] Overlapping comment ranges and point comments in HTML/device state and native DOCX, with independent editing/removal.
+- [ ] Exact DOCX layout, unsupported/script-specific theme fonts, complex style semantics and other contents-field forms.
 - [x] Editable Slate Forge canvas data across DOCX export/reopen, with validated preview binding and an image-only export choice.
 - [ ] Native editable Word drawing/text-box reconstruction and broad cross-editor object fidelity.
 - [x] ODT content import/export for text, lists, ordinary tables, images and notes.
@@ -53,13 +55,16 @@ User authorized completion of the remaining roadmap on 2026-10-29. This checklis
 - [x] Placeholder checks covering notes and canvas text, with navigation to the owning editor.
 
 ## PDF, OCR and drawing
-- [ ] Existing PDF text editing; password protection; XFA.
-- [ ] International fonts in PDF appearances.
+- [x] AES-256 password-protected PDF export and explicit unlock-to-device-copy import, without retaining passwords.
+- [ ] Existing PDF text editing and XFA.
+- [x] International PDF annotation/form appearances using an embedded local TTF/OTF with glyph-coverage checks.
+- [ ] Broad complex-script/bidirectional PDF layout and cross-reader font certification.
 - [x] Numeric geometry editing for supported imported PDF widgets; readonly/unsupported fields remain protected.
-- [ ] Cryptographic signatures.
+- [x] Final PDF export with one detached SHA-256/RSA PKCS#12 certificate signature; signed inputs are view/export-only.
+- [ ] Multiple/incremental signatures, trusted timestamps, revocation and long-term signature validation.
 - [ ] Larger PDF capacity with performance/storage validation.
 - [x] PDF page-range OCR using the local English engine.
-- [ ] Additional OCR languages.
+- [x] Local Arabic, simplified Chinese, French, German, Italian, Japanese, Portuguese, Russian and Spanish OCR, optionally combined with English.
 - [x] Persistent workspace-scoped OCR correction text; End session removes it.
 - [x] Persist source scans and crop/rotation/page settings with correction drafts.
 - [x] Include saved OCR scans/settings/corrections in ZIP, encrypted backups and encrypted recovery.

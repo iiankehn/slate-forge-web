@@ -1,4 +1,4 @@
-import {balanceLineBreak,firstBalancedLinesBottom} from './line-pagination.mjs';
+import {balanceLineBreak,firstBalancedLinesBottom,lineStart,nextLineStart} from './line-pagination.mjs';
 import {Extension} from '@tiptap/core';
 import {Plugin,PluginKey} from '@tiptap/pm/state';
 import {Decoration,DecorationSet} from '@tiptap/pm/view';
@@ -39,7 +39,8 @@ export function planPageBreaks(blocks,geometry,coords,{maxPages=100}={}){
 }
 // Float geometry depends on the surrounding lines. Keep the complete connected
 // flow together so inserting a page gap cannot change its wrapping width.
-export function groupWrappedBlocks(blocks){
+export function groupWrappedBlocks(input,coords=null){
+ const blocks=input.slice();
  const grouped=[];
  for(let i=0;i<blocks.length;){
   const first=blocks[i++];if(!first.wrapped){grouped.push(first);continue}
@@ -50,6 +51,18 @@ export function groupWrappedBlocks(blocks){
    if(next.type==='note')break;
    if(next.type==='row')throw Error('Wrapped images beside tables currently use continuous editing. Move the image above or below the table.');
    if(next.wrapped)flowEnd=Math.max(flowEnd,next.flowBottom??next.bottom);
+   // Once the float ends, subsequent paragraph lines have the ordinary full
+   // width. Keep the wrapped prefix with the image but paginate that remaining
+   // text normally. Never split through the float itself or a keep rule.
+   if(coords&&next.textblock&&!next.keepTogether&&!next.keepWithNext&&!next.pageBreakBefore&&!next.heading&&next.bottom>flowEnd+.5){
+    let low=next.from,high=next.to+1;while(low<high){const mid=Math.floor((low+high)/2);if(coords(mid).top<flowEnd-.5)low=mid+1;else high=mid}
+    if(low>next.from&&low<=next.to){let cut=lineStart(next.from,low,coords);if(next.widowControl!==false){const second=nextLineStart(next.from,next.to,coords);if(second<=next.to)cut=Math.max(cut,nextLineStart(second,next.to,coords))}
+     if(cut>next.from&&cut<=next.to&&(next.widowControl===false||nextLineStart(cut,next.to,coords)<=next.to)){
+      const prefix={...next,to:cut-1,bottom:coords(cut-1).bottom,measuredText:true};group.members.push(prefix);group.top=Math.min(group.top,prefix.top);group.bottom=Math.max(group.bottom,prefix.bottom);
+      blocks[i]={...next,from:cut,top:coords(cut).top};break;
+     }
+    }
+   }
    group.members.push(next);group.top=Math.min(group.top,next.top);group.bottom=Math.max(group.bottom,next.flowBottom??next.bottom);i++;
   }
   grouped.push(group);
@@ -87,13 +100,13 @@ export class LivePageController{
   view.state.doc.descendants(visit);
   const notes=this.root.querySelector('#page-notes'),items=notes?[...notes.querySelectorAll(':scope > ol > li')]:[];
   for(const [i,item]of items.entries())blocks.push({type:'note',target:i?item:notes,pos:view.state.doc.content.size,top:offset((i?item:notes).getBoundingClientRect()).top,bottom:offset(item.getBoundingClientRect()).bottom});
-  const coords=pos=>offset(view.coordsAtPos(Math.min(pos,view.state.doc.content.size),1));const grouped=groupWrappedBlocks(blocks),plan=planPageBreaks(grouped,geometry,coords);
+  const coords=pos=>offset(view.coordsAtPos(Math.min(pos,view.state.doc.content.size),1));const grouped=groupWrappedBlocks(blocks,coords),plan=planPageBreaks(grouped,geometry,coords);
   view.dispatch(view.state.tr.setMeta(livePageKey,pageDecorations(view.state.doc,plan.breaks,view.dom.ownerDocument)).setMeta('addToHistory',false));
   // Inserting gaps can trigger browser scroll anchoring. Re-read the origin
   // before checking rendered bounds rather than mixing two scroll positions.
   const renderedRoot=this.root.getBoundingClientRect(),renderedScale=renderedRoot.width/this.root.offsetWidth||1;
   for(const group of grouped.filter(block=>block.type==='wrapGroup')){
-   const boxes=group.members.filter(block=>block.dom).map(block=>{const box=block.dom.getBoundingClientRect();return {top:(box.top-renderedRoot.top)/renderedScale,bottom:(box.bottom-renderedRoot.top)/renderedScale}});
+   const boxes=group.members.filter(block=>block.dom).map(block=>{if(block.measuredText){const first=view.coordsAtPos(block.from,1),last=view.coordsAtPos(block.to,1);return {top:(first.top-renderedRoot.top)/renderedScale,bottom:(last.bottom-renderedRoot.top)/renderedScale}}const box=block.dom.getBoundingClientRect();return {top:(box.top-renderedRoot.top)/renderedScale,bottom:(box.bottom-renderedRoot.top)/renderedScale}});
    if(!wrappedGroupFits(Math.min(...boxes.map(box=>box.top)),Math.max(...boxes.map(box=>box.bottom)),geometry))throw Error('This wrapped layout could not fit safely inside page boundaries. Use continuous editing or adjust the image and text.');
   }
   for(const item of plan.breaks.filter(item=>item.target)){
