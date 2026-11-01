@@ -1,5 +1,18 @@
 # Slate Forge web — Codex handoff
 
+## Current feature-only continuation
+
+The user explicitly defers **all tests, builds, validation and audits until roadmap feature implementation is finished, with no exceptions**. This overrides the older batch-verification instructions below. Do not trigger CI during feature development. Current source is on `feat/full-roadmap-completion`, draft PR #6; it is not published. Commits use `[skip ci]` for this phase.
+
+Latest source checkpoint: `aacd29f`, following `bb79057`, `7dcc866` and `d83960c`. These checkpoints have not been tested or built. They add live DOCX/ODT contents with heading ranges, ODT heading/table designs, nested/move-specific review, supported native Word structural/move revisions, native cubic/quadratic/elliptical path import, manual comparison correspondences, optional on-device English semantic matching, canvas typography/direction, PDF paragraphs and annotation editing, 40 MB single-PDF allowance within the unchanged 40 MB PDF workspace budget, installed-app PDF/ODT file handling and PDF/OCR shortcuts, grapheme-safe preview splitting and extended column/nested-list keep/widow handling.
+
+Semantic comparison uses pinned local model assets under `assets/semantic`, Transformers.js 4.3.2 and a dedicated worker. No document text goes to a server. The build copies model/WASM assets and records its output graph so semantic-only chunks remain optional offline assets. Model inference is bounded to 80 rewritten passages per side, 256 tokens each; manual correspondences take priority. Closing Compare cancels its worker and clears its passage cache.
+
+Native Word structural export still requires decisions for nested suggestions and text revisions/sections inside a structural suggestion. Whole-table changes are supported; partially revised Word rows and paragraph split/join boundaries remain unsupported and produce import warnings. Native curves become bounded editable polylines rather than retained mathematical curve controls. No broad external-editor or physical-device certification is claimed.
+
+Remaining feature work still includes free page-positioned images and two-sided exclusions, mixed-section live pagination and remaining nested/wrapped layouts, broader native format/review fidelity, general complex-font PDF editing/reflow/XFA, and timestamp/revocation/LTV/certified-field policies. Keep deferred physical/manual verification separate from feature implementation and do not add new roadmap requirements.
+
+
 
 ## Active mandate — complete the whole roadmap
 
