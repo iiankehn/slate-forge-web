@@ -1,9 +1,13 @@
 # Slate Forge release assessment
 
 
-## Grouped native Word continuation
+## Current continuation: longer PDFs
 
-Nested supported native Word groups and mixed text/drawing paragraphs are implemented with focused source regressions. Adjacent group members retain membership and placement through repeated native export/reopen. Interleaved layers and unrepresentable shear are refused. The complete 65-file Node suite, production and static checks pass locally; the strengthened browser download/reopen scenario and deployment are pending verification in the release batch. Public issue forms and updated tester guidance are included. Full format/layout fidelity and the remaining unchecked roadmap items remain open.
+The 250-page PDF implementation, direct page navigation and current-state preview caching are under validation. Existing byte limits remain 20 MB/file and 40 MB/workspace. Source cases cover last-page editing, page order, ZIP/recovery, storage and cache invalidation. The browser matrix adds actual 250-page import/export/restoration with timing artifacts. Physical device and larger-byte validation remain open.
+
+## Verified grouped native Word release
+
+PR #3 is merged at `3434632dc0539afd224f66e446c3d411a19f82f6`. [CI 41265333142](https://github.com/iiankehn/slate-forge-web/actions/runs/41265333142) passed all 65 Node test-file runners and all 55 browser scenarios without retries. [Pages 41265628185](https://github.com/iiankehn/slate-forge-web/actions/runs/41265628185) repeated the checks and deployed successfully. Live index matches canonical HTML; live app.js contains the new grouped import/export and help links to the public issue forms. The alternate-content regression also passes.
 
 ## Verified public release — 2026-11-01
 

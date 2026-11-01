@@ -75,7 +75,8 @@ The public beta is deployed at https://slate-web.iiankehn.com/ through GitHub Pa
 - [x] Final PDF export with one detached SHA-256/RSA PKCS#12 certificate signature; signed inputs are view/export-only.
 - [x] Append additional detached RSA/SHA-256 signatures as incremental revisions while preserving and cryptographically testing earlier signed byte ranges; certified/locked-field policies are refused.
 - [ ] Trusted timestamps, revocation, long-term signature validation and certified/locked-field permission-policy support.
-- [ ] Larger PDF capacity with performance/storage validation.
+- [x] 250-page PDFs with direct page navigation and a bounded current-state preview cache; last-page editing/export/ZIP/recovery regressions.
+- [ ] Larger PDF byte limits and real-device memory/storage-pressure validation.
 - [x] PDF page-range OCR using the local English engine.
 - [x] Local Arabic, simplified Chinese, French, German, Italian, Japanese, Portuguese, Russian and Spanish OCR, optionally combined with English.
 - [x] Persistent workspace-scoped OCR correction text; End session removes it.
