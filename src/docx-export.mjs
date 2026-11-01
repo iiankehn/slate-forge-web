@@ -1,7 +1,7 @@
 import {paragraphTextDirection} from './text-direction.mjs';
 import {fontFamily} from './font-families.mjs';
 import {nativeCanvasRun} from './docx-native-designs.mjs';
-import {assertNoBlockRevisions} from './block-review.mjs';
+import {NativeBlockRevision,assertExportableBlockRevisions} from './docx-block-revisions.mjs';
 import {attachEditableDesigns} from './docx-designs.mjs';
 import {formatAttrs,formattingSnapshot,paragraphChangeAttrs} from './format-review.mjs';
 export function docxTextColor(value){if(/^#[a-f\d]{6}$/i.test(value||''))return value.slice(1);const match=/^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/i.exec(value||'');return match&&match.slice(1).every(n=>Number(n)<=255)?match.slice(1).map(n=>Number(n).toString(16).padStart(2,'0')).join(''):null}
@@ -47,6 +47,7 @@ function paragraph(node,ctx,options={}){
 }
 function blocks(nodes,ctx,list={}){return (nodes||[]).flatMap(node=>{
   switch(node.type){
+    case 'blockRevision':return [new NativeBlockRevision(blocks(node.content,ctx,list),node.attrs,ctx.referenceCounters)];
     case 'paragraph':case 'heading':case 'codeBlock': return [paragraph(node,ctx,list)];
     case 'designCanvas':{const scene=normalizeScene(node.attrs?.scene);if(ctx.nativeDesigns){const width=Math.min(ctx.contentWidth,(ctx.contentHeight-24)*900/scene.height);return [new Paragraph({children:[nativeCanvasRun(scene,width,width*scene.height/900)]})]}const image=ctx.images.get(sceneKey(scene));if(!image)throw Error('The design canvas must be rendered before DOCX export.');const width=Math.min(ctx.contentWidth,(ctx.contentHeight-24)*900/scene.height);return [new Paragraph({children:[new ImageRun({type:'png',data:image.data,transformation:{width,height:width*scene.height/900},altText:{title:scene.title,description:scene.description||scene.title,name:'SlateForgeDesign_'+(++ctx.designIndex)}})]})]}
     case 'tableOfContents':return [new Paragraph({children:[new TextRun({text:String(node.attrs?.title||'Contents').slice(0,80),bold:true,size:30})]}),new TableOfContents('Contents',{hyperlink:true,headingStyleRange:tocStart(node.attrs?.startDepth,node.attrs?.depth)+'-'+tocDepth(node.attrs?.depth),cachedEntries:ctx.headings.filter(h=>h.level>=tocStart(node.attrs?.startDepth,node.attrs?.depth)&&h.level<=tocDepth(node.attrs?.depth)),beginDirty:true})];
@@ -83,7 +84,7 @@ function blocks(nodes,ctx,list={}){return (nodes||[]).flatMap(node=>{
   }
 })}
 export function buildDocx(content,settings,title,images=new Map(),options={}){
- assertNoBlockRevisions(content);
+ assertExportableBlockRevisions(content);
   const layout=normalizeLayout(settings),font=layout.font==='system-ui'?'Arial':layout.font;
   const paper=layout.size==='Letter'?[215.9,279.4]:[210,297];const contentWidth=((layout.orientation==='landscape'?paper[1]:paper[0])-2*layout.margin)*96/25.4;const contentHeight=((layout.orientation==='landscape'?paper[0]:paper[1])-2*layout.margin)*96/25.4;const ctx={font,layout,images,nativeDesigns:options.nativeDesigns===true,contentWidth,contentHeight,numbering:[],nextList:1,referenceCounters:{noteIndex:0,changeIndex:1},comments:[],commentRanges:new Map(),footnotes:{},designIndex:0,headingIndex:0,headings:[]};
   function indexComments(node){const marks=node.type==='commentAnchor'?[{attrs:node.attrs}]:node.type==='text'?(node.marks||[]).filter(m=>m.type==='comment'):[];for(const mark of marks){const a=reviewAttrs(mark.attrs),existing=ctx.commentRanges.get(a.id);if(existing)existing.last=node;else{if(ctx.comments.length>=300)throw Error('DOCX supports up to 300 comments in this export.');const id=ctx.comments.length;ctx.commentRanges.set(a.id,{id,first:node,last:node});ctx.comments.push({id,author:a.author,date:new Date(a.date),resolved:a.resolved,children:a.body.split('\n').map(text=>new Paragraph(text))})}}for(const child of node.content||[])indexComments(child)}indexComments(content);
