@@ -49,7 +49,8 @@ The public beta is deployed at https://slate-web.iiankehn.com/ through GitHub Pa
 - [x] Bounded ODT repeated-row/cell expansion.
 - [x] Supported ODT named/default style inheritance, fonts/colors/highlights, paragraph design, nested list types and supported starts.
 - [x] ODT A4/Letter page design, supported margins, orientation, default typography and simple header/footer/page-number round trips.
-- [ ] Advanced ODT layout/styles, complex master pages/fields and broad external-editor fidelity.
+- [x] Native ODT text-section columns, supported orientation/header/footer master bindings and return to the document page design; page-break blocks and column-sized inline images.
+- [ ] Advanced ODT layout/styles, nested section export, continuous page-design changes, complex master pages/fields and broad external-editor fidelity.
 - [ ] Microsoft Word round-trip certification.
 - [x] Supported inline and paragraph formatting revisions, individual/bulk decisions, Undo, HTML/device persistence and native DOCX properties revisions.
 - [x] Text revisions and comments in code blocks; code menu/style controls and native DOCX line-break/tab handling.

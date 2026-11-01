@@ -1,6 +1,11 @@
 # Slate Forge web — Codex handoff
 
 
+## Current continuation — native ODT sections
+
+Branch `feat/odt-sections` adds native ODF text-section column styles and master-page bindings for orientation and plain header/footer changes, then restores the document master. Supported table/list/image-first sections and explicit page-break blocks retain structure. Images fit the active column/page. Import resolves inherited section styles and master references, preserving unsupported-layout warnings. Nested section export and continuous geometry/furniture changes are refused; other advanced ODT fidelity remains open. See the latest RELEASE_BATCH.md section for validation and publication status. Storage/version/private Site settings are unchanged.
+
+
 ## Current verified public release — 2026-11-01
 
 PR #4 is merged at `b3e5fa78f35394c30a2bee473f6da52402fe83ec`. [CI 41266108348](https://github.com/iiankehn/slate-forge-web/actions/runs/41266108348) and [Pages 41266496688](https://github.com/iiankehn/slate-forge-web/actions/runs/41266496688) both passed all 66 Node test-file runners, production/static checks and 60 browser scenarios without retries. Pages published successfully; live root matches canonical HTML and live pdf-workspace.js contains direct page navigation/range validation. Public URL: https://slate-web.iiankehn.com/ .
