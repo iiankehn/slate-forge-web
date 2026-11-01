@@ -11,7 +11,7 @@ Slate Forge is a static browser application. Node 24 and npm build the JavaScrip
 
 The app manifest, shortcuts and file handlers use relative URLs; the build check validates project-path assets. The offline cache is scoped by installation path, so an update does not remove a sibling project's caches. Do not upload unbuilt source in place of `dist/`. `.nojekyll` is included.
 
-At release preparation, the connected GitHub integration returned HTTP 403 “Resource not accessible by integration” for the Pages settings API. Repository administration cannot be completed with that integration's current capabilities; code access does not imply Pages administration access. No Pages setting or repository visibility change has been made.
+Current setup: the repository is public, Pages uses GitHub Actions and the custom domain is https://slate-web.iiankehn.com/ . Deployment and Actions access work. The connected integration still cannot write Pages administration settings (HTTP 403), so domain/source administration uses repository Settings. The original private Site is unchanged.
 
 ## Existing documents and host changes
 

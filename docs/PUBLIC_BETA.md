@@ -1,6 +1,6 @@
 # First public beta
 
-Verified release runtime: commit `338be73`; [GitHub CI run 41241670375](https://github.com/iiankehn/slate-forge-web/actions/runs/41241670375) passed all 61 Node test-file runners, production/static checks and all 20 browser scenarios across desktop Chromium/Firefox/WebKit and phone Chromium/WebKit. Actual downloaded-file restoration and offline French OCR passed. Physical-device/manual gates remain open; no public deployment is claimed.
+The public beta is live at https://slate-web.iiankehn.com/ . [Verified deployment 41258638452](https://github.com/iiankehn/slate-forge-web/actions/runs/41258638452) passed Node/build/static checks and 55 browser scenarios across five configurations. The following drawing-interoperability update is being validated separately. Physical-device checks remain deferred; phone viewports are not device certification.
 
 The immediate goal is usable everyday writing with clear saving and recovery. The full roadmap is not a prerequisite.
 
@@ -22,8 +22,17 @@ Phone viewport emulation does not certify physical Safari/iPhone/iPad or Android
 
 ## Later iterations
 
-Native Word drawing/editing fidelity, arbitrary page-positioned objects, complex sections and wrapping, split footnotes, fine-grained structural revision interoperability, rewritten/ambiguous comparison moves and larger PDF limits remain on ROADMAP.md. Cloud accounts and collaboration remain deferred. Existing advanced tools keep their documented beta boundaries.
+Arbitrary page-positioned objects, complex sections and wrapping, broad Word/ODT fidelity, fine-grained structural revision interoperability, semantic/ambiguous comparison matching and larger PDF limits remain on ROADMAP.md. Supported native Word objects, split page-bottom notes and lexical rewritten-paragraph matching have shipped. Cloud accounts and collaboration remain deferred. Existing advanced tools keep their documented beta boundaries.
 
 ## Publication
 
 GitHub development does not deploy the private Site. Pages publication uses the separate manual workflow documented in GITHUB_PAGES.md. Do not claim a public URL or successful deployment until the deployment run completes.
+
+
+## Tester announcement
+
+Slate Forge public beta: https://slate-web.iiankehn.com/
+
+Write and edit documents in your browser, save on your device, import/export supported Word and OpenDocument files, and use local PDF/OCR and drawing tools. No account is required. Download a complete workspace backup before relying on it for important work; clearing browser data can remove device-saved documents. Import/export and pagination have documented limits, so check exchanged documents before sharing them.
+
+Report problems at https://github.com/iiankehn/slate-forge-web/issues/new/choose with your browser/OS, steps and expected/actual result. Use a small non-confidential sample when one is needed. Feature suggestions can be submitted there too. Known feature gaps are tracked in ROADMAP.md; physical-device testing is still open.

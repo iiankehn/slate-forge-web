@@ -42,7 +42,8 @@ The public beta is deployed at https://slate-web.iiankehn.com/ through GitHub Pa
 - [ ] Exact DOCX layout, unsupported/script-specific theme fonts, complex style semantics and other contents-field forms.
 - [x] Editable Slate Forge canvas data across DOCX export/reopen, with validated preview binding and an image-only export choice.
 - [x] Opt-in native Word canvas shapes/text-box export and supported DrawingML reconstruction on import, reading edited Word text rather than stale original metadata.
-- [ ] Broad cross-editor object fidelity, nested native groups, mixed text/drawing paragraphs, advanced effects, pressure-varying paths and full typography parity.
+- [x] Supported nested native Word groups with translation, scale and rotation; mixed text/drawing paragraphs retain text order. Adjacent canvas groups survive native export/reopen.
+- [ ] Broad cross-editor object fidelity, skewed/mirrored text groups, advanced effects, pressure-varying native paths and full typography parity.
 - [x] ODT content import/export for text, lists, ordinary tables, images and notes.
 - [x] ODT export/import of horizontal and vertical table spans with covered cells.
 - [x] Bounded ODT repeated-row/cell expansion.

@@ -1,5 +1,12 @@
 # Slate Forge web — Codex handoff
 
+
+## Current continuation — grouped native Word drawings
+
+Branch `feat/remaining-roadmap` implements bounded nested native group transforms and grouped native export/reopen, plus ordinary text before/between/after drawings. Paragraph splitting preserves styled runs and single section/start properties; ordinary pictures stay on the existing image import path. The full 65-file Node suite, production build and static checks pass locally. Browser CI and deployment evidence follow in RELEASE_BATCH.md. Tester guidance and public issue forms are updated. Storage identifiers, private Site hosting and the public Pages custom domain are unchanged.
+
+The roadmap now separates these completed Word cases from broad cross-editor fidelity, shear/mirrored text, effects, native pressure paths and typography. Other unchecked feature items are still unfinished; no full-roadmap completion or physical-device/Word certification is claimed. Continue coherent feature batches without unnecessary permission prompts.
+
 ## Verified public release — 2026-11-01
 
 PR #2 is merged at `737df79385297c4da7a29d128fde191997606e5a`. [Release CI 41258202228](https://github.com/iiankehn/slate-forge-web/actions/runs/41258202228) passed all 65 Node test-file runners, production/static checks and 55 browser scenarios without retries. [Pages deployment 41258638452](https://github.com/iiankehn/slate-forge-web/actions/runs/41258638452) repeated release checks and published successfully. The live custom-domain index matches canonical HTML; app.js exposes the new native Word controls and pdf-workspace.js exposes existing-text editing and incremental signing. Public URL: https://slate-web.iiankehn.com/ .
