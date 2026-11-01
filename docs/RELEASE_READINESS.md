@@ -1,9 +1,11 @@
 # Slate Forge release assessment
 
 
-## Current continuation: longer PDFs
+## Verified current public release — 2026-11-01
 
-The 250-page PDF implementation, direct page navigation and current-state preview caching are under validation. Existing byte limits remain 20 MB/file and 40 MB/workspace. Source cases cover last-page editing, page order, ZIP/recovery, storage and cache invalidation. The browser matrix adds actual 250-page import/export/restoration with timing artifacts. Physical device and larger-byte validation remain open.
+PR #4 is merged at `b3e5fa78f35394c30a2bee473f6da52402fe83ec`. [CI 41266108348](https://github.com/iiankehn/slate-forge-web/actions/runs/41266108348) and [Pages 41266496688](https://github.com/iiankehn/slate-forge-web/actions/runs/41266496688) both passed all 66 Node test-file runners, production/static checks and 60 browser scenarios without retries. Pages published successfully; live root matches canonical HTML and live pdf-workspace.js contains direct page navigation/range validation. Public URL: https://slate-web.iiankehn.com/ .
+
+For the 156 KB synthetic 250-page fixture (15 lines/page and a final-page field), the deployment's five browser configurations measured opening at 1.05–1.32 s, last-page navigation at 0.34–0.47 s and export at 0.19–0.37 s. The earlier PR run measured 1.07–1.27 s, 0.23–0.46 s and 0.21–0.48 s respectively. These are bounded CI fixture measurements, not general file/device performance guarantees. Saved values, actual exported PDF and downloaded ZIP restoration passed. Existing 20 MB/file and 40 MB/workspace limits remain; larger bytes and physical memory/storage-pressure testing remain open.
 
 ## Verified grouped native Word release
 

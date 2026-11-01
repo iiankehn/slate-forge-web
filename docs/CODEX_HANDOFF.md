@@ -1,9 +1,11 @@
 # Slate Forge web — Codex handoff
 
 
-## Current continuation — longer PDFs
+## Current verified public release — 2026-11-01
 
-Branch `feat/pdf-capacity` raises the page-count limit to 250 without increasing the 20 MB/file or 40 MB/workspace byte caps. PDF tools add direct navigation and retain one current-state prepared preview across navigation/extraction. Edits/Undo/Redo/source changes invalidate it. New source and browser cases cover final-page fields, reordering, storage, downloaded exports/ZIP and recovery; performance artifacts are attached by CI. See RELEASE_BATCH.md for final evidence. Physical-device testing remains deferred, and larger byte limits remain open.
+PR #4 is merged at `b3e5fa78f35394c30a2bee473f6da52402fe83ec`. [CI 41266108348](https://github.com/iiankehn/slate-forge-web/actions/runs/41266108348) and [Pages 41266496688](https://github.com/iiankehn/slate-forge-web/actions/runs/41266496688) both passed all 66 Node test-file runners, production/static checks and 60 browser scenarios without retries. Pages published successfully; live root matches canonical HTML and live pdf-workspace.js contains direct page navigation/range validation. Public URL: https://slate-web.iiankehn.com/ .
+
+PDF support now includes 250 pages, direct navigation and one prepared current-state preview reused across navigation/extraction. Edits, Undo/Redo and source changes invalidate it. Final-page fields, reordering, storage, actual downloaded PDF/ZIP and recovery regressions pass. See RELEASE_BATCH.md for timing evidence and earlier grouped Word release details. Physical-device testing remains deferred; larger byte limits and the other unchecked feature roadmap entries remain open.
 
 The grouped Word batch is already published: PR #3 is merged at `3434632dc0539afd224f66e446c3d411a19f82f6`. [CI 41265333142](https://github.com/iiankehn/slate-forge-web/actions/runs/41265333142) passed all 65 Node test-file runners and all 55 browser scenarios without retries. [Pages 41265628185](https://github.com/iiankehn/slate-forge-web/actions/runs/41265628185) repeated the checks and deployed successfully. Live index matches canonical HTML; live app.js contains the new grouped import/export and help links to the public issue forms. The alternate-content regression also passes.
 
