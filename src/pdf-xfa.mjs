@@ -7,9 +7,15 @@ function schemaForXFA(html){
  while(stack.length){const {node,blocked,depth}=stack.pop();if(!node)continue;if(++nodes>100000||depth>100)throw Error('This XFA form exceeds the supported layout complexity.');
   const a=node.attributes||{},classes=a.class||[],locked=blocked||['xfaReadOnly','xfaDisabled','xfaNonInteractive'].some(value=>classes.includes(value))||Object.hasOwn(a,'disabled')||Object.hasOwn(a,'readOnly')||Object.hasOwn(a,'readonly')||Object.hasOwn(a,'hidden')||a.type==='hidden';
   if(['input','textarea','select'].includes(node.name)&&a.dataId){
-   const id=String(a.dataId),kind=node.name==='select'?'select':['checkbox','radio'].includes(a.type)?'check':'text',editable=!locked&&!a.multiple;
-   const existing=schema.get(id),allowed=kind==='check'?[a.xfaOn,a.xfaOff].filter(value=>value!==undefined&&value!==null).map(String):kind==='select'?(node.children||[]).map(child=>child.attributes?.value).filter(value=>typeof value==='string'):null;
-   if(existing){existing.editable||=editable;if(existing.kind==='text'||kind==='text'){existing.kind='text';existing.allowed=null}else if(existing.allowed&&allowed)for(const value of allowed)existing.allowed.add(value)}else schema.set(id,{id,kind,editable,allowed:allowed?new Set(allowed):null});
+   const id=String(a.dataId),pureMultiple=node.name==='select'&&!!a.multiple,kind=pureMultiple?'multiple':node.name==='select'?'select':['checkbox','radio'].includes(a.type)?'check':'text',choices=['select','multiple'].includes(kind)?(node.children||[]).filter(child=>child.name==='option'):[],allowed=kind==='check'?[a.xfaOn,a.xfaOff].filter(value=>value!==undefined&&value!==null).map(String):choices.length?choices.map(child=>child.attributes?.value).filter(value=>typeof value==='string'):kind==='select'||pureMultiple?[]:null;
+   const initialValues=pureMultiple?choices.filter(child=>child.attributes?.selected).map(child=>child.attributes.value):[],unsupported=pureMultiple&&(id===String(a.fieldId)||initialValues.length>100||allowed.some(value=>/[\r\n]/.test(value)||value!==value.trim()||value.length>4000)),editable=!locked&&!unsupported,existing=schema.get(id);
+   if(existing){
+    existing.fieldIds.add(String(a.fieldId));existing.editable||=editable;
+    if(existing.pureMultiple!==pureMultiple){existing.incompatible=true;existing.editable=false}
+    else if(existing.kind==='text'||kind==='text'){existing.kind='text';existing.allowed=null}
+    else if(existing.allowed&&allowed)for(const value of allowed)existing.allowed.add(value);
+    existing.unsupported||=unsupported;if(existing.unsupported||existing.incompatible)existing.editable=false;
+   }else schema.set(id,{id,kind,pureMultiple,editable,unsupported,fieldIds:new Set([String(a.fieldId)]),initialValues,allowed:allowed?new Set(allowed):null});
    if(schema.size>MAX_FIELDS)throw Error('XFA forms are limited to 5,000 fields.');
   }
   for(const child of node.children||[])stack.push({node:child,blocked:locked,depth:depth+1});
@@ -31,7 +37,7 @@ function applyValues(doc,schema,input){
   if(field.allowed&&!(Array.isArray(value)?value.every(item=>field.allowed.has(item)):field.allowed.has(value)))throw Error('An XFA edit is outside its field choices.');
  }
  for(const id of doc.annotationStorage.serializable.map?.keys()||[])doc.annotationStorage.remove(id);
- for(const [id,value]of Object.entries(values))doc.annotationStorage.setValue(id,{value});return values;
+ for(const [id,value]of Object.entries(values))doc.annotationStorage.setValue(id,{value,...(schema.get(id).pureMultiple?{xfaMultiSelect:true}:{})});return values;
 }
 export async function saveXFAPDF(bytes,state){
  assertXFAFieldOnly(state);const values=normalizeXFAValues(state.xfaValues);if(!Object.keys(values).length)return new Uint8Array(bytes);
@@ -59,12 +65,26 @@ export async function createXFAView(root,{bytes,values={},readOnly=false,onValue
   const stage=$('stage'),canvas=document.createElement('canvas');canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);canvas.style.width=viewport.width+'px';canvas.style.height=viewport.height+'px';
   renderTask=page.render({canvasContext:canvas.getContext('2d'),canvas,viewport,annotationMode:pdfjs.AnnotationMode.ENABLE_STORAGE});try{await renderTask.promise}catch(error){if(error.name==='RenderingCancelledException')return;throw error}if(!alive||request!==serial)return;
   stage.replaceChildren(canvas);stage.style.width=viewport.width+'px';stage.style.height=viewport.height+'px';
-  if(doc.isPureXfa){const html=await page.getXfa();if(!html)throw Error('This XFA page has no supported form layout.');if(!alive||request!==serial)return;const boundary=document.createElement('fieldset');boundary.className='pdf-xfa-boundary';boundary.disabled=readOnly;const layer=document.createElement('div');boundary.append(layer);stage.append(boundary);pdfjs.XfaLayer.render({div:layer,xfaHtml:safeTree(html),viewport:viewport.clone({dontFlip:true}),annotationStorage:doc.annotationStorage,linkService:links,intent:'display'});
-   for(const control of layer.querySelectorAll('.xfaReadOnly input,.xfaReadOnly textarea,.xfaReadOnly select,.xfaDisabled input,.xfaDisabled textarea,.xfaDisabled select,.xfaNonInteractive input,.xfaNonInteractive textarea,.xfaNonInteractive select,select[multiple]'))control.disabled=true;
+  if(doc.isPureXfa){const html=await page.getXfa();if(!html)throw Error('This XFA page has no supported form layout.');if(!alive||request!==serial)return;const boundary=document.createElement('fieldset');boundary.className='pdf-xfa-boundary';boundary.disabled=readOnly;const layer=document.createElement('div');boundary.append(layer);stage.append(boundary);pdfjs.XfaLayer.render({div:layer,xfaHtml:safeTree(html),viewport:viewport.clone({dontFlip:true}),annotationStorage:pureStorage(),linkService:links,intent:'display'});
+   for(const control of layer.querySelectorAll('.xfaReadOnly input,.xfaReadOnly textarea,.xfaReadOnly select,.xfaDisabled input,.xfaDisabled textarea,.xfaDisabled select,.xfaNonInteractive input,.xfaNonInteractive textarea,.xfaNonInteractive select'))control.disabled=true;
+   const lists=[],bindings=new Map();for(const field of description.schema.values())for(const id of field.fieldIds)bindings.set(id,field);
+   for(const control of layer.querySelectorAll('input[fieldid],textarea[fieldid],select[fieldid]'))if(bindings.get(control.getAttribute('fieldId'))?.editable===false)control.disabled=true;
+   for(const control of layer.querySelectorAll('select[multiple]')){
+    const field=bindings.get(control.getAttribute('fieldId'));
+    if(!field?.pureMultiple||!field.editable){control.disabled=true;control.title='This list has an unsupported or protected XFA data binding.';continue}
+    const value=doc.annotationStorage.getRawValue(field.id)?.value??field.initialValues;for(const option of control.options)option.selected=value.includes(option.value);
+    lists.push({control,field});
+   }
+   for(const {control,field}of lists){const select=()=>{
+    if(readOnly||control.disabled)return;const value=[...control.selectedOptions].map(option=>option.value);doc.annotationStorage.setValue(field.id,{value,xfaMultiSelect:true});
+    for(const sibling of lists)if(sibling.field.id===field.id&&sibling.control!==control)for(const option of sibling.control.options)option.selected=value.includes(option.value);
+   };control.addEventListener('input',select);control.addEventListener('change',select)}
    for(const button of layer.querySelectorAll('button,input[type="submit"],input[type="button"],input[type="reset"]')){button.disabled=true;button.title='Form scripts and submissions are not run here.'}
   }
   $('number').value=index+1;$('number').max=doc.numPages;$('count').textContent=' / '+doc.numPages;$('previous').disabled=index===0;$('next').disabled=index===doc.numPages-1;message(readOnly?'Signed XFA form: view and export the original.':[...description.schema.values()].some(field=>field.editable)?'XFA field edits save on this browser.':'No supported editable fields were found. The original form remains available for export.');
  }
+ // PDF.js treats choice-list storage as scalar. Multiple lists use canonical arrays instead.
+ function pureStorage(){return {getValue(id,fallback){return description.schema.get(id)?.pureMultiple?fallback:doc.annotationStorage.getValue(id,fallback)},setValue(id,value){if(!description.schema.get(id)?.pureMultiple)doc.annotationStorage.setValue(id,value)}}}
  function snapshot(){const result={};for(const [id,value]of doc.annotationStorage.serializable.map||[])if(description.schema.has(id)&&Object.hasOwn(value,'value'))Object.defineProperty(result,id,{value:value.value,enumerable:true,writable:true,configurable:true});return normalizeXFAValues(result)}
  function changed(){
   if(!alive||readOnly)return Promise.resolve(false);if(pending){queued=true;return changeTail}const before=current;pending=true;
@@ -94,6 +114,6 @@ export async function createXFAView(root,{bytes,values={},readOnly=false,onValue
   $('stage').addEventListener('input',changed);$('stage').addEventListener('change',changed);
   async function navigate(target){if(!Number.isInteger(target)||target<0||target>=doc.numPages){$('number').value=index+1;return}index=target;try{await render()}catch(error){message(error.message)}}
   $('previous').onclick=()=>navigate(index-1);$('next').onclick=()=>navigate(index+1);$('number').onchange=()=>navigate(Number($('number').value)-1);$('zoom').onchange=()=>navigate(index);hybridFields();await render();if(typeof ResizeObserver==='function'){lastWidth=root.clientWidth;resizeObserver=new ResizeObserver(()=>{if(root.clientWidth===lastWidth)return;lastWidth=root.clientWidth;clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{if(alive&&$('zoom').value==='fit')render().catch(error=>message(error.message))},150)});resizeObserver.observe(root)}
-  return {async flush(){await changeTail;if(queued){queued=false;await changed()}},async setValues(values){if(readOnly)return;const normalized=normalizeXFAValues(values),key=JSON.stringify(normalized);if(key===applied)return;current=applyValues(doc,description.schema,normalized);applied=key;hybridFields();await render()},async export(){if(readOnly)return new Uint8Array(bytes);await changeTail;if(queued){queued=false;await changed()}applyValues(doc,description.schema,current);return doc.annotationStorage.size?doc.saveDocument():new Uint8Array(bytes)},dispose(){signal?.removeEventListener('abort',abort);abort()}};
+  return {async flush(){await changeTail;if(queued){queued=false;await changed()}},async setValues(values){if(readOnly)return;const normalized=normalizeXFAValues(values),key=JSON.stringify(normalized);if(key===applied)return;current=applyValues(doc,description.schema,normalized);applied=key;hybridFields();await render()},async export(){if(readOnly)return new Uint8Array(bytes);await changeTail;if(queued){queued=false;await changed()}return saveXFAPDF(bytes,{xfaValues:current})},dispose(){signal?.removeEventListener('abort',abort);abort()}};
  }catch(error){alive=false;signal?.removeEventListener('abort',abort);await task.destroy();throw error}
 }
