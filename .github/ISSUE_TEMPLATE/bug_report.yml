@@ -1,0 +1,39 @@
+name: Report a beta problem
+description: Tell us what went wrong in Slate Forge.
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: "Use non-confidential examples. Reports are public; your browser-saved documents are not sent automatically."
+  - type: input
+    id: environment
+    attributes:
+      label: Browser and device
+      placeholder: "Firefox on Windows 11, Safari on iPadOS, etc."
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include the tool, import/export format and actions needed to reproduce the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+      description: Include the exact error text if one appeared.
+    validations:
+      required: true
+  - type: textarea
+    id: sample
+    attributes:
+      label: Optional sample or screenshot
+      description: A small non-confidential sample can help reproduce format problems.

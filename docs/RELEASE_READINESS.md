@@ -1,5 +1,10 @@
 # Slate Forge release assessment
 
+
+## Grouped native Word continuation
+
+Nested supported native Word groups and mixed text/drawing paragraphs are implemented with focused source regressions. Adjacent group members retain membership and placement through repeated native export/reopen. Interleaved layers and unrepresentable shear are refused. The complete 65-file Node suite, production and static checks pass locally; the strengthened browser download/reopen scenario and deployment are pending verification in the release batch. Public issue forms and updated tester guidance are included. Full format/layout fidelity and the remaining unchecked roadmap items remain open.
+
 ## Verified public release — 2026-11-01
 
 PR #2 is merged at `737df79385297c4da7a29d128fde191997606e5a`. [Release CI 41258202228](https://github.com/iiankehn/slate-forge-web/actions/runs/41258202228) passed all 65 Node test-file runners, production/static checks and 55 browser scenarios without retries. [Pages deployment 41258638452](https://github.com/iiankehn/slate-forge-web/actions/runs/41258638452) repeated release checks and published successfully. The live custom-domain index matches canonical HTML; app.js exposes the new native Word controls and pdf-workspace.js exposes existing-text editing and incremental signing. Public URL: https://slate-web.iiankehn.com/ .

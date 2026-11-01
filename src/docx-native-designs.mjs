@@ -19,6 +19,12 @@ export function nativeCanvasOptions(input,width,height){
    children.push({...base,type:'rectangle',transformation:{...transformation,width:Math.min(iw,o.width),height:Math.min(ih,o.height),offset:{left:o.x+Math.max(0,x),top:o.y+Math.max(0,y)},flip:{horizontal:o.flipX,vertical:o.flipY}},fill:{type:'picture',image:picture(o.src),crop,transparency:100-o.opacity}});
   }
  }
- return {children,transformation:{width,height},altText:{name:'SlateForgeNativeCanvas',title:scene.title,description:scene.description||scene.title}};
+ // Native groups must remain adjacent in the layer stack: moving a separated
+ // member across another layer would change what the document displays.
+ const groups=new Map(),closed=new Set();let previous='';
+ for(const child of children.slice(1)){const group=scene.objects.find(object=>object.id===child.id)?.group||'';if(previous&&group!==previous)closed.add(previous);if(group&&closed.has(group))throw Error('Native Word export requires grouped layers to be adjacent. Move the layers together or use preview-image export.');previous=group;if(group){if(!groups.has(group))groups.set(group,[]);groups.get(group).push(child)}}
+ const emitted=new Set(),grouped=[children[0]];
+ for(const child of children.slice(1)){const group=scene.objects.find(object=>object.id===child.id)?.group||'';if(!group){grouped.push(child);continue}if(emitted.has(group))continue;emitted.add(group);const members=groups.get(group),left=Math.min(...members.map(item=>item.transformation.offset.left)),top=Math.min(...members.map(item=>item.transformation.offset.top));grouped.push({id:'forge-native-group-'+emitted.size,type:'group',transformation:{offset:{left,top}},children:members})}
+ return {children:grouped,transformation:{width,height},altText:{name:'SlateForgeNativeCanvas',title:scene.title,description:scene.description||scene.title}};
 }
 export const nativeCanvasRun=(scene,width,height)=>new ShapeGroupRun(nativeCanvasOptions(scene,width,height));
