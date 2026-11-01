@@ -1,6 +1,6 @@
 # First public beta
 
-The public beta is live at https://slate-web.iiankehn.com/ . [Verified deployment 41266496688](https://github.com/iiankehn/slate-forge-web/actions/runs/41266496688) passed all 66 Node test-file runners, build/static checks and 60 browser scenarios across five configurations. Supported native Word groups/mixed drawing paragraphs and 250-page PDFs with direct navigation are published. Physical-device checks remain deferred; phone viewports are not device certification.
+The public beta is live at https://slate-web.iiankehn.com/ . [Verified deployment 41268357642](https://github.com/iiankehn/slate-forge-web/actions/runs/41268357642) passed all 418 Node cases across 67 test files, build/static checks and 65 browser scenarios across five configurations. Supported native Word groups/mixed paragraphs, 250-page PDFs with direct navigation and native ODT column/page-design sections are published. Physical-device checks remain deferred; phone viewports are not device certification.
 
 The immediate goal is usable everyday writing with clear saving and recovery. The full roadmap is not a prerequisite.
 

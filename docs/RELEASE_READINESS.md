@@ -1,12 +1,13 @@
 # Slate Forge release assessment
 
 
-## Native ODT section candidate
+## Latest verified public release — native ODT sections
 
-Supported native ODT text-section columns, orientation/plain furniture master bindings, document-master restoration, page-break blocks and column-fitted inline images are implemented. Focused round trips preserve sanitized editor state and repeated export. Native external-editor/Word certification, nested section export and continuous page-design changes remain open. Browser download/reopen/preview validation and final deployment evidence follow in RELEASE_BATCH.md.
+PR #5 is merged at `a5eea5fd0207eb5c678d963423b49faca438efd6`. [CI 41267909541](https://github.com/iiankehn/slate-forge-web/actions/runs/41267909541) and [Pages 41268357642](https://github.com/iiankehn/slate-forge-web/actions/runs/41268357642) both passed all 418 Node cases across 67 test files, production/static checks and 65 browser scenarios without retries. Pages deployed successfully. Live root matches canonical HTML; live app.js includes native ODT section handling and table-column declarations, and live help describes the supported ODT sections. Public URL: https://slate-web.iiankehn.com/ .
 
+This release includes the earlier grouped native Word/mixed-paragraph, 250-page PDF/direct-navigation/preview-cache and tester-feedback updates. Native ODT text-section columns and supported orientation/plain furniture bindings now round trip, including table/list/image-first sections and page-break blocks. Nested ODT section export, continuous page-design changes, broad external-editor fidelity and the other unchecked roadmap features remain open. Physical-device/Word certification is not claimed; device QA remains deferred. All original private Site and storage/version identifiers remain unchanged.
 
-## Verified current public release — 2026-11-01
+## Previous verified public release — 250-page PDFs
 
 PR #4 is merged at `b3e5fa78f35394c30a2bee473f6da52402fe83ec`. [CI 41266108348](https://github.com/iiankehn/slate-forge-web/actions/runs/41266108348) and [Pages 41266496688](https://github.com/iiankehn/slate-forge-web/actions/runs/41266496688) both passed all 66 Node test-file runners, production/static checks and 60 browser scenarios without retries. Pages published successfully; live root matches canonical HTML and live pdf-workspace.js contains direct page navigation/range validation. Public URL: https://slate-web.iiankehn.com/ .
 

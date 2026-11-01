@@ -1,12 +1,15 @@
 # Slate Forge web — Codex handoff
 
 
-## Current continuation — native ODT sections
+## Latest verified public release — native ODT sections
 
-Branch `feat/odt-sections` adds native ODF text-section column styles and master-page bindings for orientation and plain header/footer changes, then restores the document master. Supported table/list/image-first sections and explicit page-break blocks retain structure. Images fit the active column/page. Import resolves inherited section styles and master references, preserving unsupported-layout warnings. Nested section export and continuous geometry/furniture changes are refused; other advanced ODT fidelity remains open. See the latest RELEASE_BATCH.md section for validation and publication status. Storage/version/private Site settings are unchanged.
+PR #5 is merged at `a5eea5fd0207eb5c678d963423b49faca438efd6`. [CI 41267909541](https://github.com/iiankehn/slate-forge-web/actions/runs/41267909541) and [Pages 41268357642](https://github.com/iiankehn/slate-forge-web/actions/runs/41268357642) both passed all 418 Node cases across 67 test files, production/static checks and 65 browser scenarios without retries. Pages deployed successfully. Live root matches canonical HTML; live app.js includes native ODT section handling and table-column declarations, and live help describes the supported ODT sections. Public URL: https://slate-web.iiankehn.com/ .
 
+This release includes the earlier grouped native Word/mixed-paragraph, 250-page PDF/direct-navigation/preview-cache and tester-feedback updates. Native ODT text-section columns and supported orientation/plain furniture bindings now round trip, including table/list/image-first sections and page-break blocks. Nested ODT section export, continuous page-design changes, broad external-editor fidelity and the other unchecked roadmap features remain open. Physical-device/Word certification is not claimed; device QA remains deferred. All original private Site and storage/version identifiers remain unchanged.
 
-## Current verified public release — 2026-11-01
+Working tree should be clean on main after the release-evidence commit. Continue the remaining unchecked feature roadmap in coherent tested batches without unnecessary permission prompts. No source work or deployment is pending for these three completed batches.
+
+## Previous verified public release — 250-page PDFs
 
 PR #4 is merged at `b3e5fa78f35394c30a2bee473f6da52402fe83ec`. [CI 41266108348](https://github.com/iiankehn/slate-forge-web/actions/runs/41266108348) and [Pages 41266496688](https://github.com/iiankehn/slate-forge-web/actions/runs/41266496688) both passed all 66 Node test-file runners, production/static checks and 60 browser scenarios without retries. Pages published successfully; live root matches canonical HTML and live pdf-workspace.js contains direct page navigation/range validation. Public URL: https://slate-web.iiankehn.com/ .
 
