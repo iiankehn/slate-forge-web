@@ -1,5 +1,9 @@
 # Slate Forge web — Codex handoff
 
+## Locked scope — latest user instruction
+
+The user approved exactly the eight remaining feature areas in ROADMAP.md and explicitly prohibited deviation, testing and audits. ROADMAP.md is now authoritative; older checklists and remaining-work descriptions below are historical and cannot add scope. No tests, builds, validation, audits or CI during feature work. End-of-day completion is a best-effort target, not a guarantee. Current implementations stay untested/unpublished on feat/full-roadmap-completion / PR #6. Continue authorized feature implementation without approval questions; use [skip ci] commits.
+
 ## Current feature-only continuation
 
 The newest source continuation adds RFC 3161 signature timestamp requests and response attachment. The PDF panel creates a SHA-256 .tsq request with a random nonce, accepts a matching .tsr response and user-selected public CA certificates, and exports a timestamped copy using the existing reserved signature container. It checks imprint/nonce/policy, CMS RSA integrity, ESS signer-certificate binding, TSA identity/critical timestamp-only EKU, generation time/accuracy and a bounded RSA CA chain to the selected anchors. Only the latest signature can be augmented; no bytes outside its excluded contents change. No external TSA request is sent automatically. The latest signed export is retained only in panel memory so users can timestamp or countersign it directly; editing, switching or closing clears it. Revocation, OCSP/CRLs, DSS/LTV and document/archive timestamps remain unfinished. No tests, builds, audits or publication were performed.
