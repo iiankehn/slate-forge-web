@@ -1,11 +1,13 @@
 # Slate Forge web — Codex handoff
 
 
-## Current continuation — grouped native Word drawings
+## Current continuation — longer PDFs
 
-Branch `feat/remaining-roadmap` implements bounded nested native group transforms and grouped native export/reopen, plus ordinary text before/between/after drawings. Paragraph splitting preserves styled runs and single section/start properties; ordinary pictures stay on the existing image import path. The full 65-file Node suite, production build and static checks pass locally. Browser CI and deployment evidence follow in RELEASE_BATCH.md. Tester guidance and public issue forms are updated. Storage identifiers, private Site hosting and the public Pages custom domain are unchanged.
+Branch `feat/pdf-capacity` raises the page-count limit to 250 without increasing the 20 MB/file or 40 MB/workspace byte caps. PDF tools add direct navigation and retain one current-state prepared preview across navigation/extraction. Edits/Undo/Redo/source changes invalidate it. New source and browser cases cover final-page fields, reordering, storage, downloaded exports/ZIP and recovery; performance artifacts are attached by CI. See RELEASE_BATCH.md for final evidence. Physical-device testing remains deferred, and larger byte limits remain open.
 
-The roadmap now separates these completed Word cases from broad cross-editor fidelity, shear/mirrored text, effects, native pressure paths and typography. Other unchecked feature items are still unfinished; no full-roadmap completion or physical-device/Word certification is claimed. Continue coherent feature batches without unnecessary permission prompts.
+The grouped Word batch is already published: PR #3 is merged at `3434632dc0539afd224f66e446c3d411a19f82f6`. [CI 41265333142](https://github.com/iiankehn/slate-forge-web/actions/runs/41265333142) passed all 65 Node test-file runners and all 55 browser scenarios without retries. [Pages 41265628185](https://github.com/iiankehn/slate-forge-web/actions/runs/41265628185) repeated the checks and deployed successfully. Live index matches canonical HTML; live app.js contains the new grouped import/export and help links to the public issue forms. The alternate-content regression also passes.
+
+The remaining unchecked layout/format/PDF features are unfinished. Do not claim full-roadmap completion or physical-device/Word certification. Continue coherent feature batches without unnecessary permission prompts. All storage identifiers and original private Site hosting remain unchanged.
 
 ## Verified public release — 2026-11-01
 
