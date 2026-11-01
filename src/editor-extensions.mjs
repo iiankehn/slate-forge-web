@@ -1,3 +1,4 @@
+import {textDirection} from './text-direction.mjs';
 import {Extension,Node,mergeAttributes} from '@tiptap/core';
 import {Plugin,PluginKey} from '@tiptap/pm/state';
 import {Decoration,DecorationSet} from '@tiptap/pm/view';
@@ -11,6 +12,7 @@ export const SearchHighlight=Extension.create({name:'searchHighlight',addProseMi
  return {...options,decorations:DecorationSet.create(tr.doc,findMatches(tr.doc,options.query,options.matchCase,options).map(m=>Decoration.inline(m.from,m.to,{class:'search-match'})))}
  }},props:{decorations(state){return searchKey.getState(state).decorations}}})]}});
 export const ParagraphDesign=Extension.create({name:'paragraphDesign',addGlobalAttributes(){return [{types:['paragraph','heading'],attributes:{
+  textDirection:{default:'auto',parseHTML:el=>textDirection(el.getAttribute('dir')),renderHTML:a=>({dir:textDirection(a.textDirection)})},
   widowControl:{default:true,parseHTML:el=>el.getAttribute('data-widow-control')!=='false',renderHTML:a=>a.widowControl===false?{'data-widow-control':'false',style:'orphans:1;widows:1'}:{style:'orphans:2;widows:2'}},
   keepTogether:{default:false,parseHTML:el=>el.getAttribute('data-keep-together')==='true',renderHTML:a=>a.keepTogether===true?{'data-keep-together':'true',style:'break-inside:avoid'}:{}},
   keepWithNext:{default:false,parseHTML:el=>el.getAttribute('data-keep-next')==='true',renderHTML:a=>a.keepWithNext===true?{'data-keep-next':'true',style:'break-after:avoid'}:{}},

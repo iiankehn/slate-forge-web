@@ -1,104 +1,33 @@
-# Slate Forge remaining roadmap
+# Slate Forge — locked feature scope
 
-## Current implementation priority
+This is the active feature roadmap approved by the user. It replaces older broad checklists and backlog snapshots. Work only within the eight areas below; do not add features or turn deferred verification into feature requirements. Implementation details may be broken down under their existing area without expanding its scope.
 
-The public beta is deployed at https://slate-web.iiankehn.com/ through GitHub Pages ([latest verified deployment 41268357642](https://github.com/iiankehn/slate-forge-web/actions/runs/41268357642)). The user has now authorized continuing the remaining feature roadmap; physical-device testing is explicitly deferred from current work. Keep those verification items open without treating them as feature-work blockers. Cloud services and separate applications remain deferred products. Existing private Sites hosting and document-studio storage identifiers remain unchanged.
+Target: complete feature implementation by end of day if possible. This is a best-effort target, not a completion guarantee. Do not claim completion or remove an outstanding requirement to meet the target.
 
-## Storage and recovery
-- [x] Encrypted complete workspace backup export/import, including PDFs and edits. AES-256-GCM with random salt/nonce, PBKDF2-SHA256, authenticated header; password not persisted. Automated round trip, wrong-password and tampering tests pass.
-- [x] Automatic encrypted device recovery including PDF originals and edits; legacy copies remain readable.
-- [x] Durable PDF journal before committed writes; reopened failed drafts appear as separate recovery copies. Closure before the journal transaction completes remains a browser limitation.
-- [x] 200-document workspaces across creation, restore, backups and recovery, with bounded library rendering and cached body indexes.
-- [x] Reduced tab-cache fallback, storage-capacity diagnostics and simulated quota-abort/retry validation.
-- [ ] Real-device large-workspace performance, actual quota pressure and browser/OS eviction validation.
+## Remaining feature work
 
-## Layout and design
-- [ ] Free page coordinates for images with automatic surrounding text flow.
-- [x] Oval/diamond image masks with contour wrapping for paragraph-anchored floats.
-- [x] Custom polygon image masks and one-sided contour wrapping for paragraph-anchored floats; bounded point editing and shaped raster export.
-- [ ] Two-sided wrapping, page-coordinate exclusions and objects outside canvas blocks.
-- [ ] Mixed orientations/columns in live pagination.
-- [ ] Nested images, images beside tables and wrapping across page breaks.
-- [x] Split supported top-level wrapped paragraphs after the float ends; the wrapped prefix stays with its image.
-- [ ] Split text through an active float, nested wraps and arbitrary wrap/page-break interactions.
-- [x] Paragraph keep-together, keep-with-next and page-break-before controls in HTML/DOCX and supported paginated blocks.
-- [x] Two-line widow/orphan balancing for supported ordinary text in live pages and preview, with a persisted paragraph opt-out and DOCX round trip.
-- [ ] Full widow/orphan balancing across nested layouts/columns/complex typography and nested-layout keep-rule parity.
-- [x] Optional page-bottom notes in supported paged editing and measured print preview, with bounded reservations and preserved endnote defaults.
-- [x] Page-bottom note continuations across live/preview pages, preserving literal text, reference identity and source notes without scaling.
-- [ ] Complex-section/nested note parity and physical-reader/rendering certification.
-- [x] Compatible continuous one-column and plain-text column sections can share preview pages.
-- [x] Compatible continuous columns with fitting tables/images/canvases and bounded object-aware text fragmentation in measured preview.
-- [ ] Continuous sections with geometry/furniture changes, nested sections and full nested keep-rule parity; live mixed-section pagination remains open.
-- [ ] Editor/preview/Word pagination consistency.
+| Area | Completion scope |
+| --- | --- |
+| 1. Image placement and wrapping | Free page positioning, two-sided text flow, page exclusions, nested images, images beside tables, and wrapping through page breaks. |
+| 2. Pagination and sections | Mixed orientations/columns in live editing; remaining nested-section, keep-rule, widow/orphan and footnote cases; better editor/preview/Word consistency. |
+| 3. DOCX/ODT fidelity | Unsupported complex layouts, styles, fields, master pages, drawing effects and typography cases across editors. |
+| 4. Structural review | Supported partial Word row revisions and adjacent rich-text paragraph split/join revisions are implemented in source. Nested suggestions and remaining complex/container-crossing revision cases remain. |
+| 5. PDF editing | Reflow that moves subsequent content, remaining unmapped-font and vertical-text cases, and broader script/font handling. |
+| 6. XFA forms | Bound pure-XFA multiple selections, common calculation/field scripts and reviewed XML/XDP/PDF submissions are implemented in source. Advanced script/submission compatibility and unbound/conflicting data bindings remain. |
+| 7. PDF signature permissions | Broader certified-document workflows involving earlier form filling, annotations and appearance changes. |
+| 8. Signature longevity | Revocation checks through OCSP/CRLs, DSS/LTV evidence, and document/archive timestamps. |
 
-## Formats and review
-- [x] DOCX import of supported fonts/sizes, alignment/indentation, blank paragraphs, paper settings, native text revisions and comment ranges.
-- [x] Supported DOCX inherited run/paragraph styles and explicit RGB colors.
-- [x] Live contents import for standard body-level Word contents controls with Heading 1–3 ranges.
-- [x] Supported DOCX theme Latin fonts/colors, tint/shade resolution, default styles and partial font/spacing/indent inheritance.
-- [x] DOCX import of supported paragraph spacing and keep/new-page rules for ordinary paragraphs and headings.
-- [x] Overlapping comment ranges and point comments in HTML/device state and native DOCX, with independent editing/removal.
-- [ ] Exact DOCX layout, unsupported/script-specific theme fonts, complex style semantics and other contents-field forms.
-- [x] Editable Slate Forge canvas data across DOCX export/reopen, with validated preview binding and an image-only export choice.
-- [x] Opt-in native Word canvas shapes/text-box export and supported DrawingML reconstruction on import, reading edited Word text rather than stale original metadata.
-- [x] Supported nested native Word groups with translation, scale and rotation; mixed text/drawing paragraphs retain text order. Adjacent canvas groups survive native export/reopen.
-- [ ] Broad cross-editor object fidelity, skewed/mirrored text groups, advanced effects, pressure-varying native paths and full typography parity.
-- [x] ODT content import/export for text, lists, ordinary tables, images and notes.
-- [x] ODT export/import of horizontal and vertical table spans with covered cells.
-- [x] Bounded ODT repeated-row/cell expansion.
-- [x] Supported ODT named/default style inheritance, fonts/colors/highlights, paragraph design, nested list types and supported starts.
-- [x] ODT A4/Letter page design, supported margins, orientation, default typography and simple header/footer/page-number round trips.
-- [x] Native ODT text-section columns, supported orientation/header/footer master bindings and return to the document page design; page-break blocks and column-sized inline images.
-- [ ] Advanced ODT layout/styles, nested section export, continuous page-design changes, complex master pages/fields and broad external-editor fidelity.
-- [ ] Microsoft Word round-trip certification.
-- [x] Supported inline and paragraph formatting revisions, individual/bulk decisions, Undo, HTML/device persistence and native DOCX properties revisions.
-- [x] Text revisions and comments in code blocks; code menu/style controls and native DOCX line-break/tab handling.
-- [x] Grouped structural/object edits and paragraph-type conversions, retaining original top-level blocks for individual/bulk decisions and Undo through HTML/device state.
-- [ ] Fine-grained nested/move-specific structural decisions and native DOCX structural-revision interoperability.
-- [x] Confirmed Find/Replace through unresolved revisions: accept complete affected changes, then replace in one undoable operation.
-- [x] Accept all / Reject all text changes with confirmation and one-step undo.
-- [x] Highlighted text comparison plus bounded formatting, structure, object and page-design difference reports.
-- [x] Exact-content move matching within parents, insertion-resistant structural reports and inline formatting comparison on shared text inside edited blocks.
-- [x] Globally unique exact-content moves between compared containers, including swaps and retained formatting checks.
-- [x] Exact-content moves into/out of unmatched whole containers and bounded, mutual-best lexical matching of rewritten paragraphs, including unequal replacement gaps.
-- [ ] Semantic matching beyond shared wording and disambiguation of repeated/equally similar replacement or moved blocks.
-- [x] Placeholder checks covering notes and canvas text, with navigation to the owning editor.
+## Current work rules
 
-## PDF, OCR and drawing
-- [x] AES-256 password-protected PDF export and explicit unlock-to-device-copy import, without retaining passwords.
-- [x] In-place replacement of supported simple existing PDF text (unembedded standard Latin Type1 fonts, printable ASCII, direct page content text operators), with Undo/Redo and backup/recovery persistence.
-- [ ] General PDF text/font editing, embedded/subset/complex text, automatic text reflow and XFA.
-- [x] International PDF annotation/form appearances using an embedded local TTF/OTF with glyph-coverage checks.
-- [x] Bidirectional/script-run ordering and explicit fontkit glyph advances/offsets for generated PDF annotation/form appearances, with embedded local fonts and preserved logical field values.
-- [ ] Broad script/font coverage, paragraph-level typography controls and cross-reader font/render certification.
-- [x] Numeric geometry editing for supported imported PDF widgets; readonly/unsupported fields remain protected.
-- [x] Final PDF export with one detached SHA-256/RSA PKCS#12 certificate signature; signed inputs are view/export-only.
-- [x] Append additional detached RSA/SHA-256 signatures as incremental revisions while preserving and cryptographically testing earlier signed byte ranges; certified/locked-field policies are refused.
-- [ ] Trusted timestamps, revocation, long-term signature validation and certified/locked-field permission-policy support.
-- [x] 250-page PDFs with direct page navigation and a bounded current-state preview cache; last-page editing/export/ZIP/recovery regressions.
-- [ ] Larger PDF byte limits and real-device memory/storage-pressure validation.
-- [x] PDF page-range OCR using the local English engine.
-- [x] Local Arabic, simplified Chinese, French, German, Italian, Japanese, Portuguese, Russian and Spanish OCR, optionally combined with English.
-- [x] Persistent workspace-scoped OCR correction text; End session removes it.
-- [x] Persist source scans and crop/rotation/page settings with correction drafts.
-- [x] Include saved OCR scans/settings/corrections in ZIP, encrypted backups and encrypted recovery.
-- [x] Pressure-sensitive canvas pen strokes with compatible fixed-width mouse/touch fallback.
-- [ ] Physical stylus QA.
+- Feature development only. Do not run tests, builds, validation, audits, browser/device checks or CI during this phase.
+- Use `[skip ci]` on commits pushed to the implementation branch.
+- Do not merge, deploy or describe untested source as verified or published.
+- Preserve existing work, local-first/account-free behavior, storage identifiers, file-format compatibility and the original private Site identity.
+- Existing comparison, font, contents-table, review, PDF, XFA-field and signature-timestamp implementations are source work already done; their later verification is not implementation from scratch.
+- No routine permission questions. Do not add cloud services, separate applications or other product scope.
 
-## Release verification
-- [x] Actual downloaded HTML, complete ZIP/PDF state and encrypted backups reimported across five CI browser configurations.
-- [x] Browser-exported PDF form fields parsed and checked; physical print/PDF visual inspection remains open.
-- [ ] Physical iPhone/iPad Safari, Android 12+ Chrome, desktop Chrome/Firefox/Safari.
-- [ ] Virtual/hardware keyboards, IME, rotation/safe areas and screen readers.
-- [ ] Real persistent-storage permission paths.
-- [ ] Installed PWA offline PDF/OCR and service-worker updates.
-- [ ] Native sharing, file associations and installed shortcuts.
-- [ ] Eviction, suspended/restored/competing tabs and long-document/table performance.
-- [x] Supported GitHub Actions browser infrastructure across Chromium, Firefox and WebKit; physical devices remain separate.
+## Deferred release phase
 
-## Deferred product scope
-- [ ] Provider sign-in, cloud storage/sync, collaboration/permissions.
-- [ ] Separate notes and coding applications.
+After feature implementation, the previously discussed release work is auditing/testing/building accumulated changes, browser/PWA/storage/accessibility/print/Word verification, fixing resulting issues, and publication. None of those checks are authorized to run during the current feature-only phase.
 
-These deferred products are not requirements for the current account-free word processor release.
+Historical roadmap descriptions and completed features remain available in Git history. Current implementation notes are in CODEX_HANDOFF.md; they do not expand this locked scope.

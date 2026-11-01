@@ -1,5 +1,7 @@
+import {paragraphTextDirection} from './text-direction.mjs';
+import {fontFamily} from './font-families.mjs';
 import {nativeCanvasRun} from './docx-native-designs.mjs';
-import {assertNoBlockRevisions} from './block-review.mjs';
+import {NativeBlockRevision,NativeBoundaryParagraph,NativeRevisionRow,assertExportableBlockRevisions} from './docx-block-revisions.mjs';
 import {attachEditableDesigns} from './docx-designs.mjs';
 import {formatAttrs,formattingSnapshot,paragraphChangeAttrs} from './format-review.mjs';
 export function docxTextColor(value){if(/^#[a-f\d]{6}$/i.test(value||''))return value.slice(1);const match=/^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/i.exec(value||'');return match&&match.slice(1).every(n=>Number(n)<=255)?match.slice(1).map(n=>Number(n).toString(16).padStart(2,'0')).join(''):null}
@@ -8,14 +10,14 @@ import {reviewAttrs} from './review.mjs';
 import {sectionAttrs} from './sections.mjs';
 import {normalizeScene,sceneKey} from './design-model.mjs';
 import {XmlComponent,InsertedTextRun,DeletedTextRun,CommentRangeStart,CommentRangeEnd,CommentReference,SectionType,FootnoteReferenceRun,TableOfContents,Bookmark,Document,Packer,Paragraph,TextRun,Table,TableRow,TableCell,WidthType,ExternalHyperlink,ImageRun,Header,Footer,PageNumber,AlignmentType,BorderStyle,PageOrientation,LevelFormat,HorizontalPositionRelativeFrom,VerticalPositionRelativeFrom,TextWrappingType} from 'docx';
-import {noteText,tocDepth} from './references.mjs';
+import {noteText,tocDepth,tocStart} from './references.mjs';
 import {DOCUMENT_STYLES} from './document-styles.mjs';
 import {normalizeLayout} from './document-model.mjs';
 import {normalizeImageDesign,normalizeTableDesign,TABLE_PALETTES,TABLE_PADDING} from './object-design.mjs';
 const twips=mm=>Math.round(mm*1440/25.4);
 export function docxRunProperties(marks=[],ctx={}){
   let style=marks.find(m=>m.type==='textStyle')?.attrs||{};
-  let font=style.fontFamily||ctx.font,size=parseFloat(style.fontSize||String(ctx.defaultSize||12));
+  let font=fontFamily(style.fontFamily,ctx.font),size=parseFloat(style.fontSize||String(ctx.defaultSize||12));
   if((style.fontSize||'').endsWith('px'))size*=.75;if(font==='system-ui')font='Arial';
   let props={font:marks.some(m=>m.type==='code')?'Courier New':font,size:Math.max(12,Math.min(192,Math.round(size*2))),bold:ctx.heading||ctx.headerCell||marks.some(m=>m.type==='bold'),italics:marks.some(m=>m.type==='italic'),strike:marks.some(m=>m.type==='strike')};
   if(marks.some(m=>m.type==='superscript'))props.superScript=true;if(marks.some(m=>m.type==='subscript'))props.subScript=true;
@@ -36,18 +38,19 @@ function runs(nodes=[],ctx){return nodes.flatMap(n=>{
 })}
 function paragraph(node,ctx,options={}){
   let a=node.attrs||{},line=Number(a.paragraphLine||ctx.layout.line);
-  let props={widowControl:a.widowControl!==false,keepNext:node.type==='heading'||a.keepWithNext===true,keepLines:a.keepTogether===true,pageBreakBefore:a.pageBreakBefore===true,children:runs(node.content,{...ctx,heading:node.type==='heading',font:node.type==='heading'?DOCUMENT_STYLES[ctx.layout.theme].headingFont:ctx.font,defaultColor:node.type==='heading'?(ctx.layout.headingColor?.slice(1)||DOCUMENT_STYLES[ctx.layout.theme].color):undefined,defaultSize:node.type==='heading'?(DOCUMENT_STYLES[ctx.layout.theme].sizes[(node.attrs?.level||1)-1]||15):12}),alignment:({left:AlignmentType.LEFT,right:AlignmentType.RIGHT,center:AlignmentType.CENTER,justify:AlignmentType.JUSTIFIED})[a.textAlign]||AlignmentType.LEFT,
+  let props={bidirectional:paragraphTextDirection(node)==='rtl',widowControl:a.widowControl!==false,keepNext:node.type==='heading'||a.keepWithNext===true,keepLines:a.keepTogether===true,pageBreakBefore:a.pageBreakBefore===true,children:runs(node.content,{...ctx,heading:node.type==='heading',font:node.type==='heading'?DOCUMENT_STYLES[ctx.layout.theme].headingFont:ctx.font,defaultColor:node.type==='heading'?(ctx.layout.headingColor?.slice(1)||DOCUMENT_STYLES[ctx.layout.theme].color):undefined,defaultSize:node.type==='heading'?(DOCUMENT_STYLES[ctx.layout.theme].sizes[(node.attrs?.level||1)-1]||15):12}),alignment:({left:AlignmentType.LEFT,right:AlignmentType.RIGHT,center:AlignmentType.CENTER,justify:AlignmentType.JUSTIFIED})[a.textAlign]||(paragraphTextDirection(node)==='rtl'?AlignmentType.RIGHT:AlignmentType.LEFT),
     spacing:{after:Math.round(parseFloat(a.paragraphSpacing??'8')*20),line:Math.round(line*240)},indent:{left:Math.min(6,Math.max(0,Number(a.indent||0)))*480},...options};
-  if(a.paragraphChange){const change=paragraphChangeAttrs(a.paragraphChange),before=change.before;if(node.type==='heading'&&before.level!==undefined&&before.level!==a.level)throw Error('Accept or reject tracked heading-level changes before DOCX export, or use HTML.');props.revision={id:ctx.referenceCounters.changeIndex++,author:change.author,date:change.date,alignment:({left:AlignmentType.LEFT,right:AlignmentType.RIGHT,center:AlignmentType.CENTER,justify:AlignmentType.JUSTIFIED})[before.textAlign]||AlignmentType.LEFT,spacing:{after:Math.round(parseFloat(before.paragraphSpacing??'8')*20),line:Math.round(Number(before.paragraphLine||ctx.layout.line)*240)},indent:{left:before.indent*480},keepNext:node.type==='heading'||before.keepWithNext,keepLines:before.keepTogether,pageBreakBefore:before.pageBreakBefore,widowControl:before.widowControl}}
+  if(a.paragraphChange){const change=paragraphChangeAttrs(a.paragraphChange),before=change.before;if(node.type==='heading'&&before.level!==undefined&&before.level!==a.level)throw Error('Accept or reject tracked heading-level changes before DOCX export, or use HTML.');props.revision={bidirectional:paragraphTextDirection({...node,attrs:before})==='rtl',id:ctx.referenceCounters.changeIndex++,author:change.author,date:change.date,alignment:({left:AlignmentType.LEFT,right:AlignmentType.RIGHT,center:AlignmentType.CENTER,justify:AlignmentType.JUSTIFIED})[before.textAlign]||AlignmentType.LEFT,spacing:{after:Math.round(parseFloat(before.paragraphSpacing??'8')*20),line:Math.round(Number(before.paragraphLine||ctx.layout.line)*240)},indent:{left:before.indent*480},keepNext:node.type==='heading'||before.keepWithNext,keepLines:before.keepTogether,pageBreakBefore:before.pageBreakBefore,widowControl:before.widowControl}}
   if(node.type==='heading'){props.heading='Heading'+Math.min(6,Math.max(1,a.level||1));props.children=[new Bookmark({id:'sf-heading-'+(++ctx.headingIndex),children:props.children})]}
   if(node.type==='codeBlock'){props.style='ForgeCode';props.children=runs(node.content,{...ctx,font:'Courier New',heading:false,defaultSize:12,code:true})}
-  return new Paragraph(props);
+  return a.paragraphBoundaryChange?new NativeBoundaryParagraph(props,a.paragraphBoundaryChange,ctx.referenceCounters):new Paragraph(props);
 }
 function blocks(nodes,ctx,list={}){return (nodes||[]).flatMap(node=>{
   switch(node.type){
+    case 'blockRevision':return [new NativeBlockRevision(blocks(node.content,ctx,list),node.attrs,ctx.referenceCounters)];
     case 'paragraph':case 'heading':case 'codeBlock': return [paragraph(node,ctx,list)];
     case 'designCanvas':{const scene=normalizeScene(node.attrs?.scene);if(ctx.nativeDesigns){const width=Math.min(ctx.contentWidth,(ctx.contentHeight-24)*900/scene.height);return [new Paragraph({children:[nativeCanvasRun(scene,width,width*scene.height/900)]})]}const image=ctx.images.get(sceneKey(scene));if(!image)throw Error('The design canvas must be rendered before DOCX export.');const width=Math.min(ctx.contentWidth,(ctx.contentHeight-24)*900/scene.height);return [new Paragraph({children:[new ImageRun({type:'png',data:image.data,transformation:{width,height:width*scene.height/900},altText:{title:scene.title,description:scene.description||scene.title,name:'SlateForgeDesign_'+(++ctx.designIndex)}})]})]}
-    case 'tableOfContents':return [new Paragraph({children:[new TextRun({text:String(node.attrs?.title||'Contents').slice(0,80),bold:true,size:30})]}),new TableOfContents('Contents',{hyperlink:true,headingStyleRange:'1-'+tocDepth(node.attrs?.depth),cachedEntries:ctx.headings.filter(h=>h.level<=tocDepth(node.attrs?.depth)),beginDirty:true})];
+    case 'tableOfContents':return [new Paragraph({children:[new TextRun({text:String(node.attrs?.title||'Contents').slice(0,80),bold:true,size:30})]}),new TableOfContents('Contents',{hyperlink:true,headingStyleRange:tocStart(node.attrs?.startDepth,node.attrs?.depth)+'-'+tocDepth(node.attrs?.depth),cachedEntries:ctx.headings.filter(h=>h.level>=tocStart(node.attrs?.startDepth,node.attrs?.depth)&&h.level<=tocDepth(node.attrs?.depth)),beginDirty:true})];
     case 'pageBreak':return [new Paragraph({children:[new TextRun({text:'',break:1})],pageBreakBefore:true})];
     case 'horizontalRule':return [new Paragraph({border:{bottom:{style:BorderStyle.SINGLE,size:4,color:'9BAE9C'}},children:[]})];
     case 'blockquote':return blocks(node.content,ctx).map(p=>p instanceof Paragraph?p:new Paragraph({text:'Quotation'}));
@@ -64,11 +67,11 @@ function blocks(nodes,ctx,list={}){return (nodes||[]).flatMap(node=>{
       const edge={style:BorderStyle.SINGLE,size:4,color:palette.border},none={style:BorderStyle.NONE,size:0,color:palette.border};
       const borders=design.tableStyle==='grid'?{top:edge,bottom:edge,left:edge,right:edge,insideHorizontal:edge,insideVertical:edge}:design.tableStyle==='striped'?{top:edge,bottom:edge,left:none,right:none,insideHorizontal:edge,insideVertical:none}:{top:none,bottom:none,left:none,right:none,insideHorizontal:none,insideVertical:none};
       const columns=Math.max(1,(node.content?.[0]?.content||[]).reduce((sum,cell)=>sum+(cell.attrs?.colspan||1),0));
-      return [new Table({width:{size:100,type:WidthType.PERCENTAGE},borders,rows:(node.content||[]).map((row,index)=>new TableRow({cantSplit:true,tableHeader:(row.content||[]).every(cell=>cell.type==='tableHeader'),children:(row.content||[]).map(cell=>{
+      return [new Table({width:{size:100,type:WidthType.PERCENTAGE},borders,rows:(node.content||[]).map((row,index)=>new NativeRevisionRow({cantSplit:true,tableHeader:(row.content||[]).every(cell=>cell.type==='tableHeader'),children:(row.content||[]).map(cell=>{
         const header=cell.type==='tableHeader',previousHeader=ctx.headerCell,previousHeaderColor=ctx.headerColor;ctx.headerCell=header;ctx.headerColor=palette.accent;const width=ctx.contentWidth;ctx.contentWidth=Math.max(20,width*(cell.attrs?.colspan||1)/columns-2*TABLE_PADDING[design.tableDensity]);const children=blocks(cell.content,ctx);ctx.contentWidth=width;ctx.headerCell=previousHeader;ctx.headerColor=previousHeaderColor;
         let shade=header?palette.tint:design.tableStyle==='striped'&&index%2===1?palette.stripe:undefined;if(design.tableStyle==='minimal')shade=undefined;
         return new TableCell({columnSpan:cell.attrs?.colspan||1,rowSpan:cell.attrs?.rowspan||1,children:children.length?children:[new Paragraph('')],margins:{top:padding,bottom:padding,left:padding,right:padding},shading:shade?{fill:shade}:undefined,borders:design.tableStyle==='minimal'?{top:none,left:none,right:none,bottom:header?{style:BorderStyle.SINGLE,size:12,color:palette.accent}:none}:undefined})
-      })}))})];
+      })},row.attrs?.rowChange,ctx.referenceCounters))})];
     }
     case 'image':{
       const match=/^data:image\/(png|jpeg|webp|gif);base64,(.+)$/i.exec(node.attrs?.src||'');
@@ -81,7 +84,7 @@ function blocks(nodes,ctx,list={}){return (nodes||[]).flatMap(node=>{
   }
 })}
 export function buildDocx(content,settings,title,images=new Map(),options={}){
- assertNoBlockRevisions(content);
+ assertExportableBlockRevisions(content);
   const layout=normalizeLayout(settings),font=layout.font==='system-ui'?'Arial':layout.font;
   const paper=layout.size==='Letter'?[215.9,279.4]:[210,297];const contentWidth=((layout.orientation==='landscape'?paper[1]:paper[0])-2*layout.margin)*96/25.4;const contentHeight=((layout.orientation==='landscape'?paper[0]:paper[1])-2*layout.margin)*96/25.4;const ctx={font,layout,images,nativeDesigns:options.nativeDesigns===true,contentWidth,contentHeight,numbering:[],nextList:1,referenceCounters:{noteIndex:0,changeIndex:1},comments:[],commentRanges:new Map(),footnotes:{},designIndex:0,headingIndex:0,headings:[]};
   function indexComments(node){const marks=node.type==='commentAnchor'?[{attrs:node.attrs}]:node.type==='text'?(node.marks||[]).filter(m=>m.type==='comment'):[];for(const mark of marks){const a=reviewAttrs(mark.attrs),existing=ctx.commentRanges.get(a.id);if(existing)existing.last=node;else{if(ctx.comments.length>=300)throw Error('DOCX supports up to 300 comments in this export.');const id=ctx.comments.length;ctx.commentRanges.set(a.id,{id,first:node,last:node});ctx.comments.push({id,author:a.author,date:new Date(a.date),resolved:a.resolved,children:a.body.split('\n').map(text=>new Paragraph(text))})}}for(const child of node.content||[])indexComments(child)}indexComments(content);

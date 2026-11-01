@@ -9,3 +9,6 @@ dist/THIRD-PARTY-NOTICES.txt
 
 playwright-report/
 test-results/
+
+dist/semantic-worker.js
+dist/build-meta.json

@@ -1,3 +1,4 @@
+import {graphemeRange} from './text-boundaries.mjs';
 // Bounded line-boundary searches shared by live editing and measured preview.
 // Positions must be monotonic in visual line order, as in ordinary text flow.
 export function lineStart(from,pos,coords){
@@ -30,11 +31,19 @@ export function balanceLineBreak(from,to,cut,coords){
 }
 // Preview offsets refer to UTF-16 text, matching splitTextBlock. A one-character
 // Range measures the following glyph rather than the preceding caret line.
-export function textCoordinates(element){
+export function textCoordinates(element,{columnRoot=null}={}){
  const owner=element.ownerDocument,range=owner.createRange();
  if(typeof range.getBoundingClientRect!=='function')return null;
  const spans=[],walker=owner.createTreeWalker(element,4);let node,length=0;
  while(node=walker.nextNode()){if(node.length){spans.push({node,from:length,to:length+node.length});length+=node.length}}
- if(!length)return null;const cache=new Map();
- return {length,coords(offset){offset=Math.max(0,Math.min(length-1,offset));if(cache.has(offset))return cache.get(offset);let low=0,high=spans.length-1;while(low<high){const mid=Math.floor((low+high)/2);if(spans[mid].to<=offset)low=mid+1;else high=mid}const span=spans[low];let start=offset-span.from;if(start>0&&/[\uDC00-\uDFFF]/.test(span.node.data[start]))start--;let end=start+1;if(/[\uD800-\uDBFF]/.test(span.node.data[start])&&end<span.node.length)end++;range.setStart(span.node,start);range.setEnd(span.node,end);const rect=range.getBoundingClientRect(),box={top:rect.top,bottom:rect.bottom};if(!Number.isFinite(box.top)||!Number.isFinite(box.bottom)||box.bottom<=box.top)throw Error('Text lines could not be measured for page preview.');cache.set(offset,box);return box}};
+ if(!length)return null;const cache=new Map(),text=element.textContent;
+ const rootBox=columnRoot?.getBoundingClientRect(),computed=columnRoot?owner.defaultView.getComputedStyle(columnRoot):null,columnCount=Math.max(1,Number.parseInt(computed?.columnCount)||1),gap=Number.parseFloat(computed?.columnGap)||0,columnWidth=columnRoot?(columnRoot.clientWidth-gap*(columnCount-1))/columnCount:0,columnHeight=columnRoot?.clientHeight||0;
+ function locate(offset,end=false){let low=0,high=spans.length-1;while(low<high){const mid=Math.floor((low+high)/2);if(end?spans[mid].to<offset:spans[mid].to<=offset)low=mid+1;else high=mid}return spans[low]}
+ return {length,coords(offset){
+  offset=Math.max(0,Math.min(length-1,offset));if(cache.has(offset))return cache.get(offset);
+  const glyph=graphemeRange(text,offset),first=locate(glyph.from),last=locate(glyph.to,true);range.setStart(first.node,glyph.from-first.from);range.setEnd(last.node,glyph.to-last.from);
+  const rect=range.getBoundingClientRect();let top=rect.top,bottom=rect.bottom;
+  if(columnRoot&&columnCount>1&&columnWidth>0&&columnHeight>0){const center=(rect.left+rect.right)/2,fromEdge=computed.direction==='rtl'?rootBox.right-center:center-rootBox.left,column=Math.max(0,Math.floor(fromEdge/(columnWidth+gap)));top=column*columnHeight+rect.top-rootBox.top;bottom=column*columnHeight+rect.bottom-rootBox.top}
+  const box={top,bottom};if(!Number.isFinite(box.top)||!Number.isFinite(box.bottom)||box.bottom<=box.top)throw Error('Text lines could not be measured for page preview.');cache.set(offset,box);return box;
+ }};
 }
