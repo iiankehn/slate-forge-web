@@ -1,11 +1,8 @@
 # Slate Forge remaining roadmap
 
-## Current release priority
+## Current implementation priority
 
-The user narrowed the immediate goal to a usable first public beta, then iteration. Follow [PUBLIC_BETA.md](PUBLIC_BETA.md) for release scope and [GITHUB_PAGES.md](GITHUB_PAGES.md) for static hosting; advanced roadmap items below remain later work. Node/npm are build-time tools, not a hosting server requirement. Release preparation adds a getting-started guide, startup help, project-relative PWA URLs, scoped offline caches and automated browser CI. Browser CI results and publication must be verified separately; the private Site is unchanged.
-
-
-User authorized completion of the remaining roadmap on 2026-10-29. This checklist is the continuation record. Completion requires implementation and appropriate evidence; physical checks cannot be marked complete using DOM stubs. Account/cloud work and separate applications require product scope decisions before introducing services or changing the current private audience.
+The public beta is deployed at https://slate-web.iiankehn.com/ through GitHub Pages ([deployment 41244967161](https://github.com/iiankehn/slate-forge-web/actions/runs/41244967161)). The user has now authorized continuing the remaining feature roadmap; physical-device testing is explicitly deferred from current work. Keep those verification items open without treating them as feature-work blockers. Cloud services and separate applications remain deferred products. Existing private Sites hosting and document-studio storage identifiers remain unchanged.
 
 ## Storage and recovery
 - [x] Encrypted complete workspace backup export/import, including PDFs and edits. AES-256-GCM with random salt/nonce, PBKDF2-SHA256, authenticated header; password not persisted. Automated round trip, wrong-password and tampering tests pass.
@@ -18,7 +15,8 @@ User authorized completion of the remaining roadmap on 2026-10-29. This checklis
 ## Layout and design
 - [ ] Free page coordinates for images with automatic surrounding text flow.
 - [x] Oval/diamond image masks with contour wrapping for paragraph-anchored floats.
-- [ ] Two-sided and arbitrary-shape wrapping; objects outside canvas blocks.
+- [x] Custom polygon image masks and one-sided contour wrapping for paragraph-anchored floats; bounded point editing and shaped raster export.
+- [ ] Two-sided wrapping, page-coordinate exclusions and objects outside canvas blocks.
 - [ ] Mixed orientations/columns in live pagination.
 - [ ] Nested images, images beside tables and wrapping across page breaks.
 - [x] Split supported top-level wrapped paragraphs after the float ends; the wrapped prefix stays with its image.
@@ -27,9 +25,11 @@ User authorized completion of the remaining roadmap on 2026-10-29. This checklis
 - [x] Two-line widow/orphan balancing for supported ordinary text in live pages and preview, with a persisted paragraph opt-out and DOCX round trip.
 - [ ] Full widow/orphan balancing across nested layouts/columns/complex typography and nested-layout keep-rule parity.
 - [x] Optional page-bottom notes in supported paged editing and measured print preview, with bounded reservations and preserved endnote defaults.
-- [ ] Notes split across pages, complex-section/nested note parity and physical-reader/rendering certification.
+- [x] Page-bottom note continuations across live/preview pages, preserving literal text, reference identity and source notes without scaling.
+- [ ] Complex-section/nested note parity and physical-reader/rendering certification.
 - [x] Compatible continuous one-column and plain-text column sections can share preview pages.
-- [ ] Continuous sections with complex objects, geometry/furniture changes and full nested keep-rule parity.
+- [x] Compatible continuous columns with fitting tables/images/canvases and bounded object-aware text fragmentation in measured preview.
+- [ ] Continuous sections with geometry/furniture changes, nested sections and full nested keep-rule parity; live mixed-section pagination remains open.
 - [ ] Editor/preview/Word pagination consistency.
 
 ## Formats and review
@@ -41,7 +41,8 @@ User authorized completion of the remaining roadmap on 2026-10-29. This checklis
 - [x] Overlapping comment ranges and point comments in HTML/device state and native DOCX, with independent editing/removal.
 - [ ] Exact DOCX layout, unsupported/script-specific theme fonts, complex style semantics and other contents-field forms.
 - [x] Editable Slate Forge canvas data across DOCX export/reopen, with validated preview binding and an image-only export choice.
-- [ ] Native editable Word drawing/text-box reconstruction and broad cross-editor object fidelity.
+- [x] Opt-in native Word canvas shapes/text-box export and supported DrawingML reconstruction on import, reading edited Word text rather than stale original metadata.
+- [ ] Broad cross-editor object fidelity, nested native groups, mixed text/drawing paragraphs, advanced effects, pressure-varying paths and full typography parity.
 - [x] ODT content import/export for text, lists, ordinary tables, images and notes.
 - [x] ODT export/import of horizontal and vertical table spans with covered cells.
 - [x] Bounded ODT repeated-row/cell expansion.
@@ -58,17 +59,21 @@ User authorized completion of the remaining roadmap on 2026-10-29. This checklis
 - [x] Highlighted text comparison plus bounded formatting, structure, object and page-design difference reports.
 - [x] Exact-content move matching within parents, insertion-resistant structural reports and inline formatting comparison on shared text inside edited blocks.
 - [x] Globally unique exact-content moves between compared containers, including swaps and retained formatting checks.
-- [ ] Meaning-based matching of rewritten/moved blocks, moves into/out of unmatched whole containers and ambiguous repeated/unequal replacement gaps.
+- [x] Exact-content moves into/out of unmatched whole containers and bounded, mutual-best lexical matching of rewritten paragraphs, including unequal replacement gaps.
+- [ ] Semantic matching beyond shared wording and disambiguation of repeated/equally similar replacement or moved blocks.
 - [x] Placeholder checks covering notes and canvas text, with navigation to the owning editor.
 
 ## PDF, OCR and drawing
 - [x] AES-256 password-protected PDF export and explicit unlock-to-device-copy import, without retaining passwords.
-- [ ] Existing PDF text editing and XFA.
+- [x] In-place replacement of supported simple existing PDF text (unembedded standard Latin Type1 fonts, printable ASCII, direct page content text operators), with Undo/Redo and backup/recovery persistence.
+- [ ] General PDF text/font editing, embedded/subset/complex text, automatic text reflow and XFA.
 - [x] International PDF annotation/form appearances using an embedded local TTF/OTF with glyph-coverage checks.
-- [ ] Broad complex-script/bidirectional PDF layout and cross-reader font certification.
+- [x] Bidirectional/script-run ordering and explicit fontkit glyph advances/offsets for generated PDF annotation/form appearances, with embedded local fonts and preserved logical field values.
+- [ ] Broad script/font coverage, paragraph-level typography controls and cross-reader font/render certification.
 - [x] Numeric geometry editing for supported imported PDF widgets; readonly/unsupported fields remain protected.
 - [x] Final PDF export with one detached SHA-256/RSA PKCS#12 certificate signature; signed inputs are view/export-only.
-- [ ] Multiple/incremental signatures, trusted timestamps, revocation and long-term signature validation.
+- [x] Append additional detached RSA/SHA-256 signatures as incremental revisions while preserving and cryptographically testing earlier signed byte ranges; certified/locked-field policies are refused.
+- [ ] Trusted timestamps, revocation, long-term signature validation and certified/locked-field permission-policy support.
 - [ ] Larger PDF capacity with performance/storage validation.
 - [x] PDF page-range OCR using the local English engine.
 - [x] Local Arabic, simplified Chinese, French, German, Italian, Japanese, Portuguese, Russian and Spanish OCR, optionally combined with English.
@@ -79,15 +84,15 @@ User authorized completion of the remaining roadmap on 2026-10-29. This checklis
 - [ ] Physical stylus QA.
 
 ## Release verification
-- [ ] Download/reimport the exact downloaded files, including encrypted backups.
-- [ ] Actual browser-produced PDF inspection.
+- [x] Actual downloaded HTML, complete ZIP/PDF state and encrypted backups reimported across five CI browser configurations.
+- [x] Browser-exported PDF form fields parsed and checked; physical print/PDF visual inspection remains open.
 - [ ] Physical iPhone/iPad Safari, Android 12+ Chrome, desktop Chrome/Firefox/Safari.
 - [ ] Virtual/hardware keyboards, IME, rotation/safe areas and screen readers.
 - [ ] Real persistent-storage permission paths.
 - [ ] Installed PWA offline PDF/OCR and service-worker updates.
 - [ ] Native sharing, file associations and installed shortcuts.
 - [ ] Eviction, suspended/restored/competing tabs and long-document/table performance.
-- [ ] Restore automated browser access through supported platform infrastructure.
+- [x] Supported GitHub Actions browser infrastructure across Chromium, Firefox and WebKit; physical devices remain separate.
 
 ## Deferred product scope
 - [ ] Provider sign-in, cloud storage/sync, collaboration/permissions.

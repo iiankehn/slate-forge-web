@@ -15,7 +15,7 @@ function orderedMatches(pairs){
  const result=new Set();let item=indices.at(-1);while(item){result.add(item);item=previous.get(item)}return result;
 }
 export function compareDocuments(before,after,beforeLayout={},afterLayout={}, {maxNodes=10000,maxDetails=200,maxCharacters=200000,maxWork=2000000}={}){
- const counts={structure:0,formatting:0,objects:0,page:0},details=[],removed=[],added=[];let limited=false,work=maxWork,indexLimited=false;
+ const counts={structure:0,formatting:0,objects:0,page:0},details=[],removed=[],added=[];let limited=false,work=maxWork,indexLimited=false;const comparedA=new Set(),comparedB=new Set();
  const emit=(kind,path,description,extra={})=>{counts[kind]++;if(details.length<maxDetails)details.push({kind,path,description,...extra});else limited=true};
  function index(source){let visited=0,characters=0;function visit(node,path,depth){
   if(!node||typeof node!=='object')return null;if(++visited>maxNodes||depth>100){limited=true;return null}
@@ -40,6 +40,7 @@ export function compareDocuments(before,after,beforeLayout={},afterLayout={}, {m
   return false;
  }
  function compareNode(a,b){
+  comparedA.add(a);comparedB.add(b);
   if(a.type!==b.type)emit('structure',b.path,a.type+' → '+b.type,{beforePath:a.path});
   if(signature(a.attrs)!==signature(b.attrs)){if(paragraphTypes.has(a.type)&&paragraphTypes.has(b.type))emit('formatting',b.path,'Paragraph design or heading level changed',{beforePath:a.path});else if(objectNames[a.type]&&a.type===b.type)emit('objects',b.path,objectNames[a.type]+' content or design changed',{beforePath:a.path});else emit('structure',b.path,a.type+' properties changed',{beforePath:a.path})}
   if(paragraphTypes.has(a.type)&&paragraphTypes.has(b.type)&&formattingChanged(a,b))emit('formatting',b.path,'Text formatting changed on aligned text',{beforePath:a.path});
@@ -56,8 +57,11 @@ export function compareDocuments(before,after,beforeLayout={},afterLayout={}, {m
   const anchors=[{i:-1,j:-1},...pairs.filter(p=>ordered.has(p)),{i:a.length,j:b.length}];
   // Do not consume a globally unique exact counterpart as a rewritten local
   // block. This preserves cross-container swaps and moves beside replacements.
-  const reserved=node=>!indexLimited&&oldIdentities.get(node.key)===1&&newIdentities.get(node.key)===1;
+  const reserved=node=>!indexLimited&&(oldIdentities.get(node.key)===1&&newIdentities.get(node.key)===1||rewrites.has(node)||reverseRewrites.has(node));
   for(let k=1;k<anchors.length;k++){const left=anchors[k-1],right=anchors[k],old=[],current=[];for(let i=left.i+1;i<right.i;i++)if(!usedA.has(i))old.push(i);for(let j=left.j+1;j<right.j;j++)if(!usedB.has(j))current.push(j);const compatible=(i,j)=>!reserved(a[i])&&!reserved(b[j])&&(a[i].type===b[j].type||paragraphTypes.has(a[i].type)&&paragraphTypes.has(b[j].type));
+   // Confident rewritten counterparts within this ordered gap are edits,
+   // rather than moves caused merely by inserted siblings.
+   for(const i of old){const match=rewrites.get(a[i]),j=current.find(j=>b[j]===match);if(j!==undefined&&!usedA.has(i)&&!usedB.has(j)){usedA.add(i);usedB.add(j);compareNode(a[i],b[j])}}
    // A single compatible candidate per side is unambiguous even when an
    // unrelated object was inserted into the gap. Equal-size replacement gaps
    // otherwise retain order; we do not guess changed-text moves.
@@ -71,19 +75,30 @@ export function compareDocuments(before,after,beforeLayout={},afterLayout={}, {m
  // not become a supposedly unique move just because its local copy matched.
  const identities=root=>{const groups=new Map();function visit(node){if(!node)return;groups.set(node.key,(groups.get(node.key)||0)+1);for(const child of node.children)visit(child)}visit(root);return groups};
  const oldIdentities=identities(a),newIdentities=identities(b);
+ const flatten=root=>{const result=[];function walk(node){if(!node)return;result.push(node);for(const child of node.children)walk(child)}walk(root);return result},oldNodes=flatten(a),newNodes=flatten(b),rewrites=new Map(),reverseRewrites=new Map();
+ // Lexical similarity is an explicit bounded heuristic, not semantic inference.
+ // Require mutual best candidates with a margin; do not guess between repeats.
+ if(!indexLimited){const tokens=node=>new Set(node.text.normalize('NFKC').toLowerCase().match(/[\p{L}\p{N}\p{M}_]+/gu)||[]),eligible=(node,own,other)=>paragraphTypes.has(node.type)&&own.get(node.key)===1&&!other.has(node.key),olds=oldNodes.filter(node=>eligible(node,oldIdentities,newIdentities)),news=newNodes.filter(node=>eligible(node,newIdentities,oldIdentities)),sets=new Map([...olds,...news].map(node=>[node,tokens(node)])),rankA=new Map(),rankB=new Map();let complete=true;
+  const rank=(map,node,candidate,score)=>{const top=map.get(node)||[];top.push({node:candidate,score});top.sort((a,b)=>b.score-a.score);map.set(node,top.slice(0,2))};
+  outer:for(const old of olds){const left=sets.get(old);if(left.size<5)continue;for(const current of news){const right=sets.get(current);if(right.size<5)continue;const cost=left.size+right.size+1;if(cost>work){limited=true;complete=false;break outer}work-=cost;let shared=0;for(const word of left)if(right.has(word))shared++;const score=2*shared/(left.size+right.size);if(shared>=4&&score>=.6){rank(rankA,old,current,score);rank(rankB,current,old,score)}}}
+  if(complete)for(const [old,top]of rankA){const current=top[0].node,back=rankB.get(current);if(back?.[0].node===old&&top[0].score-(top[1]?.score||0)>=.12&&back[0].score-(back[1]?.score||0)>=.12){rewrites.set(old,current);reverseRewrites.set(current,old)}else limited=true}
+ }
+
  if(a&&b)compareNode(a,b);
- // Local matching runs first. Only unmatched roots from compared containers
- // participate, so an added/removed whole container remains one aggregate edit.
- // Comparing a moved root can expose further unmatched children; drain those
- // in subsequent rounds without ever matching a node more than once.
- const movedA=new Set(),movedB=new Set();
- const pendingKeys=new Set(added.map(node=>node.key));
+ // Descend unmatched containers as well: a removed wrapper can contain a
+ // paragraph moved into a newly added wrapper. Compare matched roots only once.
+ const movedA=new Set(),movedB=new Set(),pendingKeys=new Set(added.map(node=>node.key));
  for(const node of removed)if(pendingKeys.has(node.key)&&(oldIdentities.get(node.key)!==1||newIdentities.get(node.key)!==1))limited=true;
- if(!indexLimited){let cursor=0;while(cursor<removed.length){const end=removed.length,targets=new Map();for(const node of added)if(!movedB.has(node)&&newIdentities.get(node.key)===1)targets.set(node.key,node);
-  for(;cursor<end;cursor++){const old=removed[cursor],current=targets.get(old.key);if(!current||oldIdentities.get(old.key)!==1)continue;movedA.add(old);movedB.add(current);targets.delete(old.key);emit('structure',current.path,'Moved '+old.type+' from '+old.path,{beforePath:old.path,moved:true});compareNode(old,current)}
- }}
+ if(!indexLimited){const oldCandidates=()=>removed.flatMap(flatten).filter(node=>!comparedA.has(node)),newCandidates=()=>added.flatMap(flatten).filter(node=>!comparedB.has(node));let rounds=0,changed=true;
+  while(changed&&rounds++<100){changed=false;const targets=new Map(newCandidates().filter(node=>newIdentities.get(node.key)===1).map(node=>[node.key,node]));
+   for(const old of oldCandidates()){if(comparedA.has(old))continue;const exact=oldIdentities.get(old.key)===1?targets.get(old.key):null,current=exact||rewrites.get(old);if(!current||comparedB.has(current))continue;
+    movedA.add(old);movedB.add(current);targets.delete(old.key);emit('structure',current.path,'Moved '+old.type+(exact?'':' with edited text')+' from '+old.path,{beforePath:old.path,moved:true,...(!exact?{match:'text-similarity'}:{})});compareNode(old,current);changed=true;
+   }
+  }
+  if(changed)limited=true;
+ }
  for(const node of removed)if(!movedA.has(node))emit('structure',node.path,'Removed '+node.type);
  for(const node of added)if(!movedB.has(node))emit('structure',node.path,'Added '+node.type);
  const oldLayout=normalizeLayout(beforeLayout),newLayout=normalizeLayout(afterLayout);for(const key of designKeys)if(signature(oldLayout[key])!==signature(newLayout[key]))emit('page','Page design',key+' changed');
- return {counts,details,limited,hasDifferences:Object.values(counts).some(Boolean),formattingScope:'Exact-content blocks are matched across moves within their parent. Globally unique unmatched blocks also match between compared containers, retaining formatting checks and both paths. Formatting is compared on aligned shared text, including edited paragraphs; formatting of added or removed text has no counterpart. Repeated blocks and changed blocks in unequal gaps can be ambiguous. Matching does not infer meaning, rewritten moves or moves into or out of unmatched whole containers.'};
+ return {counts,details,limited,hasDifferences:Object.values(counts).some(Boolean),formattingScope:'Exact-content blocks match within and across containers, including unmatched wrappers. Edited paragraphs can match by bounded word overlap when each is the other’s clear best candidate; this is text similarity, not inferred meaning. Formatting is compared on aligned shared text; added or removed text has no counterpart. Repeated, weakly related or similarly scored candidates remain ambiguous.'};
 }

@@ -1,0 +1,15 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import fontkit from '@pdf-lib/fontkit';import {PDFDocument,PDFName,PDFRawStream,decodePDFRawStream} from 'pdf-lib';
+import {pdfTextRuns,shapedPDFFont,applyPDFGlyphPositions} from '../src/pdf-bidi.mjs';import {encodePDFFont} from '../src/pdf-fonts.mjs';import {buildPDF,loadPDF,newFormPDF} from '../src/pdf-model.mjs';
+const bytes=new Uint8Array(fs.readFileSync(new URL('./fixtures/DejaVuSans-bidi-subset.ttf',import.meta.url))),font=encodePDFFont(bytes,'Bidi fixture');
+test('mixed RTL/LTR text orders runs while preserving logical Arabic/Hebrew shaping input',()=>{
+ assert.deepEqual(pdfTextRuns('Hello שלום 123').map(run=>run.text),['Hello ','123','שלום ']);assert.deepEqual(pdfTextRuns('مرحبا world 123').map(run=>run.text),['world 123','مرحبا ']);assert.deepEqual(pdfTextRuns('Latin देवनागरी Latin').map(run=>run.script),['Latin','Devanagari','Latin']);assert.equal(pdfTextRuns('\u202b(שלום)\u202c')[0].text,')שלום(');assert.equal(pdfTextRuns('\u200fשלום').map(run=>run.text).join(''),'שלום');assert.throws(()=>pdfTextRuns('a'.repeat(20001)),/20,000/);
+});
+test('actual embedded glyph encoding follows the visual run order without reversing letters twice',async()=>{
+ const pdf=await PDFDocument.create();pdf.registerFontkit(fontkit);const embedded=await pdf.embedFont(bytes,{subset:true}),wrapped=shapedPDFFont(embedded),actual=wrapped.encodeText('Hello שלום 123').asString(),expected=embedded.encodeText('Hello ').asString()+embedded.encodeText('123').asString()+embedded.encodeText('שלום ').asString();assert.equal(actual,expected);assert.ok(wrapped.widthOfTextAtSize('Hello שלום 123',14)>0);
+});
+test('Arabic mark positions become explicit PDF text matrices and logical form values remain unchanged',async()=>{
+ const original=await PDFDocument.create(),page=original.addPage();original.getForm().createTextField('Bilingual').addToPage(page,{x:30,y:100,width:400,height:40});const logical='مرحبا world 123',output=await loadPDF(await buildPDF(await original.save(),{font,values:{Bilingual:logical},annotations:[{page:0,kind:'text',text:'السَّلَامُ 123',x:30,y:600,size:20}]}));assert.equal(output.getForm().getTextField('Bilingual').getText(),logical);const contents=output.getPage(0).node.Contents(),streams=Array.from({length:contents.size()},(_,index)=>contents.lookup(index)).filter(stream=>stream instanceof PDFRawStream),text=streams.map(stream=>Buffer.from(decodePDFRawStream(stream).decode()).toString('latin1')).join('');assert.ok((text.match(/ Tm/g)||[]).length>3,text);assert.ok((text.match(/ Tj/g)||[]).length>3);assert.ok(output.getForm().getTextField('Bilingual').acroField.getWidgets()[0].dict.has(PDFName.of('AP')));
+});
+test('direction controls do not require visible glyphs, while missing script glyphs still fail clearly',async()=>{
+ const source=await newFormPDF();assert.ok((await buildPDF(source,{font,annotations:[{page:0,kind:'text',text:'\u202bשלום 123\u202c'}]})).length);await assert.rejects(buildPDF(source,{font,annotations:[{page:0,kind:'text',text:'漢字'}]}),/does not contain/);
+});

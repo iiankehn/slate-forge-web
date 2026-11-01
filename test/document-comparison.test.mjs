@@ -85,9 +85,9 @@ test('global repeats cannot become unique moves when another occurrence matched 
  const result=compareDocuments(doc(quote(p('Left'),p('Repeat')),quote(p('Right')),p('Repeat')),doc(quote(p('Left')),quote(p('Right'),p('Repeat')),p('Repeat')));
  assert.equal(result.details.some(d=>d.moved),false);assert.equal(result.counts.structure,2);assert.equal(result.limited,true);
 });
-test('new and deleted whole containers remain aggregate changes',()=>{
+test('a paragraph moved into a new whole container is matched without duplicating its removal',()=>{
  const result=compareDocuments(doc(quote(p('Left'),p('Transfer')),quote(p('Right'))),doc(quote(p('Left')),quote(p('Right')),{type:'bulletList',content:[{type:'listItem',content:[p('Transfer')]}]}));
- assert.equal(result.details.some(d=>d.moved),false);assert.equal(result.counts.structure,2);
+ assert.equal(result.details.filter(d=>d.moved).length,1);assert.equal(result.counts.structure,2);assert.equal(result.details.find(d=>d.moved).path,'Document/3/1/1');
 });
 test('rewritten cross-container paragraphs remain additions and removals',()=>{
  const result=compareDocuments(doc(quote(p('Left'),p('Old wording')),quote(p('Right'))),doc(quote(p('Left')),quote(p('Right'),p('New wording'))));
@@ -97,4 +97,18 @@ test('truncated indexes do not claim globally unique moves',()=>{
  const before=doc(quote(p('Left'),p('Transfer')),quote(p('Right')),p('Tail')),after=doc(quote(p('Left')),quote(p('Right'),p('Transfer')),p('Tail'));
  for(const options of [{maxNodes:10},{maxCharacters:15}]){const result=compareDocuments(before,after,{}, {},options);assert.ok(result.limited);assert.equal(result.details.some(d=>d.moved),false)}
  const limited=compareDocuments(before,after,{}, {},{maxDetails:0});assert.equal(limited.counts.structure,1);assert.equal(limited.details.length,0);assert.ok(limited.limited);
+});
+
+const budget='The regional project budget includes staffing travel equipment and training';
+test('a confidently rewritten move retains shared formatting checks and reports its matching method',()=>{
+ const before=doc(quote(p('Left anchor'),p(budget)),quote(p('Right anchor'))),after=doc(quote(p('Left anchor')),quote(p('Right anchor'),p([t(budget.replace('training','expanded training'),[{type:'bold'}])]))),snapshot=JSON.stringify([before,after]),result=compareDocuments(before,after);assert.equal(result.details.filter(item=>item.moved).length,1);assert.equal(result.details.find(item=>item.moved).match,'text-similarity');assert.equal(result.counts.formatting,1);assert.equal(result.details.find(item=>item.moved).beforePath,'Document/1/2');assert.equal(result.details.find(item=>item.moved).path,'Document/2/2');assert.equal(result.limited,false);assert.equal(JSON.stringify([before,after]),snapshot);
+});
+test('rewritten paragraphs in the same anchored gap are edits, including unequal replacement gaps',()=>{
+ const result=compareDocuments(doc(p('Anchor'),p(budget),p('End')),doc(p('Anchor'),p('New short insertion'),p(budget+' tomorrow'),p('End')));assert.equal(result.details.filter(item=>item.moved).length,0);assert.equal(result.counts.structure,1);assert.match(result.details[0].description,/Added/);
+});
+test('moves out of removed containers and between two new wrapper types preserve both paths',()=>{
+ const list=text=>({type:'bulletList',content:[{type:'listItem',content:[p(text)]}]}),before=doc(quote(p('Left anchor')),list(budget)),after=doc(quote(p('Left anchor'),p(budget)));const result=compareDocuments(before,after);assert.equal(result.details.filter(item=>item.moved).length,1);assert.equal(result.counts.structure,2);assert.equal(result.details.find(item=>item.moved).beforePath,'Document/2/1/1');const wrappers=compareDocuments(doc(quote(p(budget))),doc(list(budget)));assert.equal(wrappers.details.filter(item=>item.moved).length,1);assert.equal(wrappers.counts.structure,3);
+});
+test('similarly scored rewritten candidates remain explicitly ambiguous instead of invented moves',()=>{
+ const before=doc(quote(p('Left'),p(budget)),quote(p('Right'))),after=doc(quote(p('Left')),quote(p('Right'),p(budget+' tomorrow'),p(budget+' yesterday'))),result=compareDocuments(before,after);assert.equal(result.details.some(item=>item.match==='text-similarity'),false);assert.ok(result.limited);const bounded=compareDocuments(before,after,{}, {},{maxWork:1});assert.ok(bounded.limited);assert.equal(bounded.details.some(item=>item.match==='text-similarity'),false);
 });
