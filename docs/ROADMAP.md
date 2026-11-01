@@ -11,7 +11,7 @@ Target: complete feature implementation by end of day if possible. This is a bes
 | 1. Image placement and wrapping | Free page positioning, two-sided text flow, page exclusions, nested images, images beside tables, and wrapping through page breaks. |
 | 2. Pagination and sections | Mixed orientations/columns in live editing; remaining nested-section, keep-rule, widow/orphan and footnote cases; better editor/preview/Word consistency. |
 | 3. DOCX/ODT fidelity | Unsupported complex layouts, styles, fields, master pages, drawing effects and typography cases across editors. |
-| 4. Structural review | Nested suggestions, partially revised Word table rows, and paragraph split/join revisions. |
+| 4. Structural review | Supported partial Word row revisions and adjacent rich-text paragraph split/join revisions are implemented in source. Nested suggestions and remaining complex/container-crossing revision cases remain. |
 | 5. PDF editing | Reflow that moves subsequent content, remaining unmapped-font and vertical-text cases, and broader script/font handling. |
 | 6. XFA forms | Bound pure-XFA multiple selections, common calculation/field scripts and reviewed XML/XDP/PDF submissions are implemented in source. Advanced script/submission compatibility and unbound/conflicting data bindings remain. |
 | 7. PDF signature permissions | Broader certified-document workflows involving earlier form filling, annotations and appearance changes. |

@@ -1,4 +1,4 @@
-import {XmlComponent} from 'docx';
+import {XmlComponent,Paragraph,TableRow} from 'docx';
 import {reviewAttrs} from './review.mjs';
 const W='http://schemas.openxmlformats.org/wordprocessingml/2006/main';
 const children=(node,key)=>Array.isArray(node[key])?node[key]:(node[key]=[]);
@@ -7,7 +7,7 @@ function deletionText(value){if(Array.isArray(value))return value.map(deletionTe
 
 export function assertExportableBlockRevisions(node,inside=false){
  if(node.type==='blockRevision'){if(inside)throw Error('Decide nested structural suggestions before DOCX export.');inside=true}
- else if(inside&&(node.type==='columnSection'||node.marks?.some(mark=>mark.type==='reviewChange')))throw Error('Decide text revisions or section changes inside a structural suggestion before DOCX export, or use HTML to retain them.');
+ else if(inside&&(node.attrs?.rowChange||node.attrs?.paragraphBoundaryChange||node.type==='columnSection'||node.marks?.some(mark=>mark.type==='reviewChange')))throw Error('Decide text, row, paragraph-boundary or section revisions inside a structural suggestion before DOCX export, or use HTML to retain them.');
  for(const child of node.content||[])assertExportableBlockRevisions(child,inside);
 }
 
@@ -30,6 +30,15 @@ export class NativeBlockRevision extends XmlComponent{
   return {'w:sdt':[{'w:sdtPr':[{'w:alias':[{_attr:{'w:val':'Tracked block change'}}]},{'w:tag':[{_attr:{'w:val':'SlateForgeRevision:'+a.id+':'+(this.move?'move':'edit')}}]}]},{'w:sdtContent':content}]};
  }
 }
+function nativeMarker(attributes,counters){const a=reviewAttrs(attributes);return {['w:'+(a.kind==='delete'?'del':'ins')]:[{_attr:{'w:id':counters.changeIndex++,'w:author':a.author,'w:date':a.date}}]}}
+export class NativeBoundaryParagraph extends Paragraph{
+ constructor(options,attributes,counters){super(options);this.boundaryAttributes=attributes;this.boundaryCounters=counters}
+ prepForXml(context){const node=super.prepForXml(context),props=property(node,'w:p','w:pPr'),run=property(props,'w:pPr','w:rPr');children(run,'w:rPr').push(nativeMarker(this.boundaryAttributes,this.boundaryCounters));return node}
+}
+export class NativeRevisionRow extends TableRow{
+ constructor(options,attributes,counters){super(options);this.rowAttributes=attributes;this.rowCounters=counters}
+ prepForXml(context){const node=super.prepForXml(context);if(this.rowAttributes){const props=property(node,'w:tr','w:trPr');children(props,'w:trPr').push(nativeMarker(this.rowAttributes,this.rowCounters))}return node}
+}
 const direct=(node,name)=>[...node?.children||[]].find(child=>child.namespaceURI===W&&child.localName===name),all=(node,name)=>[...node.getElementsByTagNameNS(W,name)],val=(node,key)=>node?.getAttributeNS(W,key)||'';
 const revisionNames=new Set(['ins','del','moveFrom','moveTo']);
 function nativeBlockChange(node){
@@ -49,7 +58,7 @@ function nativeBlockChange(node){
 }
 
 export function prepareDocxBlockRevisions(xml,warnings=[]){
- const boundaries=new Map(),covered=new Set(),reserved=new Set(all(xml,'pStyle').map(style=>val(style,'val')));let count=0;
+ const boundaries=new Map(),covered=new Set(),reserved=new Set([...all(xml,'pStyle'),...all(xml,'rStyle')].map(style=>val(style,'val')));let count=0;
  function clean(node){
   for(const wrapper of [...node.getElementsByTagNameNS(W,'ins'),...node.getElementsByTagNameNS(W,'del'),...node.getElementsByTagNameNS(W,'moveFrom'),...node.getElementsByTagNameNS(W,'moveTo')].reverse()){
    // Keep formatting-property revisions separate from structural decisions.
@@ -81,17 +90,35 @@ export function prepareDocxBlockRevisions(xml,warnings=[]){
   if(covered.has(node)||!xml.documentElement.contains(node))continue;let ancestor=node.parentElement,skip=false;while(ancestor&&ancestor!==xml.documentElement){if(['txbxContent','p','tbl'].includes(ancestor.localName)){skip=true;break}ancestor=ancestor.parentElement}if(skip)continue;
   const attrs=nativeBlockChange(node);if(attrs){const move=moveOwners.get(node);surround([node],move&&attrs.operation==='move'&&move.kind===attrs.kind?{...attrs,id:move.id}:attrs);}
  }
- if(all(xml,'trPr').some(props=>[...props.children].some(child=>child.namespaceURI===W&&['ins','del'].includes(child.localName))))warnings.push('Partially revised Word tables were imported with their current rows; row-level review decisions could not be retained.');
- if(all(xml,'pPr').some(props=>[...direct(props,'rPr')?.children||[]].some(child=>child.namespaceURI===W&&revisionNames.has(child.localName))))warnings.push('Word paragraph split/join revisions retained supported text changes, but their paragraph-boundary decisions could not be retained.');
+ boundaries.paragraphMarkers=new Map();boundaries.expectedRows=0;
+ const fromMarker=(marker,prefix)=>/^-?\d{1,50}$/.test(val(marker,'id'))?reviewAttrs({id:prefix+val(marker,'id'),author:val(marker,'author'),date:val(marker,'date'),kind:marker.localName==='del'?'delete':'insert'}):null;
+ for(const row of all(xml,'tr')){
+  const props=direct(row,'trPr'),marker=[...props?.children||[]].find(node=>['ins','del'].includes(node.localName)&&node.namespaceURI===W);if(!marker)continue;
+  const attrs=fromMarker(marker,'word-row-'),cell=[...row.children].filter(node=>node.localName==='tc').find(cell=>{const merge=direct(direct(cell,'tcPr'),'vMerge');return !merge||val(merge,'val')==='restart'});if(!attrs||!cell){warnings.push('An unsupported Word row revision could not be retained.');continue}
+  cell.prepend(boundary(attrs,'row'));boundaries.expectedRows++;marker.remove();
+ }
+ for(const paragraph of all(xml,'p')){
+  const runProps=direct(direct(paragraph,'pPr'),'rPr'),marker=[...runProps?.children||[]].find(node=>revisionNames.has(node.localName)&&node.namespaceURI===W);if(!marker)continue;
+  const attrs=['ins','del'].includes(marker.localName)?fromMarker(marker,'word-boundary-'):null;if(!attrs){warnings.push('An unsupported paragraph move-boundary revision could not be retained.');continue}
+  if(++count>2000)throw Error('DOCX has too many structural revision boundaries.');let id='ForgeParagraphBoundary'+count;while(reserved.has(id))id+='X';reserved.add(id);boundaries.paragraphMarkers.set(id,attrs);
+  const run=xml.createElementNS(W,'w:r'),props=xml.createElementNS(W,'w:rPr'),style=xml.createElementNS(W,'w:rStyle'),text=xml.createElementNS(W,'w:t');style.setAttributeNS(W,'w:val',id);text.textContent='\uFFFC';props.append(style);run.append(props,text);paragraph.append(run);marker.remove();
+ }
  boundaries.moveRuns=moveRuns;return boundaries;
 }
 
-export function restoreDocxBlockBoundaries(html){
+export function restoreDocxBlockBoundaries(html,{warnings=[],expectedRows=0}={}){
+ let restoredRows=0;
  const markers=[...html.querySelectorAll('[data-forge-block-boundary]')];
- for(const start of markers){let data;try{data=JSON.parse(decodeURIComponent(start.getAttribute('data-forge-block-boundary')))}catch{start.remove();continue}if(data.edge!=='start'||!start.parentNode)continue;
+ for(const start of markers){let data;try{data=JSON.parse(decodeURIComponent(start.getAttribute('data-forge-block-boundary')))}catch{start.remove();continue}if(data.edge==='row'){const row=start.closest('tr');if(row){row.setAttribute('data-forge-row-change',encodeURIComponent(JSON.stringify(data.attrs)));restoredRows++}start.remove();continue}if(data.edge!=='start'||!start.parentNode)continue;
   const siblings=[];let end=start.nextSibling;while(end){if(end.nodeType===1&&end.hasAttribute('data-forge-block-boundary')){let value;try{value=JSON.parse(decodeURIComponent(end.getAttribute('data-forge-block-boundary')))}catch{}if(value?.edge==='end'&&value.attrs.id===data.attrs.id)break}siblings.push(end);end=end.nextSibling}
   if(!end)throw Error('A DOCX structural revision has unmatched content boundaries.');
   const wrapper=html.createElement('div');wrapper.setAttribute('data-forge-block-change',encodeURIComponent(JSON.stringify(data.attrs)));start.before(wrapper);for(const sibling of siblings)wrapper.append(sibling);if(!wrapper.children.length){const p=html.createElement('p');wrapper.append(p)}start.remove();end.remove();
  }
+ for(const marker of html.querySelectorAll('[data-forge-boundary-marker]')){
+  let paragraph=marker.closest('p,h1,h2,h3,h4,h5,h6,pre');
+  if(!paragraph){const item=marker.closest('li');if(item){let anchor=marker;while(anchor.parentNode!==item)anchor=anchor.parentNode;const inline=node=>node.nodeType!==1||!['UL','OL','P','DIV','TABLE','PRE','BLOCKQUOTE'].includes(node.tagName);let first=anchor;while(first.previousSibling&&inline(first.previousSibling))first=first.previousSibling;const nodes=[];for(let node=first;node&&inline(node);node=node.nextSibling)nodes.push(node);paragraph=html.createElement('p');first.before(paragraph);paragraph.append(...nodes)}}
+  if(paragraph&&paragraph.tagName!=='PRE')paragraph.setAttribute('data-forge-boundary-change',marker.getAttribute('data-forge-boundary-marker'));else warnings.push('A paragraph-boundary revision in an unsupported text container could not be retained.');marker.remove();
+ }
+ if(restoredRows!==expectedRows)warnings.push('Some revised Word rows could not be mapped through merged or hidden table cells.');
  for(const marker of html.querySelectorAll('[data-forge-block-boundary]'))marker.remove();
 }

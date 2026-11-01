@@ -1,7 +1,7 @@
 import {paragraphTextDirection} from './text-direction.mjs';
 import {fontFamily} from './font-families.mjs';
 import {nativeCanvasRun} from './docx-native-designs.mjs';
-import {NativeBlockRevision,assertExportableBlockRevisions} from './docx-block-revisions.mjs';
+import {NativeBlockRevision,NativeBoundaryParagraph,NativeRevisionRow,assertExportableBlockRevisions} from './docx-block-revisions.mjs';
 import {attachEditableDesigns} from './docx-designs.mjs';
 import {formatAttrs,formattingSnapshot,paragraphChangeAttrs} from './format-review.mjs';
 export function docxTextColor(value){if(/^#[a-f\d]{6}$/i.test(value||''))return value.slice(1);const match=/^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/i.exec(value||'');return match&&match.slice(1).every(n=>Number(n)<=255)?match.slice(1).map(n=>Number(n).toString(16).padStart(2,'0')).join(''):null}
@@ -43,7 +43,7 @@ function paragraph(node,ctx,options={}){
   if(a.paragraphChange){const change=paragraphChangeAttrs(a.paragraphChange),before=change.before;if(node.type==='heading'&&before.level!==undefined&&before.level!==a.level)throw Error('Accept or reject tracked heading-level changes before DOCX export, or use HTML.');props.revision={bidirectional:paragraphTextDirection({...node,attrs:before})==='rtl',id:ctx.referenceCounters.changeIndex++,author:change.author,date:change.date,alignment:({left:AlignmentType.LEFT,right:AlignmentType.RIGHT,center:AlignmentType.CENTER,justify:AlignmentType.JUSTIFIED})[before.textAlign]||AlignmentType.LEFT,spacing:{after:Math.round(parseFloat(before.paragraphSpacing??'8')*20),line:Math.round(Number(before.paragraphLine||ctx.layout.line)*240)},indent:{left:before.indent*480},keepNext:node.type==='heading'||before.keepWithNext,keepLines:before.keepTogether,pageBreakBefore:before.pageBreakBefore,widowControl:before.widowControl}}
   if(node.type==='heading'){props.heading='Heading'+Math.min(6,Math.max(1,a.level||1));props.children=[new Bookmark({id:'sf-heading-'+(++ctx.headingIndex),children:props.children})]}
   if(node.type==='codeBlock'){props.style='ForgeCode';props.children=runs(node.content,{...ctx,font:'Courier New',heading:false,defaultSize:12,code:true})}
-  return new Paragraph(props);
+  return a.paragraphBoundaryChange?new NativeBoundaryParagraph(props,a.paragraphBoundaryChange,ctx.referenceCounters):new Paragraph(props);
 }
 function blocks(nodes,ctx,list={}){return (nodes||[]).flatMap(node=>{
   switch(node.type){
@@ -67,11 +67,11 @@ function blocks(nodes,ctx,list={}){return (nodes||[]).flatMap(node=>{
       const edge={style:BorderStyle.SINGLE,size:4,color:palette.border},none={style:BorderStyle.NONE,size:0,color:palette.border};
       const borders=design.tableStyle==='grid'?{top:edge,bottom:edge,left:edge,right:edge,insideHorizontal:edge,insideVertical:edge}:design.tableStyle==='striped'?{top:edge,bottom:edge,left:none,right:none,insideHorizontal:edge,insideVertical:none}:{top:none,bottom:none,left:none,right:none,insideHorizontal:none,insideVertical:none};
       const columns=Math.max(1,(node.content?.[0]?.content||[]).reduce((sum,cell)=>sum+(cell.attrs?.colspan||1),0));
-      return [new Table({width:{size:100,type:WidthType.PERCENTAGE},borders,rows:(node.content||[]).map((row,index)=>new TableRow({cantSplit:true,tableHeader:(row.content||[]).every(cell=>cell.type==='tableHeader'),children:(row.content||[]).map(cell=>{
+      return [new Table({width:{size:100,type:WidthType.PERCENTAGE},borders,rows:(node.content||[]).map((row,index)=>new NativeRevisionRow({cantSplit:true,tableHeader:(row.content||[]).every(cell=>cell.type==='tableHeader'),children:(row.content||[]).map(cell=>{
         const header=cell.type==='tableHeader',previousHeader=ctx.headerCell,previousHeaderColor=ctx.headerColor;ctx.headerCell=header;ctx.headerColor=palette.accent;const width=ctx.contentWidth;ctx.contentWidth=Math.max(20,width*(cell.attrs?.colspan||1)/columns-2*TABLE_PADDING[design.tableDensity]);const children=blocks(cell.content,ctx);ctx.contentWidth=width;ctx.headerCell=previousHeader;ctx.headerColor=previousHeaderColor;
         let shade=header?palette.tint:design.tableStyle==='striped'&&index%2===1?palette.stripe:undefined;if(design.tableStyle==='minimal')shade=undefined;
         return new TableCell({columnSpan:cell.attrs?.colspan||1,rowSpan:cell.attrs?.rowspan||1,children:children.length?children:[new Paragraph('')],margins:{top:padding,bottom:padding,left:padding,right:padding},shading:shade?{fill:shade}:undefined,borders:design.tableStyle==='minimal'?{top:none,left:none,right:none,bottom:header?{style:BorderStyle.SINGLE,size:12,color:palette.accent}:none}:undefined})
-      })}))})];
+      })},row.attrs?.rowChange,ctx.referenceCounters))})];
     }
     case 'image':{
       const match=/^data:image\/(png|jpeg|webp|gif);base64,(.+)$/i.exec(node.attrs?.src||'');
