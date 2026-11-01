@@ -1,8 +1,10 @@
+import {hasMarkedPDFSignatureHistory} from './pdf-signature-history.mjs';
 import {PDFName,PDFDict,PDFArray,PDFNull} from 'pdf-lib';
 const name=value=>PDFName.of(value);
 export const hasXFA=pdf=>pdf.context.lookup(pdf.catalog.get(name('AcroForm')))?.has?.(name('XFA'))===true;
 // Inspect fields without calling getForm(), which can remove the XFA entry.
 export function hasPDFSignature(pdf){
+ if(hasMarkedPDFSignatureHistory(pdf))return true;for(const [,object]of pdf.context.enumerateIndirectObjects())if(object instanceof PDFDict&&object.has(name('ByteRange'))&&object.has(name('Contents')))return true;
  if(pdf.context.lookup(pdf.catalog.get(name('Perms')))?.has?.(name('DocMDP')))return true;
  const form=pdf.context.lookup(pdf.catalog.get(name('AcroForm'))),fields=form?.lookupMaybe?.(name('Fields'),PDFArray);if(!fields)return false;
  const seen=new Set();let count=0;
