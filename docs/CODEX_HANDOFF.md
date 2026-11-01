@@ -1,6 +1,11 @@
 # Slate Forge web — Codex handoff
 
 
+## Active mandate — complete the whole roadmap
+
+The user explicitly clarified that finishing selected batches is insufficient: continue all remaining roadmap work, with no routine approval questions and no final response at a release milestone. Work is on `feat/full-roadmap-completion`. The published runtime below is historical; current source is an unshipped checkpoint. See FULL_ROADMAP_PROGRESS.md. Never mark open features or physical/Word certification complete without implementation/evidence. Do not imply execution continues after a final response.
+
+
 ## Latest verified public release — native ODT sections
 
 PR #5 is merged at `a5eea5fd0207eb5c678d963423b49faca438efd6`. [CI 41267909541](https://github.com/iiankehn/slate-forge-web/actions/runs/41267909541) and [Pages 41268357642](https://github.com/iiankehn/slate-forge-web/actions/runs/41268357642) both passed all 418 Node cases across 67 test files, production/static checks and 65 browser scenarios without retries. Pages deployed successfully. Live root matches canonical HTML; live app.js includes native ODT section handling and table-column declarations, and live help describes the supported ODT sections. Public URL: https://slate-web.iiankehn.com/ .

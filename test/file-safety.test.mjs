@@ -16,7 +16,7 @@ test('HTML import retains supported formatting and embedded raster images',()=>{
  for(let text of ['<h1>','text-align:center','line-height:2','font-size:18pt','colspan="2"','href="https://example.com"','data:image/png;base64,YWJj','data-page-break="true"'])assert.ok(result.includes(text),text);
 });
 test('HTML import rejects CSS URLs, positioning and unsupported attributes',()=>{
- const result=sanitize('<p style="background-image:url(https://evil.example);position:fixed;color:red;text-align:right" data-secret="abc" id="attack"><span style="font-family:evil;font-size:1000pt">Text</span></p>');
+ const result=sanitize('<p style="background-image:url(https://evil.example);position:fixed;color:red;text-align:right" data-secret="abc" id="attack"><span style="font-family:var(--evil);font-size:1000pt">Text</span></p>');
  assert.doesNotMatch(result,/evil|background-image|position|data-secret|id=|1000pt/);assert.match(result,/text-align:right/);
 });
 test('links reject obfuscated and unsupported schemes',()=>{

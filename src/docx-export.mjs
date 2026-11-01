@@ -1,3 +1,5 @@
+import {paragraphTextDirection} from './text-direction.mjs';
+import {fontFamily} from './font-families.mjs';
 import {nativeCanvasRun} from './docx-native-designs.mjs';
 import {assertNoBlockRevisions} from './block-review.mjs';
 import {attachEditableDesigns} from './docx-designs.mjs';
@@ -15,7 +17,7 @@ import {normalizeImageDesign,normalizeTableDesign,TABLE_PALETTES,TABLE_PADDING} 
 const twips=mm=>Math.round(mm*1440/25.4);
 export function docxRunProperties(marks=[],ctx={}){
   let style=marks.find(m=>m.type==='textStyle')?.attrs||{};
-  let font=style.fontFamily||ctx.font,size=parseFloat(style.fontSize||String(ctx.defaultSize||12));
+  let font=fontFamily(style.fontFamily,ctx.font),size=parseFloat(style.fontSize||String(ctx.defaultSize||12));
   if((style.fontSize||'').endsWith('px'))size*=.75;if(font==='system-ui')font='Arial';
   let props={font:marks.some(m=>m.type==='code')?'Courier New':font,size:Math.max(12,Math.min(192,Math.round(size*2))),bold:ctx.heading||ctx.headerCell||marks.some(m=>m.type==='bold'),italics:marks.some(m=>m.type==='italic'),strike:marks.some(m=>m.type==='strike')};
   if(marks.some(m=>m.type==='superscript'))props.superScript=true;if(marks.some(m=>m.type==='subscript'))props.subScript=true;
@@ -36,9 +38,9 @@ function runs(nodes=[],ctx){return nodes.flatMap(n=>{
 })}
 function paragraph(node,ctx,options={}){
   let a=node.attrs||{},line=Number(a.paragraphLine||ctx.layout.line);
-  let props={widowControl:a.widowControl!==false,keepNext:node.type==='heading'||a.keepWithNext===true,keepLines:a.keepTogether===true,pageBreakBefore:a.pageBreakBefore===true,children:runs(node.content,{...ctx,heading:node.type==='heading',font:node.type==='heading'?DOCUMENT_STYLES[ctx.layout.theme].headingFont:ctx.font,defaultColor:node.type==='heading'?(ctx.layout.headingColor?.slice(1)||DOCUMENT_STYLES[ctx.layout.theme].color):undefined,defaultSize:node.type==='heading'?(DOCUMENT_STYLES[ctx.layout.theme].sizes[(node.attrs?.level||1)-1]||15):12}),alignment:({left:AlignmentType.LEFT,right:AlignmentType.RIGHT,center:AlignmentType.CENTER,justify:AlignmentType.JUSTIFIED})[a.textAlign]||AlignmentType.LEFT,
+  let props={bidirectional:paragraphTextDirection(node)==='rtl',widowControl:a.widowControl!==false,keepNext:node.type==='heading'||a.keepWithNext===true,keepLines:a.keepTogether===true,pageBreakBefore:a.pageBreakBefore===true,children:runs(node.content,{...ctx,heading:node.type==='heading',font:node.type==='heading'?DOCUMENT_STYLES[ctx.layout.theme].headingFont:ctx.font,defaultColor:node.type==='heading'?(ctx.layout.headingColor?.slice(1)||DOCUMENT_STYLES[ctx.layout.theme].color):undefined,defaultSize:node.type==='heading'?(DOCUMENT_STYLES[ctx.layout.theme].sizes[(node.attrs?.level||1)-1]||15):12}),alignment:({left:AlignmentType.LEFT,right:AlignmentType.RIGHT,center:AlignmentType.CENTER,justify:AlignmentType.JUSTIFIED})[a.textAlign]||(paragraphTextDirection(node)==='rtl'?AlignmentType.RIGHT:AlignmentType.LEFT),
     spacing:{after:Math.round(parseFloat(a.paragraphSpacing??'8')*20),line:Math.round(line*240)},indent:{left:Math.min(6,Math.max(0,Number(a.indent||0)))*480},...options};
-  if(a.paragraphChange){const change=paragraphChangeAttrs(a.paragraphChange),before=change.before;if(node.type==='heading'&&before.level!==undefined&&before.level!==a.level)throw Error('Accept or reject tracked heading-level changes before DOCX export, or use HTML.');props.revision={id:ctx.referenceCounters.changeIndex++,author:change.author,date:change.date,alignment:({left:AlignmentType.LEFT,right:AlignmentType.RIGHT,center:AlignmentType.CENTER,justify:AlignmentType.JUSTIFIED})[before.textAlign]||AlignmentType.LEFT,spacing:{after:Math.round(parseFloat(before.paragraphSpacing??'8')*20),line:Math.round(Number(before.paragraphLine||ctx.layout.line)*240)},indent:{left:before.indent*480},keepNext:node.type==='heading'||before.keepWithNext,keepLines:before.keepTogether,pageBreakBefore:before.pageBreakBefore,widowControl:before.widowControl}}
+  if(a.paragraphChange){const change=paragraphChangeAttrs(a.paragraphChange),before=change.before;if(node.type==='heading'&&before.level!==undefined&&before.level!==a.level)throw Error('Accept or reject tracked heading-level changes before DOCX export, or use HTML.');props.revision={bidirectional:paragraphTextDirection({...node,attrs:before})==='rtl',id:ctx.referenceCounters.changeIndex++,author:change.author,date:change.date,alignment:({left:AlignmentType.LEFT,right:AlignmentType.RIGHT,center:AlignmentType.CENTER,justify:AlignmentType.JUSTIFIED})[before.textAlign]||AlignmentType.LEFT,spacing:{after:Math.round(parseFloat(before.paragraphSpacing??'8')*20),line:Math.round(Number(before.paragraphLine||ctx.layout.line)*240)},indent:{left:before.indent*480},keepNext:node.type==='heading'||before.keepWithNext,keepLines:before.keepTogether,pageBreakBefore:before.pageBreakBefore,widowControl:before.widowControl}}
   if(node.type==='heading'){props.heading='Heading'+Math.min(6,Math.max(1,a.level||1));props.children=[new Bookmark({id:'sf-heading-'+(++ctx.headingIndex),children:props.children})]}
   if(node.type==='codeBlock'){props.style='ForgeCode';props.children=runs(node.content,{...ctx,font:'Courier New',heading:false,defaultSize:12,code:true})}
   return new Paragraph(props);

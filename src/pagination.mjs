@@ -1,3 +1,4 @@
+import {fontCSS} from './font-families.mjs';
 import {collectPageNotes,pageNoteSection,allocatePageNotes} from './page-notes.mjs';
 import {balanceLineBreak,textCoordinates} from './line-pagination.mjs';
 import {normalizeLayout} from './document-model.mjs';
