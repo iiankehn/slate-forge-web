@@ -1,23 +1,24 @@
+import {structuralDiff,containsBlockRevision,movedBlockPlan} from './structural-diff.mjs';
 import {ReplaceStep,ReplaceAroundStep} from '@tiptap/pm/transform';
 import {Extension,Node} from '@tiptap/core';
 import {Plugin,Selection,NodeSelection} from '@tiptap/pm/state';
 import {Fragment} from '@tiptap/pm/model';
 import {closeHistory} from '@tiptap/pm/history';
 import {reviewAttrs,reviewKey} from './review.mjs';
-const attrs=value=>{const a=reviewAttrs(value);return {id:a.id,author:a.author,date:a.date,kind:a.kind}};
+const attrs=value=>{const a=reviewAttrs(value);return {id:a.id,author:a.author,date:a.date,kind:a.kind,...(value?.operation==='move'?{operation:'move'}:{})}};
 const decode=value=>{try{return attrs(JSON.parse(decodeURIComponent(value)))}catch{return attrs()}};
 export const BlockRevision=Node.create({name:'blockRevision',group:'block',content:'block+',defining:true,isolating:true,
- addAttributes(){return Object.fromEntries(Object.keys(attrs()).map(key=>[key,{default:attrs()[key],parseHTML:el=>decode(el.getAttribute('data-forge-block-change'))[key],renderHTML:()=>({})}]))},
+ addAttributes(){return {...Object.fromEntries(Object.keys(attrs()).map(key=>[key,{default:attrs()[key],parseHTML:el=>decode(el.getAttribute('data-forge-block-change'))[key],renderHTML:()=>({})}])),operation:{default:'edit',parseHTML:el=>decode(el.getAttribute('data-forge-block-change')).operation||'edit',renderHTML:()=>({})}}},
  parseHTML(){return [{tag:'div[data-forge-block-change]'}]},
  renderHTML({node}){const a=attrs(node.attrs);return ['div',{'data-forge-block-change':encodeURIComponent(JSON.stringify(a)),class:'forge-block-revision forge-change '+a.kind,...(a.kind==='delete'?{contenteditable:'false'}:{}),title:a.author+' · '+a.kind+' blocks'},0]}
 });
 export function blockReviewItems(doc){const items=new Map();doc.descendants((node,pos)=>{if(node.type.name!=='blockRevision')return;const a=attrs(node.attrs),item=items.get(a.id)||{...a,from:pos,to:pos+node.nodeSize,inserted:0,deleted:0,text:''};item.to=pos+node.nodeSize;item[a.kind==='delete'?'deleted':'inserted']+=node.childCount;item.text+=(item.text?' · ':'')+node.textContent.slice(0,160);items.set(a.id,item);return false});return [...items.values()]}
 export function decideBlocks(state,id,accept){const tr=state.tr,changes=[];state.doc.descendants((node,pos)=>{if(node.type.name==='blockRevision'&&(id===null||node.attrs.id===id)){changes.push({node,pos});return false}});for(const {node,pos}of changes.reverse()){const keep=node.attrs.kind==='delete'?!accept:accept;tr.replaceWith(pos,pos+node.nodeSize,keep?node.content:Fragment.empty)}return closeHistory(tr.setMeta('forgeReviewApplying',true))}
 export function assertNoBlockRevisions(node){if(node.type==='blockRevision')throw Error('Accept or reject structural/object changes before DOCX/ODT export, or use HTML to retain review.');for(const child of node.content||[])assertNoBlockRevisions(child)}
-function changed(old,doc){const a=old.content.content,b=doc.content.content;let start=0,endA=a.length,endB=b.length,from=0;while(start<endA&&start<endB&&a[start].eq(b[start]))from+=a[start++].nodeSize;while(endA>start&&endB>start&&a[endA-1].eq(b[endB-1])){endA--;endB--}return {a:a.slice(start,endA),b:b.slice(start,endB),from,to:from+b.slice(start,endB).reduce((n,node)=>n+node.nodeSize,0)}}
+const changed=structuralDiff;
 function shape(nodes){let count=0;function visit(node){if(node.type.name!=='blockRevision'&&++count>10000)throw Error('This structural change exceeds 10,000 nodes. Turn off tracking or use smaller changes.');if(node.isText||node.type.name==='commentAnchor')return null;const a={...node.attrs};for(const key of ['referenceIndex','entries','number','paragraphChange'])delete a[key];const properties=['paragraph','heading','codeBlock'].includes(node.type.name)?null:a;return [node.type.name,properties,node.content.content.map(visit).filter(Boolean)]}return JSON.stringify(nodes.map(visit).filter(Boolean))}
 const replacesBlocks=transactions=>transactions.some(tr=>tr.steps.some(step=>(step instanceof ReplaceStep||step instanceof ReplaceAroundStep)&&step.slice.content.content.some(node=>node.isBlock&&(step instanceof ReplaceStep||!node.isTextblock))));
-const pending=nodes=>nodes.some(node=>node.type.name==='blockRevision');
+const pending=containsBlockRevision;
 function sameSuggestion(a,b){return a.length===1&&b.length===1&&a[0].type.name==='blockRevision'&&b[0].type.name==='blockRevision'&&a[0].attrs.kind==='insert'&&b[0].attrs.kind==='insert'&&a[0].attrs.id===b[0].attrs.id}
 export const TrackBlockChanges=Extension.create({name:'trackBlockChanges',addOptions(){return {onBlocked:()=>{}}},addProseMirrorPlugins(){const notify=this.options?.onBlocked||(()=>{});return [new Plugin({
  filterTransaction(tr,state){if(!tr.docChanged||tr.getMeta('forgeReviewApplying')||tr.getMeta('history$'))return true;
@@ -27,7 +28,9 @@ export const TrackBlockChanges=Extension.create({name:'trackBlockChanges',addOpt
  },
  // Housekeeping such as TrailingNode must not recursively create revisions.
  appendTransaction(transactions,old,state){const setting=reviewKey.getState(state);if(!setting?.enabled||transactions.every(t=>t.getMeta('appendedTransaction'))||!transactions.some(t=>t.docChanged)||transactions.some(t=>t.getMeta('forgeReviewApplying')||t.getMeta('history$')))return null;const diff=changed(old.doc,state.doc);if(!diff.a.length&&!diff.b.length||pending(diff.a)||pending(diff.b)||shape(diff.a)===shape(diff.b)&&!replacesBlocks(transactions))return null;
-  const info={id:'blocks-'+crypto.getRandomValues(new Uint32Array(3)).join('-'),author:setting.author,date:new Date().toISOString()},type=state.schema.nodes.blockRevision,removed=diff.a.length?type.create({...info,kind:'delete'},diff.a):null,inserted=diff.b.length?type.create({...info,kind:'insert'},diff.b):null,replacement=[removed,inserted].filter(Boolean),tr=state.tr.replaceWith(diff.from,diff.to,replacement);
+  const info={id:'blocks-'+crypto.getRandomValues(new Uint32Array(3)).join('-'),author:setting.author,date:new Date().toISOString()},type=state.schema.nodes.blockRevision,plan=movedBlockPlan(diff.a,diff.b);let removed=null,inserted=null,replacement,targets=null;
+  if(plan){const ids=new Map();targets=new Map();let offset=0;replacement=plan.map(entry=>{let node=entry.node;if(entry.kind!=='keep'){if(!ids.has(entry.move))ids.set(entry.move,'move-'+crypto.getRandomValues(new Uint32Array(3)).join('-'));node=type.create({...info,id:ids.get(entry.move),kind:entry.kind,operation:'move'},[node])}if(entry.newIndex!==undefined)targets.set(entry.newIndex,offset+(entry.kind==='insert'?1:0));offset+=node.nodeSize;return node})}else{removed=diff.a.length?type.create({...info,kind:'delete'},diff.a):null;inserted=diff.b.length?type.create({...info,kind:'insert'},diff.b):null;replacement=[removed,inserted].filter(Boolean)}const tr=state.tr.replaceWith(diff.from,diff.to,replacement);
+  if(targets&&state.selection.from>=diff.from&&state.selection.to<=diff.to){let offset=0;for(let i=0;i<diff.b.length;i++){const end=offset+diff.b[i].nodeSize;if(state.selection.from-diff.from<end){const at=diff.from+targets.get(i)+state.selection.from-diff.from-offset;tr.setSelection(state.selection instanceof NodeSelection&&tr.doc.nodeAt(at)?.isAtom?NodeSelection.create(tr.doc,at):Selection.near(tr.doc.resolve(at)));break}offset=end}}
   if(inserted&&state.selection.from>=diff.from&&state.selection.to<=diff.to){const start=diff.from+(removed?.nodeSize||0)+1,at=Math.min(start+inserted.content.size,start+state.selection.from-diff.from);tr.setSelection(state.selection instanceof NodeSelection&&tr.doc.nodeAt(at)?.isAtom?NodeSelection.create(tr.doc,at):Selection.near(tr.doc.resolve(at)))}return tr.setMeta('forgeReviewApplying',true);
  }
  })]}});

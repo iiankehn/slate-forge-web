@@ -10,7 +10,7 @@ import {reviewAttrs} from './review.mjs';
 import {sectionAttrs} from './sections.mjs';
 import {normalizeScene,sceneKey} from './design-model.mjs';
 import {XmlComponent,InsertedTextRun,DeletedTextRun,CommentRangeStart,CommentRangeEnd,CommentReference,SectionType,FootnoteReferenceRun,TableOfContents,Bookmark,Document,Packer,Paragraph,TextRun,Table,TableRow,TableCell,WidthType,ExternalHyperlink,ImageRun,Header,Footer,PageNumber,AlignmentType,BorderStyle,PageOrientation,LevelFormat,HorizontalPositionRelativeFrom,VerticalPositionRelativeFrom,TextWrappingType} from 'docx';
-import {noteText,tocDepth} from './references.mjs';
+import {noteText,tocDepth,tocStart} from './references.mjs';
 import {DOCUMENT_STYLES} from './document-styles.mjs';
 import {normalizeLayout} from './document-model.mjs';
 import {normalizeImageDesign,normalizeTableDesign,TABLE_PALETTES,TABLE_PADDING} from './object-design.mjs';
@@ -49,7 +49,7 @@ function blocks(nodes,ctx,list={}){return (nodes||[]).flatMap(node=>{
   switch(node.type){
     case 'paragraph':case 'heading':case 'codeBlock': return [paragraph(node,ctx,list)];
     case 'designCanvas':{const scene=normalizeScene(node.attrs?.scene);if(ctx.nativeDesigns){const width=Math.min(ctx.contentWidth,(ctx.contentHeight-24)*900/scene.height);return [new Paragraph({children:[nativeCanvasRun(scene,width,width*scene.height/900)]})]}const image=ctx.images.get(sceneKey(scene));if(!image)throw Error('The design canvas must be rendered before DOCX export.');const width=Math.min(ctx.contentWidth,(ctx.contentHeight-24)*900/scene.height);return [new Paragraph({children:[new ImageRun({type:'png',data:image.data,transformation:{width,height:width*scene.height/900},altText:{title:scene.title,description:scene.description||scene.title,name:'SlateForgeDesign_'+(++ctx.designIndex)}})]})]}
-    case 'tableOfContents':return [new Paragraph({children:[new TextRun({text:String(node.attrs?.title||'Contents').slice(0,80),bold:true,size:30})]}),new TableOfContents('Contents',{hyperlink:true,headingStyleRange:'1-'+tocDepth(node.attrs?.depth),cachedEntries:ctx.headings.filter(h=>h.level<=tocDepth(node.attrs?.depth)),beginDirty:true})];
+    case 'tableOfContents':return [new Paragraph({children:[new TextRun({text:String(node.attrs?.title||'Contents').slice(0,80),bold:true,size:30})]}),new TableOfContents('Contents',{hyperlink:true,headingStyleRange:tocStart(node.attrs?.startDepth,node.attrs?.depth)+'-'+tocDepth(node.attrs?.depth),cachedEntries:ctx.headings.filter(h=>h.level>=tocStart(node.attrs?.startDepth,node.attrs?.depth)&&h.level<=tocDepth(node.attrs?.depth)),beginDirty:true})];
     case 'pageBreak':return [new Paragraph({children:[new TextRun({text:'',break:1})],pageBreakBefore:true})];
     case 'horizontalRule':return [new Paragraph({border:{bottom:{style:BorderStyle.SINGLE,size:4,color:'9BAE9C'}},children:[]})];
     case 'blockquote':return blocks(node.content,ctx).map(p=>p instanceof Paragraph?p:new Paragraph({text:'Quotation'}));
