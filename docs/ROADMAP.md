@@ -13,7 +13,7 @@ Target: complete feature implementation by end of day if possible. This is a bes
 | 3. DOCX/ODT fidelity | Unsupported complex layouts, styles, fields, master pages, drawing effects and typography cases across editors. |
 | 4. Structural review | Nested suggestions, partially revised Word table rows, and paragraph split/join revisions. |
 | 5. PDF editing | Reflow that moves subsequent content, remaining unmapped-font and vertical-text cases, and broader script/font handling. |
-| 6. XFA forms | Scripts, calculations and submissions remain. Bound pure-XFA multiple-selection controls are implemented in source; unbound/conflicting data bindings remain unsupported. |
+| 6. XFA forms | Bound pure-XFA multiple selections, common calculation expressions and field value scripts are implemented in source. Advanced script/runtime compatibility, submissions and unbound/conflicting data bindings remain. |
 | 7. PDF signature permissions | Broader certified-document workflows involving earlier form filling, annotations and appearance changes. |
 | 8. Signature longevity | Revocation checks through OCSP/CRLs, DSS/LTV evidence, and document/archive timestamps. |
 
