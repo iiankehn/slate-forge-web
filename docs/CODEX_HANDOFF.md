@@ -1,5 +1,11 @@
 # Slate Forge web — Codex handoff
 
+## Verified public release — 2026-11-01
+
+PR #2 is merged at `737df79385297c4da7a29d128fde191997606e5a`. [Release CI 41258202228](https://github.com/iiankehn/slate-forge-web/actions/runs/41258202228) passed all 65 Node test-file runners, production/static checks and 55 browser scenarios without retries. [Pages deployment 41258638452](https://github.com/iiankehn/slate-forge-web/actions/runs/41258638452) repeated release checks and published successfully. The live custom-domain index matches canonical HTML; app.js exposes the new native Word controls and pdf-workspace.js exposes existing-text editing and incremental signing. Public URL: https://slate-web.iiankehn.com/ .
+
+The completed batch includes note continuations, custom image contours, compatible continuous columns with objects, rewritten/cross-wrapper comparison, native Word objects, bounded PDF text replacement, incremental signatures and generated PDF script/bidirectional shaping. CI uses the pinned matching Playwright container and aligns profile-directory ownership for Firefox. The full remaining roadmap is still open; device QA remains deferred by the user. This section supersedes older unpublished/private release descriptions below. The original private Site and all storage identifiers are unchanged.
+
 ## Current continuation — public host and resumed feature roadmap
 
 Public beta host: https://slate-web.iiankehn.com/ . Pages workflow deployment 41244967161 succeeded; live index/app.js/help.html returned HTTP 200 and index matched the build. Repository is public, Pages uses workflow source, custom domain/HTTPS are configured. The older private Sites identity is preserved separately. Historical paragraphs below describing unpublished/private GitHub status are superseded by this section.

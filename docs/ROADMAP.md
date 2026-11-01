@@ -2,7 +2,7 @@
 
 ## Current implementation priority
 
-The public beta is deployed at https://slate-web.iiankehn.com/ through GitHub Pages ([deployment 41244967161](https://github.com/iiankehn/slate-forge-web/actions/runs/41244967161)). The user has now authorized continuing the remaining feature roadmap; physical-device testing is explicitly deferred from current work. Keep those verification items open without treating them as feature-work blockers. Cloud services and separate applications remain deferred products. Existing private Sites hosting and document-studio storage identifiers remain unchanged.
+The public beta is deployed at https://slate-web.iiankehn.com/ through GitHub Pages ([latest verified deployment 41258638452](https://github.com/iiankehn/slate-forge-web/actions/runs/41258638452)). The user has now authorized continuing the remaining feature roadmap; physical-device testing is explicitly deferred from current work. Keep those verification items open without treating them as feature-work blockers. Cloud services and separate applications remain deferred products. Existing private Sites hosting and document-studio storage identifiers remain unchanged.
 
 ## Storage and recovery
 - [x] Encrypted complete workspace backup export/import, including PDFs and edits. AES-256-GCM with random salt/nonce, PBKDF2-SHA256, authenticated header; password not persisted. Automated round trip, wrong-password and tampering tests pass.

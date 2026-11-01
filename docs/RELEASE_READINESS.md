@@ -1,5 +1,11 @@
 # Slate Forge release assessment
 
+## Verified public release — 2026-11-01
+
+PR #2 is merged at `737df79385297c4da7a29d128fde191997606e5a`. [Release CI 41258202228](https://github.com/iiankehn/slate-forge-web/actions/runs/41258202228) passed all 65 Node test-file runners, production/static checks and 55 browser scenarios without retries. [Pages deployment 41258638452](https://github.com/iiankehn/slate-forge-web/actions/runs/41258638452) repeated release checks and published successfully. The live custom-domain index matches canonical HTML; app.js exposes the new native Word controls and pdf-workspace.js exposes existing-text editing and incremental signing. Public URL: https://slate-web.iiankehn.com/ .
+
+The completed batch includes note continuations, custom image contours, compatible continuous columns with objects, rewritten/cross-wrapper comparison, native Word objects, bounded PDF text replacement, incremental signatures and generated PDF script/bidirectional shaping. CI uses the pinned matching Playwright container and aligns profile-directory ownership for Firefox. The full remaining roadmap is still open; device QA remains deferred by the user. This section supersedes older unpublished/private release descriptions below. The original private Site and all storage identifiers are unchanged.
+
 Verified release runtime: commit `338be73`; [GitHub CI run 41241670375](https://github.com/iiankehn/slate-forge-web/actions/runs/41241670375) passed all 61 Node test-file runners, production/static checks and all 20 browser scenarios across desktop Chromium/Firefox/WebKit and phone Chromium/WebKit. Actual downloaded-file restoration and offline French OCR passed. Physical-device/manual gates remain open; no public deployment is claimed.
 
 ## Current release priority
