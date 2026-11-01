@@ -10,6 +10,10 @@ export function extendXFAWorker(source){
  if(!choice.includes(selected)||!choice.includes(empty))throw Error('Update the XFA selection adapter for this PDF.js version.');
  choice=choice.replace(selected,'if (this.open === "multiSelect" ? (field[$data] ? field[$data][$getChildren]().map(node => node[$content].trim()) : value ? value.split("\\n") : []).includes(option.attributes.value) : values[i] === value) {').replace(empty,'if (!selected && this.open !== "multiSelect") {');
  source=source.slice(0,choiceStart)+choice+source.slice(choiceEnd);
+ const buttonStart=source.indexOf('class Button extends '),buttonEnd=source.indexOf('\nclass ',buttonStart+1),button=source.slice(buttonStart,buttonEnd),buttonAnchor='class: ["xfaButton"],';
+ if(buttonStart<0||buttonEnd<0||!button.includes(buttonAnchor))throw Error('Update the XFA button adapter for this PDF.js version.');
+ source=source.slice(0,buttonStart)+button.replace(buttonAnchor,'class: ["xfaButton"], fieldId: grandpa[$uid], dataId: grandpa[$data]?.[$uid] || grandpa[$uid],')+source.slice(buttonEnd);
+
  const handlerStart=source.indexOf('class DataHandler {'),handlerEnd=source.indexOf('\nclass ',handlerStart+1),handler=source.slice(handlerStart,handlerEnd<0?undefined:handlerEnd),original='if (storageEntry) {\n        child[$setValue](storageEntry);';
  if(handlerStart<0||!handler.includes(original))throw Error('Update the XFA dataset adapter for this PDF.js version.');
  const replacement=`if (storageEntry) {
@@ -50,7 +54,7 @@ function extendXFAScripts(source){
         if (++visited > 100000 || depth > 100) throw new Error("XFA script metadata exceeds layout limits.");
         if (node[$nodeName] === "field") {
           if (fields.length >= 5000) throw new Error("XFA script metadata exceeds field limits.");
-          const scripts = [];
+          const scripts = [], submissions = [];
           const addScript = (activity, script) => {
             if (!script) return;
             const text = script[$content];
@@ -63,8 +67,16 @@ function extendXFAScripts(source){
             scripts.push({activity, language: script.contentType, runAt: script.runAt, source: text});
           };
           addScript("calculate", node.calculate?.script);
-          for (const event of node.event?.children || []) addScript(event.activity, event.script);
-          fields.push({id: node[$data]?.[$uid] || node[$uid], fieldId: node[$uid], path, value: node.value?.[$text]() || "", numeric: ["decimal", "float", "integer"].some(type => !!node.value?.[type]), scripts});
+          addScript("validate", node.validate?.script);
+          for (const event of node.event?.children || []) {
+            addScript(event.activity, event.script);
+            if (event.execute || event.signData || event.encryptData) scripts.push({activity: event.activity, language: "unsupported", source: "This event requires an external action."});
+            if (event.submit) {
+              const submit = event.submit;
+              submissions.push({activity: event.activity, format: submit.format, target: submit.target, encoding: submit.textEncoding, xdpContent: submit.xdpContent, embedPDF: submit.embedPDF === 1, unsupported: submit.encrypt || submit.encryptData?.children.length || submit.signData?.children.length ? "Encrypted or signed submission payloads are unsupported." : event.activity !== "click" ? "Automatic submissions are not run. Use a click submission action." : ""});
+            }
+          }
+          fields.push({id: node[$data]?.[$uid] || node[$uid], fieldId: node[$uid], path, value: node.value?.[$text]() || "", numeric: ["decimal", "float", "integer"].some(type => !!node.value?.[type]), button: !!node.ui?.button, label: (node.caption?.value?.[$text]() || node.name || "Form button").slice(0,200), required: node.validate?.nullTest === "error", submissions, scripts});
         }
         const counts = new Map(), children = node[$getChildren]();
         const next = [];

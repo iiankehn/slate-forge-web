@@ -69,21 +69,21 @@ function bounded(value){if(typeof value==='number'&&!Number.isFinite(value)||typ
 function pathText(path){return path.map(part=>part.name+(part.index===null?'':'['+part.index+']')).join('.')}
 
 export function createXFAScriptRuntime(metadata,schema){
- const byName=new Map(),programs=[],warnings=new Set();let sourceSize=0;
+ const byName=new Map(),programs=[],warnings=new Set(),blocked=new Set();let sourceSize=0;
  for(const field of metadata||[]){
   if(!field||typeof field.id!=='string'||!Array.isArray(field.path)||field.path.length>100)continue;
-  if(!schema.has(field.id)&&(field.scripts||[]).length){warnings.add('Scripts on hidden or unavailable fields are unsupported.');continue}
+  if(!schema.has(field.id)&&(field.scripts||[]).length){warnings.add('Scripts on hidden or unavailable fields are unsupported.');for(const script of field.scripts)blocked.add(field.fieldId+'|'+script.activity);continue}
   const name=field.path.at(-1)?.name;if(!byName.has(name))byName.set(name,[]);byName.get(name).push(field);
   for(const script of field.scripts||[]){
    sourceSize+=script.source?.length||0;if(sourceSize>250000||programs.length>1000)throw Error('XFA scripts exceed the supported size.');
    const label=field.path.map(part=>part.name).join('.')||'Field';
    try{
     if(script.runAt==='server')throw Error('Server scripts are not available locally.');
-    if(!['calculate','initialize','change','exit','enter'].includes(script.activity))throw Error('Unsupported '+script.activity+' event.');
+    if(!['calculate','initialize','change','exit','enter','click','preSubmit','postSubmit','validate'].includes(script.activity))throw Error('Unsupported '+script.activity+' event.');
     const formcalc=['','application/x-formcalc'].includes(script.language);if(!formcalc&&!['application/x-javascript','text/javascript'].includes(script.language))throw Error('Unsupported script language.');
     const ast=compile(script.source,formcalc),entry=schema.get(field.id);if(script.activity==='calculate'&&(entry?.kind!=='text'||entry.incompatible||entry.unsupported||field.id===field.fieldId))throw Error('This calculated field has an unsupported binding or value type.');
     if(!entry)continue;programs.push({field,activity:script.activity,ast,formcalc,label});if(script.activity==='calculate'){entry.calculated=true;entry.editable=false}
-   }catch(error){warnings.add(label+': '+error.message)}
+   }catch(error){blocked.add(field.fieldId+'|'+script.activity);warnings.add(label+': '+error.message)}
   }
  }
  function run(input,{activity=null,fieldId=null}={}){
@@ -151,18 +151,20 @@ export function createXFAScriptRuntime(metadata,schema){
    }
    function write(path,value){
     bounded(value);if(path.length===1&&locals.has(path[0].name)){locals.set(path[0].name,value);return}
+    if(program.activity==='validate')throw Error('Validation scripts cannot assign field values.');
     const targets=resolve(path);if(targets.length!==1)throw Error('An assignment must target one field.');const target=targets[0],entry=schema.get(target.id);
     if(!entry?.editable&&!(entry?.calculated&&target.id===context.id))throw Error('A script tried to change a protected field.');
     if(entry.kind!=='text')throw Error('Script assignment supports text and numeric fields only.');if(Array.isArray(value))throw Error('Cannot assign a list to a scalar field.');
     Object.defineProperty(values,target.id,{value:String(value??''),enumerable:true,writable:true,configurable:true});if(target.id===context.id)selfAssigned=true;
    }
    function statements(body){for(const statement of body){tick();if(returned)break;switch(statement.type){case 'if':statements(evaluate(statement.condition)?statement.yes:statement.no);break;case 'local':locals.set(statement.name,bounded(evaluate(statement.value)));break;case 'assign':last=evaluate(statement.value);write(statement.target.path,last);break;case 'return':last=evaluate(statement.value);returned=true;break;default:last=evaluate(statement.value)}}}
-   try{statements(program.ast);if(program.activity==='calculate'&&!selfAssigned){if(program.formcalc)write([{name:'this',index:null}],last);else throw Error('The calculation did not assign its field value.')}values=normalizeXFAValues(values)}catch(error){values=before;throw Error(program.label+': '+error.message)}
+   try{statements(program.ast);if(program.activity==='validate'&&last!==true&&last!==1)throw Error('Field validation failed.');if(program.activity==='calculate'&&!selfAssigned){if(program.formcalc)write([{name:'this',index:null}],last);else throw Error('The calculation did not assign its field value.')}values=normalizeXFAValues(values)}catch(error){values=before;throw Error(program.label+': '+error.message)}
   }
   for(const program of programs)if(program.activity===activity&&(!fieldId||program.field.fieldId===fieldId))execute(program);
   const calculated=programs.filter(program=>program.activity==='calculate');
   if(calculated.length){let settled=false;for(let pass=0;pass<20;pass++){const previous=JSON.stringify(values);for(const program of calculated)execute(program);if(JSON.stringify(values)===previous){settled=true;break}}if(!settled)throw Error('XFA calculations did not settle after 20 passes.')}
+  if(activity==='preSubmit')for(const program of programs)if(program.activity==='validate')execute(program);
   return values;
  }
- return {run,warnings:[...warnings],hasCalculations:programs.some(program=>program.activity==='calculate'),hasPrograms:programs.length>0};
+ return {run,hasEvent(fieldId,activity){return programs.some(program=>program.field.fieldId===fieldId&&program.activity===activity)},supportsEvent(fieldId,activity){return !blocked.has(fieldId+'|'+activity)},canSubmit(){return ![...blocked].some(key=>['preSubmit','validate','calculate','initialize'].includes(key.slice(key.lastIndexOf('|')+1)))},warnings:[...warnings],hasCalculations:programs.some(program=>program.activity==='calculate'),hasPrograms:programs.length>0};
 }
