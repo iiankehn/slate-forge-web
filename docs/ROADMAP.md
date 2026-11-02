@@ -8,7 +8,7 @@ Target: complete feature implementation by end of day if possible. This is a bes
 
 | Area | Completion scope |
 | --- | --- |
-| 1. Image placement and wrapping | Free page positioning, two-sided text flow, page exclusions, nested images, images beside tables, and wrapping through page breaks. |
+| 1. Image placement and wrapping | Page-relative X/Y placement above text is implemented in source. Two-sided flow, page exclusions, remaining nested/image-beside-table wrapping and wrapping through page breaks remain. |
 | 2. Pagination and sections | Mixed orientations/columns in live editing; remaining nested-section, keep-rule, widow/orphan and footnote cases; better editor/preview/Word consistency. |
 | 3. DOCX/ODT fidelity | Unsupported complex layouts, styles, fields, master pages, drawing effects and typography cases across editors. |
 | 4. Structural review | Partial Word rows, adjacent rich-text split/join revisions and nested editor suggestions are implemented in source. DOCX retains the full nested tree for Slate Forge with an outer native Word review layer. Native Word hierarchy fidelity and remaining complex/container-crossing cases remain. |
