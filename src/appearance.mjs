@@ -3,7 +3,7 @@ export const THEME_PRESETS={
  system:{label:'Match system'},white:{label:'Porcelain'},colored:{label:'Soft accent'},grey:{label:'Graphite light'},dark:{label:'Charcoal'},
  linen:{label:'Linen',mode:'white',colors:{bg:'#ece7df',surface:'#fffcf6',panel:'#f7f1e8',ink:'#342d29',muted:'#71645b',line:'#d6cbbd'}},
  mist:{label:'Mist',mode:'white',colors:{bg:'#e6edf1',surface:'#f9fcff',panel:'#edf4f8',ink:'#263845',muted:'#566e7d',line:'#c8d7e0'}},
- sage:{label:'Sage',mode:'white',colors:{bg:'#e4ebe3',surface:'#f9fcf6',panel:'#edf3e9',ink:'#2d3b2d',muted:'#5c705b',line:'#c9d6c4'}},
+ sage:{label:'Sage',mode:'white',colors:{bg:'#e4ebe3',surface:'#f9fcf6',panel:'#edf3e9',ink:'#2d3b2d',muted:'#4e624d',line:'#c9d6c4'}},
  midnight:{label:'Midnight',mode:'dark',colors:{bg:'#111b2b',surface:'#1b2a40',panel:'#172338',ink:'#e5edf8',muted:'#a7b8d0',line:'#344861'}},
  plum:{label:'Dusk',mode:'dark',colors:{bg:'#251d2b',surface:'#362b3e',panel:'#2e2535',ink:'#f3e9f4',muted:'#c3aec9',line:'#58445f'}},
  forest:{label:'Evergreen',mode:'dark',colors:{bg:'#12251f',surface:'#20392f',panel:'#193027',ink:'#e4f1e9',muted:'#abc5b5',line:'#3b5a49'}}
