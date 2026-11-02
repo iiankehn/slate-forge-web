@@ -74,7 +74,7 @@ const uuid=()=>Array.from(crypto.getRandomValues(new Uint8Array(24)),b=>b.toStri
 const menus=initAppMenus({onAction:runMenuAction,isAvailable:commandAvailable});
 let workspaceHome=null;
 const fresh=()=>({id:uuid(),docs:[],trash:[],active:null,recoveryId:null,snippets:[],templates:[]});
-const blank=(title='Untitled document',content={type:'doc',content:[{type:'paragraph'}]})=>({id:uuid(),title,content,updated:Date.now(),layout:normalizeLayout(),history:[],wordGoal:0});
+const blank=(title='Untitled document',content={type:'doc',content:[{type:'paragraph'}]})=>({id:uuid(),title,content,updated:Date.now(),layout:normalizeLayout({font:'Arial'}),history:[],wordGoal:0});
 function toast(message){$('toast').textContent=message;$('toast').style.display='block';clearTimeout(timer);timer=setTimeout(()=>$('toast').style.display='none',4500)}
 const tabCache=new TabSessionCache(),libraryIndex=new LibraryBodyIndex();let libraryLimit=LIBRARY_BATCH,librarySignature='';
 function save(){state.modifiedAt=Math.max(Date.now(),(state.modifiedAt||0)+1);scheduleDeviceSave();scheduleRecovery();let result;try{result=tabCache.save(sessionStorage,KEY,state,{deviceAvailable:!!deviceWriter})}catch(error){result={saved:false,error}}dirty=!result.saved;renderSaveStatus();return result.saved}

@@ -10,6 +10,8 @@ This pass follows the UI redesign, not a new document-feature roadmap. Product s
 - Workspace contains recent/title-searchable documents, templates, opening/export, print, settings, backups and session controls. Destructive session actions still require the existing separate confirmation.
 - Six added light/dark palettes share the original preference storage, accents and screen-only dark-page behavior. A palette does not alter saved or exported document colors.
 
+The user also specifies sans-serif throughout the app experience. Interface typography and new-document defaults use sans-serif; existing document font choices remain document formatting. Mobile Workspace navigation overrides the old fixed sidebar rule so it cannot cover document actions.
+
 ## Verification plan and evidence
 
 The complete Node suite checks saving, storage failure handling, imports/exports, PDF/OCR tools, review and the new interface integration. Added tests cover first/returning visits, denied preference storage, inert document titles, tour completion/cancellation, palette/pre-paint consistency and ribbon keyboard/focus behavior.

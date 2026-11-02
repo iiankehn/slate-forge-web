@@ -28,6 +28,6 @@ Drawing, semantic comparison and sophisticated PDF/signature tools are also main
 
 ## This interface pass only
 
-A distinct task-grouped ribbon, a Workspace start/backstage screen, three first-visit setup cards, a skippable/replayable tour, and additional light/dark palettes. Workspace separates document actions, settings and local session identity so a future account area can fit without introducing accounts, sign-in, sync or remote storage now.
+A distinct task-grouped ribbon, a Workspace start/backstage screen, three first-visit setup cards, a skippable/replayable tour, additional light/dark palettes, and sans-serif interface/new-document defaults. Workspace separates document actions, settings and local session identity so a future account area can fit without introducing accounts, sign-in, sync or remote storage now.
 
 Then stabilize the whole product: existing save/restore/export/offline regressions plus first-visit/returning-visit behavior, keyboard access, focus, destructive-action cancellation, narrow layouts and palette persistence. Automated browser emulation and UX heuristics are not user research or physical-device certification. Findings belong in stability work, not an expanding feature roadmap.
