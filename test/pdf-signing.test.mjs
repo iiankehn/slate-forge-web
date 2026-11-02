@@ -33,5 +33,5 @@ test('certification permissions and field locks govern subsequent signatures wit
  assert.equal(policy.permission,2);assert.equal(policy.slots.find(slot=>slot.name==='Second').available,true);assert.equal(policy.slots.find(slot=>slot.name==='Third').available,false);
  await assert.rejects(signPDFIncremental(certified,p12,'fixture',{now,fieldName:'Third'}),/lock/i);
  const second=await signPDFIncremental(certified,p12,'fixture',{now,fieldName:'Second'});assert.deepEqual(second.subarray(0,certified.length),certified);verifySignature(second,0,certified.length);verifySignature(second,1);assert.equal((await inspectPDFSignaturePolicy(second)).history.length,2);
- const altered=second.slice();altered[20]^=1;await assert.rejects(inspectPDFSignaturePolicy(altered),/digest|integrity/);
+ const altered=second.slice();altered[7]=altered[7]===55?54:55;await assert.rejects(inspectPDFSignaturePolicy(altered),/digest|integrity/);
 });
