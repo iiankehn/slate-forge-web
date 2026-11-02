@@ -11,4 +11,4 @@ Completed interface pass (PR #7):
 
 After the interface changes, run stability and UX regressions across the existing product and these flows. Fix resulting defects without expanding scope. Preserve local saving, backup compatibility, the public GitHub Pages host and the separate private Site identity. Future accounts are not part of this release.
 
-The UI release is published with sans-serif interface and new-document defaults. The current follow-up is reload reliability from a phone WebKit retry observed in deployment checks; it is stability work, not added feature scope.
+The UI release and reload lifecycle fix are published, with sans-serif interface and new-document defaults. All 465 Node tests and 95 browser scenarios passed in PR/main CI. The deployment repetition had one Firefox document-discovery/template journey pass on retry; it remains known test instability, not a new feature requirement. See UX_STABILITY.md for exact run evidence. No additional feature work is authorized by this roadmap.

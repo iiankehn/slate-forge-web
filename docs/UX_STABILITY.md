@@ -36,3 +36,14 @@ Reviewed captures: [desktop ribbon](ui/ribbon-desktop.png), [mobile Workspace](u
 PR #7 is merged at `cb577796b7bc0173b141852116a91044057a20e1`. [Main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41397146965) passed and [Pages 41397164913](https://github.com/iiankehn/slate-forge-web/actions/runs/41397164913) deployed successfully. Live HTML, app/PDF scripts, styles, help, PDF worker and service-worker code/assets are verified. The cache version reconciles with CI platform-specific notices.
 
 The PR run passed all 90 browser cases without retries. The Pages repetition had one phone WebKit save/reload case that passed on retry (89 first-pass, one retry). This is under follow-up investigation before declaring reload stability complete. It must not be described as a retry-free deployment run.
+
+## Reload follow-up published
+
+PR #8 is merged and revision `3304b071ce3f6cba1823936d36ffd1a2c2006cd5` is live. The ownership channel now closes on page navigation and reconnects on back/forward restoration. Focused tests reproduce the unloading-page ownership response; a browser regression checks six reloads, a separate tab and a final original-tab reload while retaining the document ID, title and text. Save journeys wait for explicit save completion. Storage identifiers and file formats are unchanged.
+
+- [PR CI 41398848560](https://github.com/iiankehn/slate-forge-web/actions/runs/41398848560): 465 Node tests and all 95 browser scenarios passed without retries.
+- [Main CI 41400063361](https://github.com/iiankehn/slate-forge-web/actions/runs/41400063361): 465 Node tests and all 95 browser scenarios passed without retries.
+- [Pages 41400063530](https://github.com/iiankehn/slate-forge-web/actions/runs/41400063530): deployed successfully after 465 tests and 95 completed browser scenarios. Repeated reload/second-tab checks passed in all five configurations. One desktop Firefox document-discovery/template journey needed a retry (94 first-pass, one retry); its intermittent locator failure remains unconfirmed test instability. Do not call this deployment run retry-free.
+- Live HTML, app/PDF scripts, stylesheet, help and PDF worker match the verified build. Service-worker code and asset lists match, and its version reconciles with CI package notices. HTTPS responses are verified.
+
+The requested interface pass and full automated suite are complete. The reload lifecycle fix is published. The Firefox UI retry remains a known follow-up; it does not add product feature scope. This release remains a public beta, with the physical-device and user-research limits stated above.

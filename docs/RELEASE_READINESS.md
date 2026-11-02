@@ -1,5 +1,11 @@
 # Slate Forge release assessment
 
+## Latest public release — focused sans-serif workspace and reload stability
+
+Revision `3304b071ce3f6cba1823936d36ffd1a2c2006cd5` is live at https://slate-web.iiankehn.com/ . The requested interface redesign and full automated suite are complete: 465 Node tests and 95 browser scenarios passed without retries in PR/main CI, with selected axe accessibility checks across setup, Workspace, preferences and every palette. Pages deployed successfully; its repetition had one Firefox document-discovery/template UI retry. Reload/second-tab checks passed on all five browser configurations. Live primary assets are verified. [UX_STABILITY.md](UX_STABILITY.md) records evidence, screenshots, the remaining test instability and manual verification limits. [PRODUCT_FOCUS.md](PRODUCT_FOCUS.md) stops advanced feature expansion. Existing documents and private Site identity are preserved.
+
+
+
 ## Latest published release — audited accumulated implementation
 
 Revision `c0400862e45b9be412a49244e6c2062fd18a4530` is published at https://slate-web.iiankehn.com/ . PR/main CI and Pages passed 459 Node tests, production/static checks and 75 browser scenarios without retries. Live primary assets are verified. Suitable for everyday public beta use; the advanced-feature and verification boundaries are recorded in [RELEASE_AUDIT.md](RELEASE_AUDIT.md). This assessment supersedes older release descriptions below.
