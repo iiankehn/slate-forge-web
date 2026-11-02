@@ -1,4 +1,4 @@
-// One command catalog supplies the desktop menu bar and the mobile menu dialog.
+// Complete command catalog retained for search; the ribbon curates everyday tasks.
 export const APP_MENUS=[
  ['File',[
   ['New document','new'],['Open a file…','import'],['Save on this device','saveNow','Ctrl/⌘ S'],['Documents…','documents'],null,
@@ -22,25 +22,33 @@ export const APP_MENUS=[
  ['Review',[
   ['Comments and tracked changes…','reviewTools'],['Comment on selection…','reviewTools:addComment'],['Track changes settings…','reviewTools'],['Compare documents…','reviewTools:compareDocs']]]
 ];
+// The catalog remains the source for command search. The ribbon presents a
+// smaller set of everyday tasks without duplicating editor controls or state.
+export const RIBBON_TABS=[
+ ['Home',[['Document',[['Save','saveNow'],['Undo','command:undo'],['Redo','command:redo']]],['Writing',[['Find & replace','find'],['Link','link'],['Word count','stats']]]]],
+ ['Insert',[['Add to your page',[['Image','insert:image'],['Table','insert:table'],['Link','link']]],['Structure',[['Page break','insert:pageBreak'],['Contents','insert:insertTOC'],['Footnote','insert:insertFootnote']]]]],
+ ['Layout',[['Page',[['Page design','layout'],['Paragraph','paragraph'],['Sections & columns','productivity:insertColumnSection']]],['Output',[['Page preview','pagePreview'],['Print / PDF','export:print']]]]],
+ ['Review',[['Review your writing',[['Comments & changes','reviewTools'],['Add comment','reviewTools:addComment'],['Compare','reviewTools:compareDocs']]],['Finish',[['Document checks','documentChecks'],['Writing tools','writingTools']]]]],
+ ['View',[['Workspace',[['Continuous','continuousEditing'],['Paged','pagedEditing'],['Focus','focus']]],['Comfort',[['Appearance','appearance'],['Fit width','zoomFit'],['100%','zoomReset'],['Outline','outline']]],['Navigate',[['Go to page','goToPage'],['Previous','previousPage'],['Next','nextPage']]]]],
+ ['Tools',[['Other file tools',[['PDF & forms','pdfTools'],['Scan & OCR','ocrTools'],['Drawing','designCanvas']]],['Reusable work',[['Snippets & templates','productivity'],['Design templates','productivity:openDesignTemplates']]],['App',[['Prepare offline','offlineTools'],['App status','appStatus'],['Install','installApp'],['Update','updateApp'],['Command search','commands']]]]]
+];
 export function initAppMenus({onAction,isAvailable=()=>true}){
- const nav=document.createElement('nav');nav.id='applicationMenus';nav.setAttribute('aria-label','Application menus');
- const mount=document.getElementById('menuMount'),dialog=document.getElementById('menuDialog'),toggle=document.getElementById('menuToggle'),mobile=matchMedia('(max-width:760px)');
- let active=-1,origin=null;const categories=[];
- for(const [index,[name,items]]of APP_MENUS.entries()){
-  const group=document.createElement('div');group.className='app-menu-group';const trigger=document.createElement('button');trigger.className='app-menu-trigger';trigger.textContent=name;trigger.setAttribute('aria-label',name);trigger.id='app-menu-'+index;trigger.setAttribute('aria-controls','app-menu-panel-'+index);trigger.setAttribute('aria-expanded','false');
-  const panel=document.createElement('div');panel.className='app-menu-panel';panel.id='app-menu-panel-'+index;panel.hidden=true;panel.setAttribute('role','menu');panel.setAttribute('aria-labelledby',trigger.id);
-  for(const item of items){if(!item){const separator=document.createElement('div');separator.setAttribute('role','separator');panel.append(separator);continue}const [label,action,shortcut]=item,button=document.createElement('button');button.setAttribute('role','menuitem');button.setAttribute('aria-label',label);button.dataset.menuAction=action;const text=document.createElement('span');text.textContent=label;button.append(text);if(shortcut){const hint=document.createElement('kbd');hint.textContent=shortcut;button.append(hint)}button.onclick=()=>{close(true);onAction(action)};panel.append(button)}
-  trigger.onclick=()=>active===index?collapse():open(index);trigger.onpointerenter=()=>{if(!mobile.matches&&active>=0&&active!==index)open(index)};trigger.onfocus=()=>{if(!mobile.matches)categories.forEach((c,i)=>c.trigger.tabIndex=i===index?0:-1)};group.append(trigger,panel);nav.append(group);categories.push({trigger,panel});
- }
+ const mount=document.getElementById('menuMount'),nav=document.createElement('section');nav.id='applicationMenus';nav.className='forge-ribbon';nav.setAttribute('aria-label','Writing ribbon');
+ const tabs=document.createElement('div');tabs.className='ribbon-tabs';tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','Ribbon sections');
+ const file=document.createElement('button');file.type='button';file.className='ribbon-workspace';file.id='backstageToggle';file.textContent='Workspace';file.setAttribute('aria-haspopup','dialog');file.onclick=()=>onAction('backstage');nav.append(file,tabs);
+ const panels=document.createElement('div');panels.className='ribbon-panels';nav.append(panels);let active='Home';
+ const categories=[];
  function refresh(){nav.querySelectorAll('[data-menu-action]').forEach(button=>button.disabled=!isAvailable(button.dataset.menuAction))}
- function collapse(){for(const {trigger,panel}of categories){trigger.setAttribute('aria-expanded','false');panel.hidden=true}active=-1}
- function open(index,focusItem=false){if(active<0&&!dialog.open)origin=document.activeElement;collapse();refresh();active=index;const {trigger,panel}=categories[index];trigger.setAttribute('aria-expanded','true');panel.hidden=false;if(focusItem)panel.querySelector('button:not(:disabled)')?.focus()}
- function close(restore=false){const previous=active;collapse();if(dialog.open)dialog.close();toggle.setAttribute('aria-expanded','false');if(restore){if(mobile.matches)toggle.focus();else if(origin?.isConnected)origin.focus();else categories[previous]?.trigger.focus()}}
- function layout(){close();if(mobile.matches){dialog.querySelector('.mobile-menu-content').append(nav);nav.removeAttribute('role')}else{mount.append(nav);nav.setAttribute('role','menubar')}categories.forEach(({trigger},i)=>{if(mobile.matches){trigger.removeAttribute('role');trigger.removeAttribute('aria-haspopup')}else{trigger.setAttribute('role','menuitem');trigger.setAttribute('aria-haspopup','menu')}trigger.tabIndex=mobile.matches||i===0?0:-1})}
- toggle.onclick=()=>{origin=document.activeElement;dialog.showModal();toggle.setAttribute('aria-expanded','true');collapse();refresh();categories[0].trigger.focus()};document.getElementById('closeMenu').onclick=()=>close(true);dialog.addEventListener('cancel',event=>{event.preventDefault();close(true)});dialog.addEventListener('click',event=>{if(event.target===dialog)close(true)});dialog.addEventListener('close',()=>{collapse();toggle.setAttribute('aria-expanded','false')});
- nav.addEventListener('keydown',event=>{const trigger=event.target.closest('.app-menu-trigger'),panel=event.target.closest('.app-menu-panel'),index=categories.findIndex(c=>c.trigger===trigger);if(event.key==='Escape'){event.preventDefault();if(mobile.matches)close(true);else{const button=categories[active]?.trigger;collapse();button?.focus()}return}if(!mobile.matches&&event.key==='Tab'){close();return}
-  if(trigger){if(['ArrowDown','ArrowUp'].includes(event.key)){event.preventDefault();open(index,true);if(event.key==='ArrowUp')categories[index].panel.querySelectorAll('button:not(:disabled)').item(categories[index].panel.querySelectorAll('button:not(:disabled)').length-1)?.focus()}if(!mobile.matches&&['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?categories.length-1:(index+(event.key==='ArrowRight'?1:-1)+categories.length)%categories.length;if(active>=0)open(next);categories[next].trigger.focus()}return}
-  if(panel){const buttons=[...panel.querySelectorAll('button:not(:disabled)')],position=buttons.indexOf(event.target);if(['ArrowDown','ArrowUp','Home','End'].includes(event.key)){event.preventDefault();buttons[event.key==='Home'?0:event.key==='End'?buttons.length-1:(position+(event.key==='ArrowDown'?1:-1)+buttons.length)%buttons.length]?.focus()}if(!mobile.matches&&['ArrowLeft','ArrowRight'].includes(event.key)){event.preventDefault();open((active+(event.key==='ArrowRight'?1:-1)+categories.length)%categories.length,true)}}
- });
- document.addEventListener('pointerdown',event=>{if(!mobile.matches&&!nav.contains(event.target))close()});document.addEventListener('focusin',event=>{if(!mobile.matches&&active>=0&&!nav.contains(event.target))close()});mobile.addEventListener('change',layout);layout();return {close,refresh};
+ function select(name,focus=false){active=name;nav.classList.remove('ribbon-collapsed');for(const entry of categories){const selected=entry.name===name;entry.trigger.setAttribute('aria-selected',String(selected));entry.trigger.tabIndex=selected?0:-1;entry.panel.hidden=!selected;if(selected&&focus)entry.trigger.focus()}refresh();toggle?.setAttribute('aria-expanded','true')}
+ for(const [index,[name,groups]]of RIBBON_TABS.entries()){
+  const trigger=document.createElement('button');trigger.type='button';trigger.className='app-menu-trigger';trigger.id='ribbon-tab-'+index;trigger.textContent=name;trigger.setAttribute('role','tab');trigger.setAttribute('aria-controls','ribbon-panel-'+index);trigger.onclick=()=>select(name);
+  const panel=document.createElement('div');panel.className='ribbon-panel';panel.id='ribbon-panel-'+index;panel.setAttribute('role','tabpanel');panel.setAttribute('aria-labelledby',trigger.id);
+  if(name==='Home'){const formatting=document.querySelector('.toolbar');if(formatting){const group=document.createElement('div');group.className='ribbon-group ribbon-formatting';const label=document.createElement('span');label.className='ribbon-group-label';label.textContent='Text & paragraph';group.append(formatting,label);panel.append(group)}}
+  for(const [label,commands]of groups){const group=document.createElement('div');group.className='ribbon-group';group.setAttribute('role','group');group.setAttribute('aria-label',label);const controls=document.createElement('div');controls.className='ribbon-commands';
+   for(const [title,action]of commands){const button=document.createElement('button');button.type='button';button.dataset.menuAction=action;button.textContent=title;button.onclick=()=>onAction(action);controls.append(button)}const caption=document.createElement('span');caption.className='ribbon-group-label';caption.textContent=label;group.append(controls,caption);panel.append(group)}
+  tabs.append(trigger);panels.append(panel);categories.push({name,trigger,panel});
+ }
+ const toggle=document.getElementById('menuToggle');if(toggle){toggle.textContent='⌃';toggle.setAttribute('aria-label','Collapse or expand ribbon');toggle.setAttribute('aria-controls','applicationMenus');toggle.onclick=()=>{const collapsed=nav.classList.toggle('ribbon-collapsed');toggle.setAttribute('aria-expanded',String(!collapsed))}}
+ tabs.addEventListener('keydown',event=>{const index=categories.findIndex(entry=>entry.trigger===event.target);if(index<0)return;if(['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?categories.length-1:(index+(event.key==='ArrowRight'?1:-1)+categories.length)%categories.length;select(categories[next].name,true)}if(event.key==='Escape'){event.preventDefault();document.getElementById('document-content')?.focus()}});
+ mount.append(nav);select(active);return {close(){},refresh,select,get active(){return active}};
 }
