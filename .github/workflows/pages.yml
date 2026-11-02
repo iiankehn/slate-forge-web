@@ -2,10 +2,6 @@ name: Publish GitHub Pages
 # Publication is an explicit owner action, separate from ordinary PR checks.
 on:
   workflow_dispatch:
-  # Temporary trigger for this explicitly authorized release; remove after deployment.
-  push:
-    branches: [main]
-    paths: ['.github/workflows/pages.yml']
 permissions:
   contents: read
 concurrency:
