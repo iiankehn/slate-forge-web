@@ -19,6 +19,10 @@ The first full run had 431 passes and 19 failures. Several assertions described 
 
 Additional regressions cover XFA dependency convergence, protected/calculated fields, unsafe scripts, multi-selection values, explicit credential-free submissions, DOCX snapshot sanitization and stale-package refusal, certification/field-lock policies, signature tampering, timestamp request binding and denied responses. The browser suite includes page-positioned image reload, preview and actual source download.
 
+Browser CI also exposed and prompted fixes for three integration defects: image node views accessed Tiptap before mounting (blocking image-containing imports); the offline URL allowlist omitted new semantic assets; and incremental signing reused object-stream/cross-reference container numbers discarded by pdf-lib, which strict PDF readers could not resolve. Signing now reserves all parsed indirect-object numbers. CI stops after the first persistent browser failure to make failures reviewable sooner.
+
+An independent ephemeral OpenSSL RFC 3161 responder generated and verified a matching response; the app attached it, retained signature integrity and recognized the attached timestamp. This is a local interoperability check, not certification by a public TSA.
+
 ## Scope assessment
 
 | Existing roadmap area | Release boundary |

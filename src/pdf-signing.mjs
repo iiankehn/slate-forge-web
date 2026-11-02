@@ -2,8 +2,16 @@ import {hasPDFSignature as hasExistingSignature} from './pdf-form-kind.mjs';
 import {inspectPDFSignaturePolicy,normalizeFieldLock,signatureSlotLock,fieldIsLocked} from './pdf-signature-policy.mjs';
 export {inspectPDFSignaturePolicy} from './pdf-signature-policy.mjs';
 import forge from 'node-forge';
-import {PDFDocument,PDFName,PDFString,PDFHexString,PDFArray,PDFNumber,PDFDict} from 'pdf-lib';
+import {PDFDocument,PDFName,PDFString,PDFHexString,PDFArray,PDFNumber,PDFDict,PDFParser} from 'pdf-lib';
 const SIGNATURE_BYTES=16384;
+// pdf-lib discards ObjStm/XRef containers from its loaded context. Preserve
+// their object numbers when appending: reusing one corrupts earlier compressed
+// object references in conforming readers, even if pdf-lib can recover it.
+class SigningPDFParser extends PDFParser{
+ parseIndirectObjectHeader(){const ref=super.parseIndirectObjectHeader();this.highWater=Math.max(this.highWater||0,ref.objectNumber);return ref}
+}
+async function loadSigningPDF(bytes){const parser=new SigningPDFParser(bytes,100,false,false),context=await parser.parseDocument();context.largestObjectNumber=Math.max(context.largestObjectNumber,parser.highWater||0);return new PDFDocument(context,false,false)}
+
 function binary(bytes){let value='';for(let i=0;i<bytes.length;i+=16384)value+=String.fromCharCode(...bytes.subarray(i,i+16384));return value}
 function signingIdentity(bytes,password,now){
  if(!(bytes instanceof Uint8Array)||!bytes.length||bytes.length>2000000)throw Error('Choose a PKCS#12 certificate file under 2 MB.');
@@ -35,7 +43,7 @@ function lockOptions(lock,type='SigFieldLock'){
 }
 async function appendSignature(bytes,certificate,password,{now=new Date(),reason='',name='',fieldName='',certification=0,lock=null,firstOnly=false,onProgress=()=>{}}={}){
  if(!(bytes instanceof Uint8Array)||!bytes.length||bytes.length>40000000)throw Error('PDF signing is limited to 40 MB.');if(!Number.isFinite(now.getTime()))throw Error('Invalid signing date.');if(![0,1,2,3].includes(certification))throw Error('Choose supported certification permissions.');
- const pdf=await PDFDocument.load(bytes,{updateMetadata:false});if(pdf.isEncrypted)throw Error('Unlock the PDF before signing.');if(!pdf.getPageCount())throw Error('Choose a PDF with at least one page.');
+ const pdf=await loadSigningPDF(bytes);if(pdf.isEncrypted)throw Error('Unlock the PDF before signing.');if(!pdf.getPageCount())throw Error('Choose a PDF with at least one page.');
  if(firstOnly&&hasExistingSignature(pdf))throw Error('This PDF already has a signature. Use Add another signature.');
  const policy=await inspectPDFSignaturePolicy(bytes,{pdf,onProgress});if(firstOnly&&policy.history.length)throw Error('This PDF is already signed. Use Add another signature.');if(certification&&policy.history.length)throw Error('Certification must be the first signature.');if(policy.permission===1)throw Error('The document certification or lock policy permits no changes.');if(policy.history.length>=20)throw Error('Incremental signing is limited to 20 signatures.');
  const context=pdf.context,metadata=policy.metadata,available=policy.slots.filter(slot=>slot.available);let target=null;

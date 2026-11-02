@@ -10,7 +10,7 @@ function verifySignature(bytes,index=0,expectedLength=bytes.length){
  assert.equal(range[2]+range[3],expectedLength);return range;
 }
 test('PKCS#12 signing produces a valid detached SHA-256/RSA signature over the complete PDF',async()=>{
- const original=await newFormPDF(),before=original.slice(),signed=await signPDF(original,p12,'fixture',{now,reason:'Reviewed'});verifySignature(signed);assert.deepEqual(original,before);assert.ok(hasPDFSignature(await loadPDF(signed)));
+ const original=await newFormPDF(),before=original.slice(),signed=await signPDF(original,p12,'fixture',{now,reason:'Reviewed'});verifySignature(signed);assert.deepEqual(signed.subarray(0,original.length),original);const originalMax=Math.max(...[...Buffer.from(original).toString('latin1').matchAll(/(?:^|[\r\n])(\d+) \d+ obj\b/g)].map(match=>Number(match[1]))),added=[...Buffer.from(signed.subarray(original.length)).toString('latin1').matchAll(/(?:^|[\r\n])(\d+) \d+ obj\b/g)].map(match=>Number(match[1]));const root=(await loadPDF(original)).context.trailerInfo.Root.objectNumber;assert.ok(added.filter(number=>number!==root).every(number=>number>originalMax));assert.deepEqual(original,before);assert.ok(hasPDFSignature(await loadPDF(signed)));
  const altered=signed.slice();altered[20]^=1;assert.throws(()=>verifySignature(altered));await assert.rejects(buildPDF(signed,{}),/invalidate the signature/);await assert.rejects(signPDF(signed,p12,'fixture',{now}),/already has a signature/);
 });
 test('wrong passwords, expired certificates and malformed certificate files cannot sign',async()=>{

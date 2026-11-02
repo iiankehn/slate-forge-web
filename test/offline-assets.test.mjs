@@ -11,3 +11,9 @@ test('completion is not reported if the shell disappears during preparation',asy
 test('offline inventory accepts only the current project cache while retaining legacy root compatibility',async()=>{
  const base='https://app.example/slate-forge-web/',f=fixture();f.base=base;f.entries.set(base,new Response('app'));const scoped={...manifest,root:base,cache:'document-studio-shell-%2Fslate-forge-web%2F-0123456789abcdef'};assert.equal((await offlineInventory(scoped,f)).total,2);for(const cache of ['document-studio-shell-%2Fother%2F-0123456789abcdef',manifest.cache,'unrelated-cache'])await assert.rejects(offlineInventory({...scoped,cache},f),/Invalid offline/);assert.equal((await offlineInventory(manifest,fixture())).total,2);
 });
+
+test('offline preparation accepts generated semantic worker, chunks and packaged model assets',async()=>{
+ const assets=['./semantic-worker.js','./chunks/transformers-ABCDEFGH.js','./vendor/semantic/all-MiniLM-L6-v2/onnx/model_quantized.onnx','./vendor/onnx/ort-wasm-simd-threaded.wasm'];
+ assert.equal((await offlineInventory({...manifest,assets},fixture())).total,4);
+ for(const asset of ['./chunks/private.json','./semantic-worker.js/extra','./vendor/unrelated/private'])await assert.rejects(offlineInventory({...manifest,assets:[asset]},fixture()),/Invalid offline/);
+});

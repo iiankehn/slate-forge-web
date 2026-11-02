@@ -47,3 +47,8 @@ test('XFA submission prepares an independent attachment and sends only with expl
  try{assert.equal(calls,0);assert.equal(await sendXFASubmission(payload),200);assert.equal(calls,1)}finally{globalThis.fetch=previous}
  assert.equal(xfaEmailDraft(new URL('mailto:reader@example.com?subject=Hello%0D%0AInjected&body=private')),'mailto:reader@example.com?subject=HelloInjected');
 });
+
+test('image node views can mount before Tiptap exposes editor.view',async()=>{
+ const {pageImageNodeView}=await import('../src/image-placement.mjs'),dom=new JSDOM('<main></main>');
+ try{const editor={options:{element:dom.window.document.querySelector('main')},get view(){throw Error('Editor view is not mounted yet')}},node={attrs:{imagePlacement:'flow'}},view=pageImageNodeView({HTMLAttributes:{}})({node,editor,HTMLAttributes:{src:'data:image/png;base64,aA=='}});assert.equal(view.dom.tagName,'IMG');assert.equal(view.dom.ownerDocument,dom.window.document)}finally{dom.window.close()}
+});
