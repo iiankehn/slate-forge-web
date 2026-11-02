@@ -25,7 +25,7 @@ export const APP_MENUS=[
 // The catalog remains the source for command search. The ribbon presents a
 // smaller set of everyday tasks without duplicating editor controls or state.
 export const RIBBON_TABS=[
- ['Home',[['Document',[['Save','saveNow'],['Undo','command:undo'],['Redo','command:redo']]],['Writing',[['Find & replace','find'],['Link','link'],['Word count','stats']]]]],
+ ['Home',[['Document',[['Save','saveNow'],['Undo','command:undo'],['Redo','command:redo']]],['Writing',[['Font settings','fontSettings'],['Find & replace','find'],['Link','link'],['Word count','stats']]]]],
  ['Insert',[['Add to your page',[['Image','insert:image'],['Table','insert:table'],['Link','link']]],['Structure',[['Page break','insert:pageBreak'],['Contents','insert:insertTOC'],['Footnote','insert:insertFootnote']]]]],
  ['Layout',[['Page',[['Page design','layout'],['Paragraph','paragraph'],['Sections & columns','productivity:insertColumnSection']]],['Output',[['Page preview','pagePreview'],['Print / PDF','export:print']]]]],
  ['Review',[['Review your writing',[['Comments & changes','reviewTools'],['Add comment','reviewTools:addComment'],['Compare','reviewTools:compareDocs']]],['Finish',[['Document checks','documentChecks'],['Writing tools','writingTools']]]]],
