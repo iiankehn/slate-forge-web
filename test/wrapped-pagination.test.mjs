@@ -20,7 +20,7 @@ test('wrapped text moves as a whole and oversized groups retain a clear fallback
  const blocks=[{type:'block',pos:0,top:100,bottom:650},image(1,690,850),text(2,684,1000)];
  const plan=planPageBreaks(groupWrappedBlocks(blocks),geometry,()=>{throw Error('A grouped paragraph must not be split')});
  assert.equal(plan.pages,2);assert.equal(plan.breaks[0].pos,1);assert.equal(plan.breaks[0].height,1000+PAGE_GAP+100-684);
- assert.throws(()=>planPageBreaks(groupWrappedBlocks([image(0,100,300),text(1,100,1100)]),geometry,()=>{}),/surrounding text are taller/);
+ assert.throws(()=>planPageBreaks(groupWrappedBlocks([image(0,100,300),text(1,100,1100)]),geometry,()=>{}),/wrapped image layout spans pages/);
 });
 test('an explicit break cannot be inserted through a wrapped flow',()=>{
  assert.throws(()=>groupWrappedBlocks([image(0,100,400),{type:'pageBreak',pos:1,top:250,bottom:250}]),/crosses an explicit page break/);
@@ -38,7 +38,7 @@ test('rendered group validation rejects page margins and gutters on any page',()
 test('adjacent blocks after a float ends remain independently pageable',()=>{
  const blocks=[image(0,100,300),text(1,100,500),text(23,500,900)];
  const groups=groupWrappedBlocks(blocks);assert.equal(groups.length,2);assert.equal(groups[0].members.length,2);assert.equal(groups[1],blocks[2]);
- assert.throws(()=>groupWrappedBlocks([image(0,100,300),{type:'row',pos:1,top:150,bottom:200}]),/beside tables/);
+ const beside=groupWrappedBlocks([image(0,100,300),{type:'row',pos:1,top:150,bottom:200}]);assert.equal(beside.length,1);assert.equal(beside[0].members[1].type,'row');assert.equal(planPageBreaks(beside,geometry,()=>{}).pages,1);
 });
 
 function longWrapped({imageTop=100,imageBottom=300,lineTop=100,lines=100,attrs={}}={}){

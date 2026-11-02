@@ -27,7 +27,7 @@ export function editablePDFText(pdf,pageIndex){
    if(operator===String.fromCharCode(34)){state.wordSpacing=Number(operands.at(-3)?.value)||0;state.characterSpacing=Number(operands.at(-2)?.value)||0}
    if(operator==='Do'&&operands.at(-1)?.type==='name'){
     const key=operands.at(-1).value;
-    try{const form=pdfFormTarget(resources,key);if(form)scan(form.stream,streamIndex,[...path,{name:key,start:operands.at(-1).start,end:token.end}],form.resources,{...state,inText:false},[],nextAncestors)}catch(error){skipped.add(error.message)}
+    const nestedStart=items.length;try{const form=pdfFormTarget(resources,key);if(form)scan(form.stream,streamIndex,[...path,{name:key,start:operands.at(-1).start,end:token.end}],form.resources,{...state,inText:false},[],nextAncestors)}catch(error){items.splice(nestedStart);skipped.add(error.message)}
    }
    const target=operator==='TJ'?operands.at(-1)?.items:operator==='Tj'||operator===String.fromCharCode(39)||operator===String.fromCharCode(34)?[operands.at(-1)]:[];
    if(state.inText&&state.font&&target?.some(part=>part?.type==='string')){
@@ -43,7 +43,7 @@ export function editablePDFText(pdf,pageIndex){
   }
  }
  const resources=page.node.Resources(),state={font:null,fontSize:0,rise:0,characterSpacing:0,wordSpacing:0,inText:false,fontScope:pdfResourceView(resources)},graphics=[];
- for(const [index,entry]of entries.entries())try{scan(entry.stream,index,[],resources,state,graphics,new Set())}catch(error){skipped.add(error.message);state.font=null;state.inText=false}
+ for(const [index,entry]of entries.entries()){const start=items.length;try{scan(entry.stream,index,[],resources,state,graphics,new Set())}catch(error){items.splice(start);skipped.add(error.message);state.font=null;state.inText=false}}
  if(skipped.size){limited=true;reason=[reason,...skipped].filter(Boolean).join(' ')}return {items,limited,reason};
 }
 

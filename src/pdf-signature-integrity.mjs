@@ -16,7 +16,7 @@ export function readCMSContainer(bytes){
  const signed=content.value[1]?.value?.[0],parts=signed?.value;
  if(!parts||parts[2]?.type!==A.Type.SEQUENCE||!parts[2].value.length)throw Error('Unsupported CMS encapsulated-content structure.');
  const signers=parts.at(-1);if(signers?.type!==A.Type.SET||signers.value.length!==1)throw Error('Only one CMS signer per PDF signature is supported.');
- const capture={},errors=[];if(!A.validate(signers.value[0],forge.pkcs7.asn1.signerInfoValidator,capture,errors))throw Error('Unsupported CMS signer structure.');
+ const capture={},errors=[];if(!A.validate(signers.value[0],forge.pkcs7.asn1.signedDataValidator.value.find(rule=>rule.name==='SignedData.SignerInfos').value[0],capture,errors))throw Error('Unsupported CMS signer structure.');
  const algorithm=hashes[A.derToOid(capture.digestAlgorithm)],signatureAlgorithm=oid(capture.signatureAlgorithm[0]);if(!algorithm||signatureAlgorithm!==forge.pki.oids.rsaEncryption&&rsaHashes[signatureAlgorithm]!==algorithm)throw Error('CMS signatures require RSA with SHA-256, SHA-384 or SHA-512.');
  const certificates=parts.slice(3,-1).find(part=>part.tagClass===A.Class.CONTEXT_SPECIFIC&&part.type===0)?.value||[],matches=new Map(),parsed=[];
  if(certificates.length>40)throw Error('CMS certificate containers are limited to 40 certificates.');
