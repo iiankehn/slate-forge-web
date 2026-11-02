@@ -1,5 +1,9 @@
 # Slate Forge web development
 
+## Current mandate — focused product and interface
+
+No new document-engine or advanced feature development. Implement the explicitly requested ribbon, first-visit onboarding/tour, start/backstage workspace and more light/dark palettes. Evaluate unfinished scope against ordinary writing needs. Then run stability, accessibility and UX regressions. Existing public GitHub Pages release authorization remains in force; preserve the private Site and all existing storage identifiers. Older audit/feature mandates below are historical.
+
 ## Latest user mandate — audit and publish current implementation
 
 The user now explicitly requests a complete audit, a readiness assessment and publication of what is implemented. This supersedes the feature-only prohibition below. Run tests/build/static/browser CI and fix release blockers; do not expand feature scope. Publish to the existing public GitHub Pages host through the current repository workflows, preserving the separate private Site identity and all storage identifiers. No further routine approval questions are needed.

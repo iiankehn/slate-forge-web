@@ -1,5 +1,5 @@
 export const DOCUMENT_STYLES={
- studio:{name:'Forge',description:'A clear, modern hierarchy with a serif body.',font:'Georgia',headingFont:'Arial',line:'1.65',sizes:[30,21,15],color:'25322F'},
+ studio:{name:'Forge',description:'Clear sans-serif typography for everyday writing.',font:'Arial',headingFont:'Arial',line:'1.65',sizes:[30,21,15],color:'25322F'},
  editorial:{name:'Editorial',description:'Expressive serif headings and warm accents.',font:'Georgia',headingFont:'Georgia',line:'1.65',sizes:[32,22,16],color:'79533A'},
  classic:{name:'Classic',description:'Traditional typography for formal documents.',font:'Times New Roman',headingFont:'Times New Roman',line:'1.65',sizes:[26,18,14],color:'27384A'}
 };

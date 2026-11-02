@@ -1,33 +1,12 @@
-# Slate Forge — locked feature scope
+# Slate Forge — essential product and stability scope
 
-This is the active feature roadmap approved by the user. It replaces older broad checklists and backlog snapshots. Work only within the eight areas below; do not add features or turn deferred verification into feature requirements. Implementation details may be broken down under their existing area without expanding its scope.
+The latest user direction replaces the former eight-area feature-completion mandate. No new document-engine features. Evaluate unfinished scope by everyday usefulness and maintenance cost; see [PRODUCT_FOCUS.md](PRODUCT_FOCUS.md) for decisions to keep, bound or stop each area. The previous feature roadmap is preserved in Git history.
 
-Target: complete feature implementation by end of day if possible. This is a best-effort target, not a completion guarantee. Do not claim completion or remove an outstanding requirement to meet the target.
+Current authorized interface work:
 
-## Remaining feature work
+- A distinct ribbon with grouped everyday commands.
+- A Workspace start/backstage screen for documents, templates, opening, print, preferences and local session management.
+- First-visit setup cards and a skippable/replayable tour.
+- More light and dark palettes, preserving existing preferences and document colors.
 
-| Area | Completion scope |
-| --- | --- |
-| 1. Image placement and wrapping | Page placement, float-aware tables, preview continuations and supported live/preview two-sided exclusions are implemented in source. Remaining complex nested/table/page-break wrapping and cross-layout cases remain. |
-| 2. Pagination and sections | Mixed orientations/columns in live editing; remaining nested-section, keep-rule, widow/orphan and footnote cases; better editor/preview/Word consistency. |
-| 3. DOCX/ODT fidelity | Unsupported complex layouts, styles, fields, master pages, drawing effects and typography cases across editors. |
-| 4. Structural review | Partial Word rows, adjacent rich-text split/join revisions and nested editor suggestions are implemented in source. DOCX retains the full nested tree for Slate Forge with an outer native Word review layer. Native Word hierarchy fidelity and remaining complex/container-crossing cases remain. |
-| 5. PDF editing | Reflow that moves subsequent content, remaining unmapped-font and vertical-text cases, and broader script/font handling. |
-| 6. XFA forms | Bound pure-XFA multiple selections, common calculation/field scripts and reviewed XML/XDP/PDF submissions are implemented in source. Advanced script/submission compatibility and unbound/conflicting data bindings remain. |
-| 7. PDF signature permissions | Broader certified-document workflows involving earlier form filling, annotations and appearance changes. |
-| 8. Signature longevity | Revocation checks through OCSP/CRLs, DSS/LTV evidence, and document/archive timestamps. |
-
-## Historical feature-phase rules (superseded for this release)
-
-- Feature development only. Do not run tests, builds, validation, audits, browser/device checks or CI during this phase.
-- Use `[skip ci]` on commits pushed to the implementation branch.
-- Do not merge, deploy or describe untested source as verified or published.
-- Preserve existing work, local-first/account-free behavior, storage identifiers, file-format compatibility and the original private Site identity.
-- Existing comparison, font, contents-table, review, PDF, XFA-field and signature-timestamp implementations are source work already done; their later verification is not implementation from scratch.
-- No routine permission questions. Do not add cloud services, separate applications or other product scope.
-
-## Release phase now authorized
-
-After feature implementation, the previously discussed release work is auditing/testing/building accumulated changes, browser/PWA/storage/accessibility/print/Word verification, fixing resulting issues, and publication. The user has now explicitly authorized auditing, testing, fixing blockers and publishing the current implementation. The eight feature areas above remain the scope record; incomplete features are limitations, not additional release requirements.
-
-Historical roadmap descriptions and completed features remain available in Git history. Current implementation notes are in CODEX_HANDOFF.md; they do not expand this locked scope.
+After the interface changes, run stability and UX regressions across the existing product and these flows. Fix resulting defects without expanding scope. Preserve local saving, backup compatibility, the public GitHub Pages host and the separate private Site identity. Future accounts are not part of this release.

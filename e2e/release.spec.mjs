@@ -1,3 +1,4 @@
+import AxeBuilder from '@axe-core/playwright';
 import {capacityPDF} from '../test/fixtures/pdf-capacity.mjs';
 import forge from 'node-forge';
 import {signPDF} from '../src/pdf-signing.mjs';
@@ -11,8 +12,11 @@ import fs from 'node:fs/promises';
 import {readWorkspaceBackup} from '../src/workspace-backup.mjs';
 import {loadPDF,describeFields} from '../src/pdf-model.mjs';
 
-async function menu(page,name,action){if(!await page.locator('#applicationMenus').isVisible())await page.locator('#menuToggle').click();await page.locator('.app-menu-trigger').filter({hasText:new RegExp('^'+name+'$')}).click();await page.locator('[data-menu-action="'+action+'"]').click()}
-async function start(page){await page.goto('./');await expect(page.locator('#document-content')).toBeVisible();if(await page.locator('#dismissWelcome').isVisible())await page.locator('#dismissWelcome').click()}
+async function enterEditor(page){if(await page.locator('#firstVisit').isVisible())await page.locator('[data-skip]').click();if(await page.locator('#workspaceHome').isVisible())await page.locator('#continueWriting').click()}
+async function menu(page,name,action){await enterEditor(page);if(name==='File'){
+ await page.locator('#backstageToggle').click();const section=['encryptedBackup','end','recovery','privacy'].includes(action)?'Session':['deviceStorage','appearance','appStatus'].includes(action)?'Settings':null;if(section)await page.locator('[data-home-page="'+section+'"]').click();await page.locator('[data-home-action="'+action+'"]').click();
+ }else{const tab=action==='pagePreview'?'Layout':{Edit:'Home',Format:'Home',View:'View',Insert:'Insert',Review:'Review',Tools:'Tools'}[name]||name;await page.locator('[role="tab"]').filter({hasText:new RegExp('^'+tab+'$')}).click();await page.locator('.ribbon-panel:not([hidden]) [data-menu-action="'+action+'"]').click()}}
+async function start(page){await page.goto('./');await expect(page.locator('#document-content')).toBeAttached();await enterEditor(page)}
 async function write(page){await page.locator('#title').fill('Release smoke document');await page.locator('#document-content').fill('An independent backup keeps this document safe.');await menu(page,'File','saveNow');await expect(page.locator('#saveState')).toHaveText('Saved on this device')}
 async function download(page,testInfo,extension){const link=page.locator('.download-link[download$=".'+extension+'"]');await expect(link).toBeVisible();const event=page.waitForEvent('download');await link.click();const result=await event,file=testInfo.outputPath(result.suggestedFilename());await result.saveAs(file);expect(await result.failure()).toBeNull();return file}
 async function open(page,file){await menu(page,'File','import');await page.locator('#nativeFileInput').setInputFiles(file)}
@@ -89,4 +93,31 @@ test('page-positioned two-sided image flow preserves editable text and downloade
  await menu(page,'File','saveNow');await expect(page.locator('#saveState')).toHaveText('Saved on this device');await page.reload();await expect(page.locator('#document-content')).toContainText(text.trim());
  await menu(page,'View','pagePreview');await expect(page.locator('#printMeasuredPages')).toBeEnabled();expect((await page.locator('.preview-body').allTextContents()).join('')).toContain(text.trim());await page.locator('#closeDialog').click();
  await menu(page,'File','export');await page.locator('#htmlExport').click();const downloaded=await download(page,testInfo,'html'),html=await fs.readFile(downloaded,'utf8');expect(html).toContain('data-image-page-flow="both"');expect(html).toContain(text.trim());expect(await page.evaluate(content=>new DOMParser().parseFromString(content,'text/html').querySelector('article .live-image-exclusion-spacer')===null,html)).toBe(true);
+});
+
+test('first visit chooses a palette, completes the tour and returns to a searchable workspace',async({page},testInfo)=>{
+ await page.goto('./');await expect(page.locator('#firstVisit')).toBeVisible();await expect(page.locator('#onboardingTitle')).toContainText('clear space');await expect(page.locator('#onboardingTitle')).toHaveCSS('font-family',/sans-serif/);
+ await page.screenshot({path:testInfo.outputPath('onboarding.png')});await page.locator('[data-next]').click();await page.locator('[data-palette=midnight]').click();await expect(page.locator('body')).toHaveAttribute('data-ui-theme','dark');await expect(page.locator('body')).toHaveAttribute('data-ui-palette','midnight');
+ await page.locator('[data-next]').click();await expect(page.locator('.setup-description')).toContainText('Clearing browser data');await page.locator('[data-start-tour]').click();await expect(page.locator('#workspaceTour')).toBeVisible();
+ for(let step=0;step<4;step++)await page.locator('[data-tour-next]').click();await expect(page.locator('#workspaceTour')).not.toBeVisible();await expect(page.locator('.tour-target')).toHaveCount(0);await expect(page.locator('#document-content')).toHaveCSS('font-family',/Arial/);
+ await page.locator('#title').fill('My first letter');await page.locator('#document-content').fill('This text must survive interface changes.');await menu(page,'File','saveNow');await expect(page.locator('#saveState')).toHaveText('Saved on this device');
+ await page.locator('#backstageToggle').click();await expect(page.locator('#workspaceHome')).toBeVisible();await page.screenshot({path:testInfo.outputPath('workspace-dark.png')});await page.locator('#homeSearch').fill('first letter');await expect(page.locator('.home-document')).toHaveCount(1);await page.locator('.home-document').click();await expect(page.locator('#document-content')).toHaveText('This text must survive interface changes.');
+ await page.reload();await expect(page.locator('#workspaceHome')).toBeVisible();await expect(page.locator('#firstVisit')).not.toBeVisible();await expect(page.locator('body')).toHaveAttribute('data-ui-palette','midnight');await page.locator('#continueWriting').click();await expect(page.locator('#document-content')).toHaveText('This text must survive interface changes.');
+ await page.screenshot({path:testInfo.outputPath('ribbon-dark.png')});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2)).toBe(true);
+});
+
+test('ribbon keyboard access, preferences, templates and end-session cancellation preserve writing',async({page},testInfo)=>{
+ await start(page);await write(page);await page.locator('[role=tab]').filter({hasText:/^Home$/}).focus();await page.keyboard.press('ArrowRight');await expect(page.locator('[role=tab][aria-selected=true]')).toHaveText('Insert');await page.keyboard.press('End');await expect(page.locator('[role=tab][aria-selected=true]')).toHaveText('Tools');await page.keyboard.press('Home');await expect(page.locator('[role=tab][aria-selected=true]')).toHaveText('Home');
+ await page.locator('#backstageToggle').click();await page.locator('[data-home-page=Settings]').click();await page.locator('[data-home-action=appearance]').click();await page.locator('#uiTheme').selectOption('linen');await page.locator('#closeDialog').click();await expect(page.locator('body')).toHaveAttribute('data-ui-palette','linen');await page.screenshot({path:testInfo.outputPath('ribbon-linen.png')});
+ await page.locator('#backstageToggle').click();await page.locator('[data-home-page=Templates]').click();await page.locator('[data-templates]').click();await page.locator('[data-template=letter]').click();await expect(page.locator('#title')).toHaveValue('Untitled letter');
+ await page.locator('#backstageToggle').click();await page.locator('[data-home-page=Documents]').click();await page.locator('#homeSearch').fill('Release smoke');await page.locator('.home-document').click();await expect(page.locator('#document-content')).toContainText('An independent backup');
+ await page.locator('#backstageToggle').click();await page.locator('[data-home-page=Session]').click();await page.locator('[data-home-action=end]').click();await expect(page.locator('#confirmEnd')).toBeVisible();await page.locator('#closeDialog').click();await expect(page.locator('#document-content')).toContainText('An independent backup');
+ await page.locator('#backstageToggle').click();await page.screenshot({path:testInfo.outputPath('workspace-linen.png')});expect(await page.locator('#workspaceHome').evaluate(el=>el.scrollWidth<=el.clientWidth+2)).toBe(true);await page.keyboard.press('Escape');await expect(page.locator('#workspaceHome')).not.toBeVisible();
+});
+
+test('workspace and editor meet automated accessibility checks in light and dark palettes',async({page},testInfo)=>{
+ test.setTimeout(180000);const findings=[];const audit=async name=>{const result=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();await testInfo.attach(name+'.json',{body:JSON.stringify(result.violations,null,2),contentType:'application/json'});if(result.violations.length)findings.push({screen:name,violations:result.violations.map(v=>({id:v.id,impact:v.impact,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))}))})};
+ await page.goto('./');await expect(page.locator('#firstVisit')).toBeVisible();await audit('first-visit');await page.locator('[data-next]').click();await audit('palette-setup');await page.locator('[data-skip]').click();await page.locator('#backstageToggle').click();await audit('workspace-light');await page.locator('#continueWriting').click();
+ for(const theme of ['white','linen','mist','sage','grey','colored','dark','midnight','plum','forest','system']){await menu(page,'View','appearance');if(theme==='white')await audit('preferences');await page.locator('#uiTheme').selectOption(theme);await page.locator('#closeDialog').click();await audit('editor-'+theme)}
+ await page.locator('#backstageToggle').click();await audit('workspace-final');expect(findings).toEqual([]);
 });
