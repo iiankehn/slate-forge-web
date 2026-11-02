@@ -21,3 +21,18 @@ GitHub Actions runs the full production build, static packaging checks and brows
 Initial local result: 462 Node tests pass, as do production build, static packaging and source whitespace checks. Browser and accessibility results must be recorded after execution; no browser/device success is implied by this initial result.
 
 This is automated regression testing plus a source/visual UX review. It does not replace user research, physical-device testing, actual screen-reader use, IME/stylus testing, real storage eviction or printer/external-word-processor certification.
+
+
+## Verified implementation
+
+[PR CI 41396459279](https://github.com/iiankehn/slate-forge-web/actions/runs/41396459279) passed 462 Node tests, production/static checks and all 90 browser scenarios without retries on `4d9c05aeb8c8713cd65bcbe050ea66cecceef457`. The selected axe WCAG A/AA checks reported no violations across all tested setup, Workspace, preference and palette states in the five browser configurations. Production dependency audit: zero known vulnerabilities.
+
+Findings fixed: Undo availability with a persistent ribbon; duplicate controls; inherited mobile sidebar positioning that covered Workspace actions; setup-step ARIA semantics; dialog names; light-palette secondary-text contrast; keyboard/direct-launch navigation; and inherited serif interface styles. Existing document font choices remain intact; new blank/Forge documents use Arial.
+
+Reviewed captures: [desktop ribbon](ui/ribbon-desktop.png), [mobile Workspace](ui/workspace-mobile.png), [mobile onboarding](ui/onboarding-mobile.png).
+
+## Published UI release
+
+PR #7 is merged at `cb577796b7bc0173b141852116a91044057a20e1`. [Main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41397146965) passed and [Pages 41397164913](https://github.com/iiankehn/slate-forge-web/actions/runs/41397164913) deployed successfully. Live HTML, app/PDF scripts, styles, help, PDF worker and service-worker code/assets are verified. The cache version reconciles with CI platform-specific notices.
+
+The PR run passed all 90 browser cases without retries. The Pages repetition had one phone WebKit save/reload case that passed on retry (89 first-pass, one retry). This is under follow-up investigation before declaring reload stability complete. It must not be described as a retry-free deployment run.

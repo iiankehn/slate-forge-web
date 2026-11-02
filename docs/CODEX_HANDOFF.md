@@ -1,3 +1,7 @@
+# Latest status — UI published, reload stability follow-up
+
+PR #7 / `cb577796b7bc0173b141852116a91044057a20e1` is live at https://slate-web.iiankehn.com/ . Ribbon, Workspace/backstage, onboarding, tour, palettes and sans-serif UI/new-document defaults are implemented. PR CI 41396459279 passed 462 Node tests and 90 browser scenarios without retries; main CI 41397146965 passed. Pages 41397164913 deployed and live assets match, but its phone WebKit save/reload case needed one retry. Investigate reload/tab-ownership lifecycle and add a repeated-reload/duplicate-tab regression before calling stability complete. Product scope remains frozen under PRODUCT_FOCUS.md. No new features. Existing document fonts/formats/storage and private Site identity stay intact.
+
 # Current direction — essential product, redesigned interface, stability
 
 The user stops new document-feature development. Evaluate unfinished areas for everyday usefulness instead of completing an expanding roadmap. PRODUCT_FOCUS.md records what to keep, bound or stop. The explicitly requested UI scope is a distinct ribbon, Workspace start/backstage, first-visit setup/tour and more light/dark palettes, followed by stability/UX checks. See UX_STABILITY.md for current verification. This supersedes historical completion/audit-only mandates below. Preserve the public GitHub Pages host, private Site identity and legacy storage identifiers.

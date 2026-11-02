@@ -2,7 +2,7 @@
 
 ## Current mandate — focused product and interface
 
-No new document-engine or advanced feature development. Implement the explicitly requested ribbon, first-visit onboarding/tour, start/backstage workspace and more light/dark palettes. Evaluate unfinished scope against ordinary writing needs. Then run stability, accessibility and UX regressions. Existing public GitHub Pages release authorization remains in force; preserve the private Site and all existing storage identifiers. Older audit/feature mandates below are historical.
+Use sans-serif for the interface and new-document defaults; preserve fonts chosen in existing documents. No new document-engine or advanced feature development. Implement the explicitly requested ribbon, first-visit onboarding/tour, start/backstage workspace and more light/dark palettes. Evaluate unfinished scope against ordinary writing needs. Then run stability, accessibility and UX regressions. Existing public GitHub Pages release authorization remains in force; preserve the private Site and all existing storage identifiers. Older audit/feature mandates below are historical.
 
 ## Latest user mandate — audit and publish current implementation
 
