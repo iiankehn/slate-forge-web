@@ -1,10 +1,10 @@
 # Slate Forge release assessment
 
-## Latest public release — focused sans-serif workspace and reload stability
+## Current public release — interface and stability complete
 
-Revision `3304b071ce3f6cba1823936d36ffd1a2c2006cd5` is live at https://slate-web.iiankehn.com/ . The requested interface redesign and full automated suite are complete: 465 Node tests and 95 browser scenarios passed without retries in PR/main CI, with selected axe accessibility checks across setup, Workspace, preferences and every palette. Pages deployed successfully; its repetition had one Firefox document-discovery/template UI retry. Reload/second-tab checks passed on all five browser configurations. Live primary assets are verified. [UX_STABILITY.md](UX_STABILITY.md) records evidence, screenshots, the remaining test instability and manual verification limits. [PRODUCT_FOCUS.md](PRODUCT_FOCUS.md) stops advanced feature expansion. Existing documents and private Site identity are preserved.
+Revision `e2b7d0479daf44bab59efd266cfe8cb2a1829888` is live at https://slate-web.iiankehn.com/ . The requested ribbon/Workspace, onboarding/tour, palettes and sans-serif interface are complete. PR #8 corrected reload ownership; PR #9 corrects delayed editor focus overriding a newly selected field. [PR CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41467347689), [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41468991239), [release CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41469421300) and [Pages deployment](https://github.com/iiankehn/slate-forge-web/actions/runs/41469421667) passed 466 Node tests, production/static checks and 95 browser scenarios without retries. Live primary assets, shell chunks and service-worker code/manifest/cache digest are verified.
 
-
+Ready for everyday public beta/tester use. [UX_STABILITY.md](UX_STABILITY.md) records the focused regression, historical retries, the unreproduced historical Firefox failure and manual-verification limits. [PRODUCT_FOCUS.md](PRODUCT_FOCUS.md) bounds advanced tools and stops feature expansion; [ROADMAP.md](ROADMAP.md) is complete for this release. Preserve independent backups, existing documents and private Site identity. Older assessments below are historical.
 
 ## Latest published release — audited accumulated implementation
 

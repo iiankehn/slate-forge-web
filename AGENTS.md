@@ -1,25 +1,21 @@
 # Slate Forge web development
 
-## Current mandate — focused product and interface
+## Current mandate
 
-The interface pass and reload fix are published; see UX_STABILITY.md for exact evidence. No autonomous new feature work. Report retry counts honestly and keep intermittent test failures visible.
+The requested interface and stability release is complete and published. Read docs/CODEX_HANDOFF.md, docs/ROADMAP.md, docs/PRODUCT_FOCUS.md and docs/UX_STABILITY.md for current scope and evidence. No autonomous new features or reopening of historical roadmaps. Fix reproducible defects within the focused product; report intermittent failures and retry counts honestly. The user authorizes necessary commands, repository changes and public Pages publication without routine approval questions.
 
-Use sans-serif for the interface and new-document defaults; preserve fonts chosen in existing documents. No new document-engine or advanced feature development. Implement the explicitly requested ribbon, first-visit onboarding/tour, start/backstage workspace and more light/dark palettes. Evaluate unfinished scope against ordinary writing needs. Then run stability, accessibility and UX regressions. Existing public GitHub Pages release authorization remains in force; preserve the private Site and all existing storage identifiers. Older audit/feature mandates below are historical.
+Use sans-serif for the interface and new-document defaults; preserve font choices in existing documents. Keep the app local-first, account-free and without paid services, telemetry or cloud documents. Advanced compatibility tools are bounded maintenance areas, not new completion requirements. This browser/PWA project is separate from Slate Android.
 
-## Latest user mandate — audit and publish current implementation
+## Source, verification and release
 
-The user now explicitly requests a complete audit, a readiness assessment and publication of what is implemented. This supersedes the feature-only prohibition below. Run tests/build/static/browser CI and fix release blockers; do not expand feature scope. Publish to the existing public GitHub Pages host through the current repository workflows, preserving the separate private Site identity and all storage identifiers. No further routine approval questions are needed.
+Preserve existing work; do not reset, force-push or discard pending changes. Preserve the preexisting untracked docs/ROADMAP_SCOPE_AUDIT.md. It is not the active roadmap.
 
-## Active user mandate — locked feature-only phase
+Use Node 24. Run npm ci when dependencies are missing, npm test for affected regression checks, npm run build for production output and npm run check:dist for static packaging. dist/index.html is canonical tracked source; the build does not recreate it. Source whitespace check: git diff --check -- . ':!dist/*.js' ':!dist/chunks/*'. Bundled JavaScript contains intentional whitespace in text literals. Do not repeat expensive unchanged checks without a reason.
 
-Work only on the eight approved areas in docs/ROADMAP.md. That file supersedes older roadmap/backlog snapshots. No added feature scope, no tests, builds, validation, audits, browser/device checks or CI during this phase. Use [skip ci] commits on the implementation branch; do not merge/deploy untested work. The user targets end-of-day feature completion if possible; do not promise or claim completion without the implementation. Continue without routine approval questions. Older verification/release commands below are references for the deferred release phase and must not run now.
+Browser checks run through GitHub Actions across five configurations; CI rejects tests that pass only on retry. Browser automation was denied by URL policy in this workspace. Never evade a policy denial through alternate hosts, raw CDP or shell browser automation. Synthetic DOM/IndexedDB and browser emulation are not physical-device, screen-reader, printer or external-editor certification. Preserve meaningful evidence and manual-verification limits.
 
-This is the browser/PWA project, separate from Slate Android. Read docs/CODEX_HANDOFF.md, docs/ROADMAP.md, docs/RELEASE_READINESS.md and the latest section of docs/RELEASE_BATCH.md before starting work.
+Publish authorized releases through the existing manual GitHub Pages workflow to https://slate-web.iiankehn.com/ and verify the live artifacts. A GitHub commit alone does not deploy Pages. Preserve the separate private Site and origin in .openai/hosting.json; do not recreate it, change its audience or silently replace its origin. Update the handoff and roadmap against actual implementation and evidence.
 
-Work in coherent feature batches, implement and verify them, and update the roadmap against actual evidence. Preserve existing work; do not reset, force-push or discard changes. Keep the app local-first, account-free, without paid services, telemetry or cloud documents. Preserve legacy document-studio storage identifiers and database versions unless a tested migration requires a change. Workspace tokens are local namespaces, not authentication or device fingerprints.
+## Storage compatibility
 
-Run npm ci when dependencies are missing, npm test for regression checks and npm run build for production output. dist/index.html is canonical tracked source; the build does not recreate it. Source whitespace check: git diff --check -- . ':!dist/*.js' ':!dist/chunks/*'. Bundled JavaScript contains intentional whitespace in text literals.
-
-Preserve the existing private Site and origin in .openai/hosting.json. A GitHub commit does not publish that Site. Use the supported Sites deployment integration if available; never invent credentials, recreate the Site, make it public or silently replace its origin. A different origin cannot automatically access documents already stored on users' devices.
-
-Browser automation was blocked by URL policy in the previous workspace. Never evade a policy denial through alternate hosts, raw CDP or shell browser automation. Independently evaluate permitted browser capabilities in a new environment. Synthetic DOM/IndexedDB and LibreOffice checks are not physical-device or Microsoft Word certification. Track unverified real-browser, downloads, print, PWA lifecycle, IME, accessibility and actual storage-pressure gates explicitly.
+Preserve legacy document-studio storage identifiers, database versions and backup/file formats unless a tested migration is explicitly required. Workspace tokens are local namespaces, not authentication or device fingerprints. Different origins cannot automatically access existing browser documents. Never clear real user storage as a repair step. Saving, encrypted recovery, backups, PDF journals and OCR drafts require appropriate regression coverage when changed.
