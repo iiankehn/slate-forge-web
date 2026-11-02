@@ -1,3 +1,4 @@
+import {needsReviewTree,wordReviewProjection,reviewHTMLSnapshot,attachReviewTree} from './docx-review-tree.mjs';
 import {paragraphTextDirection} from './text-direction.mjs';
 import {fontFamily} from './font-families.mjs';
 import {nativeCanvasRun} from './docx-native-designs.mjs';
@@ -96,4 +97,10 @@ export function buildDocx(content,settings,title,images=new Map(),options={}){
     comments:{children:ctx.comments},footnotes:ctx.footnotes,features:{updateFields:true,trackRevisions:layout.trackChanges},styles:{paragraphStyles:[{id:'ForgeCode',name:'Slate Forge Code',basedOn:'Normal',run:{font:'Courier New'}}],default:{document:{run:{font,size:24,language:{value:layout.language}},paragraph:{spacing:{line:Math.round(Number(layout.line)*240)}}}}},
     numbering:{config:ctx.numbering},sections});
 }
-export async function exportDocx(content,settings,title,images,options={}){const blob=await Packer.toBlob(buildDocx(content,settings,title,images,options));if(options.nativeDesigns||options.editableDesigns===false)return blob;const bytes=await attachEditableDesigns(new Uint8Array(await blob.arrayBuffer()),content,options);return new Blob([bytes],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'})}
+export async function exportDocx(content,settings,title,images,options={}){
+ const nested=needsReviewTree(content),projection=nested?wordReviewProjection(content):content,blob=await Packer.toBlob(buildDocx(projection,settings,title,images,options));
+ if(!nested&&(options.nativeDesigns||options.editableDesigns===false))return blob;
+ let bytes=new Uint8Array(await blob.arrayBuffer());if(!options.nativeDesigns&&options.editableDesigns!==false)bytes=await attachEditableDesigns(bytes,projection,options);
+ if(nested)bytes=await attachReviewTree(bytes,reviewHTMLSnapshot(options.reviewHTML,images,options),settings,options);
+ return new Blob([bytes],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+}

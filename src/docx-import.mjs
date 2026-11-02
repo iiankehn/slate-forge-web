@@ -1,3 +1,4 @@
+import {restoreReviewTree} from './docx-review-tree.mjs';
 import {prepareDocxBlockRevisions,restoreDocxBlockBoundaries} from './docx-block-revisions.mjs';
 import {fontFamily,fontCSS} from './font-families.mjs';
 import {restoreNativeDrawings} from './docx-native-import.mjs';
@@ -10,6 +11,7 @@ import {enrichDocxStructure} from './docx-structure.mjs';
 import mammoth from 'mammoth/mammoth.browser.js';import {unzipSync,zipSync,strFromU8,strToU8} from 'fflate';import {validateDocxArchive,safeImage} from './file-safety.mjs';import {normalizeLayout,FONTS} from './document-model.mjs';import {reviewAttrs} from './review.mjs';import {importMammothNotes} from './references.mjs';
 const W='http://schemas.openxmlformats.org/wordprocessingml/2006/main';
 export async function importDOCX(bytes,Parser=DOMParser,{prepare=prepareImage}={}){validateDocxArchive(bytes);const files=unzipSync(bytes),xml=new Parser().parseFromString(strFromU8(files['word/document.xml']),'application/xml');if(xml.querySelector('parsererror')||xml.doctype)throw Error('Invalid document XML.');const warnings=[],native=new Map();let count=0;
+ const restoredReview=await restoreReviewTree(files,Parser,warnings);if(restoredReview)return {...restoredReview,warnings};
  const val=(n,name)=>n?.getAttributeNS(W,name)||'',desc=(n,name)=>n.getElementsByTagNameNS(W,name);
  let themeSource=null;
  if(files['word/_rels/document.xml.rels']){const relationships=new Parser().parseFromString(strFromU8(files['word/_rels/document.xml.rels']),'application/xml');if(relationships.doctype||relationships.querySelector('parsererror'))throw Error('Invalid DOCX relationships XML.');const link=[...relationships.getElementsByTagNameNS('*','Relationship')].find(n=>/\/theme$/.test(n.getAttribute('Type')||'')&&n.getAttribute('TargetMode')!=='External');if(link){const target=link.getAttribute('Target')||'';if(/^[a-zA-Z0-9_./-]+$/.test(target)&&!target.split('/').includes('..')){const path=target.startsWith('/')?target.slice(1):'word/'+target.replace(/^\.\//,'');if(files[path])themeSource=strFromU8(files[path])}}}
