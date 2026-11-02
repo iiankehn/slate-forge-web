@@ -1,3 +1,7 @@
+# Published audited public beta
+
+PR #6 is merged and revision `c0400862e45b9be412a49244e6c2062fd18a4530` is live at https://slate-web.iiankehn.com/ . [PR CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41391321090), [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41391911123) and [Pages deployment](https://github.com/iiankehn/slate-forge-web/actions/runs/41391915460) passed. The release has 459 passing Node tests and 75 passing browser scenarios without retries; live primary assets are verified. See RELEASE_AUDIT.md for corrections, evidence and readiness limits. Suitable for everyday public beta use; advanced document/PDF compatibility remains bounded. The eight-area roadmap remains unfinished and unchanged in scope. The audit/publication request is complete; do not invent further feature work. Private Site and legacy storage identities are preserved. Historical feature-only and unpublished-source statements below describe earlier states.
+
 # Current mandate — audit and publish accumulated implementation
 
 The user explicitly authorized auditing, testing, release-blocker fixes and publication of the current feature set on the existing public GitHub Pages host, https://slate-web.iiankehn.com/ . This supersedes all historical feature-only restrictions below. Do not resume or expand roadmap development during this release. Preserve the private Site identity and storage compatibility. See RELEASE_AUDIT.md for the current assessment and release evidence; older notes below describe earlier states.

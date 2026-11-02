@@ -4,7 +4,7 @@ The user requested an audit and publication of the existing implementation, endi
 
 ## Readiness decision
 
-Public beta for everyday local writing, saving, backup and supported import/export is the intended release level, conditional on passing the release workflow. Advanced layout, review interoperability, PDF editing, XFA and signing remain bounded beta capabilities. A passing automated suite does not establish universal document compatibility, physical-device reliability or legal signature acceptance. Keep originals and export complete workspace backups; ordinary device storage can be cleared or evicted.
+The published release is suitable for everyday local writing, saving, backup and supported import/export as a public beta. The required release and deployment checks passed. Advanced layout, review interoperability, PDF editing, XFA and signing remain bounded beta capabilities. A passing automated suite does not establish universal document compatibility, physical-device reliability or legal signature acceptance. Keep originals and export complete workspace backups; ordinary device storage can be cleared or evicted.
 
 ## Audit findings and corrections
 
@@ -40,6 +40,15 @@ Optional semantic comparison uses packaged local models and does not upload docu
 
 ## Evidence and publication
 
-Local baseline after corrections: all 450 existing tests pass; new focused regressions pass separately. Production build and static packaging checks pass (260 files, 83.7 MiB); the production dependency audit reports zero known vulnerabilities. The release workflow must repeat the full suite, build, static checks and browser scenarios on the release commit before merge. The Pages workflow repeats these checks on main before publishing. Final run links and deployed revision will be recorded after publication.
+Published revision: `c0400862e45b9be412a49244e6c2062fd18a4530` from [PR #6](https://github.com/iiankehn/slate-forge-web/pull/6). Public site: https://slate-web.iiankehn.com/ .
+
+- [PR CI 41391321090](https://github.com/iiankehn/slate-forge-web/actions/runs/41391321090): 459 Node tests, production/static checks and all 75 browser scenarios passed without retries.
+- [Main CI 41391911123](https://github.com/iiankehn/slate-forge-web/actions/runs/41391911123): passed on the merged revision.
+- [Pages 41391915460](https://github.com/iiankehn/slate-forge-web/actions/runs/41391915460): repeated all 459 tests and 75 browser scenarios without retries, then deployed successfully.
+- Production packaging: 260 files, 83.7 MiB. Production dependency audit: zero known vulnerabilities. Source whitespace checks pass.
+- Live HTML, app/PDF scripts, styles, help and PDF worker return HTTP 200 and match the audited runtime bytes. The service-worker code and asset lists match exactly; its cache version recomputes correctly with the CI platform-specific package notices (`bb5775eec6f8ef76`).
+- Independent ephemeral OpenSSL timestamp response generation/verification, attachment to the latest of two signatures and subsequent integrity checks passed; pdfinfo opens the final file successfully.
+
+The 75 browser scenarios cover the 15 checked workflows across desktop Chromium/Firefox/WebKit and phone Chromium/WebKit emulation, including actual downloads, backup restoration, offline OCR, image layout, native document round trips and signed-PDF export. XFA rendering/dataset export and semantic inference did not receive full browser round-trip coverage in this audit; their source/package review and focused model/interpreter tests do not establish universal compatibility.
 
 Physical devices, IME/assistive technology, actual storage eviction, printer output and Microsoft Word/other external-reader interoperability remain unverified. These are limits of the assessment, not newly added roadmap features. No claim of completed roadmap or comprehensive production certification is made.

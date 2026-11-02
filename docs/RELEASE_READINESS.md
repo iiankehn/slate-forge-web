@@ -1,5 +1,9 @@
 # Slate Forge release assessment
 
+## Latest published release — audited accumulated implementation
+
+Revision `c0400862e45b9be412a49244e6c2062fd18a4530` is published at https://slate-web.iiankehn.com/ . PR/main CI and Pages passed 459 Node tests, production/static checks and 75 browser scenarios without retries. Live primary assets are verified. Suitable for everyday public beta use; the advanced-feature and verification boundaries are recorded in [RELEASE_AUDIT.md](RELEASE_AUDIT.md). This assessment supersedes older release descriptions below.
+
 ## Current accumulated release audit
 
 See [RELEASE_AUDIT.md](RELEASE_AUDIT.md) for the current audit, corrected defects, readiness boundaries and publication evidence. This supersedes older feature-only restrictions and the historical assessments below.
