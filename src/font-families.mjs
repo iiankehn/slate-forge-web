@@ -1,0 +1,5 @@
+// Preserve installed/custom family names without admitting CSS declarations,
+// remote URLs, escapes or multiple-family expressions from imported files.
+export function fontFamily(value,fallback=null){if(typeof value!=='string')return fallback;let name=value.trim();if(name.length>=2&&((name[0]==='"'&&name.at(-1)==='"')||(name[0]==="'"&&name.at(-1)==="'")))name=name.slice(1,-1);return name.length>=1&&name.length<=100&&/^[\p{L}\p{M}\p{N} ._()'+-]+$/u.test(name)&&! /^(?:url|var|expression|calc)\s*\(/i.test(name)?name:fallback}
+export function fontCSS(value,fallback='Georgia'){const name=fontFamily(value,fallback);return /^[\p{L}_][\p{L}\p{M}\p{N} _-]*$/u.test(name)&&!/^(inherit|initial|unset|revert|revert-layer)$/i.test(name)?name:JSON.stringify(name)}
+export function selectFont(select,value){value=fontFamily(value,'');if(value&&!Array.from(select.options).some(option=>option.value===value)){const option=select.ownerDocument.createElement('option');option.value=value;option.textContent=value;option.dataset.importedFont='true';select.append(option)}select.value=value||''}

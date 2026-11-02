@@ -18,7 +18,7 @@ const pixel='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCA
 const p=text=>({type:'paragraph',content:[{type:'text',text}]});
 const fixture={type:'doc',content:[{type:'image',attrs:{src:pixel,alt:'Test pixel',imageWidth:50,imageAlign:'right',imageWrap:'left'}},{type:'table',attrs:{tableStyle:'striped',tablePalette:'warm',tableDensity:'spacious'},content:[{type:'tableRow',content:[{type:'tableHeader',content:[p('Heading')]}]},{type:'tableRow',content:[{type:'tableCell',content:[p('Data')]}]}]}]};
 test('object design settings normalize unsupported or hostile values',()=>{
- assert.deepEqual(normalizeImageDesign({imageWidth:900,imageAlign:'url(evil)'}),{imageShape:'rectangle',imageGap:18,imageWidth:100,imageAlign:'left',imageWrap:'none'});
+ assert.deepEqual(normalizeImageDesign({imageWidth:900,imageAlign:'url(evil)'}),{imagePlacement:'flow',imagePageFlow:'overlay',imagePageWidth:60,imageX:22,imageY:22,imageShape:'rectangle',imageGap:18,imageWidth:100,imageAlign:'left',imageWrap:'none'});
  assert.deepEqual(normalizeTableDesign({tableStyle:'evil',tablePalette:'__proto__',tableDensity:'999'}),{tableStyle:'grid',tablePalette:'sage',tableDensity:'comfortable'});
 });
 test('image and table settings survive sanitized HTML round trips',()=>{

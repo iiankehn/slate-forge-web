@@ -1,3 +1,4 @@
+import {fontFamily,fontCSS} from './font-families.mjs';
 import {bodyText} from './workspace-discovery.mjs';
 import {normalizeLanguage} from './writing-tools.mjs';
 import {styleKey} from './document-styles.mjs';
@@ -6,7 +7,7 @@ export function normalizeLayout(value={}) {
   if(!value||typeof value!=='object'||Array.isArray(value))value={};
   return {notePlacement:value.notePlacement==='page'?'page':'end',headingColor:/^#[a-f\d]{6}$/i.test(value.headingColor||'')?value.headingColor:null,trackChanges:value.trackChanges===true,reviewAuthor:String(value.reviewAuthor||'Reviewer').slice(0,80),language:normalizeLanguage(value.language),theme:styleKey(value.theme),size:value.size==='Letter'?'Letter':'A4',orientation:value.orientation==='landscape'?'landscape':'portrait',
     margin:[15,22,30].includes(Number(value.margin))?Number(value.margin):22,
-    font:FONTS.includes(value.font)?value.font:'Georgia',line:['1.3','1.65','2'].includes(String(value.line))?String(value.line):'1.65',
+    font:fontFamily(value.font,'Georgia'),line:['1.3','1.65','2'].includes(String(value.line))?String(value.line):'1.65',
     header:String(value.header||'').slice(0,120),footer:String(value.footer||'').slice(0,120),pageNumbers:value.pageNumbers===true};
 }
 // Search text within a block, including across mark boundaries, without crossing

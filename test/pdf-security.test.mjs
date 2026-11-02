@@ -10,6 +10,6 @@ test('password bounds and signed PDFs prevent unsafe or misleading security outp
  const bytes=await newFormPDF();await assert.rejects(protectPDF(bytes,'short'),/at least 12/);await assert.rejects(protectPDF(bytes,'é'.repeat(64)),/127 UTF-8/);await assert.rejects(unlockPDF(bytes,'a'.repeat(128)),/127 UTF-8/);
  const pdf=await PDFDocument.load(bytes),field=pdf.context.register(pdf.context.obj({FT:'Sig',T:'Signature',V:pdf.context.obj({Type:'Sig'})}));pdf.getForm().acroForm.addField(field);await assert.rejects(protectPDF(await pdf.save(),'long-test-password'),/invalidate/);
 });
-test('XFA is refused before a library can silently delete its data',async()=>{
- const pdf=await PDFDocument.create();pdf.addPage();pdf.getForm().acroForm.dict.set(PDFName.of('XFA'),pdf.context.obj([]));const bytes=await pdf.save({updateFieldAppearances:false});await assert.rejects(loadPDF(bytes),/XFA/);await assert.rejects(protectPDF(bytes,'long-test-password'),/XFA/);
+test('XFA packets survive load, protection and password unlock without getForm',async()=>{
+ const pdf=await PDFDocument.create();pdf.addPage();pdf.getForm().acroForm.dict.set(PDFName.of('XFA'),pdf.context.obj([]));const bytes=await pdf.save({updateFieldAppearances:false});for(const copy of [bytes,await unlockPDF(await protectPDF(bytes,'long-test-password'),'long-test-password')]){const loaded=await loadPDF(copy),form=loaded.context.lookup(loaded.catalog.get(PDFName.of('AcroForm')));assert.ok(form.has(PDFName.of('XFA')));assert.equal(form.lookup(PDFName.of('XFA')).size(),0)}
 });

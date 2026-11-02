@@ -1,5 +1,13 @@
 # Slate Forge web development
 
+## Latest user mandate — audit and publish current implementation
+
+The user now explicitly requests a complete audit, a readiness assessment and publication of what is implemented. This supersedes the feature-only prohibition below. Run tests/build/static/browser CI and fix release blockers; do not expand feature scope. Publish to the existing public GitHub Pages host through the current repository workflows, preserving the separate private Site identity and all storage identifiers. No further routine approval questions are needed.
+
+## Active user mandate — locked feature-only phase
+
+Work only on the eight approved areas in docs/ROADMAP.md. That file supersedes older roadmap/backlog snapshots. No added feature scope, no tests, builds, validation, audits, browser/device checks or CI during this phase. Use [skip ci] commits on the implementation branch; do not merge/deploy untested work. The user targets end-of-day feature completion if possible; do not promise or claim completion without the implementation. Continue without routine approval questions. Older verification/release commands below are references for the deferred release phase and must not run now.
+
 This is the browser/PWA project, separate from Slate Android. Read docs/CODEX_HANDOFF.md, docs/ROADMAP.md, docs/RELEASE_READINESS.md and the latest section of docs/RELEASE_BATCH.md before starting work.
 
 Work in coherent feature batches, implement and verify them, and update the roadmap against actual evidence. Preserve existing work; do not reset, force-push or discard changes. Keep the app local-first, account-free, without paid services, telemetry or cloud documents. Preserve legacy document-studio storage identifiers and database versions unless a tested migration requires a change. Workspace tokens are local namespaces, not authentication or device fingerprints.

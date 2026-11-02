@@ -15,7 +15,7 @@ export function planPageBreaks(blocks,geometry,coords,{maxPages=100,reserves=[]}
  const bottom=()=>index*(height+PAGE_GAP)+height-margin-Math.max(0,Number(reserves[index])||0);
  function advance(pos,y,kind='block',header=null,columns=1,target=null){if(++index>=maxPages)throw Error('Live editing is limited to '+maxPages+' pages. Use Page preview for this document.');const targetY=index*(height+PAGE_GAP)+margin+(header?.height||0),size=Math.max(0,targetY-y-shift);breaks.push({pos,height:size,page:index+1,kind,header,columns,target});shift+=size}
  for(const [blockIndex,block]of blocks.entries()){if(block.type==='pageBreak'){if(block.top+shift>index*(height+PAGE_GAP)+margin+1)advance(block.pos,block.top);continue}
-  if(block.bottom-block.top+(block.header?.height||0)>content+2&&!block.textblock)throw Error(block.type==='note'?'A note is taller than a page. Shorten it or use Page preview.':block.type==='wrapGroup'?'A wrapped image and its surrounding text are taller than a page. Shorten the text, resize the image or use continuous editing.':'An object or table row group is taller than a page. Use Page preview or resize it.');
+  if(block.bottom-block.top+(block.header?.height||0)>content+2&&!block.textblock)throw Error(block.type==='note'?'A note is taller than a page. Shorten it or use Page preview.':block.type==='wrapGroup'?'This wrapped image layout spans pages. Use Page preview for image continuation, or resize the image for live pages.':'An object or table row group is taller than a page. Use Page preview or resize it.');
   if(block.pageBreakBefore&&block.top+shift>index*(height+PAGE_GAP)+margin+1)advance(block.from,block.top,'inline');
   if(block.keepTogether){if(block.bottom-block.top>content+2)throw Error('A paragraph marked Keep together is taller than a page. Turn off Keep together or shorten it.');while(block.bottom+shift>bottom()+1)advance(block.from,block.top,'inline')}
   if(!block.textblock){while(block.bottom+shift>bottom()+1)advance(block.pos,block.top,block.type==='row'?'row':'block',block.header,block.columns,block.target);continue}
@@ -70,7 +70,6 @@ export function groupWrappedBlocks(input,coords=null){
    const next=blocks[i];
    if(next.type==='pageBreak')throw Error('A wrapped image crosses an explicit page break. Move the image or use continuous editing.');
    if(next.type==='note')break;
-   if(next.type==='row')throw Error('Wrapped images beside tables currently use continuous editing. Move the image above or below the table.');
    if(next.wrapped)flowEnd=Math.max(flowEnd,next.flowBottom??next.bottom);
    // Once the float ends, subsequent paragraph lines have the ordinary full
    // width. Keep the wrapped prefix with the image but paginate that remaining
@@ -104,17 +103,17 @@ export class LivePageController{
  refresh(){if(this.dead||this.measuring)return;clearTimeout(this.timer);this.timer=setTimeout(()=>this.measure(),100)}
  update(view,previous){if(this.measuring||this.dead)return;if(view.state.doc!==previous.doc)this.refresh()}
  measure(){if(this.dead||!this.root)return;if(this.view.composing){this.refresh();return}this.measuring=true;const view=this.view;
- try{this.clear();if(!this.options.enabled()){this.options.onStatus?.({enabled:false,pages:0});return}let unsupported='';view.state.doc.descendants((node,pos,parent)=>{if(node.type.name==='columnSection')unsupported='Mixed sections currently use continuous editing. Page preview keeps their section layout.';if(node.type.name==='image'&&['left','right'].includes(node.attrs.imageWrap)&&parent.type.name!=='doc')unsupported='Wrapped images inside lists, tables or nested blocks currently use continuous editing. Page preview keeps their text flow.'});if(unsupported)throw Error(unsupported);
+ try{this.clear();if(!this.options.enabled()){this.options.onStatus?.({enabled:false,pages:0});return}let unsupported='';view.state.doc.descendants((node,pos,parent)=>{if(node.type.name==='image'&&node.attrs.imagePlacement==='page'&&node.attrs.imagePageFlow&&node.attrs.imagePageFlow!=='overlay'&&view.nodeDOM(pos)?.classList.contains('forge-exclusion-fallback'))unsupported='This image exclusion needs continuous editing and Page preview for its current layout.';if(node.type.name==='columnSection')unsupported='Mixed sections currently use continuous editing. Page preview keeps their section layout.';if(node.type.name==='image'&&node.attrs.imagePlacement!=='page'&&['left','right'].includes(node.attrs.imageWrap)&&parent.type.name!=='doc')unsupported='Wrapped images inside lists, tables or nested blocks currently use continuous editing. Page preview keeps their text flow.'});if(unsupported)throw Error(unsupported);
   const settings=this.options.layout(),geometry=pageGeometry(settings);this.root.classList.add('live-pages-enabled');this.root.style.setProperty('--live-page-width',geometry.width+'px');this.root.style.setProperty('--live-page-margin',geometry.margin+'px');
   const rootBox=this.root.getBoundingClientRect(),scale=rootBox.width/this.root.offsetWidth||1,offset=rect=>({top:(rect.top-rootBox.top)/scale,bottom:(rect.bottom-rootBox.top)/scale}),blocks=[];
-  function visit(node,pos,parent){const dom=view.nodeDOM(pos);if(!dom||!dom.getBoundingClientRect)return false;const box=offset(dom.getBoundingClientRect());if(node.type.name==='pageBreak'){blocks.push({type:'pageBreak',pos,...box});return false}if(node.type.name==='table'){
+  function visit(node,pos,parent){const dom=view.nodeDOM(pos);if(!dom||!dom.getBoundingClientRect)return false;const box=offset(dom.getBoundingClientRect());if(node.type.name==='image'&&node.attrs.imagePlacement==='page')return false;if(node.type.name==='pageBreak'){blocks.push({type:'pageBreak',pos,...box});return false}if(node.type.name==='table'){
    const rows=[];let rowPos=pos+1;
    node.forEach(row=>{const rowDOM=view.nodeDOM(rowPos);if(!rowDOM)throw Error('A table could not be measured. Use continuous editing.');rows.push({node:row,pos:rowPos,dom:rowDOM,...offset(rowDOM.getBoundingClientRect())});rowPos+=row.nodeSize});
    const groups=rowSpanGroups(rows.map(row=>row.node.content.content.map(cell=>cell.attrs.rowspan))),columns=node.firstChild.content.content.reduce((n,cell)=>n+(cell.attrs.colspan||1),0);let header=null;
    for(const [i,group]of groups.entries()){
     const items=rows.slice(group.from,group.to),first=items[0],last=items.at(-1);
     if(i===0&&items.every(row=>row.node.content.content.every(cell=>cell.type.name==='tableHeader')))header={height:last.bottom-first.top,html:'<tbody>'+items.map(row=>row.dom.outerHTML).join('')+'</tbody>'};
-    blocks.push({type:'row',pos:first.pos,top:first.top,bottom:last.bottom,header:i?header:null,columns});
+    blocks.push({type:'row',pos:first.pos,dom:first.dom,lastDOM:last.dom,top:first.top,bottom:last.bottom,header:i?header:null,columns});
    }
    return false;
   }if(node.isTextblock){blocks.push({type:'text',heading:node.type.name==='heading',widowControl:node.attrs.widowControl!==false,keepTogether:node.attrs.keepTogether===true,keepWithNext:node.attrs.keepWithNext===true,pageBreakBefore:node.attrs.pageBreakBefore===true,dom,pos,from:pos+1,to:pos+node.nodeSize-1,textblock:true,...box});return false}if(node.isAtom||node.type.name==='image'||node.type.name==='designCanvas'){const wrapped=node.type.name==='image'&&['left','right'].includes(node.attrs.imageWrap),marginBottom=wrapped?parseFloat(view.dom.ownerDocument.defaultView.getComputedStyle(dom).marginBottom)||0:0;blocks.push({type:'block',pos,dom,wrapped,flowBottom:box.bottom+marginBottom,...box});return false}return true}
@@ -127,7 +126,7 @@ export class LivePageController{
   // before checking rendered bounds rather than mixing two scroll positions.
   const renderedRoot=this.root.getBoundingClientRect(),renderedScale=renderedRoot.width/this.root.offsetWidth||1;
   for(const group of grouped.filter(block=>block.type==='wrapGroup')){
-   const boxes=group.members.filter(block=>block.dom).map(block=>{if(block.measuredText){const first=view.coordsAtPos(block.from,1),last=view.coordsAtPos(block.to,1);return {top:(first.top-renderedRoot.top)/renderedScale,bottom:(last.bottom-renderedRoot.top)/renderedScale}}const box=block.dom.getBoundingClientRect();return {top:(box.top-renderedRoot.top)/renderedScale,bottom:(box.bottom-renderedRoot.top)/renderedScale}});
+   const boxes=group.members.filter(block=>block.dom).map(block=>{if(block.measuredText){const first=view.coordsAtPos(block.from,1),last=view.coordsAtPos(block.to,1);return {top:(first.top-renderedRoot.top)/renderedScale,bottom:(last.bottom-renderedRoot.top)/renderedScale}}const box=block.dom.getBoundingClientRect();return {top:(box.top-renderedRoot.top)/renderedScale,bottom:((block.lastDOM?.getBoundingClientRect().bottom??box.bottom)-renderedRoot.top)/renderedScale}});
    if(!wrappedGroupFits(Math.min(...boxes.map(box=>box.top)),Math.max(...boxes.map(box=>box.bottom)),geometry))throw Error('This wrapped layout could not fit safely inside page boundaries. Use continuous editing or adjust the image and text.');
   }
   for(const item of plan.breaks.filter(item=>item.target)){

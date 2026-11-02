@@ -14,14 +14,14 @@ function orderedMatches(pairs){
  for(const pair of pairs){let lo=0,hi=tails.length;while(lo<hi){const mid=(lo+hi)>>1;if(tails[mid]<pair.j)lo=mid+1;else hi=mid}previous.set(pair,lo?indices[lo-1]:null);tails[lo]=pair.j;indices[lo]=pair}
  const result=new Set();let item=indices.at(-1);while(item){result.add(item);item=previous.get(item)}return result;
 }
-export function compareDocuments(before,after,beforeLayout={},afterLayout={}, {maxNodes=10000,maxDetails=200,maxCharacters=200000,maxWork=2000000}={}){
+export function compareDocuments(before,after,beforeLayout={},afterLayout={}, {maxNodes=10000,maxDetails=200,maxCharacters=200000,maxWork=2000000,matchOverrides=[]}={}){
  const counts={structure:0,formatting:0,objects:0,page:0},details=[],removed=[],added=[];let limited=false,work=maxWork,indexLimited=false;const comparedA=new Set(),comparedB=new Set();
  const emit=(kind,path,description,extra={})=>{counts[kind]++;if(details.length<maxDetails)details.push({kind,path,description,...extra});else limited=true};
  function index(source){let visited=0,characters=0;function visit(node,path,depth){
   if(!node||typeof node!=='object')return null;if(++visited>maxNodes||depth>100){limited=true;return null}
   if(node.type==='commentAnchor')return null;
   if(node.marks?.some(m=>m.type==='reviewChange'&&m.attrs?.kind==='delete'))return null;
-  const attrs={...node.attrs};delete attrs.paragraphChange;for(const key of Object.keys(attrs))if(attrs[key]===null||attrs[key]===undefined||attrs[key]===false||key==='indent'&&attrs[key]===0||key==='widowControl'&&attrs[key]===true)delete attrs[key];if(node.attrs?.widowControl===false)attrs.widowControl=false;if(node.type==='tableOfContents')delete attrs.entries;if(node.type==='footnote')delete attrs.number;
+  const attrs={...node.attrs};delete attrs.paragraphChange;for(const key of Object.keys(attrs))if(attrs[key]===null||attrs[key]===undefined||attrs[key]===false||key==='indent'&&attrs[key]===0||key==='widowControl'&&attrs[key]===true||key==='textDirection'&&attrs[key]==='auto'||node.type==='tableOfContents'&&key==='startDepth'&&attrs[key]===1)delete attrs[key];if(node.attrs?.widowControl===false)attrs.widowControl=false;if(node.type==='tableOfContents')delete attrs.entries;if(node.type==='footnote')delete attrs.number;
   if(node.type==='text'){const available=Math.max(0,maxCharacters-characters),text=String(node.text||'').slice(0,available);characters+=text.length;if(text.length!==String(node.text||'').length)limited=true;return {type:'text',text,marks:formattingSnapshot(node.marks)}}
   const children=[],inline=[];let text='',offset=0;
   for(let i=0;i<(node.content?.length||0);i++){if(visited>=maxNodes){limited=true;break}const child=node.content[i],entry=visit(child,path+'/'+(paragraphTypes.has(node.type)?'inline@'+offset:i+1),depth+1);offset+=child.type==='text'?String(child.text||'').length:1;if(!entry)continue;if(entry.type==='text'){if(paragraphTypes.has(node.type)){const start=text.length;text+=entry.text;const marks=signature(entry.marks),last=inline.at(-1);if(last?.marks===marks)last.to=text.length;else if(entry.text)inline.push({from:start,to:text.length,marks})}continue}children.push(entry);if(paragraphTypes.has(node.type)){const start=text.length;text+=entry.type==='hardBreak'?'\n':'\uFFFC';inline.push({from:start,to:text.length,marks:'[]'})}}
@@ -48,9 +48,10 @@ export function compareDocuments(before,after,beforeLayout={},afterLayout={}, {m
  }
  function compareChildren(a,b){
   const oldGroups=new Map(),newGroups=new Map();for(const [items,groups]of [[a,oldGroups],[b,newGroups]])for(let i=0;i<items.length;i++){const group=groups.get(items[i].key)||[];group.push(i);groups.set(items[i].key,group)}
-  const pairs=[],usedA=new Set(),usedB=new Set(),occurrences=new Map();
-  for(let i=0;i<a.length;i++){const targets=newGroups.get(a[i].key),olds=oldGroups.get(a[i].key);if(!targets?.length)continue;const occurrence=occurrences.get(a[i].key)||0;occurrences.set(a[i].key,occurrence+1);const j=targets[occurrence];if(j===undefined)continue;pairs.push({i,j,unique:olds.length===1&&targets.length===1});usedA.add(i);usedB.add(j)}
-  const ordered=orderedMatches(pairs);
+  const pairs=[],usedA=new Set(),usedB=new Set();
+  for(let i=0;i<a.length;i++){const match=manualA.get(a[i]),j=match?b.indexOf(match):-1;if(j>=0){pairs.push({i,j,unique:true,manual:true});usedA.add(i);usedB.add(j)}}
+  for(let i=0;i<a.length;i++){if(usedA.has(i)||manualA.has(a[i]))continue;const targets=(newGroups.get(a[i].key)||[]).filter(j=>!usedB.has(j)&&!manualB.has(b[j])),olds=oldGroups.get(a[i].key);if(!targets?.length)continue;const j=targets[0];if(j===undefined)continue;pairs.push({i,j,unique:olds.filter(index=>!manualA.has(a[index])).length===1&&targets.length===1});usedA.add(i);usedB.add(j)}
+  pairs.sort((left,right)=>left.i-right.i);const ordered=orderedMatches(pairs);
   for(const pair of pairs){if(!ordered.has(pair)){if(pair.unique)emit('structure',b[pair.j].path,'Moved '+a[pair.i].type+' from '+a[pair.i].path,{beforePath:a[pair.i].path,moved:true});else limited=true}compareNode(a[pair.i],b[pair.j])}
   // Pair changed blocks only inside stable ordered anchors. Unmatched insertions
   // cannot shift formatting/object reports for the following exact matches.
@@ -74,11 +75,17 @@ export function compareDocuments(before,after,beforeLayout={},afterLayout={}, {m
  // Count identities in the complete indexes. A repeated block elsewhere must
  // not become a supposedly unique move just because its local copy matched.
  const identities=root=>{const groups=new Map();function visit(node){if(!node)return;groups.set(node.key,(groups.get(node.key)||0)+1);for(const child of node.children)visit(child)}visit(root);return groups};
- const oldIdentities=identities(a),newIdentities=identities(b);
+ const oldIdentities=identities(a),newIdentities=identities(b),manualA=new Map(),manualB=new Map(),matchKinds=new Map();
  const flatten=root=>{const result=[];function walk(node){if(!node)return;result.push(node);for(const child of node.children)walk(child)}walk(root);return result},oldNodes=flatten(a),newNodes=flatten(b),rewrites=new Map(),reverseRewrites=new Map();
+ const selectable=node=>paragraphTypes.has(node.type)||Object.hasOwn(objectNames,node.type),byOldPath=new Map(oldNodes.filter(selectable).map(node=>[node.path,node])),byNewPath=new Map(newNodes.filter(selectable).map(node=>[node.path,node]));
+ for(const override of (Array.isArray(matchOverrides)?matchOverrides:[]).slice(0,500)){
+  const old=byOldPath.get(override?.beforePath),current=byNewPath.get(override?.afterPath);if(!old||!current||manualA.has(old)||manualB.has(current)||!(old.type===current.type||paragraphTypes.has(old.type)&&paragraphTypes.has(current.type)))continue;
+  const overlaps=(node,map)=>[...map.keys()].some(other=>other.path.startsWith(node.path+'/')||node.path.startsWith(other.path+'/'));
+  if(overlaps(old,manualA)||overlaps(current,manualB))continue;manualA.set(old,current);manualB.set(current,old);matchKinds.set(old,override.origin==='semantic'?'semantic':'manual');rewrites.set(old,current);reverseRewrites.set(current,old);
+ }
  // Lexical similarity is an explicit bounded heuristic, not semantic inference.
  // Require mutual best candidates with a margin; do not guess between repeats.
- if(!indexLimited){const tokens=node=>new Set(node.text.normalize('NFKC').toLowerCase().match(/[\p{L}\p{N}\p{M}_]+/gu)||[]),eligible=(node,own,other)=>paragraphTypes.has(node.type)&&own.get(node.key)===1&&!other.has(node.key),olds=oldNodes.filter(node=>eligible(node,oldIdentities,newIdentities)),news=newNodes.filter(node=>eligible(node,newIdentities,oldIdentities)),sets=new Map([...olds,...news].map(node=>[node,tokens(node)])),rankA=new Map(),rankB=new Map();let complete=true;
+ if(!indexLimited){const tokens=node=>new Set(node.text.normalize('NFKC').toLowerCase().match(/[\p{L}\p{N}\p{M}_]+/gu)||[]),eligible=(node,own,other)=>!manualA.has(node)&&!manualB.has(node)&&paragraphTypes.has(node.type)&&own.get(node.key)===1&&!other.has(node.key),olds=oldNodes.filter(node=>eligible(node,oldIdentities,newIdentities)),news=newNodes.filter(node=>eligible(node,newIdentities,oldIdentities)),sets=new Map([...olds,...news].map(node=>[node,tokens(node)])),rankA=new Map(),rankB=new Map();let complete=true;
   const rank=(map,node,candidate,score)=>{const top=map.get(node)||[];top.push({node:candidate,score});top.sort((a,b)=>b.score-a.score);map.set(node,top.slice(0,2))};
   outer:for(const old of olds){const left=sets.get(old);if(left.size<5)continue;for(const current of news){const right=sets.get(current);if(right.size<5)continue;const cost=left.size+right.size+1;if(cost>work){limited=true;complete=false;break outer}work-=cost;let shared=0;for(const word of left)if(right.has(word))shared++;const score=2*shared/(left.size+right.size);if(shared>=4&&score>=.6){rank(rankA,old,current,score);rank(rankB,current,old,score)}}}
   if(complete)for(const [old,top]of rankA){const current=top[0].node,back=rankB.get(current);if(back?.[0].node===old&&top[0].score-(top[1]?.score||0)>=.12&&back[0].score-(back[1]?.score||0)>=.12){rewrites.set(old,current);reverseRewrites.set(current,old)}else limited=true}
@@ -88,11 +95,11 @@ export function compareDocuments(before,after,beforeLayout={},afterLayout={}, {m
  // Descend unmatched containers as well: a removed wrapper can contain a
  // paragraph moved into a newly added wrapper. Compare matched roots only once.
  const movedA=new Set(),movedB=new Set(),pendingKeys=new Set(added.map(node=>node.key));
- for(const node of removed)if(pendingKeys.has(node.key)&&(oldIdentities.get(node.key)!==1||newIdentities.get(node.key)!==1))limited=true;
+ for(const node of removed)if(!manualA.has(node)&&pendingKeys.has(node.key)&&(oldIdentities.get(node.key)!==1||newIdentities.get(node.key)!==1))limited=true;
  if(!indexLimited){const oldCandidates=()=>removed.flatMap(flatten).filter(node=>!comparedA.has(node)),newCandidates=()=>added.flatMap(flatten).filter(node=>!comparedB.has(node));let rounds=0,changed=true;
-  while(changed&&rounds++<100){changed=false;const targets=new Map(newCandidates().filter(node=>newIdentities.get(node.key)===1).map(node=>[node.key,node]));
-   for(const old of oldCandidates()){if(comparedA.has(old))continue;const exact=oldIdentities.get(old.key)===1?targets.get(old.key):null,current=exact||rewrites.get(old);if(!current||comparedB.has(current))continue;
-    movedA.add(old);movedB.add(current);targets.delete(old.key);emit('structure',current.path,'Moved '+old.type+(exact?'':' with edited text')+' from '+old.path,{beforePath:old.path,moved:true,...(!exact?{match:'text-similarity'}:{})});compareNode(old,current);changed=true;
+  while(changed&&rounds++<100){changed=false;const targets=new Map(newCandidates().filter(node=>newIdentities.get(node.key)===1&&!manualB.has(node)).map(node=>[node.key,node]));
+   for(const old of oldCandidates()){if(comparedA.has(old))continue;const exact=!manualA.has(old)&&oldIdentities.get(old.key)===1?targets.get(old.key):null,current=rewrites.get(old)||exact;if(!current||comparedB.has(current))continue;
+    movedA.add(old);movedB.add(current);targets.delete(old.key);emit('structure',current.path,'Moved '+old.type+(old.key===current.key?'':' with edited text')+' from '+old.path,{beforePath:old.path,moved:true,...(manualA.has(old)?{match:matchKinds.get(old)}:!exact?{match:'text-similarity'}:{})});compareNode(old,current);changed=true;
    }
   }
   if(changed)limited=true;
@@ -100,5 +107,5 @@ export function compareDocuments(before,after,beforeLayout={},afterLayout={}, {m
  for(const node of removed)if(!movedA.has(node))emit('structure',node.path,'Removed '+node.type);
  for(const node of added)if(!movedB.has(node))emit('structure',node.path,'Added '+node.type);
  const oldLayout=normalizeLayout(beforeLayout),newLayout=normalizeLayout(afterLayout);for(const key of designKeys)if(signature(oldLayout[key])!==signature(newLayout[key]))emit('page','Page design',key+' changed');
- return {counts,details,limited,hasDifferences:Object.values(counts).some(Boolean),formattingScope:'Exact-content blocks match within and across containers, including unmatched wrappers. Edited paragraphs can match by bounded word overlap when each is the other’s clear best candidate; this is text similarity, not inferred meaning. Formatting is compared on aligned shared text; added or removed text has no counterpart. Repeated, weakly related or similarly scored candidates remain ambiguous.'};
+ return {counts,details,limited,manualMatches:[...matchKinds.values()].filter(kind=>kind==='manual').length,semanticMatches:[...matchKinds.values()].filter(kind=>kind==='semantic').length,semanticCandidates:{before:oldNodes.filter(node=>paragraphTypes.has(node.type)&&node.text.trim().length>=20&&!manualA.has(node)&&!newIdentities.has(node.key)).map(node=>({path:node.path,text:node.text})),after:newNodes.filter(node=>paragraphTypes.has(node.type)&&node.text.trim().length>=20&&!manualB.has(node)&&!oldIdentities.has(node.key)).map(node=>({path:node.path,text:node.text}))},matchChoices:{before:[...byOldPath.values()].slice(0,1000).map(node=>({path:node.path,type:node.type,text:(node.text||node.attrs?.alt||node.attrs?.title||objectNames[node.type]||'').slice(0,140)})),after:[...byNewPath.values()].slice(0,1000).map(node=>({path:node.path,type:node.type,text:(node.text||node.attrs?.alt||node.attrs?.title||objectNames[node.type]||'').slice(0,140)}))},hasDifferences:Object.values(counts).some(Boolean),formattingScope:'Exact-content blocks match within and across containers, including unmatched wrappers. Edited paragraphs can match by bounded word overlap when each is the other’s clear best candidate; this is text similarity, not inferred meaning. Formatting is compared on aligned shared text; added or removed text has no counterpart. Optional on-device semantic matches use English sentence embeddings. Manual correspondences take priority over automatic matching. Repeated, weakly related or similarly scored candidates without a manual correspondence remain ambiguous.'};
 }
