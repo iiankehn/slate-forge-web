@@ -401,3 +401,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{ou
 @media print{#workspaceHome,#firstVisit,#workspaceTour{display:none!important}.ribbon-panels,.ribbon-tabs,.ribbon-workspace{display:none!important}}
 .app-wordmark span{font-size:16px;font-weight:700;letter-spacing:-.6px;color:var(--ink)}
 @media(max-width:760px){.app-wordmark span{display:none}.ribbon-tabs .app-menu-trigger{min-height:44px}.ribbon-commands button{min-height:36px}}
+#workspaceHome .home-heading{background:transparent;border:0;padding:0;min-height:0}
+#workspaceHome .home-footnote{background:transparent;font-size:11px;line-height:1.8;white-space:normal;height:auto;color:var(--muted)}
+.template-lines{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.template-lines::after{content:'';width:26px;height:10px;border-block:1px solid currentColor;opacity:.4}

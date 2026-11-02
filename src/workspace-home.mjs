@@ -20,7 +20,7 @@ export function initWorkspaceHome({documents,activeId,onOpen,onCreate,onAction,a
   home.querySelector('[data-tour]').onclick=startTour;
   const content=home.querySelector('#homeContent');
   if(page==='Home'||page==='Templates'){
-   content.innerHTML='<section class="home-starters" aria-label="Start a document"><button type="button" class="blank-starter" data-blank><span class="paper-preview" aria-hidden="true">＋</span><strong>Blank document</strong><small>Just you and a clean page.</small></button><button type="button" class="template-starter" data-templates><span class="template-lines" aria-hidden="true">Aa<br>━━ ━</span><strong>Start with a template</strong><small>Letters, reports and proposals.</small></button></section>';
+   content.innerHTML='<section class="home-starters" aria-label="Start a document"><button type="button" class="blank-starter" data-blank><span class="paper-preview" aria-hidden="true">＋</span><strong>Blank document</strong><small>Just you and a clean page.</small></button><button type="button" class="template-starter" data-templates><span class="template-lines" aria-hidden="true">Aa</span><strong>Start with a template</strong><small>Letters, reports and proposals.</small></button></section>';
    content.querySelector('[data-blank]').onclick=()=>{dismiss();onCreate()};content.querySelector('[data-templates]').onclick=()=>run('new');
   }
   if(page==='Print')content.innerHTML='<div class="home-explainer"><h2>Make the page yours, then share it.</h2><p>Preview your current document before printing. Save a PDF through your browser’s print window, or export an editable copy.</p></div>';
