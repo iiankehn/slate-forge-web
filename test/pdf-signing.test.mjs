@@ -35,3 +35,12 @@ test('certification permissions and field locks govern subsequent signatures wit
  const second=await signPDFIncremental(certified,p12,'fixture',{now,fieldName:'Second'});assert.deepEqual(second.subarray(0,certified.length),certified);verifySignature(second,0,certified.length);verifySignature(second,1);assert.equal((await inspectPDFSignaturePolicy(second)).history.length,2);
  const altered=second.slice();altered[7]=altered[7]===55?54:55;await assert.rejects(inspectPDFSignaturePolicy(altered),/digest|integrity/);
 });
+
+test('timestamp requests bind the signature hash and nonce and refuse mismatched or denied responses',async()=>{
+ const {createPDFTimestampRequest,parseTimestampRequest,attachPDFTimestamp}=await import('../src/pdf-timestamps.mjs'),source=await newFormPDF(),signed=await signPDF(source,p12,'fixture',{now}),request=await createPDFTimestampRequest(signed,{random:{getRandomValues(value){value.fill(0);return value}}}),parsed=parseTimestampRequest(request.request);
+ assert.equal(parsed.nonce,'01');assert.equal(Buffer.from(parsed.digest,'latin1').toString('hex'),request.signatureDigest);assert.equal(parsed.digest.length,32);
+ await assert.rejects(createPDFTimestampRequest(source),/Sign the PDF/);assert.throws(()=>parseTimestampRequest(new Uint8Array([1,2,3])));
+ const second=await signPDFIncremental(signed,p12,'fixture',{now});await assert.rejects(attachPDFTimestamp(second,request.request,new Uint8Array([1]),[]),/another PDF signature/);
+ const A=forge.asn1,denied=A.create(A.Class.UNIVERSAL,A.Type.SEQUENCE,true,[A.create(A.Class.UNIVERSAL,A.Type.SEQUENCE,true,[A.create(A.Class.UNIVERSAL,A.Type.INTEGER,false,'\x02')])]),response=Uint8Array.from(A.toDer(denied).getBytes(),c=>c.charCodeAt(0));
+ await assert.rejects(attachPDFTimestamp(signed,request.request,response,[]),/did not grant/);
+});

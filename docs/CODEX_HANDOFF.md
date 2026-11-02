@@ -1,3 +1,7 @@
+# Current mandate — audit and publish accumulated implementation
+
+The user explicitly authorized auditing, testing, release-blocker fixes and publication of the current feature set on the existing public GitHub Pages host, https://slate-web.iiankehn.com/ . This supersedes all historical feature-only restrictions below. Do not resume or expand roadmap development during this release. Preserve the private Site identity and storage compatibility. See RELEASE_AUDIT.md for the current assessment and release evidence; older notes below describe earlier states.
+
 # Slate Forge web — Codex handoff
 
 ## Locked scope — latest user instruction

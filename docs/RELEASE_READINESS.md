@@ -1,5 +1,9 @@
 # Slate Forge release assessment
 
+## Current accumulated release audit
+
+See [RELEASE_AUDIT.md](RELEASE_AUDIT.md) for the current audit, corrected defects, readiness boundaries and publication evidence. This supersedes older feature-only restrictions and the historical assessments below.
+
 
 ## Latest verified public release — native ODT sections
 

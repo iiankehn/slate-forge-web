@@ -17,7 +17,7 @@ Target: complete feature implementation by end of day if possible. This is a bes
 | 7. PDF signature permissions | Broader certified-document workflows involving earlier form filling, annotations and appearance changes. |
 | 8. Signature longevity | Revocation checks through OCSP/CRLs, DSS/LTV evidence, and document/archive timestamps. |
 
-## Current work rules
+## Historical feature-phase rules (superseded for this release)
 
 - Feature development only. Do not run tests, builds, validation, audits, browser/device checks or CI during this phase.
 - Use `[skip ci]` on commits pushed to the implementation branch.
@@ -26,8 +26,8 @@ Target: complete feature implementation by end of day if possible. This is a bes
 - Existing comparison, font, contents-table, review, PDF, XFA-field and signature-timestamp implementations are source work already done; their later verification is not implementation from scratch.
 - No routine permission questions. Do not add cloud services, separate applications or other product scope.
 
-## Deferred release phase
+## Release phase now authorized
 
-After feature implementation, the previously discussed release work is auditing/testing/building accumulated changes, browser/PWA/storage/accessibility/print/Word verification, fixing resulting issues, and publication. None of those checks are authorized to run during the current feature-only phase.
+After feature implementation, the previously discussed release work is auditing/testing/building accumulated changes, browser/PWA/storage/accessibility/print/Word verification, fixing resulting issues, and publication. The user has now explicitly authorized auditing, testing, fixing blockers and publishing the current implementation. The eight feature areas above remain the scope record; incomplete features are limitations, not additional release requirements.
 
 Historical roadmap descriptions and completed features remain available in Git history. Current implementation notes are in CODEX_HANDOFF.md; they do not expand this locked scope.

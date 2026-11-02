@@ -38,3 +38,12 @@ test('nested DOCX review snapshot is sanitized and ignored after external packag
   archive['word/document.xml']=strToU8('<changed/>');assert.equal(await restoreReviewTree(archive,Parser,warnings,{purifier}),null);assert.match(warnings.join(' '),/changed outside/);
  }finally{dom.window.close()}
 });
+
+test('XFA submission prepares an independent attachment and sends only with explicit invocation',async()=>{
+ const {prepareXFASubmission,describeXFASubmission,sendXFASubmission,xfaEmailDraft}=await import('../src/pdf-xfa-submit.mjs');
+ assert.throws(()=>describeXFASubmission({format:'pdf',target:'http://example.com'}),/HTTPS/);assert.throws(()=>describeXFASubmission({format:'pdf',target:'https://user:secret@example.com'}),/passwords/);
+ const original=new Uint8Array([1,2,3]),payload=await prepareXFASubmission(original,{format:'pdf',target:'https://example.com/submit'});original[0]=9;assert.equal(payload.body[0],1);
+ const previous=globalThis.fetch;let calls=0;globalThis.fetch=async(url,options)=>{calls++;assert.equal(url,'https://example.com/submit');assert.equal(options.credentials,'omit');assert.equal(options.redirect,'error');assert.equal(options.referrerPolicy,'no-referrer');assert.equal(options.method,'POST');return {ok:true,status:200}};
+ try{assert.equal(calls,0);assert.equal(await sendXFASubmission(payload),200);assert.equal(calls,1)}finally{globalThis.fetch=previous}
+ assert.equal(xfaEmailDraft(new URL('mailto:reader@example.com?subject=Hello%0D%0AInjected&body=private')),'mailto:reader@example.com?subject=HelloInjected');
+});
