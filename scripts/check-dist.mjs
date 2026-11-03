@@ -3,7 +3,7 @@ import path from 'node:path';
 import vm from 'node:vm';
 const directory=path.resolve(process.argv[2]||'dist'),base=new URL('https://example.github.io/slate-forge-web/');
 function requireFile(name){const file=path.resolve(directory,name);if(!file.startsWith(directory+path.sep)||!fs.statSync(file).isFile())throw Error('Missing or invalid built file: '+name);return file}
-for(const file of ['index.html','help.html','app.css','app.js','sw.js','manifest.webmanifest','icon-192.png','icon-512.png','THIRD-PARTY-NOTICES.txt'])requireFile(file);
+for(const file of ['index.html','help.html','app.css','app.js','sw.js','manifest.webmanifest','icon-192.png','icon-512.png','icon-maskable-512.png','apple-touch-icon.png','favicon.ico','brand/favicon.svg','brand/sf-symbol-small.svg','brand/sf-wordmark-horizontal-on-light.svg','brand/sf-wordmark-horizontal-on-dark.svg','THIRD-PARTY-NOTICES.txt'])requireFile(file);
 const html=fs.readFileSync(requireFile('index.html'),'utf8'),manifest=JSON.parse(fs.readFileSync(requireFile('manifest.webmanifest'),'utf8'));
 for(const value of [manifest.id,manifest.start_url,manifest.scope,...manifest.shortcuts.map(item=>item.url),...manifest.file_handlers.map(item=>item.action)])if(!new URL(value,base).href.startsWith(base.href))throw Error('PWA launch escapes the project directory: '+value);
 for(const icon of manifest.icons)requireFile(icon.src);

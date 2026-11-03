@@ -96,7 +96,7 @@ test('page-positioned two-sided image flow preserves editable text and downloade
 });
 
 test('first visit chooses a palette, completes the tour and returns to a searchable workspace',async({page},testInfo)=>{
- await page.goto('./');await expect(page.locator('#firstVisit')).toBeVisible();await expect(page.locator('#onboardingTitle')).toContainText('clear space');await expect(page.locator('#onboardingTitle')).toHaveCSS('font-family',/sans-serif/);
+ await page.goto('./');await expect(page.locator('#firstVisit')).toBeVisible();await expect(page.locator('#onboardingTitle')).toContainText('clear space');await expect(page.locator('#onboardingTitle')).toHaveCSS('font-family',/sans-serif/);await expect(page.locator('.setup-top img.forge-mark')).toHaveJSProperty('naturalWidth',16);
  await page.screenshot({path:testInfo.outputPath('onboarding.png')});await page.locator('[data-next]').click();await page.locator('[data-palette=midnight]').click();await expect(page.locator('body')).toHaveAttribute('data-ui-theme','dark');await expect(page.locator('body')).toHaveAttribute('data-ui-palette','midnight');
  await page.locator('[data-next]').click();await expect(page.locator('.setup-description')).toContainText('Clearing browser data');await page.locator('[data-start-tour]').click();await expect(page.locator('#workspaceTour')).toBeVisible();
  for(let step=0;step<4;step++)await page.locator('[data-tour-next]').click();await expect(page.locator('#workspaceTour')).not.toBeVisible();await expect(page.locator('.tour-target')).toHaveCount(0);await expect(page.locator('#document-content')).toHaveCSS('font-family',/Arial/);
