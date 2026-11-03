@@ -112,3 +112,17 @@ The released five-configuration browser journey downloads/reopens overlapping/ra
 - Confirm ODT canvases are image previews with descriptions and expected page/column size; original objects remain editable in the original document or HTML/workspace backup. Hidden objects and editable scene data must not appear in ODT previews.
 
 Actual external-editor resaves remain unverified for this batch. Native ODF tracked changes and editable ODF shapes are not implemented by it.
+
+## Native ODT text-revision follow-on — target-editor checks
+
+The published compatibility batch adds native inline insertion/deletion decisions; see ODT_TEXT_REVISIONS.md for supported ranges and validation evidence. The first-batch limitation above is historical for inline text changes. Formatting and structural revisions remain bounded.
+
+- Export a paragraph replacement containing styled deleted text and a comment on inserted text. Open the exact ODT in each target Word/LibreOffice version; inspect original/deleted text, new text, author/date and comment coverage. Record editor/version and actual results.
+- Accept and reject copies in the external editor, resave each, then reopen the exact files in Slate Forge. Compare final text and formatting. Keep the original pending-review file independently.
+- Resave a still-pending copy and check Slate Forge's individual/bulk decisions and Undo/Redo. If the external editor renames generated native IDs, replacement groups may become independent decisions; record that distinction rather than claiming shared-group fidelity.
+- Test recording enabled and disabled separately, including a document with no pending changes. Confirm subsequent typing follows the imported setting.
+- Try native formatting, cross-paragraph, overlapping, object and line-break revisions in disposable files. Unsupported structures must produce an explicit import/export error and preserve the open workspace; do not silently accept a flattened copy as full review fidelity.
+
+Source converters and browser download/reopen tests are separate from these actual external-editor resaves. Native editable ODF canvases and full native formatting/structural revision interchange remain outside this text-revision batch.
+
+Published text-revision evidence: [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41735668694) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41735669867) passed 502 Node tests, production/static checks and all 110 browser scenarios without retries. These runs do not close the manual Word/LibreOffice/device rows above.

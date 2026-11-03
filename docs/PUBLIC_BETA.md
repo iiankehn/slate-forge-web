@@ -1,6 +1,6 @@
 # First public beta
 
-The public beta is live at https://slate-web.iiankehn.com/ . Current runtime `6a0af3ea285a49ba125c8a0bbfc2c86efa227578` adds native ODT comments and canvas preview export to the completed interface, silent-update and branding releases. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41723609890) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41723610425) passed 489 Node tests, production/static checks and all 105 browser scenarios without retries. See ODT_COMPATIBILITY.md for this requested advanced follow-on and its bounds. Physical-device and actual target-editor checks remain open; phone viewports are not device certification.
+The public beta is live at https://slate-web.iiankehn.com/ . Current runtime `49d70dd7a7610bd1ce3e28d04f4ceed0a2b3d301` adds native ODT inline text revisions and preserved recording preference to the prior comments/canvas compatibility release. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41735668694) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41735669867) passed 502 Node tests, production/static checks and all 110 browser scenarios without retries. See ODT_TEXT_REVISIONS.md for supported review decisions and explicit complex-revision limits. Actual target-editor resaves and physical-device checks remain open.
 
 The immediate goal is usable everyday writing with clear saving and recovery. The full roadmap is not a prerequisite.
 

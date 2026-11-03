@@ -1,6 +1,10 @@
 # Slate Forge release assessment
 
-## Current public release — ODT compatibility
+## Current public release — native ODT text revisions
+
+Revision `49d70dd7a7610bd1ce3e28d04f4ceed0a2b3d301` is live at https://slate-web.iiankehn.com/ . Native ODT inline text suggestions now retain review decisions and recording preference. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41735668694) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41735669867) passed 502 Node tests, production/static checks and all 110 browser scenarios without retries. Live code/manifests and cache digest `c4e7519fb8ae9992` are verified/reconciled. [ODT_TEXT_REVISIONS.md](ODT_TEXT_REVISIONS.md) records the long-ID regression fixed before publication and explicit unsupported revisions. Actual Word/LibreOffice resaves, physical devices and universal office fidelity are not certified.
+
+## Previous public release — ODT comments and canvas previews
 
 Revision `6a0af3ea285a49ba125c8a0bbfc2c86efa227578` is live at https://slate-web.iiankehn.com/ . Native ODT text/cursor comments, canvas preview export and safer external ODF imports are published. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41723609890) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41723610425) passed 489 Node tests, production/static checks and all 105 browser scenarios without retries. Live shell/worker verification passed, with cache digest reconciled against platform-specific notices. The static test-server race discovered in the first main run is fixed; see [ODT_COMPATIBILITY.md](ODT_COMPATIBILITY.md) for failure history and remaining boundaries. Canvas previews are images; native ODF tracked changes and Word/LibreOffice resave certification are not supplied by this batch.
 

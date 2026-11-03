@@ -1,6 +1,16 @@
-# Slate Forge handoff — ODT compatibility published
+# Slate Forge handoff — native ODT text revisions published
 
-## Latest requested follow-on — native ODT comments and canvas previews
+## Current compatibility release
+
+Published 2026-11-03 from `49d70dd7a7610bd1ce3e28d04f4ceed0a2b3d301` at https://slate-web.iiankehn.com/ . The user's “Next” continued Word/ODT compatibility. PR #13 adds native inline ODT insertion/deletion round trips with author/date metadata and deleted-text styling, preserved recording on/off, grouped decisions, accept/reject and undo/save/reload behavior. Converter tests retain decisions through ODT → native DOCX → ODT.
+
+[main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41735668694) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41735669867) passed 502 Node tests, production/static checks and all 110 browser scenarios without retries. All 44 live shell/worker URLs and cache digest `c4e7519fb8ae9992` are verified/reconciled against the build and platform-specific notices. A long external group-ID case was reproduced and fixed before publication; pending draft release runs were cancelled. [ODT_TEXT_REVISIONS.md](ODT_TEXT_REVISIONS.md) records the complete evidence, temporary credential expiry and explicit format limits. The injected CLI authorization was refreshed; recheck it in future sessions rather than assuming transfer.
+
+Complex native formatting/structural revisions, object/field/line-break revisions and external-editor resaves remain bounded/unverified. ODT canvases remain image previews. Preserve the original files and HTML/workspace backups for complete review history. No storage, backup, public origin or private Site identity changed.
+
+## Earlier release history
+
+## Previous compatibility release — comments and canvas previews
 
 Published 2026-11-03 from `6a0af3ea285a49ba125c8a0bbfc2c86efa227578` at https://slate-web.iiankehn.com/ . The user explicitly reopened advanced features and selected Word/ODT compatibility. PR #12 adds native ODT overlapping/ranged/cursor comments with author/date/plain bodies and resolved metadata, fitted PNG canvas previews, namespace-alias-safe imports and image descriptions without duplicated body prose. ODT previews reopen as images; keep HTML/workspace backups for editable canvases.
 

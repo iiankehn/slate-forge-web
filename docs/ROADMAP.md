@@ -2,7 +2,14 @@
 
 ## Requested advanced compatibility follow-on
 
-Next batch: [ODT_TEXT_REVISIONS.md](ODT_TEXT_REVISIONS.md) adds native inline ODT insertion/deletion round trips and recording preference preservation. Implementation validation is in progress; the prior comments/canvas release evidence below remains historical.
+The next requested batch is now published; [ODT_TEXT_REVISIONS.md](ODT_TEXT_REVISIONS.md) records its evidence and bounds.
+
+- [x] Native inline ODT insertion/deletion round trips with metadata and supported deleted-text styling.
+- [x] Recording on/off preservation and grouped accept/reject, undo and save/reload behavior.
+- [x] ODT → native DOCX → ODT converter coverage and actual downloaded-file browser decisions.
+- [x] Reproduce/fix long-ID decision collisions; validate and publish corrected source.
+
+Complex native formatting/structural revisions and editable ODF canvases are not completed by this text-revision batch. Earlier comments/canvas evidence below remains historical.
 
 The user subsequently reopened advanced features and selected Word/ODT compatibility on 2026-11-03. [ODT_COMPATIBILITY.md](ODT_COMPATIBILITY.md) records the first batch: native ODT comments, canvas preview export and image-description import correction. The completed essential-product checklist below remains release history.
 

@@ -2,7 +2,7 @@
 
 ## Requested advanced follow-on — 2026-11-03
 
-After the focused release and limitations review, the user explicitly reopened advanced-feature work and selected Word/ODT compatibility as the lead area. The first batch adds native ODT comments and canvas preview export. This supersedes the freeze below for requested compatibility work; it does not promise universal office fidelity or authorize unrelated accounts/cloud features. Preserve existing saved work and validate each supported behavior. See [ODT_COMPATIBILITY.md](ODT_COMPATIBILITY.md).
+After the focused release and limitations review, the user explicitly reopened advanced-feature work and selected Word/ODT compatibility as the lead area. The first batch adds native ODT comments and canvas preview export. The subsequent “Next” request continued with published native inline ODT text revisions; see ODT_TEXT_REVISIONS.md. This supersedes the freeze below for requested compatibility work; it does not promise universal office fidelity or authorize unrelated accounts/cloud features. Preserve existing saved work and validate each supported behavior. See [ODT_COMPATIBILITY.md](ODT_COMPATIBILITY.md).
 
 The latest direction supersedes the former eight-area completion roadmap. Stop expanding the document engine. Prioritize everyday writing, easy file handling and confidence that work is safe. There is no usage dataset supporting a literal 99% figure; the decisions below follow the user's essential-task criterion.
 

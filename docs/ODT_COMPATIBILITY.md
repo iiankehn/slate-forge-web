@@ -1,6 +1,6 @@
 # Word/ODT compatibility follow-on
 
-The next native text-revision batch is tracked in [ODT_TEXT_REVISIONS.md](ODT_TEXT_REVISIONS.md). The behavior and release record below describe the first comments/canvas batch.
+The published native text-revision batch is recorded in [ODT_TEXT_REVISIONS.md](ODT_TEXT_REVISIONS.md). The behavior and release record below describe the first comments/canvas batch.
 
 Requested 2026-11-03 after the completed focused release. The user explicitly reopened advanced work and selected Word/ODT compatibility as the lead area.
 
@@ -14,7 +14,7 @@ Requested 2026-11-03 after the completed focused release. The user explicitly re
 - Preserve external ODF namespace aliases for headings, links, image relationships/geometry and table spans/repeats instead of depending on literal XML prefixes.
 - Keep image descriptions in image alternative text instead of duplicating them as body prose on ODT import.
 
-ODT still exports final inline review text and requires decisions on structural groups. This batch adds comments, not native ODF tracked changes. Native text boxes/shapes, exact external layout and round-trip preservation of arbitrary ODF features remain future compatibility work.
+At this first comments/canvas release, ODT exported final inline review text and required structural decisions. Native inline text revisions are now added by ODT_TEXT_REVISIONS.md; the first batch itself added comments, not native tracked changes. Native text boxes/shapes, exact external layout and round-trip preservation of arbitrary ODF features remain future compatibility work.
 
 ## Verification
 
