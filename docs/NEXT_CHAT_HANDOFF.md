@@ -2,6 +2,8 @@
 
 Prepared 2026-11-03 from the repository at `56774d1`. This is a continuation guide, not a new feature roadmap. Fetch current `main` before relying on the historical commit or test counts below.
 
+Codex environment/tooling supplement verified 2026-11-03 after handoff commit `b426344`. Environment access and app connections must be checked again in the next chat; a repository document cannot provision credentials or override platform policy.
+
 ## Product, scope and exact stopping point
 
 - Repository: https://github.com/iiankehn/slate-forge-web — branch `main`.
@@ -83,6 +85,55 @@ Browser checks use the repo's Playwright `1.64.1` and axe dependencies. `playwri
 **The previous workspace denied local browser automation by URL/security policy.** Follow current policy; never evade a denial through shell browser automation, CDP, alternate hosts or changed origins. Prefer the existing GitHub Actions workflows for browser evidence. In a different environment where local automation is permitted, browser execution additionally requires the matching Playwright browser binaries and OS libraries (`npx playwright install --with-deps chromium firefox webkit` on a supported Linux host). That installation is unnecessary for ordinary source/Node work and for the existing CI container, which already supplies the matching browsers/libraries. Do not install an unrelated global Playwright version.
 
 For a managed cloud environment, read its runtime skill and check environment/network/credential readiness before network or container work. Preserve injected proxy/CA settings and do not expose secrets. At handoff, managed network status was unrestricted; that does not establish the next environment's policy or credentials.
+
+## Codex environment, connected apps and tools
+
+Use a Codex session with a writable checkout, a shell/command execution tool, filesystem read/edit capability, and outbound HTTPS for repository/package access. A chat with only GitHub file-reading tools cannot run this project's build or Node tests. The previous checkout was `/workspace/slate-forge-web`; paths and attachment locations do not automatically transfer to a new environment.
+
+| Capability | Required setup or supported alternative |
+| --- | --- |
+| Shell and files | In this session, `functions.exec` orchestrates `tools.exec_command`, `tools.write_stdin`, `tools.apply_patch` and `tools.view_image`. Discover the next session's equivalent tools rather than assuming these exact names exist. Use command sessions for long-running work and file patches for edits. |
+| GitHub app | The connected **GitHub** app is available here for repository metadata/files, issues, PRs, checks/logs and artifacts. Prefer its supported capabilities for those operations. Give it access to `iiankehn/slate-forge-web` in the next session, or use authenticated `gh` for capabilities the app lacks. A public repository's readability does not prove mutation/Actions access. |
+| Git transport and Actions | Git plus an authenticated GitHub CLI/credential helper or another supported credential provider. A connected app's authorization does not automatically configure shell Git or `gh`. Verify each path used. The latest verified CLI identity was `iiankehn`, with `ADMIN` permission on this repo; do not assume this transfers. |
+| Managed cloud environment | If using the **Cloud Environment** app, call its `environment_status` tool and follow the cloud-environment-runtime skill. Wait for a selected starting environment only when its tools/files are needed. Confirm network and credential readiness; do not copy an old environment ID. A normal supported terminal/workspace is sufficient if this app is absent. |
+| Source search and file transfer | `rg` is preferred; Git/file tools are alternatives. `curl`, CA certificates, `unzip` and `zip` are useful for live-asset checks and CI artifact inspection. If an uploaded file is needed, use the session's supported download tool or its supplied local path. Old `/tmp` attachments are not guaranteed to exist. |
+| Browser and visual inspection | Existing GitHub Actions provide the supported cross-browser suite. Retrieve logs, traces and screenshots using GitHub artifact tools or `gh run download`, then use an image viewer where available. A separate interactive browser tool is optional; it must be permitted by current policy. Do not bypass a browser-policy denial. |
+| Skills | If available: Start Feature Work, Slate Forge Release, Slate Forge Storage Checks and cloud-environment-runtime. Discover/read them through the session's skills tools; do not assume old skill filesystem paths exist. Repo instructions/scripts remain available without those skills. |
+| Sites | The **Sites** app is available in this session but is not required for public GitHub Pages development or release. Preserve its existing private project; do not install/use Sites to replace Pages. |
+
+No Notion, Slack, email, Figma, image-generation, security-plugin or database app is needed to resume this project. Do not introduce an unrelated app connection or external service as a startup dependency. An image-generation tool is not needed to reuse the committed approved branding. Do not spawn extra agents as a startup requirement.
+
+For shell publishing, the selected identity needs repository contents write access, PR access if using PRs, Actions read access for results/artifacts and Actions write access to dispatch workflows. Editing workflow files can require additional workflow authorization from the chosen GitHub credential type. Pages deployment itself uses the existing workflow's `pages: write` and `id-token: write` job permissions; do not place a personal token in the app or repository. Use least-privilege supported credentials and report the specific missing operation if access fails. Never copy credentials into this handoff.
+
+The previous session's `gh` used an injected `GH_TOKEN`. Managed-environment status separately reported no configured secret bindings; that does not mean CLI authentication was absent. Check observed CLI/app behavior rather than inferring access from an environment-variable listing. Do not dump the environment or secret files. Use existing injected authentication normally; only report actual missing access, not a presumed need to log in again.
+
+The current workflows use Microsoft's Playwright `v1.64.1-noble` container, pinned by digest in `.github/workflows/ci.yml` and `pages.yml`. Docker is installed in this workspace but is optional for local source/build work. If deliberately reproducing that container elsewhere, read the current image pin and the cloud runtime's Docker/proxy/CA guidance first. Do not assume a working Docker daemon or registry access merely because its CLI exists.
+
+Allow outbound HTTPS to the actual GitHub/API/raw/artifact hosts and npm package hosts used by supported tools and `package-lock.json`. Browser binary hosts are only needed for permitted local browser installation; container registry access is only needed where containers are actually pulled. GitHub Actions perform their own runner downloads. Report a denied destination accurately; never disable TLS verification, remove the proxy or route around a policy denial.
+
+Use a writable workspace with room for the checkout, npm dependencies, generated bundles/vendor assets and test artifacts. This workspace's installed `node_modules` was approximately 930 MiB and the tracked semantic assets approximately 23 MiB; these are observations, not fixed budgets. Allow several GiB of working space, particularly for optional browser downloads. No special PDF/OCR API key, external model download or original branding archive is needed for the standard build.
+
+## Startup preflight in a new Codex chat
+
+1. Discover the available command/file, GitHub, environment and image-viewing tools. Read applicable environment and repository instructions. Check actual platform approvals/network/browser policy; prior user authorization does not bypass those controls.
+2. Locate the existing checkout or clone the public repository. Inspect local changes and safely synchronize as described above. Check Node 24 before installing dependencies; run `npm ci` if dependencies are absent or the lockfile changed.
+3. Verify shell tooling and authenticated GitHub access with the read-only commands below. If only the connected GitHub app is available, perform equivalent repo/workflow access checks there. Do not print credential-bearing remote URLs.
+4. Use the fresh-clone build/static checks above to establish startup readiness when the environment is new. Confirm the local server can bind port 4173 when needed. Do not start a second server while Playwright is configured to manage it.
+5. Do not assume screenshots, local documents, untracked files, shell sessions, authentication or package installations transferred from the previous chat. Committed source, models, branding, instructions and release evidence are available from the repo. Stop only the dependent operation when a real capability is missing and continue independent authorized work.
+
+```bash
+for sf_tool in git node npm gh rg curl python3 unzip zip; do
+  command -v "$sf_tool" || true
+done
+node -e 'if (Number(process.versions.node.split(".")[0]) !== 24) { console.error("Node 24 is required"); process.exit(1); } console.log("Node", process.versions.node)'
+npm --version
+git status --short
+gh auth status
+gh repo view iiankehn/slate-forge-web --json nameWithOwner,viewerPermission
+gh workflow list --repo iiankehn/slate-forge-web
+```
+
+The tool-discovery loop is informational: missing optional tools do not invalidate source work. `gh auth status` is designed to mask tokens; never add `--show-token`. `gh workflow list` verifies read access, not dispatch permission. Confirm write/dispatch access through the intended authorized operation, not an unrelated test mutation or dummy deployment. Before committing, ensure Git author identity is configured through the environment's supported setup; never copy a prior session's personal identity blindly.
 
 ## Publication and known-good evidence
 
