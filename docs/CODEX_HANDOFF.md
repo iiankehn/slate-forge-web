@@ -1,4 +1,12 @@
-# Slate Forge handoff — Brand Kit published; focused roadmap complete
+# Slate Forge handoff — ODT compatibility published
+
+## Latest requested follow-on — native ODT comments and canvas previews
+
+Published 2026-11-03 from `6a0af3ea285a49ba125c8a0bbfc2c86efa227578` at https://slate-web.iiankehn.com/ . The user explicitly reopened advanced features and selected Word/ODT compatibility. PR #12 adds native ODT overlapping/ranged/cursor comments with author/date/plain bodies and resolved metadata, fitted PNG canvas previews, namespace-alias-safe imports and image descriptions without duplicated body prose. ODT previews reopen as images; keep HTML/workspace backups for editable canvases.
+
+[main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41723609890) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41723610425) passed 489 Node tests, production/static checks and all 105 browser scenarios without retries. Live shell/worker files and cache digest are verified. A main-run test-server cleanup race was reproduced and fixed before publication; the first pending Pages run was cancelled. [ODT_COMPATIBILITY.md](ODT_COMPATIBILITY.md) records exact evidence, the failed run and verification limits. No storage, backup, origin or private Site identity changed. Native ODF tracked changes, editable ODF canvas objects and external-editor/device certification remain open; universal fidelity is not claimed.
+
+## Previous focused release history
 
 For fresh-environment setup, dependencies, exact continuation scope and command examples, read [NEXT_CHAT_HANDOFF.md](NEXT_CHAT_HANDOFF.md). This supplements the release history below and does not reopen the completed roadmap.
 

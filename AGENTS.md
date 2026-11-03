@@ -2,7 +2,7 @@
 
 ## Current mandate
 
-2026-11-03 follow-on: the user explicitly requested advanced features and selected Word/ODT compatibility. This authorizes the compatibility batch described in docs/ODT_COMPATIBILITY.md despite the earlier freeze below. Preserve pending post-release documentation work. Other advanced areas remain bounded until selected; no universal-fidelity claim is implied.
+2026-11-03 follow-on: the user explicitly requested advanced features and selected Word/ODT compatibility. The first compatibility batch is now published; docs/ODT_COMPATIBILITY.md records evidence and bounds. This request supersedes the earlier freeze below for selected compatibility work. Preserve pending post-release documentation work. Other advanced areas remain bounded until selected; no universal-fidelity claim is implied.
 
 The requested interface, stability, silent-update and branding integration release is complete and published. Read docs/CODEX_HANDOFF.md, docs/ROADMAP.md, docs/PRODUCT_FOCUS.md and docs/UX_STABILITY.md for current scope and evidence. No autonomous new features or reopening of historical roadmaps. Fix reproducible defects within the focused product; report intermittent failures and retry counts honestly. The user authorizes necessary commands, repository changes and public Pages publication without routine approval questions.
 

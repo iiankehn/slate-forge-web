@@ -1,6 +1,10 @@
 # Slate Forge release assessment
 
-## Current public release — supplied Brand Kit integrated
+## Current public release — ODT compatibility
+
+Revision `6a0af3ea285a49ba125c8a0bbfc2c86efa227578` is live at https://slate-web.iiankehn.com/ . Native ODT text/cursor comments, canvas preview export and safer external ODF imports are published. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41723609890) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41723610425) passed 489 Node tests, production/static checks and all 105 browser scenarios without retries. Live shell/worker verification passed, with cache digest reconciled against platform-specific notices. The static test-server race discovered in the first main run is fixed; see [ODT_COMPATIBILITY.md](ODT_COMPATIBILITY.md) for failure history and remaining boundaries. Canvas previews are images; native ODF tracked changes and Word/LibreOffice resave certification are not supplied by this batch.
+
+## Previous public release — supplied Brand Kit integrated
 
 Revision `1407181d5c04a21fabc3fa12066b6173da23b2aa` is live at https://slate-web.iiankehn.com/ . The supplied v1.2 Fold + Forge identity is used in app chrome, Workspace/onboarding, browser favicons and install/Apple/maskable icons. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41646799702) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41646800305) passed 477 Node tests, production/static checks and 100 browser scenarios without retries. Logo loading, responsive overflow and automated accessibility checks pass; desktop/mobile captures are reviewed. Live shell/brand/icon files and the worker code/manifest/cache digest are verified. Ready for everyday public beta/tester use, within the platform icon-refresh and review-label boundaries in [BRANDING.md](BRANDING.md). Original feature scope remains closed.
 

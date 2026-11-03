@@ -2,7 +2,14 @@
 
 ## Requested advanced compatibility follow-on
 
-The user subsequently reopened advanced features and selected Word/ODT compatibility on 2026-11-03. [ODT_COMPATIBILITY.md](ODT_COMPATIBILITY.md) records the first batch: native ODT comments, canvas preview export and image-description import correction. The completed essential-product checklist below remains release history. New compatibility evidence must be recorded separately.
+The user subsequently reopened advanced features and selected Word/ODT compatibility on 2026-11-03. [ODT_COMPATIBILITY.md](ODT_COMPATIBILITY.md) records the first batch: native ODT comments, canvas preview export and image-description import correction. The completed essential-product checklist below remains release history.
+
+- [x] Native ODT text comments, overlapping ranges and cursor anchors.
+- [x] Canvas preview export with an explicit editable-original warning.
+- [x] External ODF namespace aliases and image-description correction.
+- [x] Reproduce/fix the CI server cleanup race, validate and publish the compatibility batch.
+
+Published evidence and remaining compatibility boundaries are recorded in ODT_COMPATIBILITY.md. This batch does not claim universal Word/ODT fidelity.
 
 The latest user direction replaces the former eight-area feature-completion mandate. [PRODUCT_FOCUS.md](PRODUCT_FOCUS.md) records which advanced areas to keep, bound or stop. The previous feature roadmap is preserved in Git history; it is not an expanding backlog for this release.
 

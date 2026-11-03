@@ -1,5 +1,7 @@
 # Next-chat handoff — Slate Forge web
 
+Current published runtime: `6a0af3ea285a49ba125c8a0bbfc2c86efa227578` (2026-11-03). The first Word/ODT compatibility batch is complete and live: native ODT comments/cursor anchors, canvas PNG previews and namespace/image-description corrections. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41723609890) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41723610425) passed 489 Node tests, production/static checks and all 105 browser scenarios without retries. Live assets/cache digest are verified. The discovered test-server stream/fixture-cleanup race was fixed before release. See ODT_COMPATIBILITY.md for exact evidence and bounds; no further advanced area has been implemented by this batch.
+
 Latest direction (2026-11-03): the user then requested advanced features and selected Word/ODT compatibility, superseding the earlier focused-only direction for that area. See ODT_COMPATIBILITY.md for the native ODT comments/canvas-preview batch and its verification boundaries. Earlier scope statements below describe the prior stopping point.
 
 Prepared 2026-11-03 from the repository at `56774d1`. This is a continuation guide, not a new feature roadmap. Fetch current `main` before relying on the historical commit or test counts below.

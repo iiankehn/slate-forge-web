@@ -102,3 +102,13 @@ One LibreOffice development-build metadata fixture passed. Physical-browser/down
 - For grouped structural review, test table/canvas/image changes, block moves, rich paragraph/code conversions, protected deleted copies and edits inside inserted copies. Check caret/IME behavior around isolating wrappers, ordinary editor-generated trailing paragraphs, Undo/Redo, bulk stale-context guards and quota/backup recovery. Reopen HTML/JSON only with a build that supports blockRevision. Decide structural groups before Word/ODT export; native structural revision interop is not implemented.
 
 - With Page design → Note placement set to Bottom of reference page, inspect actual body/note boundaries, note numbering/navigation and the same downloaded/printed PDF across target browsers. Include multiple notes near a page break, wrapped paragraphs, keep rules and tables; test note changes, fonts, rotation/Fit and IME. Check keyboard access to original note controls and cleanup when returning to Continuous editing. Endnote defaults must remain unchanged for old documents. Split-note continuation is implemented and has source/browser coverage. Inspect actual printed continuation; complex-section fidelity remains bounded.
+
+## ODT compatibility follow-on — target-editor checks
+
+The released five-configuration browser journey downloads/reopens overlapping/ranged/cursor comments and a rendered canvas preview. The corrected release passed 489 Node tests and 105 browser scenarios without retries. This is separate from the manual matrix above.
+
+- Open the exact exported ODT in target Word/LibreOffice versions. Inspect overlap boundaries, cross-paragraph ranges, cursor anchors, literal multiline comment bodies, authors and dates. LibreOffice resolved state uses an extension; record whether each recipient retains it.
+- Resave and reopen that exact file in Slate Forge. Verify body text, comment coverage and preview images; record simplification warnings. Comments inside notes, generated contents or stored revision data are intentionally omitted with warnings.
+- Confirm ODT canvases are image previews with descriptions and expected page/column size; original objects remain editable in the original document or HTML/workspace backup. Hidden objects and editable scene data must not appear in ODT previews.
+
+Actual external-editor resaves remain unverified for this batch. Native ODF tracked changes and editable ODF shapes are not implemented by it.
