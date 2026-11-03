@@ -28,7 +28,7 @@ export function automaticUpdates({serviceWorker=globalThis.navigator?.serviceWor
    await check();
    // A bounded wait keeps offline or unreachable launches usable.
    const worker=registration.installing;
-   if(worker&&controlled)await new Promise(resolve=>{if(['installed','redundant','activated'].includes(worker.state))resolve();else listen(worker,'statechange',()=>{if(['installed','redundant','activated'].includes(worker.state))resolve()})});
+   if(worker&&controlled)await new Promise(resolve=>{if(['redundant','activated'].includes(worker.state))resolve();else listen(worker,'statechange',()=>{if(['redundant','activated'].includes(worker.state))resolve()})});
    if(registration.waiting&&controlled){const switched=new Promise(resolve=>listen(serviceWorker,'controllerchange',resolve));await attempt();await switched}
   }catch{}})();
   ready=new Promise(resolve=>{const limit=setTimeout(resolve,timeout);boot.finally(()=>{clearTimeout(limit);resolve()})});
