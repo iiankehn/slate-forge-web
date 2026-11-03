@@ -132,3 +132,19 @@ test('saved writing survives repeated reloads while another tab gets its own wor
  const other=await context.newPage(),errors=[];other.on('pageerror',error=>errors.push(error.message));try{await start(other);await expect(other.locator('#title')).toHaveValue('Untitled document');expect(await other.evaluate(()=>JSON.parse(sessionStorage.getItem('document-studio.session.v1')).id)).not.toBe(id);await expect(page.locator('#title')).toHaveValue('Release smoke document');expect(await workspace()).toBe(id);expect(errors).toEqual([])}finally{await other.close()}
  await page.reload();await expect(page.locator('#title')).toHaveValue('Release smoke document');await enterEditor(page);await expect(page.locator('#document-content')).toContainText('An independent backup keeps this document safe.');expect(await workspace()).toBe(id);
 });
+
+test('a new release applies silently on launch and keeps writing in both tabs',async({page,context},testInfo)=>{
+ test.setTimeout(180000);
+ const directory='update-fixture-'+testInfo.project.name,root='dist/'+directory,base='./'+directory+'/',worker=await fs.readFile('dist/sw.js','utf8'),html=await fs.readFile('dist/index.html','utf8'),app=await fs.readFile('dist/app.js','utf8');
+ await fs.mkdir(root,{recursive:true});let other;
+ const publish=async(version,hash)=>{await fs.writeFile(root+'/app.js',app+'\ndocument.body.dataset.testRelease='+JSON.stringify(version)+';');await fs.writeFile(root+'/index.html',html);await fs.writeFile(root+'/sw.js',worker.replace(/const CACHE=PREFIX\+'[a-f0-9]{16}'/,"const CACHE=PREFIX+'"+hash+"'"))};
+ try{
+  for(const entry of await fs.readdir('dist',{withFileTypes:true}))if(!entry.name.startsWith('update-fixture-')&&!['vendor','index.html','sw.js','app.js'].includes(entry.name))await fs.cp('dist/'+entry.name,root+'/'+entry.name,{recursive:true});
+  await publish('A','1111111111111111');await page.goto(base);await expect(page.locator('#document-content')).toBeAttached();await enterEditor(page);await write(page);await page.evaluate(()=>navigator.serviceWorker.ready);await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
+  const identity=await page.evaluate(()=>JSON.parse(sessionStorage.getItem('document-studio.session.v1')).id);
+  other=await context.newPage();const errors=[];other.on('pageerror',error=>errors.push(error.message));await other.goto(base);await expect(other.locator('#document-content')).toBeAttached();await enterEditor(other);await other.locator('#title').fill('Other tab document');await other.locator('#document-content').fill('Other tab writing stays intact.');await menu(other,'File','saveNow');await expect(other.locator('#toast')).toHaveText('Workspace saved on this device.');
+  await publish('B','2222222222222222');await page.reload();await expect(page.locator('body')).toHaveAttribute('data-test-release','B',{timeout:60000});await expect(page.locator('#title')).toHaveValue('Release smoke document');await enterEditor(page);await expect(page.locator('#document-content')).toContainText('An independent backup');expect(await page.evaluate(()=>JSON.parse(sessionStorage.getItem('document-studio.session.v1')).id)).toBe(identity);
+  await expect(other.locator('body')).toHaveAttribute('data-test-release','B',{timeout:60000});await expect(other.locator('#title')).toHaveValue('Other tab document');await enterEditor(other);await expect(other.locator('#document-content')).toContainText('Other tab writing stays intact.');expect(errors).toEqual([]);await expect(page.locator('[data-menu-action=updateApp]')).toHaveCount(0);
+  await context.setOffline(true);await page.reload();await expect(page.locator('body')).toHaveAttribute('data-test-release','B');await expect(page.locator('#title')).toHaveValue('Release smoke document');await enterEditor(page);await expect(page.locator('#document-content')).toContainText('An independent backup');
+ }finally{await other?.close();await fs.rm(root,{recursive:true,force:true})}
+});

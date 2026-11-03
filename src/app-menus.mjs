@@ -18,7 +18,7 @@ export const APP_MENUS=[
  ['Tools',[
   ['Word count and writing goal…','stats'],['Document checks…','documentChecks'],['Writing tools…','writingTools'],['Snippets and custom templates…','productivity'],['Design templates…','productivity:openDesignTemplates'],null,
   ['PDF & forms…','pdfTools'],['Scan & OCR…','ocrTools'],null,
-  ['Getting started…','gettingStarted'],['Offline preparation…','offlineTools'],['App status…','appStatus'],['Install app…','installApp'],['Update app','updateApp'],['Workspace privacy…','privacy'],['Open-source licenses','licenses'],['Keyboard shortcuts…','shortcuts']]],
+  ['Getting started…','gettingStarted'],['Offline preparation…','offlineTools'],['App status…','appStatus'],['Install app…','installApp'],['Workspace privacy…','privacy'],['Open-source licenses','licenses'],['Keyboard shortcuts…','shortcuts']]],
  ['Review',[
   ['Comments and tracked changes…','reviewTools'],['Comment on selection…','reviewTools:addComment'],['Track changes settings…','reviewTools'],['Compare documents…','reviewTools:compareDocs']]]
 ];
@@ -30,7 +30,7 @@ export const RIBBON_TABS=[
  ['Layout',[['Page',[['Page design','layout'],['Paragraph','paragraph'],['Sections & columns','productivity:insertColumnSection']]],['Output',[['Page preview','pagePreview'],['Print / PDF','export:print']]]]],
  ['Review',[['Review your writing',[['Comments & changes','reviewTools'],['Add comment','reviewTools:addComment'],['Compare','reviewTools:compareDocs']]],['Finish',[['Document checks','documentChecks'],['Writing tools','writingTools']]]]],
  ['View',[['Workspace',[['Continuous','continuousEditing'],['Paged','pagedEditing'],['Focus','focus']]],['Comfort',[['Appearance','appearance'],['Fit width','zoomFit'],['100%','zoomReset'],['Outline','outline']]],['Navigate',[['Go to page','goToPage'],['Previous','previousPage'],['Next','nextPage']]]]],
- ['Tools',[['Other file tools',[['PDF & forms','pdfTools'],['Scan & OCR','ocrTools'],['Drawing','designCanvas']]],['Reusable work',[['Snippets & templates','productivity'],['Design templates','productivity:openDesignTemplates']]],['App',[['Prepare offline','offlineTools'],['App status','appStatus'],['Install','installApp'],['Update','updateApp'],['Command search','commands']]]]]
+ ['Tools',[['Other file tools',[['PDF & forms','pdfTools'],['Scan & OCR','ocrTools'],['Drawing','designCanvas']]],['Reusable work',[['Snippets & templates','productivity'],['Design templates','productivity:openDesignTemplates']]],['App',[['Prepare offline','offlineTools'],['App status','appStatus'],['Install','installApp'],['Command search','commands']]]]]
 ];
 export function initAppMenus({onAction,isAvailable=()=>true}){
  const mount=document.getElementById('menuMount'),nav=document.createElement('section');nav.id='applicationMenus';nav.className='forge-ribbon';nav.setAttribute('aria-label','Writing ribbon');
