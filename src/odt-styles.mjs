@@ -1,6 +1,6 @@
 import {fontFamily,fontCSS} from './font-families.mjs';
 import {FONTS,normalizeLayout} from './document-model.mjs';
-export const ODT_NS={style:'urn:oasis:names:tc:opendocument:xmlns:style:1.0',fo:'urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0',text:'urn:oasis:names:tc:opendocument:xmlns:text:1.0',table:'urn:oasis:names:tc:opendocument:xmlns:table:1.0'};
+export const ODT_NS={draw:'urn:oasis:names:tc:opendocument:xmlns:drawing:1.0',xlink:'http://www.w3.org/1999/xlink',svg:'urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0',style:'urn:oasis:names:tc:opendocument:xmlns:style:1.0',fo:'urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0',text:'urn:oasis:names:tc:opendocument:xmlns:text:1.0',table:'urn:oasis:names:tc:opendocument:xmlns:table:1.0'};
 export const odtAttr=(node,prefix,name)=>node?.getAttributeNS(ODT_NS[prefix],name)||'';
 const attr=odtAttr;
 export function odtLength(value){const m=/^(-?\d+(?:\.\d+)?)(pt|cm|mm|in|px)$/.exec(value||'');return m?Number(m[1])*({pt:1,cm:72/2.54,mm:72/25.4,in:72,px:.75})[m[2]]:null}
