@@ -21,7 +21,7 @@ export function automaticUpdates({serviceWorker=globalThis.navigator?.serviceWor
   return connecting;
  }
  async function check(){
-  if(stopped||!online()||needsReload||reloading)return;if(serviceWorker.controller!==lastController)changed();if(checking)return checking;
+  if(stopped||!online()||needsReload||reloading)return;if(serviceWorker.controller!==lastController){changed();if(needsReload)return}if(checking)return checking;
   checking=Promise.resolve().then(async()=>{try{if(!await connect())return;await registration.update();watch(registration.installing);await attempt()}catch{}}).finally(()=>{checking=null});return checking;
  }
  let ready=Promise.resolve();
