@@ -6,7 +6,7 @@ export function automaticUpdates({serviceWorker=globalThis.navigator?.serviceWor
  const later=()=>{if(!stopped&&!timer)timer=setTimeout(()=>{timer=null;(needsReload?reloadWhenSafe():attempt()).catch(()=>{})},retryDelay)};
  async function reloadWhenSafe(){
   if(stopped||reloading)return;
-  try{if(!await beforeReload()){later();return}if(stopped||reloading)return;reloading=true;reload()}catch{later()}
+  try{await Promise.allSettled([connecting,checking].filter(Boolean));if(stopped||reloading)return;if(!await beforeReload()){later();return}if(stopped||reloading)return;reloading=true;reload()}catch{later()}
  }
  function changed(){const next=serviceWorker.controller;if(next===lastController)return;const previous=lastController;lastController=next;if(!previous)return;needsReload=true;reloadWhenSafe().catch(()=>{})}
  async function attempt(){
@@ -21,7 +21,7 @@ export function automaticUpdates({serviceWorker=globalThis.navigator?.serviceWor
   return connecting;
  }
  async function check(){
-  if(stopped||!online())return;if(serviceWorker.controller!==lastController)changed();if(checking)return checking;
+  if(stopped||!online()||needsReload||reloading)return;if(serviceWorker.controller!==lastController)changed();if(checking)return checking;
   checking=Promise.resolve().then(async()=>{try{if(!await connect())return;await registration.update();watch(registration.installing);await attempt()}catch{}}).finally(()=>{checking=null});return checking;
  }
  let ready=Promise.resolve();
