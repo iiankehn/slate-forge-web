@@ -1,8 +1,12 @@
 # Slate Forge release assessment
 
-## Current public release — silent updates
+## Current public release — supplied Brand Kit integrated
 
-Revision `9cc8e41684c744e3485f9d6e70f091994796b6a9` is live at https://slate-web.iiankehn.com/ . The single requested follow-on now checks and applies releases silently on launch and return, protects pending local saves and retains offline fallback. [PR CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41585035123), [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41586086505) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41586088144) passed 476 Node tests, production/static checks and 100 browser scenarios without retries, including two-tab A→B upgrades and offline reopen in all five configurations. Live files/chunks and the worker code/manifest/cache digest are verified. Ready for everyday public beta/tester use, within [automatic-update rollout and verification limits](AUTOMATIC_UPDATES.md). Original feature scope remains closed.
+Revision `1407181d5c04a21fabc3fa12066b6173da23b2aa` is live at https://slate-web.iiankehn.com/ . The supplied v1.2 Fold + Forge identity is used in app chrome, Workspace/onboarding, browser favicons and install/Apple/maskable icons. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41646799702) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41646800305) passed 477 Node tests, production/static checks and 100 browser scenarios without retries. Logo loading, responsive overflow and automated accessibility checks pass; desktop/mobile captures are reviewed. Live shell/brand/icon files and the worker code/manifest/cache digest are verified. Ready for everyday public beta/tester use, within the platform icon-refresh and review-label boundaries in [BRANDING.md](BRANDING.md). Original feature scope remains closed.
+
+## Previous public release — silent updates
+
+Revision `9cc8e41684c744e3485f9d6e70f091994796b6a9` was previously published at https://slate-web.iiankehn.com/ . The single requested follow-on now checks and applies releases silently on launch and return, protects pending local saves and retains offline fallback. [PR CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41585035123), [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41586086505) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41586088144) passed 476 Node tests, production/static checks and 100 browser scenarios without retries, including two-tab A→B upgrades and offline reopen in all five configurations. Live files/chunks and the worker code/manifest/cache digest are verified. Ready for everyday public beta/tester use, within [automatic-update rollout and verification limits](AUTOMATIC_UPDATES.md). Original feature scope remains closed.
 
 ## Previous public release — interface and stability complete
 
