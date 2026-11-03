@@ -16,7 +16,7 @@ export function automaticUpdates({serviceWorker=globalThis.navigator?.serviceWor
  }
  function watch(worker){if(!worker)return;listen(worker,'statechange',()=>{if(worker.state==='installed')attempt().catch(()=>{})});if(worker.state==='installed')attempt().catch(()=>{})}
  async function check(){
-  if(stopped||!online()||!registration)return;if(checking)return checking;
+  if(stopped||!online()||!registration)return;if(serviceWorker.controller!==lastController)changed();if(checking)return checking;
   checking=Promise.resolve().then(async()=>{try{await registration.update();watch(registration.installing);await attempt()}catch{}}).finally(()=>{checking=null});return checking;
  }
  let ready=Promise.resolve();
