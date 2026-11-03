@@ -17,7 +17,9 @@ export function importOdtComments(root,warnings,escape){
  if(starts.length>300||ends.length>300)throw Error('ODT supports up to 300 comments on import.');
  const byStart=new Map(),byEnd=new Map(),active=new Set(),positions=new Map();let index=0,outputSize=0;for(const node of root.getElementsByTagName('*'))positions.set(node,index++);
  const name=node=>node.getAttributeNS(OFFICE,'name')||'';
+ function unsupported(node){for(let parent=node.parentElement;parent&&parent!==root;parent=parent.parentElement)if(parent.namespaceURI===TEXT&&['note','tracked-changes','table-of-content'].includes(parent.localName)||parent.namespaceURI===OFFICE&&parent.localName==='annotation')return true;return false}
  for(const start of starts){const key=name(start),matching=ends.filter(end=>name(end)===key),duplicates=starts.filter(node=>name(node)===key).length;
+  if(unsupported(start)||matching.some(unsupported)){warnings.add('An ODT comment in notes, generated contents or stored revision data was omitted.');continue}
   if(!key||duplicates!==1||matching.length>1||matching.length&&positions.get(matching[0])<=positions.get(start)){warnings.add('An ambiguous ODT comment range was ignored.');continue}
   const paragraphs=[...start.getElementsByTagNameNS(TEXT,'p')],attrs=reviewAttrs({id:'odt-comment-'+byStart.size,author:start.getElementsByTagNameNS(DC,'creator')[0]?.textContent,body:paragraphs.map(node=>node.textContent).join('\n'),date:start.getElementsByTagNameNS(DC,'date')[0]?.textContent,resolved:start.getAttributeNS(LOEXT,'resolved')==='true'}),record={attrs,encoded:escape(encodeURIComponent(JSON.stringify(attrs))),point:!matching.length};byStart.set(start,record);if(matching.length)byEnd.set(matching[0],record);
  }
@@ -26,3 +28,5 @@ export function importOdtComments(root,warnings,escape){
  function wrap(value){for(const record of active)value='<span data-forge-comment="'+record.encoded+'">'+value+'</span>';return bounded(value)}
  return {marker,wrap};
 }
+
+export function odtNoteText(body){if(!body)return '';const copy=body.cloneNode(true);for(const node of [...copy.getElementsByTagNameNS(OFFICE,'annotation'),...copy.getElementsByTagNameNS(OFFICE,'annotation-end'),...copy.getElementsByTagNameNS(TEXT,'tracked-changes')])node.remove();return copy.textContent||''}
