@@ -2,12 +2,14 @@
 
 Record browser/OS/version and actual results. A responsive iframe or API stub does not close a physical-device gate.
 
+Status reconciled 2026-11-03: the matrix below records physical/manual evidence. Released CI separately passed 100 browser scenarios across five configurations, including exact downloaded-file restoration, offline OCR, silent updates and accessibility checks. See [POST_RELEASE_REVIEW.md](POST_RELEASE_REVIEW.md). Historical procedures below are test prompts, not an active feature backlog. Record pass/fail, sample, settings and evidence for each actual target run.
+
 | Target | Editing / keyboard | Files / complete backup | Install / offline / update | Print / layout | Accessibility |
 |---|---|---|---|---|---|
 | iPhone Safari | Open | Open | Open | Open | VoiceOver open |
 | iPad Safari + hardware keyboard | Open | Open | Open | Open | VoiceOver open |
 | Android 12+ Chrome | Open | Open | Open | Open | TalkBack open |
-| Desktop Chrome | Local browser editing checks passed; physical keyboard still open | ZIP generation/import passed; completed download open | HTTPS installed workflow open | Measured preview passed; printed file open | Menu keyboard checks passed; reader open |
+| Desktop Chrome | Local browser editing checks passed; physical keyboard still open | Automated exact-file downloads/restoration passed; native device picker/share flow open | HTTPS installed workflow open | Measured preview passed; printed file open | Menu keyboard checks passed; reader open |
 | Desktop Firefox | Open | Open | Supported install fallback / offline open | Open | Open |
 | Desktop Safari | Open | Open | Supported install / offline open | Open | Open |
 | Microsoft Word | N/A | DOCX round trip open | N/A | Open | Review/comments open |
@@ -57,16 +59,16 @@ These are pending physical-browser checks; source fixtures alone do not complete
 
 - Download ODT with inherited/direct fonts/colors, highlighting, paragraph rules, nested lists and a non-default start. Open/save in target LibreOffice versions and reimport the actual saved file. Compare text, formatting, list types, paragraph controls and Undo.
 - Check A4/Letter portrait/landscape, supported margins and simple header/footer/page numbers. Try custom/unequal margins and multiple masters, and verify simplification warnings.
-- Confirm imported colored highlights remain editable, toolbar highlighting still toggles normally, and HTML/ODT preserves color. DOCX highlighting remains yellow.
+- Confirm imported colored highlights remain editable, toolbar highlighting still toggles normally, and HTML/ODT preserves color. Inspect supported DOCX highlight mapping in the exported file; do not infer universal color fidelity.
 
 One local LibreOffice development-build fixture passed; these actual browser/download/target-editor checks remain open.
 
 ## Review, code and comparison batch
 
 - Enable tracking, change inline styles and paragraph alignment/spacing/keep rules, edit a pending suggestion again, then accept/reject individually and in bulk. Check Cancel, one-step Undo/Redo, comments/text revisions and reopening from device storage and HTML/backup. Verify stale confirmations cannot resolve a changed document/workspace.
-- Exercise code creation from Format and the style selector, native typing/deletion/newlines/tabs, Find/Replace, comments and decisions. Verify rich-format controls are disabled in code, pending formatting blocks code conversion, and IME/hardware/virtual keyboards retain cursor positions. Structural edits remain direct.
+- Exercise code creation from Format and the style selector, native typing/deletion/newlines/tabs, Find/Replace, comments and decisions. Verify rich-format controls are disabled in code, pending formatting blocks code conversion, and IME/hardware/virtual keyboards retain cursor positions. Grouped structural/object review is implemented; inspect accept/reject and Undo separately.
 - Download DOCX with run/paragraph property revisions and reviewed code, open/save in target editors and reimport that exact saved file. Inspect original formatting, revision decisions and newlines/tabs. LibreOffice's development build dropped some earlier Latin run properties in one fixture; do not assume cross-editor fidelity.
-- Compare identical text with different styles, paragraph design, objects and page settings; compare inserted/deleted/moved blocks. Check bounded reports, screen-reader announcements, Unicode and literal markup. Inline formatting within changed-text blocks and semantic moved-block alignment remain incomplete.
+- Compare identical text with different styles, paragraph design, objects and page settings; compare inserted/deleted/moved blocks. Check bounded reports, screen-reader announcements, Unicode and literal markup. Shared-text formatting and bounded move matching are implemented; ambiguous/general semantic matching remains bounded.
 
 Source/DOM checks do not complete these physical-browser and actual-download checks.
 
@@ -93,10 +95,10 @@ One LibreOffice development-build metadata fixture passed. Physical-browser/down
 - Prepare all ten OCR models offline, restart installed apps without a connection, and recognize camera/PDF scans in each selected language with and without English. Check restored language/page-range settings. Node WASM French/Russian fixtures do not certify camera accuracy or target-device memory.
 - Download/reopen password-protected PDFs in target readers; test wrong/correct passwords and explicit unlocked-copy consent. Confirm passwords and certificates are absent from device records/backups. Test quota failures while retaining an export path.
 - Test international PDF annotations and new/existing form values with representative local TTF/OTF fonts. Verify selected fonts' glyph coverage, complex-script/bidirectional layout and recipient-reader appearances. Current fixtures cover Latin/Greek/Cyrillic, not all scripts.
-- Sign a final PDF with a real local RSA PKCS#12 identity and verify in recipient readers. Check trust/expiry messaging; timestamp/revocation/LTV/multiple signatures remain unsupported. Verify importing/exporting signed sources preserves exact bytes and blocks edits.
+- Sign a final PDF with a real local RSA PKCS#12 identity and verify in recipient readers. Check trust/expiry messaging; incremental additional signatures and RFC3161 timestamps are implemented within documented policy limits. Verify recipient trust and real TSA interoperability; revocation/LTV remain outside scope. Verify importing/exporting signed sources preserves exact bytes and blocks edits.
 - Exercise overlapping and cursor comments with keyboards/screen readers and Word round trips, including empty ranges. Cursor anchors are omitted from final print text.
 - Verify long top-level wrapped paragraphs on successive pages after the float ends. Check caret navigation, Undo, IME and scaling; active-float splits and nested wraps still require further implementation.
 
 - For grouped structural review, test table/canvas/image changes, block moves, rich paragraph/code conversions, protected deleted copies and edits inside inserted copies. Check caret/IME behavior around isolating wrappers, ordinary editor-generated trailing paragraphs, Undo/Redo, bulk stale-context guards and quota/backup recovery. Reopen HTML/JSON only with a build that supports blockRevision. Decide structural groups before Word/ODT export; native structural revision interop is not implemented.
 
-- With Page design → Note placement set to Bottom of reference page, inspect actual body/note boundaries, note numbering/navigation and the same downloaded/printed PDF across target browsers. Include multiple notes near a page break, wrapped paragraphs, keep rules and tables; test note changes, fonts, rotation/Fit and IME. Check keyboard access to original note controls and cleanup when returning to Continuous editing. Endnote defaults must remain unchanged for old documents. Split/oversized notes and complex-section parity are not complete.
+- With Page design → Note placement set to Bottom of reference page, inspect actual body/note boundaries, note numbering/navigation and the same downloaded/printed PDF across target browsers. Include multiple notes near a page break, wrapped paragraphs, keep rules and tables; test note changes, fonts, rotation/Fit and IME. Check keyboard access to original note controls and cleanup when returning to Continuous editing. Endnote defaults must remain unchanged for old documents. Split-note continuation is implemented and has source/browser coverage. Inspect actual printed continuation; complex-section fidelity remains bounded.

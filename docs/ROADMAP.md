@@ -1,5 +1,9 @@
 # Slate Forge — completed essential-product release
 
+## Requested advanced compatibility follow-on
+
+The user subsequently reopened advanced features and selected Word/ODT compatibility on 2026-11-03. [ODT_COMPATIBILITY.md](ODT_COMPATIBILITY.md) records the first batch: native ODT comments, canvas preview export and image-description import correction. The completed essential-product checklist below remains release history. New compatibility evidence must be recorded separately.
+
 The latest user direction replaces the former eight-area feature-completion mandate. [PRODUCT_FOCUS.md](PRODUCT_FOCUS.md) records which advanced areas to keep, bound or stop. The previous feature roadmap is preserved in Git history; it is not an expanding backlog for this release.
 
 - [x] A distinct ribbon with grouped everyday commands.
@@ -16,3 +20,5 @@ The latest user direction replaces the former eight-area feature-completion mand
 The current release passes 477 Node tests and 100 browser scenarios without retries in main CI and Pages. [Automatic updates](AUTOMATIC_UPDATES.md) and [branding integration](BRANDING.md) record the explicitly requested follow-ons. [UX_STABILITY.md](UX_STABILITY.md) records exact runs, historical retry outcomes and verification limits. The historical Firefox discovery failure did not recur in the strengthened checks; its original cause remains unproven. Any recurrence is a regression to investigate, not a new feature item.
 
 This release roadmap is complete. No further feature work is authorized by it. Preserve local saving, backup compatibility, the public host and the separate private Site identity. Future accounts and broader advanced compatibility require a separate user decision.
+
+Post-release review (2026-11-03): the user reaffirmed this focused scope. [POST_RELEASE_REVIEW.md](POST_RELEASE_REVIEW.md) distinguishes already-covered limitations from remaining manual verification and gives acceptance evidence. Advanced limitations are not reopened as feature requirements.

@@ -1,8 +1,12 @@
 # Next-chat handoff — Slate Forge web
 
+Latest direction (2026-11-03): the user then requested advanced features and selected Word/ODT compatibility, superseding the earlier focused-only direction for that area. See ODT_COMPATIBILITY.md for the native ODT comments/canvas-preview batch and its verification boundaries. Earlier scope statements below describe the prior stopping point.
+
 Prepared 2026-11-03 from the repository at `56774d1`. This is a continuation guide, not a new feature roadmap. Fetch current `main` before relying on the historical commit or test counts below.
 
 Codex environment/tooling supplement verified 2026-11-03 after handoff commit `b426344`. Environment access and app connections must be checked again in the next chat; a repository document cannot provision credentials or override platform policy.
+
+Post-release review 2026-11-03: the user requested remaining-limitations work and explicitly chose to keep the focused product scope. Read [POST_RELEASE_REVIEW.md](POST_RELEASE_REVIEW.md). Stale beta/roadmap/device-QA claims were reconciled; 477 Node tests passed again. No runtime defect was established or new runtime deployment required. Physical devices, screen readers, printed PDFs, real storage eviction and target-editor exchange still require actual evidence. FULL_ROADMAP_PROGRESS and PUBLIC_BETA now reflect current scope; older capability claims elsewhere remain historical until checked against source.
 
 ## Product, scope and exact stopping point
 
@@ -11,8 +15,8 @@ Codex environment/tooling supplement verified 2026-11-03 after handoff commit `b
 - The agreed essential-product roadmap is complete. Ribbon, Workspace/backstage, onboarding, tour, light/dark palettes, sans-serif defaults, silent updates and supplied Brand Kit icons are implemented and published. Core editing, local saving/recovery/backups, supported import/export and printing are implemented.
 - The last task was a read-only feature-completeness assessment. It found no further required features in the approved scope and no open GitHub issues/PRs at that time. Do not convert this assessment or historical limitations into a new backlog.
 - Advanced layout fidelity, exact Word/ODT interchange, full native Word nested review, general PDF text reflow/vertical replacement, general XFA scripts/bindings and comprehensive signature revocation/LTV remain bounded, frozen or excluded by `docs/PRODUCT_FOCUS.md`. RFC3161 timestamp support already exists. Accounts, cloud sync and broader desktop-office parity are not completion requirements.
-- Remaining work is documented manual verification, fixing demonstrated defects, and reconciling stale documentation. `docs/FULL_ROADMAP_PROGRESS.md` and parts of `docs/PUBLIC_BETA.md` still describe superseded scope. `docs/DEVICE_QA.md` also contains historical capability claims that must be checked against current source, not blindly reopened as missing features.
-- The user has not selected a new implementation task after this assessment. Continue only within the next request; do not autonomously expand the roadmap.
+- Remaining work is documented manual verification and fixing demonstrated defects. The post-release review reconciles FULL_ROADMAP_PROGRESS, PUBLIC_BETA and known stale DEVICE_QA capability claims. Recheck current source before treating any older limitation as a missing feature.
+- The user selected focused limitations/verification work after this assessment. Follow POST_RELEASE_REVIEW; do not autonomously expand the roadmap.
 
 ## Read first and instruction precedence
 

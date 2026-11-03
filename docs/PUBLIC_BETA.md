@@ -1,6 +1,6 @@
 # First public beta
 
-The public beta is live at https://slate-web.iiankehn.com/ . [Verified deployment 41268357642](https://github.com/iiankehn/slate-forge-web/actions/runs/41268357642) passed all 418 Node cases across 67 test files, build/static checks and 65 browser scenarios across five configurations. Supported native Word groups/mixed paragraphs, 250-page PDFs with direct navigation and native ODT column/page-design sections are published. Physical-device checks remain deferred; phone viewports are not device certification.
+The public beta is live at https://slate-web.iiankehn.com/ . The supplied-branding runtime `1407181d5c04a21fabc3fa12066b6173da23b2aa` passed 477 Node tests, production/static checks and 100 browser scenarios without retries in [CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41646799702) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41646800305). The focused release is complete, including silent updates and branding. Physical-device checks remain open; phone viewports are not device certification.
 
 The immediate goal is usable everyday writing with clear saving and recovery. The full roadmap is not a prerequisite.
 
@@ -22,7 +22,7 @@ Phone viewport emulation does not certify physical Safari/iPhone/iPad or Android
 
 ## Later iterations
 
-Arbitrary page-positioned objects, complex sections and wrapping, broad Word/ODT fidelity, fine-grained structural revision interoperability, semantic/ambiguous comparison matching and larger PDF limits remain on ROADMAP.md. Supported native Word objects, split page-bottom notes and lexical rewritten-paragraph matching have shipped. Cloud accounts and collaboration remain deferred. Existing advanced tools keep their documented beta boundaries.
+The focused roadmap is complete. Advanced compatibility is bounded or frozen by PRODUCT_FOCUS.md; historical feature lists are not an active backlog. Remaining work is physical-device/manual verification, reproducible reliability fixes and documentation maintenance. See POST_RELEASE_REVIEW.md for evidence and acceptance criteria. Accounts and cloud collaboration require a separate product decision.
 
 ## Publication
 
@@ -35,4 +35,4 @@ Slate Forge public beta: https://slate-web.iiankehn.com/
 
 Write and edit documents in your browser, save on your device, import/export supported Word and OpenDocument files, and use local PDF/OCR and drawing tools. No account is required. Download a complete workspace backup before relying on it for important work; clearing browser data can remove device-saved documents. Import/export and pagination have documented limits, so check exchanged documents before sharing them.
 
-Report problems at https://github.com/iiankehn/slate-forge-web/issues/new/choose with your browser/OS, steps and expected/actual result. Use a small non-confidential sample when one is needed. Feature suggestions can be submitted there too. Known feature gaps are tracked in ROADMAP.md; physical-device testing is still open.
+Report problems at https://github.com/iiankehn/slate-forge-web/issues/new/choose with your browser/OS, steps and expected/actual result. Use a small non-confidential sample when one is needed. Feature suggestions can be submitted there too. Supported boundaries are recorded in PRODUCT_FOCUS.md and POST_RELEASE_REVIEW.md; physical-device testing is still open.
