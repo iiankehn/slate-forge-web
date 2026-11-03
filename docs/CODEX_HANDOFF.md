@@ -1,5 +1,7 @@
 # Slate Forge handoff — Brand Kit published; focused roadmap complete
 
+For fresh-environment setup, dependencies, exact continuation scope and command examples, read [NEXT_CHAT_HANDOFF.md](NEXT_CHAT_HANDOFF.md). This supplements the release history below and does not reopen the completed roadmap.
+
 Updated 2026-11-03. Published source `1407181d5c04a21fabc3fa12066b6173da23b2aa` is live at https://slate-web.iiankehn.com/ . Later documentation commits do not change its runtime. PR #11 integrates the supplied Brand Kit, PR #10 adds silent updates, PR #7 delivered the focused interface and PRs #8–9 corrected reload ownership and focus.
 
 ## Brand Kit integration — explicitly requested follow-on
