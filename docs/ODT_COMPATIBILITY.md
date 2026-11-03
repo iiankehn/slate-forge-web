@@ -1,5 +1,7 @@
 # Word/ODT compatibility follow-on
 
+The next native text-revision batch is tracked in [ODT_TEXT_REVISIONS.md](ODT_TEXT_REVISIONS.md). The behavior and release record below describe the first comments/canvas batch.
+
 Requested 2026-11-03 after the completed focused release. The user explicitly reopened advanced work and selected Word/ODT compatibility as the lead area.
 
 ## Behavior in this batch
