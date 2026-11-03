@@ -10,7 +10,8 @@ The latest user direction replaces the former eight-area feature-completion mand
 - [x] Stability, accessibility and UX regressions, including saving/reload, backups, offline use, Workspace discovery and keyboard/focus behavior.
 - [x] Correct the reproducible reload-ownership and delayed-focus defects; reject flaky browser checks in CI.
 - [x] Publish the verified release to the existing public GitHub Pages host and verify live assets.
+- [x] Explicit follow-on requested 2026-11-03: silent automatic updates on launch/return, with local-save protection and offline fallback.
 
-The release passes 466 Node tests and 95 browser scenarios without retries in PR/main/release CI and Pages. [UX_STABILITY.md](UX_STABILITY.md) records exact runs, historical retry outcomes and verification limits. The historical Firefox discovery failure did not recur in the strengthened checks; its original cause remains unproven. Any recurrence is a regression to investigate, not a new feature item.
+The current release passes 476 Node tests and 100 browser scenarios without retries in PR/main CI and Pages. [Automatic updates](AUTOMATIC_UPDATES.md) records the single explicitly requested follow-on. [UX_STABILITY.md](UX_STABILITY.md) records exact runs, historical retry outcomes and verification limits. The historical Firefox discovery failure did not recur in the strengthened checks; its original cause remains unproven. Any recurrence is a regression to investigate, not a new feature item.
 
 This release roadmap is complete. No further feature work is authorized by it. Preserve local saving, backup compatibility, the public host and the separate private Site identity. Future accounts and broader advanced compatibility require a separate user decision.
