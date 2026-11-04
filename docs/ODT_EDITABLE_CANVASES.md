@@ -15,3 +15,9 @@ Ten focused Node regressions cover sanitized editor reopening/re-export, origina
 ## Remaining selected compatibility work
 
 Native editable ODF shapes/text boxes, native formatting/structural ODT revisions, broader unsupported ODF drawing imports and actual Word/LibreOffice resave testing remain open. Keep an HTML or workspace backup for complete original document/review data. The user-confirmed mobile header correction remains intact. No account, storage identifier, database, backup format, origin or private Site identity changes are included.
+
+## LibreOffice headless resave smoke test
+
+A representative exported file was opened and resaved by `LibreOfficeDev 26.8.0.0.alpha0` (`2c87e51eeaa2b413ff4ae097b2705eea1995d8e5`) using the Writer `writer8` ODT filter. Its prose, comment author/body, insertion suggestion and PNG preview reopen. LibreOffice removed `SlateForge/designs.json`; the current preview stays an image, without resurrecting the original canvas. This is a single development-runtime headless resave, not stable LibreOffice GUI, Microsoft Word, device or universal compatibility certification.
+
+The smoke test exposed a recording-preference bug: LibreOffice omits `text:track-changes` when it is true. ODF 1.3 part 3 §19.889 explicitly defines the default as true. Import now honors that default when a tracked-changes store exists; absent stores and explicit false/0 stay off. `test/fixtures/odt-libreoffice-resaved.odt` preserves the actual resaved fixture, generated solely from synthetic text/comments, a tiny PNG and a synthetic canvas. A sanitized-editor regression checks recording, comment identity, suggestion decisions and image fallback from that fixture, plus explicit boolean values and absent stores. The first pending main/Pages release was cancelled to include this correction before publication.

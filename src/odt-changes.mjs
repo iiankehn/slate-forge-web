@@ -66,5 +66,5 @@ export function importOdtChanges(root,styles,escape){
  const deletionHTML=new Map();for(const record of records.values())if(record.kind==='delete')deletionHTML.set(record,deleted(record));
  function marker(node){if(node.namespaceURI!==TEXT||!['change','change-start','change-end'].includes(node.localName))return null;return node.localName==='change'?deletionHTML.get(byMarker.get(node))||'':''}
  function wrap(node,value){const record=byNode.get(node);return bounded(record?'<span data-forge-change="'+record.encoded+'">'+value+'</span>':value)}
- return {marker,wrap,trackChanges:['true','1'].includes(container?.getAttributeNS(TEXT,'track-changes'))};
+ return {marker,wrap,trackChanges:!!container&&(!container.hasAttributeNS(TEXT,'track-changes')||['true','1'].includes(container.getAttributeNS(TEXT,'track-changes')))};
 }
