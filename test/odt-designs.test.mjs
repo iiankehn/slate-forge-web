@@ -1,4 +1,5 @@
 import test from 'node:test';
+import {randomBytes} from 'node:crypto';
 import assert from 'node:assert/strict';
 import {JSDOM} from 'jsdom';
 import {getSchema} from '@tiptap/core';
@@ -30,4 +31,4 @@ test('ODT restores independent canvases without discarding an externally edited 
 test('unknown versions, unsafe preview paths and noncanonical scene data never become editable objects',()=>{for(const change of [p=>p.version=2,p=>p.canvases[0].path='../Pictures/image0.png',p=>p.canvases[0].scene.width=100,p=>p.canvases[0].hash='0'.repeat(64),p=>p.canvases=Array(51).fill(p.canvases[0])]){const r=mutate(f=>{const p=JSON.parse(strFromU8(f[PART]));change(p);f[PART]=strToU8(JSON.stringify(p))});assert.equal(r.host.querySelectorAll('[data-forge-design]').length,0);assert.equal(r.host.querySelectorAll('img').length,1);assert.ok(r.warnings.length)}});
 test('editable ODT export bounds aggregate original data before producing an unopenable file',()=>{const large=normalizeScene({objects:[{type:'image',src:'data:image/png;base64,'+'A'.repeat(1000000)}]}),node={type:'designCanvas',attrs:{scene:large}},previews=new Map([[sceneKey(large),{data:png,width:900,height:large.height}]]);assert.throws(()=>exportODT({type:'doc',content:Array(11).fill(node)},{},'',previews,{editableDesigns:true}),/10 MB/)});
 
-test('ODT refuses aggregate previews larger than its own archive import limit',()=>{const previews=new Map([[sceneKey(scene),{data:new Uint8Array(1500000),width:900,height:scene.height}]]);for(const editableDesigns of [true,false])assert.throws(()=>exportODT({type:'doc',content:Array(34).fill(canvas)},{},'',previews,{editableDesigns}),/archive safety limits/)});
+test('ODT refuses aggregate previews larger than its own archive import limit',()=>{const previews=new Map([[sceneKey(scene),{data:new Uint8Array(1500000),width:900,height:scene.height}]]);for(const editableDesigns of [true,false])assert.throws(()=>exportODT({type:'doc',content:Array(34).fill(canvas)},{},'',previews,{editableDesigns}),/archive safety limits/);const packed=new Map([[sceneKey(scene),{data:randomBytes(1200000),width:900,height:scene.height}]]);assert.throws(()=>exportODT({type:'doc',content:Array(5).fill(canvas)},{},'',packed,{editableDesigns:true}),/5 MB file opening limit/)});
