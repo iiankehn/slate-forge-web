@@ -1,5 +1,7 @@
 # Slate Forge — completed essential-product release
 
+Next Word/ODT batch (2026-11-04): bounded native ODF shapes/text boxes are implemented; see ODT_NATIVE_SHAPES.md. Release verification is pending. Preserve prior retained-canvas modes and the mobile fix.
+
 ## Current compatibility release — ODT original canvases
 
 Published 2026-11-04 from `c75516ffde44e5aee44367aee72b1f4f26977a73` at https://slate-web.iiankehn.com/ . ODT can retain original editable Slate Forge canvases alongside PNG previews, and import honors the ODF recording default found in a LibreOffice resave; changed/ambiguous previews fall back to images, and image-only copies omit retained scenes. Export now enforces the existing packed/expanded opening limits. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41777777965) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41777778525) passed 513 Node tests, production/static checks and all 120 browser scenarios without retries. Verified 45 live shell/worker URLs and reconciled cache digest `f1606aa1167db141` against platform-specific notices. Native ODF objects, formatting/structural revisions and broader Word/LibreOffice resave testing remain open. The user-confirmed mobile header fix and all storage/origin identities are preserved. See [ODT_EDITABLE_CANVASES.md](ODT_EDITABLE_CANVASES.md).
