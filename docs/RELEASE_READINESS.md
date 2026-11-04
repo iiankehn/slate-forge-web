@@ -1,6 +1,13 @@
 # Slate Forge release assessment
 
-## Current public release — native ODF strokes
+## Current public release — native ODF pictures
+
+Published native ODF pictures from `f946ef30559d61ad516f91e0ab1b3842476a19d7` at https://slate-web.iiankehn.com/ . PR #19 and [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41905448242) passed 537 Node tests and all 135 browser scenarios without retries. [Pages promotion](https://github.com/iiankehn/slate-forge-web/actions/runs/41907698905) deployed that successful main artifact without rebuilding or rerunning browsers. Verified 45 live shell/worker URLs and cache digest `c7223919ff92c3ff`.
+
+PNG/JPEG canvas pictures retain editable crop, horizontal flip and opacity; import reads current native files/styles. Whole image files, including cropped-out pixels and metadata, remain embedded, as the dialog explains. Vertical flips remain preview-only on export because the actual LibreOffice resave discards them. See [ODT_NATIVE_PICTURES.md](ODT_NATIVE_PICTURES.md) for bounds and actual editor evidence. Preserve storage/origins, earlier modes and the confirmed mobile fix. **Next: broader transforms, including a reliable vertical-flip representation**, per [ROADMAP.md](ROADMAP.md).
+
+
+## Previous public release — native ODF strokes
 
 Published 2026-11-04 from `ffbec7cfadd668fbfca3a026951e2f622ce15209` at https://slate-web.iiankehn.com/ . Native ODF mode now exports/reopens lines, supported triangular arrows, straight-segment paths and pressure-derived filled contours. Bounded polygon union removes LibreOffice pressure-overlap gaps; flat-path rewrites and current native edits remain editable. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41861651898) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41861664906) passed 529 Node tests, production/static checks and all 130 browser scenarios without retries. Verified 45 live shell/worker URLs and reconciled cache digest `bd1c60e2117542ac` against platform-specific notices. See [ODT_NATIVE_STROKES.md](ODT_NATIVE_STROKES.md) for geometry/work limits, actual LibreOffice resaves/rendering and the standards-based native formatting-rejection limitation. Storage/origin identities, earlier export modes and the confirmed mobile fix are preserved.
 

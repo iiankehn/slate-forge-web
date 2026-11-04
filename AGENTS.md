@@ -1,9 +1,8 @@
 # Slate Forge web development
 
-Verified publication flow: PR #18 is merged; Pages promotion 41886753392 deployed the existing verified runtime artifact without a build/browser rerun. Seven promotion-policy checks passed. Use docs/RELEASE_PIPELINE.md and the ordered docs/ROADMAP.md; native ODF canvas pictures are next. For docs/release-tooling-only work, verify unchanged app/build inputs and use affected checks, respecting required checks.
+Native ODF pictures are published from `f946ef30559d61ad516f91e0ab1b3842476a19d7`; see docs/ODT_NATIVE_PICTURES.md. Broader transforms, including reliable vertical picture flips, are next in docs/ROADMAP.md. Preserve whole-image metadata disclosure, strict refusal paths and existing preview alternatives.
 
-2026-11-04 roadmap refocus: follow the ordered backlog in docs/ROADMAP.md. Native ODF pictures are the next product batch, followed by broader transforms. Release history is separate. Pages publication promotes a successful main push CI artifact using verification_run_id; do not rebuild or rerun browsers in publication. See docs/RELEASE_PIPELINE.md.
-
+Pages promotion 41907698905 reused main CI 41905448242 without rebuilding/rerunning browsers. See docs/RELEASE_PIPELINE.md. For docs/tooling-only changes, verify unchanged app/build inputs and run affected checks, respecting required checks.
 
 Stroke continuation (2026-11-04): the native ODF stroke extension is published from `ffbec7cfadd668fbfca3a026951e2f622ce15209`; read docs/ODT_NATIVE_STROKES.md for supported geometry, bounds and the standards-based format-revision limitation.
 
