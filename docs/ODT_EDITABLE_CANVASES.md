@@ -1,5 +1,7 @@
 # ODT original-canvas retention
 
+Current continuation: [ODT_NATIVE_SHAPES.md](ODT_NATIVE_SHAPES.md) records the published bounded native shapes/text-box mode. Earlier original-canvas retention and preview-only modes remain supported. Native pictures/paths/transforms and formatting/structural revisions remain separate limits.
+
 Published 2026-11-04: this Word/ODT batch adds optional original-canvas retention to ODT export. The export dialog enables it by default when a document contains canvases; clear “Retain original canvases in ODT” for a preview-only copy. Other editors display the PNG preview. This is not native ODF drawing-object export.
 
 The ODT package contains `SlateForge/designs.json`, declared as application/json in the manifest. It retains normalized original scenes, including hidden/locked/grouped objects and uncropped embedded image sources. The dialog explains that retained data is included. Image-only copies contain neither the scene part nor its hidden objects.

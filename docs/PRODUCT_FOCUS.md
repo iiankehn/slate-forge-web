@@ -1,5 +1,7 @@
 # Slate Forge: a smaller, dependable writing product
 
+Current continuation: [ODT_NATIVE_SHAPES.md](ODT_NATIVE_SHAPES.md) records the published bounded native shapes/text-box mode. Earlier original-canvas retention and preview-only modes remain supported. Native pictures/paths/transforms and formatting/structural revisions remain separate limits.
+
 Current continuation: [ODT_EDITABLE_CANVASES.md](ODT_EDITABLE_CANVASES.md) records published optional original-canvas retention. Preview-only behavior below describes earlier releases or image-only copies; native ODF objects remain separate.
 
 ## Requested advanced follow-on — 2026-11-03

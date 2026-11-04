@@ -1,6 +1,10 @@
 # Slate Forge release assessment
 
-## Current public release — ODT original canvases
+## Current public release — native ODF shapes
+
+Published 2026-11-04 from `65d854db558b8af9974c874cd08b82f60d86e168` at https://slate-web.iiankehn.com/ . Native ODF export/reimport supports rectangles, rounded rectangles, ellipses and uniform text boxes. It reads current native objects, omits hidden/private scene data and preserves the existing preview modes. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41838522282) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41838535562) passed 520 Node tests, production/static checks and all 125 browser scenarios without retries. Verified 45 live shell/worker URLs and reconciled cache digest `8b1134f3aee723e2` against platform-specific notices. See [ODT_NATIVE_SHAPES.md](ODT_NATIVE_SHAPES.md) for supported objects, actual LibreOffice headless resaves/rendering and remaining limits. Storage/origin identities and the confirmed mobile safe-area fix are unchanged.
+
+## Previous public release — ODT original canvases
 
 Published 2026-11-04 from `c75516ffde44e5aee44367aee72b1f4f26977a73` at https://slate-web.iiankehn.com/ . ODT can retain original editable Slate Forge canvases alongside PNG previews, and import honors the ODF recording default found in a LibreOffice resave; changed/ambiguous previews fall back to images, and image-only copies omit retained scenes. Export now enforces the existing packed/expanded opening limits. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41777777965) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41777778525) passed 513 Node tests, production/static checks and all 120 browser scenarios without retries. Verified 45 live shell/worker URLs and reconciled cache digest `f1606aa1167db141` against platform-specific notices. Native ODF objects, formatting/structural revisions and broader Word/LibreOffice resave testing remain open. The user-confirmed mobile header fix and all storage/origin identities are preserved. See [ODT_EDITABLE_CANVASES.md](ODT_EDITABLE_CANVASES.md).
 
