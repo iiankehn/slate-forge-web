@@ -1,5 +1,7 @@
 # Slate Forge web development
 
+Next Word/ODT batch (2026-11-04): bounded native ODF shapes/text boxes are implemented; see docs/ODT_NATIVE_SHAPES.md. Release verification is pending. Preserve prior retained-canvas modes and the mobile fix.
+
 Word/ODT continuation (2026-11-04): original-canvas retention for ODT is published from `c75516ffde44e5aee44367aee72b1f4f26977a73`; see docs/ODT_EDITABLE_CANVASES.md for release evidence and remaining compatibility limits. Preserve the user-confirmed mobile header fix.
 
 ## Current mandate
