@@ -21,7 +21,8 @@ export function nativeOdtCanvas(input,width,styleId,esc,pictureAssets){
    body+='<draw:frame'+common+'><draw:text-box>'+o.text.split(/\r\n?|\n/).map(t=>'<text:p text:style-name="'+props+'">'+textXML(t,esc)+'</text:p>').join('')+'</draw:text-box></draw:frame>';
   }else body+='<draw:'+o.type+common+(o.type==='rect'&&o.radius?' draw:corner-radius="'+mm(o.radius*scale)+'"':'')+'/>';
  }
- return {markupSize:encodeScene({...scene,objects}).length,xml:'<draw:g draw:name="SlateForgeNativeCanvas" text:anchor-type="as-char"><svg:title>'+esc(scene.title)+'</svg:title><svg:desc>'+esc(scene.description)+'</svg:desc>'+body+'</draw:g>'};
+ const markupSize=encodeScene({...scene,objects}).length;if(markupSize>15000000)throw Error('Native ODT exceeds the 15 MB per-canvas reopening limit. Split the canvas into smaller copies.');
+ return {markupSize,xml:'<draw:g draw:name="SlateForgeNativeCanvas" text:anchor-type="as-char"><svg:title>'+esc(scene.title)+'</svg:title><svg:desc>'+esc(scene.description)+'</svg:desc>'+body+'</draw:g>'};
 }
 const emptyShapeText=n=>n.namespaceURI===NS.text&&n.localName==='p'&&!n.children.length&&!n.textContent;
 const direct=(node,ns,name)=>[...node.children].filter(n=>n.namespaceURI===ns&&n.localName===name);
@@ -41,6 +42,6 @@ export function importNativeOdtCanvases(xml,styles,esc,files){
    if(o.type==='image'){return o}
    if(o.type==='text'){const boxes=direct(node,NS.draw,'text-box');if(boxes.length!==1||node.children.length!==1||g.opacity!==100)fail();for(const [key,expected]of [['left',10],['right',10],['top',8],['bottom',0]]){const value=odtLength(g.props['fo:padding-'+key]||g.props['fo:padding']||'0mm');if(value===null||Math.abs(value*scale-expected)>.2)fail()}if(g.props['draw:textarea-vertical-align']&&g.props['draw:textarea-vertical-align']!=='top')fail();Object.assign(o,uniformText(boxes[0],styles,scale))}else{if([...node.children].some(n=>!emptyShapeText(n)&&(n.namespaceURI!==NS.svg||!['title','desc'].includes(n.localName))))fail();const radius=attr(node,'draw','corner-radius');if(radius){const r=odtLength(radius);if(r===null||r*scale>50.1)fail();o.radius=r*scale}}
    return o;
-  });const title=direct(group,NS.svg,'title')[0]?.textContent||'Native ODT canvas',description=direct(group,NS.svg,'desc')[0]?.textContent||'';if(title.length>100||description.length>500)fail();const scene=normalizeScene({title,description,height:canvasHeight,background:background.fill,objects});const encoded=encodeScene(scene);expanded+=encoded.length;if(expanded>20000000)fail();result.set(parent,'<div data-forge-design="'+esc(encoded)+'"></div>');
+  });const title=direct(group,NS.svg,'title')[0]?.textContent||'Native ODT canvas',description=direct(group,NS.svg,'desc')[0]?.textContent||'';if(title.length>100||description.length>500)fail();const scene=normalizeScene({title,description,height:canvasHeight,background:background.fill,objects});const encoded=encodeScene(scene);expanded+=encoded.length;if(encoded.length>15000000||expanded>20000000)fail();result.set(parent,'<div data-forge-design="'+esc(encoded)+'"></div>');
  }return result;
 }
