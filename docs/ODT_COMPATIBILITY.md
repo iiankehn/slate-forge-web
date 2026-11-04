@@ -1,5 +1,7 @@
 # Word/ODT compatibility follow-on
 
+Current continuation: [ODT_EDITABLE_CANVASES.md](ODT_EDITABLE_CANVASES.md) records published optional original-canvas retention. Preview-only behavior below describes earlier releases or image-only copies; native ODF objects remain separate.
+
 The published native text-revision batch is recorded in [ODT_TEXT_REVISIONS.md](ODT_TEXT_REVISIONS.md). The behavior and release record below describe the first comments/canvas batch.
 
 Requested 2026-11-03 after the completed focused release. The user explicitly reopened advanced work and selected Word/ODT compatibility as the lead area.

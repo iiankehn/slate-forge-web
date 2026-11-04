@@ -1,5 +1,7 @@
 # Slate Forge: a smaller, dependable writing product
 
+Current continuation: [ODT_EDITABLE_CANVASES.md](ODT_EDITABLE_CANVASES.md) records published optional original-canvas retention. Preview-only behavior below describes earlier releases or image-only copies; native ODF objects remain separate.
+
 ## Requested advanced follow-on — 2026-11-03
 
 After the focused release and limitations review, the user explicitly reopened advanced-feature work and selected Word/ODT compatibility as the lead area. The first batch adds native ODT comments and canvas preview export. The subsequent “Next” request continued with published native inline ODT text revisions; see ODT_TEXT_REVISIONS.md. This supersedes the freeze below for requested compatibility work; it does not promise universal office fidelity or authorize unrelated accounts/cloud features. Preserve existing saved work and validate each supported behavior. See [ODT_COMPATIBILITY.md](ODT_COMPATIBILITY.md).

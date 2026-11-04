@@ -1,6 +1,6 @@
 # Slate Forge web development
 
-Word/ODT continuation (2026-11-04): original-canvas retention for ODT is implemented in the current development batch; see docs/ODT_EDITABLE_CANVASES.md. Other editors show previews; native ODF objects and formatting/structural revisions remain separate limits. Preserve the user-confirmed mobile safe-area fix. Release evidence is pending.
+Word/ODT continuation (2026-11-04): original-canvas retention for ODT is published from `c75516ffde44e5aee44367aee72b1f4f26977a73`; see docs/ODT_EDITABLE_CANVASES.md for release evidence and remaining compatibility limits. Preserve the user-confirmed mobile header fix.
 
 ## Current mandate
 

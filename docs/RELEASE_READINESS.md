@@ -1,6 +1,10 @@
 # Slate Forge release assessment
 
-## Current public release — mobile safe areas
+## Current public release — ODT original canvases
+
+Published 2026-11-04 from `c75516ffde44e5aee44367aee72b1f4f26977a73` at https://slate-web.iiankehn.com/ . ODT can retain original editable Slate Forge canvases alongside PNG previews, and import honors the ODF recording default found in a LibreOffice resave; changed/ambiguous previews fall back to images, and image-only copies omit retained scenes. Export now enforces the existing packed/expanded opening limits. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41777777965) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41777778525) passed 513 Node tests, production/static checks and all 120 browser scenarios without retries. Verified 45 live shell/worker URLs and reconciled cache digest `f1606aa1167db141` against platform-specific notices. Native ODF objects, formatting/structural revisions and broader Word/LibreOffice resave testing remain open. The user-confirmed mobile header fix and all storage/origin identities are preserved. See [ODT_EDITABLE_CANVASES.md](ODT_EDITABLE_CANVASES.md).
+
+## Previous public release — mobile safe areas
 
 Revision `95fc8402f0b879dd59457222647a5222e279175a` is live at https://slate-web.iiankehn.com/ . The reported mobile header cut-off is addressed by reserving hardware safe areas on the outer shell and fullscreen screens. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41772922302) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41772922806) passed 502 Node tests, production/static checks and all 115 browser scenarios without retries. Live files/cache digest are verified and simulated portrait/landscape captures reviewed. [MOBILE_SAFE_AREAS.md](MOBILE_SAFE_AREAS.md) records user confirmation of the reported header fix and the broader device-QA boundaries. No storage migration or host change was made.
 
