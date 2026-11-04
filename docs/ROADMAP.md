@@ -1,5 +1,7 @@
 # Slate Forge — completed essential-product release
 
+Word/ODT continuation (2026-11-04): original-canvas retention for ODT is implemented in the current development batch; see ODT_EDITABLE_CANVASES.md. Other editors show previews; native ODF objects and formatting/structural revisions remain separate limits. Preserve the user-confirmed mobile safe-area fix. Release evidence is pending.
+
 ## User-reported mobile stability correction
 
 - [x] Restore safe-area protection for the document header after redesign padding overrides.
