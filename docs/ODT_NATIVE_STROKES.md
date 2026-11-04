@@ -1,5 +1,17 @@
 # Native ODF strokes
 
+<!-- stroke-release-pending:start -->
+## Native stroke release — merged, deployment queued
+
+2026-11-04: [PR #17](https://github.com/iiankehn/slate-forge-web/pull/17) is merged at `ffbec7cfadd668fbfca3a026951e2f622ce15209`. PR CI passed 529 Node tests and 130 browser scenarios without retries. The [main verification](https://github.com/iiankehn/slate-forge-web/actions/runs/41861651898) and [manual Pages run](https://github.com/iiankehn/slate-forge-web/actions/runs/41861664906) also logged 529 Node tests and all 130 browser scenarios passing without retries, with production/static checks complete. Pages publication is not yet confirmed; its deployment job `126691676798` remains queued.
+
+[GitHub Status](https://www.githubstatus.com/) reports an active “Incident with Actions and Pages”, with both components degraded and the incident under investigation. No pending deployment approvals or wait timer were reported. Do not interpret this queue as a test failure or credential failure, and do not dispatch a duplicate release merely to bypass it.
+
+The public app has **not** been verified on the stroke source: its live worker still reports cache `8b1134f3aee723e2`, the previously published native-shape release `65d854db558b8af9974c874cd08b82f60d86e168`. The deployment remains pending. All new stroke behavior described here is implemented/validated, not yet claimed live.
+
+Resume with the existing Pages run: check terminal status, inspect any failure before retrying, verify live shell/worker assets and reconcile the cache with platform-specific notices after a successful deployment, then replace this pending record with publication evidence. Keep current storage/host identities and the confirmed mobile fix. The source, fixtures, reviewed render and regression results are preserved; no additional implementation or user approval is needed for the already-authorized release.
+<!-- stroke-release-pending:end -->
+
 This Word/ODT continuation extends native ODT canvas mode to lines, triangular arrows, straight-segment paths and filled contours. Lines/arrows use `draw:line`; open paths use `draw:polyline`; filled/pressure geometry uses `draw:path` and standard marker definitions. Hidden objects, PNG previews and private original-canvas data are absent in native mode. Line/arrow axis flips are supported. Pictures, rotations/skews and other transforms remain outside this mode.
 
 Pressure strokes become editable filled contours rather than pressure samples. A bounded integer polygon union preserves nonzero fill while removing overlap gaps seen in LibreOffice's path renderer. Disjoint regions and real holes are retained. Filled contours with visible strokes are accepted only when even-odd and nonzero filling agree, so geometry processing cannot silently remove visible interior stroke edges. The pinned Clipper library is distributed under Boost Software License 1.0; its attribution, complete license and included JSBN permission notice are retained in THIRD-PARTY-NOTICES.txt.
@@ -21,3 +33,9 @@ Generated content/styles pass the official ODF 1.3 Relax NG schema. A LibreOffic
 ## Remaining limits
 
 Native pictures and broader affine transforms, edited curves, arbitrary external groups, custom arrowheads, advanced mixed text formatting, native formatting/structural revisions and broader target-editor QA remain open. Preview and original-canvas modes preserve the wider model.
+
+## Validated source and render
+
+The final PR run is https://github.com/iiankehn/slate-forge-web/actions/runs/41859218463 . Final full CI passed 529 Node tests and all 130 browser scenarios without retries; both release verification logs independently confirm the same totals. A local fixture helper initially assumed a leading paragraph in every test file; it was corrected for the canvas-only thin-path fixture, and all 16 affected format cases passed before final CI. Pressure overlap gaps were found and fixed before validation.
+
+[Reviewed final LibreOffice rendering](ui/odt-native-strokes-libreoffice-render.png) shows the line, flipped arrow, open polyline and pressure ink without overlap gaps. The Boost and JSBN notices are bundled. This is synthetic headless development-runtime evidence, not stable-editor GUI, Word, printer or physical-device certification.

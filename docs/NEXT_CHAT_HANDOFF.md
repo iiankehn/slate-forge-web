@@ -1,6 +1,18 @@
 # Next-chat handoff — Slate Forge web
 
-Stroke continuation (2026-11-04): native ODF strokes are implemented; read ODT_NATIVE_STROKES.md for supported geometry, bounds and the standards-based format-revision limitation. Release verification is pending.
+<!-- stroke-release-pending:start -->
+## Native stroke release — merged, deployment queued
+
+2026-11-04: [PR #17](https://github.com/iiankehn/slate-forge-web/pull/17) is merged at `ffbec7cfadd668fbfca3a026951e2f622ce15209`. PR CI passed 529 Node tests and 130 browser scenarios without retries. The [main verification](https://github.com/iiankehn/slate-forge-web/actions/runs/41861651898) and [manual Pages run](https://github.com/iiankehn/slate-forge-web/actions/runs/41861664906) also logged 529 Node tests and all 130 browser scenarios passing without retries, with production/static checks complete. Pages publication is not yet confirmed; its deployment job `126691676798` remains queued.
+
+[GitHub Status](https://www.githubstatus.com/) reports an active “Incident with Actions and Pages”, with both components degraded and the incident under investigation. No pending deployment approvals or wait timer were reported. Do not interpret this queue as a test failure or credential failure, and do not dispatch a duplicate release merely to bypass it.
+
+The public app has **not** been verified on the stroke source: its live worker still reports cache `8b1134f3aee723e2`, the previously published native-shape release `65d854db558b8af9974c874cd08b82f60d86e168`. The deployment remains pending. All new stroke behavior described here is implemented/validated, not yet claimed live.
+
+Resume with the existing Pages run: check terminal status, inspect any failure before retrying, verify live shell/worker assets and reconcile the cache with platform-specific notices after a successful deployment, then replace this pending record with publication evidence. Keep current storage/host identities and the confirmed mobile fix. The source, fixtures, reviewed render and regression results are preserved; no additional implementation or user approval is needed for the already-authorized release.
+<!-- stroke-release-pending:end -->
+
+Stroke continuation (2026-11-04): native ODF strokes are merged/validated from `ffbec7cfadd668fbfca3a026951e2f622ce15209`; read ODT_NATIVE_STROKES.md. Publication is queued during a GitHub Actions/Pages incident; check run 41861664906 before further release work.
 
 ## Current compatibility release — native ODF shapes
 
