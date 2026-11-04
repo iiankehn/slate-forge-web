@@ -1,6 +1,10 @@
 # Slate Forge release assessment
 
-## Current public release — native ODT text revisions
+## Current public release — mobile safe areas
+
+Revision `95fc8402f0b879dd59457222647a5222e279175a` is live at https://slate-web.iiankehn.com/ . The reported mobile header cut-off is addressed by reserving hardware safe areas on the outer shell and fullscreen screens. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41772922302) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41772922806) passed 502 Node tests, production/static checks and all 115 browser scenarios without retries. Live files/cache digest are verified and simulated portrait/landscape captures reviewed. [MOBILE_SAFE_AREAS.md](MOBILE_SAFE_AREAS.md) records the physical iPhone follow-up still needed. No storage migration or host change was made.
+
+## Previous public release — native ODT text revisions
 
 Revision `49d70dd7a7610bd1ce3e28d04f4ceed0a2b3d301` is live at https://slate-web.iiankehn.com/ . Native ODT inline text suggestions now retain review decisions and recording preference. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41735668694) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41735669867) passed 502 Node tests, production/static checks and all 110 browser scenarios without retries. Live code/manifests and cache digest `c4e7519fb8ae9992` are verified/reconciled. [ODT_TEXT_REVISIONS.md](ODT_TEXT_REVISIONS.md) records the long-ID regression fixed before publication and explicit unsupported revisions. Actual Word/LibreOffice resaves, physical devices and universal office fidelity are not certified.
 

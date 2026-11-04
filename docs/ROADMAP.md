@@ -1,5 +1,14 @@
 # Slate Forge — completed essential-product release
 
+## User-reported mobile stability correction
+
+- [x] Restore safe-area protection for the document header after redesign padding overrides.
+- [x] Keep fullscreen Workspace scrolling, onboarding and tour controls inside protected regions.
+- [x] Add five-configuration simulated inset geometry checks and review portrait/landscape captures.
+- [x] Publish verified source and reconcile live stylesheet/worker assets.
+
+[MOBILE_SAFE_AREAS.md](MOBILE_SAFE_AREAS.md) records evidence. A post-release check on the affected physical iPhone remains open; this correction does not add a new feature roadmap.
+
 ## Requested advanced compatibility follow-on
 
 The next requested batch is now published; [ODT_TEXT_REVISIONS.md](ODT_TEXT_REVISIONS.md) records its evidence and bounds.

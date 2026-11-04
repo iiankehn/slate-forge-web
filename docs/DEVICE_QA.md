@@ -126,3 +126,9 @@ The published compatibility batch adds native inline insertion/deletion decision
 Source converters and browser download/reopen tests are separate from these actual external-editor resaves. Native editable ODF canvases and full native formatting/structural revision interchange remain outside this text-revision batch.
 
 Published text-revision evidence: [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41735668694) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41735669867) passed 502 Node tests, production/static checks and all 110 browser scenarios without retries. These runs do not close the manual Word/LibreOffice/device rows above.
+
+## Reported mobile header clipping — 2026-11-04 correction
+
+The user supplied physical iPhone evidence of the document header covered by the system top area. The safe-area correction is published as `95fc8402f0b879dd59457222647a5222e279175a`; [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41772922302) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41772922806) passed 502 Node tests, production/static checks and all 115 browser scenarios without retries. Portrait, shorter, landscape-cutout, 320 px and zero-inset geometry checks pass in all five configurations. Reviewed captures are in MOBILE_SAFE_AREAS.md. These checks do not close the physical iPhone row.
+
+After saving, reopen the affected app online and verify title, save indicator and menu below the system status area. Check rotation, keyboard show/dismiss, Workspace scrolling and its tour control. Record installed-vs-browser mode, OS/browser version and actual outcome. No post-release physical-device result has been supplied.

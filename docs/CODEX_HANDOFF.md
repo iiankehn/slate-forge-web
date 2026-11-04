@@ -1,6 +1,16 @@
-# Slate Forge handoff — native ODT text revisions published
+# Slate Forge handoff — mobile safe-area correction published
 
-## Current compatibility release
+## Current mobile stability release
+
+Published 2026-11-04 from `95fc8402f0b879dd59457222647a5222e279175a` at https://slate-web.iiankehn.com/ . The user reported a mobile screenshot with the entire document header cut off. Later redesign padding rules had overridden the old iPhone safe-area padding. The outer app shell now reserves top/side insets independently of header styling; the footer, fullscreen Workspace, inner scrolling and onboarding/tour controls also stay in their safe regions.
+
+[main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41772922302) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41772922806) passed 502 Node tests, production/static checks and all 115 browser scenarios without retries. All 44 live shell/worker URLs are verified against the build, with service-worker code/manifests and cache digest `a1c3d8e5f2390c87` reconciled against platform-specific notices. Reviewed portrait/landscape phone-WebKit captures are linked in [MOBILE_SAFE_AREAS.md](MOBILE_SAFE_AREAS.md). The new geometry journey runs in five configurations with simulated portrait/short/landscape/small/zero insets. This is not physical iPhone certification: the affected device needs a saved-work/online-reopen retest, including keyboard dismissal and rotation.
+
+The mobile report took priority over further advanced compatibility work. Word/ODT remains the selected advanced area; the already-published native text revisions remain intact. No document storage, backup format, font choice, public origin or private Site identity changed.
+
+## Earlier release history
+
+## Previous compatibility release — native ODT text revisions
 
 Published 2026-11-03 from `49d70dd7a7610bd1ce3e28d04f4ceed0a2b3d301` at https://slate-web.iiankehn.com/ . The user's “Next” continued Word/ODT compatibility. PR #13 adds native inline ODT insertion/deletion round trips with author/date metadata and deleted-text styling, preserved recording on/off, grouped decisions, accept/reject and undo/save/reload behavior. Converter tests retain decisions through ODT → native DOCX → ODT.
 
