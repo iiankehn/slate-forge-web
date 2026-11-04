@@ -1,6 +1,6 @@
 # First public beta
 
-The public beta is live at https://slate-web.iiankehn.com/ . Current runtime `95fc8402f0b879dd59457222647a5222e279175a` corrects mobile safe-area clipping of the title/header and fullscreen Workspace controls while retaining the prior Word/ODT compatibility release. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41772922302) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41772922806) passed 502 Node tests, production/static checks and all 115 browser scenarios without retries. Live files are verified; see MOBILE_SAFE_AREAS.md for reviewed simulated captures and the physical-device retest still needed.
+The public beta is live at https://slate-web.iiankehn.com/ . Current runtime `95fc8402f0b879dd59457222647a5222e279175a` corrects mobile safe-area clipping of the title/header and fullscreen Workspace controls while retaining the prior Word/ODT compatibility release. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41772922302) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41772922806) passed 502 Node tests, production/static checks and all 115 browser scenarios without retries. Live files are verified; see MOBILE_SAFE_AREAS.md for reviewed simulated captures, user confirmation of the reported header fix and remaining manual QA.
 
 The immediate goal is usable everyday writing with clear saving and recovery. The full roadmap is not a prerequisite.
 

@@ -2,7 +2,7 @@
 
 ## Current mandate
 
-2026-11-04 mobile stability follow-up: the user reported the entire top header cut off on an iPhone screenshot. The safe-area correction is published; read docs/MOBILE_SAFE_AREAS.md for evidence and the physical-device retest still open. Preserve inset protection independently of header padding, and keep Workspace scrolling/tour controls inside their protected region.
+2026-11-04 mobile stability follow-up: the user reported the entire top header cut off on an iPhone screenshot. The safe-area correction is published; read docs/MOBILE_SAFE_AREAS.md for evidence and the user-confirmed affected-device header fix. Preserve inset protection independently of header padding, and keep Workspace scrolling/tour controls inside their protected region.
 
 Continuation: the user's “Next” continues Word/ODT compatibility. The native inline ODT revision batch is published, with evidence in docs/ODT_TEXT_REVISIONS.md; preserve explicit refusal of unsupported revision structures and all existing storage/origin invariants.
 

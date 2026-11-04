@@ -2,7 +2,7 @@
 
 ## Current public release — mobile safe areas
 
-Revision `95fc8402f0b879dd59457222647a5222e279175a` is live at https://slate-web.iiankehn.com/ . The reported mobile header cut-off is addressed by reserving hardware safe areas on the outer shell and fullscreen screens. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41772922302) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41772922806) passed 502 Node tests, production/static checks and all 115 browser scenarios without retries. Live files/cache digest are verified and simulated portrait/landscape captures reviewed. [MOBILE_SAFE_AREAS.md](MOBILE_SAFE_AREAS.md) records the physical iPhone follow-up still needed. No storage migration or host change was made.
+Revision `95fc8402f0b879dd59457222647a5222e279175a` is live at https://slate-web.iiankehn.com/ . The reported mobile header cut-off is addressed by reserving hardware safe areas on the outer shell and fullscreen screens. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41772922302) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41772922806) passed 502 Node tests, production/static checks and all 115 browser scenarios without retries. Live files/cache digest are verified and simulated portrait/landscape captures reviewed. [MOBILE_SAFE_AREAS.md](MOBILE_SAFE_AREAS.md) records user confirmation of the reported header fix and the broader device-QA boundaries. No storage migration or host change was made.
 
 ## Previous public release — native ODT text revisions
 

@@ -7,7 +7,7 @@
 - [x] Add five-configuration simulated inset geometry checks and review portrait/landscape captures.
 - [x] Publish verified source and reconcile live stylesheet/worker assets.
 
-[MOBILE_SAFE_AREAS.md](MOBILE_SAFE_AREAS.md) records evidence. A post-release check on the affected physical iPhone remains open; this correction does not add a new feature roadmap.
+[MOBILE_SAFE_AREAS.md](MOBILE_SAFE_AREAS.md) records evidence. The user confirmed the reported header clipping is fixed on the affected device (2026-11-04). Broader device QA retains its separate status.
 
 ## Requested advanced compatibility follow-on
 
