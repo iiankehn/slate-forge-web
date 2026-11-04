@@ -1,8 +1,8 @@
 # Slate Forge web development
 
-Bounded native ODF transforms are published from `890b9a8afe9198365dac6606bf56ca56aaee12c6`; see docs/ODT_NATIVE_TRANSFORMS.md. Basic shapes/pictures support rotation/X skew, text supports rotation, and vertical picture flips use half-turn plus horizontal mirroring. Remaining stroke/group/matrix transform cases stay explicit in docs/ROADMAP.md. Preserve whole-image metadata disclosure, refusal paths and preview alternatives.
+Native ODF stroke transforms are published from `3154878e39110ceb1d3e6ea41677e73e5a2cbe3f`; see docs/ODT_STROKE_TRANSFORMS.md. Rigid primitives/path vertices and axis-line geometry survive; skew/pressure strokes become editable unioned contours. Keep paint bounds, minimum-frame, bordered-contour, stroke-list scaling/shearing and complexity refusals explicit. Bounded group/matrix compatibility is next in docs/ROADMAP.md.
 
-Pages promotion 41918905404 reused main CI 41916632916 without rebuilding/rerunning browsers. See docs/RELEASE_PIPELINE.md. Docs/tooling-only changes use affected checks after confirming unchanged app/build inputs, respecting required checks.
+Pages promotion 41926898336 reused main CI 41924728034 without rebuilding/rerunning browsers. See docs/RELEASE_PIPELINE.md. Docs/tooling-only changes use affected checks after confirming unchanged app/build inputs, respecting required checks. Preserve storage/origins, whole-image metadata disclosure, earlier modes and the confirmed mobile fix.
 
 Stroke continuation (2026-11-04): the native ODF stroke extension is published from `ffbec7cfadd668fbfca3a026951e2f622ce15209`; read docs/ODT_NATIVE_STROKES.md for supported geometry, bounds and the standards-based format-revision limitation.
 

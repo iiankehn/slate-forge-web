@@ -1,5 +1,8 @@
 # Native ODF strokes
 
+Current continuation: [ODT_STROKE_TRANSFORMS.md](ODT_STROKE_TRANSFORMS.md) extends the original release with bounded rigid and skew/pressure transforms and axis-line recovery. Earlier exclusions below describe the initial stroke release.
+
+
 
 Published 2026-11-04: this Word/ODT continuation extends native ODT canvas mode to lines, triangular arrows, straight-segment paths and filled contours. Lines/arrows use `draw:line`; open paths use `draw:polyline`; filled/pressure geometry uses `draw:path` and standard marker definitions. Hidden objects, PNG previews and private original-canvas data are absent in native mode. Line/arrow axis flips are supported. Pictures, rotations/skews and other transforms remain outside this mode.
 

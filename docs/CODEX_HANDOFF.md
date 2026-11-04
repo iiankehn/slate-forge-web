@@ -1,6 +1,12 @@
-# Slate Forge handoff — native ODF transforms published
+# Slate Forge handoff — native ODF stroke transforms published
 
-## Current compatibility release — bounded native ODF transforms
+## Current compatibility release — native ODF stroke transforms
+
+Published from `3154878e39110ceb1d3e6ea41677e73e5a2cbe3f` at https://slate-web.iiankehn.com/ . [PR #21 verification](https://github.com/iiankehn/slate-forge-web/actions/runs/41922726717) and [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41924728034) passed 554 Node tests and all 145 browser scenarios without retries. [Pages promotion](https://github.com/iiankehn/slate-forge-web/actions/runs/41926898336) deployed the successful main artifact without rebuilding or rerunning browsers. Verified 45 live shell/worker URLs and cache digest `90ef44bc52d2e75b`.
+
+Native ODF strokes now retain rigid line/arrow/path rotations/reflections and axis-line geometry. Skewed strokes and transformed pressure paths become editable unioned contours, preserving cap/head geometry and single opacity. Current rigid native endpoint/path edits are read. See [ODT_STROKE_TRANSFORMS.md](ODT_STROKE_TRANSFORMS.md) for bounds and actual LibreOffice evidence. Edge-clipped rigid paint, unrepresentable short/edge-positioned primitives, transformed bordered contours and foreign stroke scaling/shearing lists remain explicit preview cases. Preserve storage/origins, image metadata disclosure, earlier modes and the confirmed mobile fix. **Next: bounded group/matrix compatibility**, with unsupported text/bordered-contour cases explicit, in [ROADMAP.md](ROADMAP.md).
+
+## Previous compatibility release — bounded native ODF transforms
 
 Published from `890b9a8afe9198365dac6606bf56ca56aaee12c6` at https://slate-web.iiankehn.com/ . [PR #20 verification](https://github.com/iiankehn/slate-forge-web/actions/runs/41914345731) and [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41916632916) passed 544 Node tests and all 140 browser scenarios without retries. [Pages promotion](https://github.com/iiankehn/slate-forge-web/actions/runs/41918905404) deployed the successful main artifact without rebuilding or rerunning browsers. Verified 45 live shell/worker URLs and cache digest `b010212a4d776036`.
 

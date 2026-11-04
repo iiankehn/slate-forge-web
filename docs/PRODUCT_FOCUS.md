@@ -1,6 +1,6 @@
 # Slate Forge: a smaller, dependable writing product
 
-Current extension: [ODT_NATIVE_TRANSFORMS.md](ODT_NATIVE_TRANSFORMS.md) records bounded basic-shape/picture rotation and X skew, rotated text and vertical picture flips. Whole image files/metadata remain embedded. Remaining stroke/group/matrix and mirrored/skewed-text cases stay explicit; follow the ordered roadmap. Earlier compatibility sections describe previous releases, with preview and retained-original alternatives preserved.
+Current extension: [ODT_STROKE_TRANSFORMS.md](ODT_STROKE_TRANSFORMS.md) records rigid stroke rotations/reflections, axis-line recovery and skew/pressure stroke outlines. Group/matrix compatibility is next. Unsupported text, bordered-contour and stroke-list scaling/shearing cases remain explicit, as do geometry/paint limits. Earlier compatibility sections are previous releases; preview and retained-original alternatives remain supported.
 
 ## Requested advanced follow-on — 2026-11-03
 

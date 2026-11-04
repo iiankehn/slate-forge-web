@@ -20,4 +20,16 @@ A thin endpoint box is not enlarged and mistaken for new line geometry. The impo
 
 [Reviewed direct source-to-PDF rendering](ui/odt-stroke-transforms-libreoffice.png) contains the seven strokes/contours without a save workaround. content.xml and styles.xml pass the official ODF 1.3 Relax NG schema. Headless editor rendering/resaving is distinct from Microsoft Word, GUI-editor and physical-device certification.
 
-Browser CI adds actual native ODT download, current canvas-title editing, reopening, device save/reload, HTML export and opening the real LibreOffice fixture across five configurations. Publication results follow final verification.
+Browser CI adds actual native ODT download, current canvas-title editing, reopening, device save/reload, HTML export and opening the real LibreOffice fixture across five configurations.
+
+## Next-batch corpus preparation
+
+A [one-level opaque group probe](fixtures/odt-grouped-strokes-libreoffice-probe.odt) survives actual LibreOffice resaving with both directed child endpoints and order unchanged within .01 mm. The current importer still refuses the nested group explicitly. This is evidence for the next bounded group batch, not a current group-support claim; group paint/compositing, deeper nesting and raw matrix semantics still need representation proof.
+
+## Published verification
+
+Published from `3154878e39110ceb1d3e6ea41677e73e5a2cbe3f` at https://slate-web.iiankehn.com/ . [PR #21 verification](https://github.com/iiankehn/slate-forge-web/actions/runs/41922726717) and [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41924728034) passed 554 Node tests and all 145 browser scenarios without retries. [Pages promotion](https://github.com/iiankehn/slate-forge-web/actions/runs/41926898336) deployed the successful main artifact without rebuilding or rerunning browsers. Verified 45 live shell/worker URLs and cache digest `90ef44bc52d2e75b`.
+
+Native ODF strokes now retain rigid line/arrow/path rotations/reflections and axis-line geometry. Skewed strokes and transformed pressure paths become editable unioned contours, preserving cap/head geometry and single opacity. Current rigid native endpoint/path edits are read. Edge-clipped rigid paint, unrepresentable short/edge-positioned primitives, transformed bordered contours and foreign stroke scaling/shearing lists remain explicit preview cases. Preserve storage/origins, image metadata disclosure, earlier modes and the confirmed mobile fix. **Next: bounded group/matrix compatibility**, with unsupported text/bordered-contour cases explicit, in [ROADMAP.md](ROADMAP.md).
+
+Promoted `static-site` artifact 13369038767; archive SHA-256 `49bb62fc30d59e12dc2bd2d97977d2d73e9bf10784a3d9adceea895617426794`. Final PR source `917ec5de85993641d237fd614d6971ab1fe467fb`. Pages job steps contain artifact retrieval/provenance validation, upload and deployment only. Live cache verification reconciles the known platform-specific notices difference. Documentation bookkeeping changes no runtime bytes.
