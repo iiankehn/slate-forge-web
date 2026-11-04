@@ -1,18 +1,11 @@
 # Slate Forge release assessment
 
-<!-- stroke-release-pending:start -->
-## Native stroke release — merged, deployment queued
+## Current public release — native ODF strokes
 
-2026-11-04: [PR #17](https://github.com/iiankehn/slate-forge-web/pull/17) is merged at `ffbec7cfadd668fbfca3a026951e2f622ce15209`. PR CI passed 529 Node tests and 130 browser scenarios without retries. The [main verification](https://github.com/iiankehn/slate-forge-web/actions/runs/41861651898) and [manual Pages run](https://github.com/iiankehn/slate-forge-web/actions/runs/41861664906) also logged 529 Node tests and all 130 browser scenarios passing without retries, with production/static checks complete. Pages publication is not yet confirmed; its deployment job `126691676798` remains queued.
+Published 2026-11-04 from `ffbec7cfadd668fbfca3a026951e2f622ce15209` at https://slate-web.iiankehn.com/ . Native ODF mode now exports/reopens lines, supported triangular arrows, straight-segment paths and pressure-derived filled contours. Bounded polygon union removes LibreOffice pressure-overlap gaps; flat-path rewrites and current native edits remain editable. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41861651898) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41861664906) passed 529 Node tests, production/static checks and all 130 browser scenarios without retries. Verified 45 live shell/worker URLs and reconciled cache digest `bd1c60e2117542ac` against platform-specific notices. See [ODT_NATIVE_STROKES.md](ODT_NATIVE_STROKES.md) for geometry/work limits, actual LibreOffice resaves/rendering and the standards-based native formatting-rejection limitation. Storage/origin identities, earlier export modes and the confirmed mobile fix are preserved.
 
-[GitHub Status](https://www.githubstatus.com/) reports an active “Incident with Actions and Pages”, with both components degraded and the incident under investigation. No pending deployment approvals or wait timer were reported. Do not interpret this queue as a test failure or credential failure, and do not dispatch a duplicate release merely to bypass it.
 
-The public app has **not** been verified on the stroke source: its live worker still reports cache `8b1134f3aee723e2`, the previously published native-shape release `65d854db558b8af9974c874cd08b82f60d86e168`. The deployment remains pending. All new stroke behavior described here is implemented/validated, not yet claimed live.
-
-Resume with the existing Pages run: check terminal status, inspect any failure before retrying, verify live shell/worker assets and reconcile the cache with platform-specific notices after a successful deployment, then replace this pending record with publication evidence. Keep current storage/host identities and the confirmed mobile fix. The source, fixtures, reviewed render and regression results are preserved; no additional implementation or user approval is needed for the already-authorized release.
-<!-- stroke-release-pending:end -->
-
-## Current public release — native ODF shapes
+## Previous public release — native ODF shapes
 
 Published 2026-11-04 from `65d854db558b8af9974c874cd08b82f60d86e168` at https://slate-web.iiankehn.com/ . Native ODF export/reimport supports rectangles, rounded rectangles, ellipses and uniform text boxes. It reads current native objects, omits hidden/private scene data and preserves the existing preview modes. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41838522282) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41838535562) passed 520 Node tests, production/static checks and all 125 browser scenarios without retries. Verified 45 live shell/worker URLs and reconciled cache digest `8b1134f3aee723e2` against platform-specific notices. See [ODT_NATIVE_SHAPES.md](ODT_NATIVE_SHAPES.md) for supported objects, actual LibreOffice headless resaves/rendering and remaining limits. Storage/origin identities and the confirmed mobile safe-area fix are unchanged.
 

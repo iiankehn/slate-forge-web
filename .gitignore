@@ -12,3 +12,7 @@ test-results/
 
 dist/semantic-worker.js
 dist/build-meta.json
+
+# Local Python release-tool bytecode
+__pycache__/
+*.py[cod]
