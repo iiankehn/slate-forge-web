@@ -1,5 +1,7 @@
 # Slate Forge web development
 
+Verified publication flow: PR #18 is merged; Pages promotion 41886753392 deployed the existing verified runtime artifact without a build/browser rerun. Seven promotion-policy checks passed. Use docs/RELEASE_PIPELINE.md and the ordered docs/ROADMAP.md; native ODF canvas pictures are next. For docs/release-tooling-only work, verify unchanged app/build inputs and use affected checks, respecting required checks.
+
 2026-11-04 roadmap refocus: follow the ordered backlog in docs/ROADMAP.md. Native ODF pictures are the next product batch, followed by broader transforms. Release history is separate. Pages publication promotes a successful main push CI artifact using verification_run_id; do not rebuild or rerun browsers in publication. See docs/RELEASE_PIPELINE.md.
 
 

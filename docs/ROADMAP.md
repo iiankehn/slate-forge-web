@@ -8,7 +8,7 @@ The active scope is the user-selected **Word/ODT compatibility** follow-on. The 
 - Original-canvas retention, native basic shapes/text boxes, and native lines/arrows/paths are published within their documented bounds.
 - The reported mobile header clipping is user-confirmed fixed; preserve its safe-area protection.
 - The GitHub incident-delayed stroke release has now deployed and its live files are verified. See [ODT_NATIVE_STROKES.md](ODT_NATIVE_STROKES.md).
-- Current delivery work removes the redundant Pages rebuild/browser run by promoting a successful main CI artifact. See [RELEASE_PIPELINE.md](RELEASE_PIPELINE.md).
+- Delivery now promotes a successful main CI artifact without rebuilding or rerunning browsers; the promotion/deployment path has been exercised. See [RELEASE_PIPELINE.md](RELEASE_PIPELINE.md).
 
 ## Ordered remaining work
 
