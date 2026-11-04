@@ -1,5 +1,7 @@
 # Native ODF canvas shapes and text boxes
 
+Current extension: [ODT_NATIVE_STROKES.md](ODT_NATIVE_STROKES.md) records published line/arrow/path support. Earlier shape-only exclusions below are release history. Native pictures, broader transforms and native formatting/structural review remain separate limits.
+
 Published 2026-11-04: this Word/ODT continuation adds an optional native ODF export mode for rectangles, rounded rectangles, ellipses and uniform text boxes. Native mode takes precedence over original-canvas retention. Its standard `draw:g`, `draw:rect`, `draw:ellipse` and `draw:frame`/`draw:text-box` elements are editable objects in compatible editors, rather than PNG previews. Hidden objects and private scene data are omitted. Group membership and locking are not transferred; the outer native canvas remains a group.
 
 Supported visible objects retain positions, dimensions, solid fills/strokes, shape opacity, rounded corners, text, supported fonts/sizes/colors, bold/italic/underline/strike, alignment, line height and explicit horizontal text direction. Text uses native paragraphs; the external editor controls wrapping and font layout. Native import reads the current object geometry/text/styles, including supported edits, rather than restoring a hidden original snapshot. It recognizes Slate Forge native canvas groups with a background viewport rectangle, including the tested LibreOffice rewrites; general arbitrary ODF drawing import is not claimed.
