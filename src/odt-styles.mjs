@@ -32,5 +32,5 @@ export function createOdtStyles(content,stylesXML,Parser){
 
  const lists=new Map();for(const doc of documents)for(const node of doc.getElementsByTagNameNS(ODT_NS.text,'list-style'))lists.set(attr(node,'style','name'),node);
  function isNumbered(name,level){const definition=lists.get(name),entry=[...(definition?.children||[])].find(n=>Number(attr(n,'text','level'))===level);return entry?.localName==='list-level-style-number'}
- return {fontName:props=>(props['fo:font-family']||fonts.get(props['style:font-name'])||'Arial').replace(/^['"]|['"]$/g,''),resolve,combine,inline,paragraphAttrs,layout,masterLayout,warnings,isNumbered};
+ return {markers:name=>documents.flatMap(doc=>[...doc.getElementsByTagNameNS(ODT_NS.draw,'marker')]).filter(node=>attr(node,'draw','name')===name),fontName:props=>(props['fo:font-family']||fonts.get(props['style:font-name'])||'Arial').replace(/^['"]|['"]$/g,''),resolve,combine,inline,paragraphAttrs,layout,masterLayout,warnings,isNumbered};
 }

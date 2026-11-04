@@ -1,5 +1,7 @@
 # Slate Forge handoff — native ODF shapes published
 
+Stroke continuation (2026-11-04): native ODF strokes are implemented; read ODT_NATIVE_STROKES.md for supported geometry, bounds and the standards-based format-revision limitation. Release verification is pending.
+
 ## Current compatibility release — native ODF shapes
 
 Published 2026-11-04 from `65d854db558b8af9974c874cd08b82f60d86e168` at https://slate-web.iiankehn.com/ . Native ODF export/reimport supports rectangles, rounded rectangles, ellipses and uniform text boxes. It reads current native objects, omits hidden/private scene data and preserves the existing preview modes. [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41838522282) and [Pages](https://github.com/iiankehn/slate-forge-web/actions/runs/41838535562) passed 520 Node tests, production/static checks and all 125 browser scenarios without retries. Verified 45 live shell/worker URLs and reconciled cache digest `8b1134f3aee723e2` against platform-specific notices. See [ODT_NATIVE_SHAPES.md](ODT_NATIVE_SHAPES.md) for supported objects, actual LibreOffice headless resaves/rendering and remaining limits. Storage/origin identities and the confirmed mobile safe-area fix are unchanged.

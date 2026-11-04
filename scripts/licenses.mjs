@@ -9,6 +9,7 @@ for(let [dir,info] of Object.entries(lock.packages).sort()){
  const names=fs.readdirSync(dir).filter(n=>/^(licen[cs]e|copying|notice)([.-]|$)/i.test(n));
  for(let name of names){const file=path.join(dir,name);if(fs.statSync(file).isFile())output+='\n'+name+'\n'+fs.readFileSync(file,'utf8')+'\n'}
 }
+output+='\n\nCLIPPER LIBRARY AND INCLUDED JSBN\n'+fs.readFileSync('assets/licenses/clipper-lib.txt','utf8');
 output+='\n\nLOCAL SEMANTIC COMPARISON MODEL\n'+fs.readFileSync('assets/semantic/all-MiniLM-L6-v2/SOURCE.txt','utf8')+'\n'+fs.readFileSync('assets/semantic/LICENSE.txt','utf8');
 output+='\n\nSLATE FORGE WORDMARK — DEJAVU FONT PERMISSION NOTICE\n'+fs.readFileSync('dist/brand/FONT-LICENSE.txt','utf8');
 fs.writeFileSync('dist/THIRD-PARTY-NOTICES.txt',output);

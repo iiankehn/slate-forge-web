@@ -1,5 +1,7 @@
 # Slate Forge web development
 
+Stroke continuation (2026-11-04): native ODF strokes are implemented; read docs/ODT_NATIVE_STROKES.md for supported geometry, bounds and the standards-based format-revision limitation. Release verification is pending.
+
 Native ODF batch (2026-11-04): the bounded shapes/text-box release is published from `65d854db558b8af9974c874cd08b82f60d86e168`; see docs/ODT_NATIVE_SHAPES.md for supported objects and evidence. Preserve prior retained-canvas modes and the confirmed mobile fix.
 
 Word/ODT continuation (2026-11-04): original-canvas retention for ODT is published from `c75516ffde44e5aee44367aee72b1f4f26977a73`; see docs/ODT_EDITABLE_CANVASES.md for release evidence and remaining compatibility limits. Preserve the user-confirmed mobile header fix.
