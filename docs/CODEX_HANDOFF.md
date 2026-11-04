@@ -1,5 +1,7 @@
 # Slate Forge handoff — mobile safe-area correction published
 
+Word/ODT continuation (2026-11-04): original-canvas retention for ODT is implemented in the current development batch; see ODT_EDITABLE_CANVASES.md. Other editors show previews; native ODF objects and formatting/structural revisions remain separate limits. Preserve the user-confirmed mobile safe-area fix. Release evidence is pending.
+
 ## Current mobile stability release
 
 Published 2026-11-04 from `95fc8402f0b879dd59457222647a5222e279175a` at https://slate-web.iiankehn.com/ . The user reported a mobile screenshot with the entire document header cut off. Later redesign padding rules had overridden the old iPhone safe-area padding. The outer app shell now reserves top/side insets independently of header styling; the footer, fullscreen Workspace, inner scrolling and onboarding/tour controls also stay in their safe regions.

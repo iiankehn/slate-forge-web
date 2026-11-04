@@ -1,5 +1,7 @@
 # Slate Forge web development
 
+Word/ODT continuation (2026-11-04): original-canvas retention for ODT is implemented in the current development batch; see docs/ODT_EDITABLE_CANVASES.md. Other editors show previews; native ODF objects and formatting/structural revisions remain separate limits. Preserve the user-confirmed mobile safe-area fix. Release evidence is pending.
+
 ## Current mandate
 
 2026-11-04 mobile stability follow-up: the user reported the entire top header cut off on an iPhone screenshot. The safe-area correction is published; read docs/MOBILE_SAFE_AREAS.md for evidence and the user-confirmed affected-device header fix. Preserve inset protection independently of header padding, and keep Workspace scrolling/tour controls inside their protected region.
