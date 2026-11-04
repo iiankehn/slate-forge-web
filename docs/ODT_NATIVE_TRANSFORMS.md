@@ -15,8 +15,20 @@ Import reads current object transforms and geometry, without restoring a private
 
 ## Evidence
 
-The representative corpus includes rotated/skewed rectangle and ellipse, rotated text and a cropped, translucent, vertically flipped PNG. `test/fixtures/odt-transforms-libreoffice-resaved.odt` is an actual LibreOfficeDev 26.8.0.0.alpha0 resave. Tests compare current geometry, text and source-image sample positions after resave and another export/reimport, plus contained/flipped pictures and 24 representative rotation/skew/crop combinations.
+The representative corpus includes rotated/skewed rectangle and ellipse, rotated text and a cropped, translucent, vertically flipped PNG. `test/fixtures/odt-transforms-libreoffice-resaved.odt` is an actual LibreOfficeDev 26.8.0.0.alpha0 resave. The transformed ODT resave also retains the original embedded PNG bytes. Tests compare current geometry, text and source-image sample positions after resave and another export/reimport, plus contained/flipped pictures and 24 representative rotation/skew/crop combinations.
 
 Direct source-to-PDF rendering initially exposed missing group-position defaults, producing an empty initial render. Explicit native group positioning fixes it: the source now directly renders shapes, text and picture without a save workaround. [Reviewed direct rendering](ui/odt-native-transforms-libreoffice.png). Both content.xml and styles.xml pass the official ODF 1.3 Relax NG schema. This is headless editor evidence, not Microsoft Word, GUI-editor or physical-device certification.
 
-Browser CI adds actual native ODT download, current transformed-text editing, reopening, device save/reload, HTML export and opening the real LibreOffice fixture in all five configurations. Release results follow after verification and publication.
+Browser CI adds actual native ODT download, current transformed-text editing, reopening, device save/reload, HTML export and opening the real LibreOffice fixture in all five configurations.
+
+## Next-batch corpus preparation
+
+An [actual LibreOffice resave probe](fixtures/odt-axis-strokes-libreoffice-probe.odt) retains a horizontal line and vertical arrow as exact axis-aligned native endpoints. These remain explicitly unsupported by the current native importer; this probe is preparation for the remaining stroke-transform work. Reimport must recover a legal pre-rotation editing frame instead of clamping zero-width/height endpoint boxes to 20 units and changing the line. Sheared caps/arrowheads and group/matrix cases require separate representation proof.
+
+## Published verification
+
+Published from `890b9a8afe9198365dac6606bf56ca56aaee12c6` at https://slate-web.iiankehn.com/ . [PR #20 verification](https://github.com/iiankehn/slate-forge-web/actions/runs/41914345731) and [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41916632916) passed 544 Node tests and all 140 browser scenarios without retries. [Pages promotion](https://github.com/iiankehn/slate-forge-web/actions/runs/41918905404) deployed the successful main artifact without rebuilding or rerunning browsers. Verified 45 live shell/worker URLs and cache digest `b010212a4d776036`.
+
+Bounded native ODF rotation/X skew now works for basic shapes and PNG/JPEG pictures; uniform opaque text boxes support rotation. Vertical picture flips use a half-turn plus horizontal mirroring that survives the available LibreOffice resave. Explicit group positioning fixes the blank initial rendering found during exchange testing. Whole image files/metadata remain embedded, and storage/origins, preview alternatives and the confirmed mobile fix remain intact. **Next: the remaining bounded stroke/group transform cases**, in [ROADMAP.md](ROADMAP.md); do not claim arbitrary matrices, groups or mirrored/skewed text are supported.
+
+Promoted `static-site` artifact 13366171294; archive SHA-256 `ec5a7860f63f2d4fd4edf1a276851febb16de074bc31ff546e75d33d068aa01d`. Final PR source `9ed59b274df904eb6b54807ca61937afdc03199b`. Pages job steps contain artifact retrieval/provenance validation, upload and deployment only. Live cache verification reconciles the known platform-specific notices difference. Final documentation bookkeeping changes no runtime bytes.

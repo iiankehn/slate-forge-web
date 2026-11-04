@@ -6,7 +6,8 @@ The active scope is the user-selected **Word/ODT compatibility** follow-on. The 
 
 - Native ODT comments and inline insertion/deletion review are published.
 - Original-canvas retention, native basic shapes/text boxes, and native lines/arrows/paths are published within their documented bounds.
-- Native PNG/JPEG canvas pictures with supported crop, horizontal flip and opacity are published; see [ODT_NATIVE_PICTURES.md](ODT_NATIVE_PICTURES.md). Native pictures embed whole files and metadata; vertical flips remain preview-only pending transform support.
+- Native PNG/JPEG canvas pictures with supported crop, horizontal flip and opacity are published; see [ODT_NATIVE_PICTURES.md](ODT_NATIVE_PICTURES.md). Native pictures embed whole files and metadata. Bounded vertical flips now work through the transform extension.
+- Bounded basic-shape/picture rotation and X skew, rotated text and vertical picture flips are published; see [ODT_NATIVE_TRANSFORMS.md](ODT_NATIVE_TRANSFORMS.md).
 - The reported mobile header clipping is user-confirmed fixed; preserve its safe-area protection.
 - Delivery now promotes a successful main CI artifact without rebuilding or rerunning browsers; the promotion/deployment path has been exercised. See [RELEASE_PIPELINE.md](RELEASE_PIPELINE.md).
 
@@ -14,7 +15,7 @@ The active scope is the user-selected **Word/ODT compatibility** follow-on. The 
 
 | Order | Item | Completion boundary |
 | --- | --- | --- |
-| 1 — next product batch | Broader native ODF transforms | Resolve vertical-picture flip preservation; add supported rotations and affine geometry deliberately, with current-object reimport and representative external-editor fixtures. Keep unsupported groups/transforms explicit. |
+| 1 — next product batch | Remaining native ODF transform cases | Build on the published shape/picture/text subset. Bound transformed line/arrow/path geometry next; group/matrix and mirrored/skewed-text cases require a representable model and actual external-editor fixtures. Preserve explicit refusal until demonstrated. |
 | 2 — alongside each feature | Target-editor exchange evidence | Maintain a small representative document corpus. Record stable LibreOffice/Word behavior where those actual editors are available; keep headless, browser and physical-device evidence distinct. Fix reproduced data loss or incorrect output before broadening scope. |
 | Constrained research | ODT review history beyond inline text | Standard ODF formatting-change metadata does not include previous formatting. Do not invent Reject behavior. Any app-specific history retention is a separate, explicit design; native structural revisions need a bounded representation before implementation. |
 
@@ -28,6 +29,6 @@ After deployment, verify the live shell/worker files and cache manifest. Record 
 
 ## Evidence and history
 
-[ODT compatibility](ODT_COMPATIBILITY.md) · [inline revisions](ODT_TEXT_REVISIONS.md) · [original canvases](ODT_EDITABLE_CANVASES.md) · [native shapes](ODT_NATIVE_SHAPES.md) · [native strokes](ODT_NATIVE_STROKES.md) · [native pictures](ODT_NATIVE_PICTURES.md) · [release readiness](RELEASE_READINESS.md).
+[ODT compatibility](ODT_COMPATIBILITY.md) · [inline revisions](ODT_TEXT_REVISIONS.md) · [original canvases](ODT_EDITABLE_CANVASES.md) · [native shapes](ODT_NATIVE_SHAPES.md) · [native strokes](ODT_NATIVE_STROKES.md) · [native pictures](ODT_NATIVE_PICTURES.md) · [bounded transforms](ODT_NATIVE_TRANSFORMS.md) · [release readiness](RELEASE_READINESS.md).
 
 The former completed essential-product checklist and chronological release entries are preserved in [ROADMAP_HISTORY.md](ROADMAP_HISTORY.md).

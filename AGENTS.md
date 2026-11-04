@@ -1,8 +1,8 @@
 # Slate Forge web development
 
-Native ODF pictures are published from `f946ef30559d61ad516f91e0ab1b3842476a19d7`; see docs/ODT_NATIVE_PICTURES.md. Broader transforms, including reliable vertical picture flips, are next in docs/ROADMAP.md. Preserve whole-image metadata disclosure, strict refusal paths and existing preview alternatives.
+Bounded native ODF transforms are published from `890b9a8afe9198365dac6606bf56ca56aaee12c6`; see docs/ODT_NATIVE_TRANSFORMS.md. Basic shapes/pictures support rotation/X skew, text supports rotation, and vertical picture flips use half-turn plus horizontal mirroring. Remaining stroke/group/matrix transform cases stay explicit in docs/ROADMAP.md. Preserve whole-image metadata disclosure, refusal paths and preview alternatives.
 
-Pages promotion 41907698905 reused main CI 41905448242 without rebuilding/rerunning browsers. See docs/RELEASE_PIPELINE.md. For docs/tooling-only changes, verify unchanged app/build inputs and run affected checks, respecting required checks.
+Pages promotion 41918905404 reused main CI 41916632916 without rebuilding/rerunning browsers. See docs/RELEASE_PIPELINE.md. Docs/tooling-only changes use affected checks after confirming unchanged app/build inputs, respecting required checks.
 
 Stroke continuation (2026-11-04): the native ODF stroke extension is published from `ffbec7cfadd668fbfca3a026951e2f622ce15209`; read docs/ODT_NATIVE_STROKES.md for supported geometry, bounds and the standards-based format-revision limitation.
 

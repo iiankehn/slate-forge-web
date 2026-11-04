@@ -1,6 +1,12 @@
-# Slate Forge handoff — native ODF pictures published
+# Slate Forge handoff — native ODF transforms published
 
-## Current compatibility release — native ODF pictures
+## Current compatibility release — bounded native ODF transforms
+
+Published from `890b9a8afe9198365dac6606bf56ca56aaee12c6` at https://slate-web.iiankehn.com/ . [PR #20 verification](https://github.com/iiankehn/slate-forge-web/actions/runs/41914345731) and [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41916632916) passed 544 Node tests and all 140 browser scenarios without retries. [Pages promotion](https://github.com/iiankehn/slate-forge-web/actions/runs/41918905404) deployed the successful main artifact without rebuilding or rerunning browsers. Verified 45 live shell/worker URLs and cache digest `b010212a4d776036`.
+
+Bounded native ODF rotation/X skew now works for basic shapes and PNG/JPEG pictures; uniform opaque text boxes support rotation. Vertical picture flips use a half-turn plus horizontal mirroring that survives the available LibreOffice resave. Explicit group positioning fixes the blank initial rendering found during exchange testing. See [ODT_NATIVE_TRANSFORMS.md](ODT_NATIVE_TRANSFORMS.md) for bounds and actual editor evidence. Whole image files/metadata remain embedded, and storage/origins, preview alternatives and the confirmed mobile fix remain intact. **Next: the remaining bounded stroke/group transform cases**, in [ROADMAP.md](ROADMAP.md); do not claim arbitrary matrices, groups or mirrored/skewed text are supported.
+
+## Previous compatibility release — native ODF pictures
 
 Published native ODF pictures from `f946ef30559d61ad516f91e0ab1b3842476a19d7` at https://slate-web.iiankehn.com/ . PR #19 and [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41905448242) passed 537 Node tests and all 135 browser scenarios without retries. [Pages promotion](https://github.com/iiankehn/slate-forge-web/actions/runs/41907698905) deployed that successful main artifact without rebuilding or rerunning browsers. Verified 45 live shell/worker URLs and cache digest `c7223919ff92c3ff`.
 

@@ -1,6 +1,6 @@
 # Slate Forge: a smaller, dependable writing product
 
-Current extension: [ODT_NATIVE_PICTURES.md](ODT_NATIVE_PICTURES.md) records native PNG/JPEG crop, horizontal flip and opacity. Native images embed whole files and metadata. Vertical flips and broader transforms remain next; native formatting/structural review remains constrained. Earlier shape/stroke/original-canvas sections describe previous releases; their preview and retained-original modes stay supported.
+Current extension: [ODT_NATIVE_TRANSFORMS.md](ODT_NATIVE_TRANSFORMS.md) records bounded basic-shape/picture rotation and X skew, rotated text and vertical picture flips. Whole image files/metadata remain embedded. Remaining stroke/group/matrix and mirrored/skewed-text cases stay explicit; follow the ordered roadmap. Earlier compatibility sections describe previous releases, with preview and retained-original alternatives preserved.
 
 ## Requested advanced follow-on — 2026-11-03
 
