@@ -24,7 +24,7 @@ Browser CI adds actual native ODT download, current canvas-title editing, reopen
 
 ## Next-batch corpus preparation
 
-A [one-level opaque group probe](fixtures/odt-grouped-strokes-libreoffice-probe.odt) survives actual LibreOffice resaving with both directed child endpoints and order unchanged within .01 mm. The current importer still refuses the nested group explicitly. This is evidence for the next bounded group batch, not a current group-support claim; group paint/compositing, deeper nesting and raw matrix semantics still need representation proof.
+A [one-level opaque group probe](fixtures/odt-grouped-strokes-libreoffice-probe.odt) survives actual LibreOffice resaving with both directed child endpoints and order unchanged within .01 mm. The stroke-transform release originally refused this group. The bounded follow-on in [ODT_GROUPS.md](ODT_GROUPS.md) now preserves its opaque line/arrow membership with explicit style/geometry guards. Broader group paint/compositing, deeper nesting and raw matrices remain optional unsupported cases, not new completion tasks.
 
 ## Published verification
 

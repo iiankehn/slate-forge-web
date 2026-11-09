@@ -1,6 +1,15 @@
-# Slate Forge handoff — suite-wide redacted PDF copies published
+# Slate Forge handoff — finite roadmap complete
 
-## Current release — suite-wide redacted PDF copies
+## Completed final batch — bounded ODF stroke groups
+
+The repaired batch merged through PR #24 at `d8535f28c91922d919a0f53f1df756c36e2fcb69`. Exact-source PR checks passed 582 Node cases and 165 browser scenarios without retries after independent review. Published runtime `d8535f28c91922d919a0f53f1df756c36e2fcb69` at https://slate-web.iiankehn.com/ . [PR verification](https://github.com/iiankehn/slate-forge-web/actions/runs/42580266841) and [merged-main verification](https://github.com/iiankehn/slate-forge-web/actions/runs/42683902860) each passed 582 Node cases and 165 browser scenarios without retries. [Pages promotion](https://github.com/iiankehn/slate-forge-web/actions/runs/42686729685) reused main artifact `13704782234`, archive SHA-256 `c285e2d9732a13e2a1428828da770c6f283feefa021c10e3e4069717f8592daf`, without rebuilding or rerunning browsers. All 53 verified live shell/worker URLs matched that exact archive; worker cache digest `2fd596f2fcf3bc65` reconciled. The finite bounded implementation roadmap is complete.
+
+Supported scope is one-level adjacent opaque native lines/arrows, preserving geometry/order and editable membership. Effective graphic-style validation rejects unrepresented group paint and unresolved ancestry while preserving harmless XMLNS declarations and legitimate corpus defaults. The OCR browser scenario now waits for initialization before file injection. See [ODT_GROUPS.md](ODT_GROUPS.md) for repair history, evidence and limits.
+
+The user's finite implementation finish line is reached: reviewed main verification, artifact promotion, live verification and this bookkeeping are complete. Stop here. No automatic rectangle/ellipse, matrix, deeper-group, extra-paint or review-history feature batch. These remain optional/deferred limitations. Retain only Dev and Adversarial specialists under [TEAM_WORKFLOW.md](TEAM_WORKFLOW.md), with root release clearance. Older chronological “Next” text below is historical, not an instruction to expand the completed scope.
+
+
+## Previous release — suite-wide redacted PDF copies
 
 Published from `3d91e753f259750946ab996c4c3c6f75caeabcda` at https://slate-web.iiankehn.com/ . [PR #22 verification](https://github.com/iiankehn/slate-forge-web/actions/runs/42554330140) and [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/42555983519) passed 567 Node tests and all 160 browser scenarios without retries. [Pages promotion](https://github.com/iiankehn/slate-forge-web/actions/runs/42557481574) deployed the successful main artifact without rebuilding or rerunning browsers. Verified 53 live shell/worker URLs and cache digest `0f878937a487742b`.
 
