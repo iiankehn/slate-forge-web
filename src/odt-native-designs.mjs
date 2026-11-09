@@ -49,9 +49,9 @@ export function importNativeOdtCanvases(xml,styles,esc,files){
   const members=[],membership=new Map();let groupIndex=0;
   for(const node of shapes.slice(1)){if(node.localName!=='g'){members.push(node);continue}
    // One-level opaque stroke groups use absolute child coordinates. No group transform or paint is applied.
-   const allowedAttrs=new Set(['name','style-name']);for(const a of node.attributes)if(a.namespaceURI!==NS.draw||!allowedAttrs.has(a.localName))fail();
+   const allowedAttrs=new Set(['name','style-name']);for(const a of node.attributes){if(a.namespaceURI==='http://www.w3.org/2000/xmlns/')continue;if(a.namespaceURI!==NS.draw||!allowedAttrs.has(a.localName))fail();}
    if([...node.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()))fail();
-   const props=styles.resolve('graphic',attr(node,'draw','style-name'));const allowedProps=new Set(['loext:decorative','style:run-through']);if(Object.keys(props).some(k=>!allowedProps.has(k)))fail();
+   const styleName=attr(node,'draw','style-name');if(!styles.hasResolvedStyle('graphic',styleName))fail();const props=styles.combine(styles.resolve('graphic',''),styles.resolve('graphic',styleName));const allowedProps=new Set(['loext:decorative','style:run-through']);if(Object.keys(props).some(k=>!allowedProps.has(k)))fail();
    const children=[...node.children];if(!children.length||children.some(n=>n.namespaceURI!==NS.draw||n.localName!=='line'))fail();
    const key='odt-stroke-group-'+(++groupIndex);for(const child of children){if(graphic(child,styles).opacity!==100)fail();members.push(child);membership.set(child,key)}
   }if(members.length>100)fail();
