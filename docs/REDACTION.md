@@ -1,6 +1,6 @@
 # Redacted PDF copies
 
-The user selected suite-wide redaction with flattened PDF output first on 2026-11-09. Implementation is awaiting browser CI and publication; it is not yet a live feature.
+The user selected suite-wide redaction with flattened PDF output first on 2026-11-09. The release is published from `3d91e753f259750946ab996c4c3c6f75caeabcda` at https://slate-web.iiankehn.com/ .
 
 ## Use and output boundary
 
@@ -22,4 +22,14 @@ Editable redacted DOCX/ODT/HTML, automatic discovery/OCR-based redaction and ori
 
 ## Verification
 
-Local Node checks cover actual decoded PDF image pixels, transparency flattening, fresh PDF object structure, cancellation, failure handling, page review gating and preservation of saved PDF originals/current edit snapshots. These checks do not establish browser rendering or physical-device behavior. Browser CI covers document text/canvas capture, downloaded PDF structure/pixels, file inputs and direct PDF/drawing/scan entry points across the existing five configurations. Final CI and publication evidence will be recorded after execution.
+Local Node checks cover actual decoded PDF image pixels, transparency flattening, fresh PDF object structure, cancellation, failure handling, page review gating and preservation of saved PDF originals/current edit snapshots. These checks do not establish browser rendering or physical-device behavior. Browser CI covers document text/canvas capture, downloaded PDF structure/pixels, file inputs and direct PDF/drawing/scan entry points across the existing five configurations. Final CI and publication evidence follows below.
+
+During implementation, PR runs [42552073788](https://github.com/iiankehn/slate-forge-web/actions/runs/42552073788) and [42552970675](https://github.com/iiankehn/slate-forge-web/actions/runs/42552970675) each stopped with 66 browser scenarios passed and one reproducible WebKit scan persistence failure, also failing its single retry. A Blob-copy attempt did not repair it. Focused diagnosis [42553921923](https://github.com/iiankehn/slate-forge-web/actions/runs/42553921923) exposed the actual Blob/File storage error after correcting prematurely empty transaction-error reporting. Superseded intermediate PR/diagnostic runs were cancelled and are not passes.
+
+The byte-backed repair passed [focused verification 42554340117](https://github.com/iiankehn/slate-forge-web/actions/runs/42554340117): 567 Node tests, production/static checks and all six desktop/phone WebKit redaction scenarios without retries. Full [PR verification 42554330140](https://github.com/iiankehn/slate-forge-web/actions/runs/42554330140) passed all 567 Node tests and 160 browser scenarios without retries. Merged-main verification and public promotion also succeeded; see the release evidence below.
+
+## Published release evidence
+
+Published from `3d91e753f259750946ab996c4c3c6f75caeabcda` at https://slate-web.iiankehn.com/ . [PR #22 verification](https://github.com/iiankehn/slate-forge-web/actions/runs/42554330140) and [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/42555983519) passed 567 Node tests and all 160 browser scenarios without retries. [Pages promotion](https://github.com/iiankehn/slate-forge-web/actions/runs/42557481574) deployed the successful main artifact without rebuilding or rerunning browsers. Verified 53 live shell/worker URLs and cache digest `0f878937a487742b`.
+
+Promotion used artifact `13648285523`, SHA-256 `5c3f5456d32a09cc8ce5871cf81e7db1423d9f855e3aef553759c24fdfa20834`. Live assets match the local build; the platform-specific third-party notice difference reconciles with the live worker cache digest. Browser configurations include desktop Chromium, Firefox and WebKit and phone Chromium/WebKit emulation. Physical-device and assistive-technology certification is not claimed. Image-only output has no text accessibility layer.

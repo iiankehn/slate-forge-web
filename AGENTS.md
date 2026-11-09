@@ -1,10 +1,10 @@
 # Slate Forge web development
 
-2026-11-09 user-selected priority: suite-wide redaction, with a new flattened redacted PDF first. This explicitly supersedes the compatibility-only scope for this batch. Read docs/REDACTION.md for the output boundary; preserve originals, history and backups. Resume bounded ODF group/matrix work afterward.
+Suite-wide redacted PDF copies are published from `3d91e753f259750946ab996c4c3c6f75caeabcda`. Read docs/REDACTION.md for output bounds and evidence. PR/main passed 567 Node tests and 160 browser scenarios without retries; Pages promotion 42557481574 reused main CI 42555983519. Preserve originals, history and backups. New scan records use portable bytes with legacy Blob reads and unchanged public backup shape; older app builds cannot read new scan records. The user-selected redaction batch is complete; resume bounded ODF group/matrix work in docs/ROADMAP.md.
 
 Native ODF stroke transforms are published from `3154878e39110ceb1d3e6ea41677e73e5a2cbe3f`; see docs/ODT_STROKE_TRANSFORMS.md. Rigid primitives/path vertices and axis-line geometry survive; skew/pressure strokes become editable unioned contours. Keep paint bounds, minimum-frame, bordered-contour, stroke-list scaling/shearing and complexity refusals explicit. Bounded group/matrix compatibility is next in docs/ROADMAP.md.
 
-Pages promotion 41926898336 reused main CI 41924728034 without rebuilding/rerunning browsers. See docs/RELEASE_PIPELINE.md. Docs/tooling-only changes use affected checks after confirming unchanged app/build inputs, respecting required checks. Preserve storage/origins, whole-image metadata disclosure, earlier modes and the confirmed mobile fix.
+Prior stroke promotion 41926898336 reused main CI 41924728034 without rebuilding/rerunning browsers. See docs/RELEASE_PIPELINE.md. Docs/tooling-only changes use affected checks after confirming unchanged app/build inputs, respecting required checks. Preserve storage/origins, whole-image metadata disclosure, earlier modes and the confirmed mobile fix.
 
 Stroke continuation (2026-11-04): the native ODF stroke extension is published from `ffbec7cfadd668fbfca3a026951e2f622ce15209`; read docs/ODT_NATIVE_STROKES.md for supported geometry, bounds and the standards-based format-revision limitation.
 

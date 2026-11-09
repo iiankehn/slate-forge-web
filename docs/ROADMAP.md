@@ -1,8 +1,10 @@
 # Slate Forge development roadmap
 
-The active batch is the user-selected **suite-wide redacted PDF copy**, followed by the **Word/ODT compatibility** roadmap. The everyday writing release is complete. Keep the product local-first and account-free, preserve saved documents/fonts/backups, and keep the existing public and private hosting identities. XFA/signature expansion, accounts and cloud sync remain outside this work.
+The user-selected **suite-wide redacted PDF copy** is published. The active follow-on returns to **Word/ODT compatibility**. The everyday writing release is complete. Keep the product local-first and account-free, preserve saved documents/fonts/backups, and keep the existing public and private hosting identities. XFA/signature expansion, accounts and cloud sync remain outside this work.
 
 ## Current position
+
+- Suite-wide redacted PDF copies are published for writing, canvases, PDFs and scan/image sources; originals and backups remain intact. See [REDACTION.md](REDACTION.md) for bounds and evidence.
 
 - Native ODT comments and inline insertion/deletion review are published.
 - Original-canvas retention, native basic shapes/text boxes, and native lines/arrows/paths are published within their documented bounds.
@@ -16,8 +18,7 @@ The active batch is the user-selected **suite-wide redacted PDF copy**, followed
 
 | Order | Item | Completion boundary |
 | --- | --- | --- |
-| 1 — current product batch | Suite-wide flattened redacted PDF | Writing documents, design canvases, PDF tools and scan/image sources share reviewed pixel-area redaction into a fresh image-only PDF. Preserve source files and saved history; see [REDACTION.md](REDACTION.md). Editable redacted formats remain outside this first version. |
-| 2 — next compatibility batch | Bounded native ODF group/matrix compatibility | Start with the actual one-level opaque group corpus. Prove child geometry/order and group paint semantics before adding supported groups. Raw matrices, deeper hierarchy, mirrored/skewed text, bordered contours and foreign stroke scaling/shearing lists remain explicit until representable and demonstrated in actual editors. |
+| 1 — next compatibility batch | Bounded native ODF group/matrix compatibility | Start with the actual one-level opaque group corpus. Prove child geometry/order and group paint semantics before adding supported groups. Raw matrices, deeper hierarchy, mirrored/skewed text, bordered contours and foreign stroke scaling/shearing lists remain explicit until representable and demonstrated in actual editors. |
 | Alongside each feature | Target-editor exchange evidence | Maintain a small representative document corpus. Record stable LibreOffice/Word behavior where those actual editors are available; keep headless, browser and physical-device evidence distinct. Fix reproduced data loss or incorrect output before broadening scope. |
 | Constrained research | ODT review history beyond inline text | Standard ODF formatting-change metadata does not include previous formatting. Do not invent Reject behavior. Any app-specific history retention is a separate, explicit design; native structural revisions need a bounded representation before implementation. |
 

@@ -1,6 +1,15 @@
-# Slate Forge handoff — native ODF stroke transforms published
+# Slate Forge handoff — suite-wide redacted PDF copies published
 
-## Current compatibility release — native ODF stroke transforms
+## Current release — suite-wide redacted PDF copies
+
+Published from `3d91e753f259750946ab996c4c3c6f75caeabcda` at https://slate-web.iiankehn.com/ . [PR #22 verification](https://github.com/iiankehn/slate-forge-web/actions/runs/42554330140) and [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/42555983519) passed 567 Node tests and all 160 browser scenarios without retries. [Pages promotion](https://github.com/iiankehn/slate-forge-web/actions/runs/42557481574) deployed the successful main artifact without rebuilding or rerunning browsers. Verified 53 live shell/worker URLs and cache digest `0f878937a487742b`.
+
+Review → Redact & share PDF and PDF/drawing/scan tools share area marking, all-page review and fresh image-only output. Covered pixels are overwritten before encoding; source objects, metadata, attachments and signatures are omitted. Originals, saved edits, history and backups remain intact. Limits are 25 pages, 8 megapixels/page, 60 megapixels total and 40 MB files. Editable redacted formats and automatic discovery remain excluded. See [REDACTION.md](REDACTION.md) for the boundary, initial reproducible WebKit failures and final repair evidence.
+
+New scan records persist bytes to avoid WebKit Blob/File storage failures. Reads accept legacy records and reconstruct the existing Blob snapshot/backup shape; identifiers, database versions and external backup formats are unchanged. Older builds cannot read new scan records. Preserve the mobile header fix and all earlier compatibility modes. **Next: bounded native ODF group/matrix compatibility**, per [ROADMAP.md](ROADMAP.md).
+
+
+## Previous compatibility release — native ODF stroke transforms
 
 Published from `3154878e39110ceb1d3e6ea41677e73e5a2cbe3f` at https://slate-web.iiankehn.com/ . [PR #21 verification](https://github.com/iiankehn/slate-forge-web/actions/runs/41922726717) and [main CI](https://github.com/iiankehn/slate-forge-web/actions/runs/41924728034) passed 554 Node tests and all 145 browser scenarios without retries. [Pages promotion](https://github.com/iiankehn/slate-forge-web/actions/runs/41926898336) deployed the successful main artifact without rebuilding or rerunning browsers. Verified 45 live shell/worker URLs and cache digest `90ef44bc52d2e75b`.
 
