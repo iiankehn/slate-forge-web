@@ -4,6 +4,12 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      browser_scope:
+        description: Diagnostic subset (manual runs cannot be promoted)
+        type: choice
+        default: all
+        options: [all, redaction-webkit]
 permissions:
   contents: read
 jobs:
@@ -28,6 +34,10 @@ jobs:
       - name: Match browser profile directory ownership
         run: chown "$(id -u):$(id -g)" "$HOME"
       - run: npm run test:browser -- --max-failures=1
+        if: github.event_name != 'workflow_dispatch' || inputs.browser_scope != 'redaction-webkit'
+      - name: Diagnose WebKit redaction
+        if: github.event_name == 'workflow_dispatch' && inputs.browser_scope == 'redaction-webkit'
+        run: npm run test:browser -- e2e/redaction.spec.mjs --project=desktop-webkit --project=phone-webkit --max-failures=1
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
