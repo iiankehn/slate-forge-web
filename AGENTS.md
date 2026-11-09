@@ -1,5 +1,11 @@
 # Slate Forge web development
 
+## Required specialist workflow
+
+The user requires all substantive development tasks to be delegated to five specialists: `dev`, `verification`, `results_analysis`, `quality_check` and `adversarial_review`. Root coordinates assignments, resolves findings, integrates approved changes and handles releases. Follow [docs/TEAM_WORKFLOW.md](docs/TEAM_WORKFLOW.md) for ownership, evidence reuse and review gates. Do not resume a single-thread implementation/review/release workflow.
+
+The bounded ODF stroke-group change merged in PR #23 at `31fa635b2b20bbc513bd40fd149029e30decf4e1` remains held for independent team review. Its previous automatic promotion controller was stopped. Passing CI alone does not authorize automatic publication before independent review. Team setup is configuration work; it does not resume product development or release the held change.
+
 Suite-wide redacted PDF copies are published from `3d91e753f259750946ab996c4c3c6f75caeabcda`. Read docs/REDACTION.md for output bounds and evidence. PR/main passed 567 Node tests and 160 browser scenarios without retries; Pages promotion 42557481574 reused main CI 42555983519. Preserve originals, history and backups. New scan records use portable bytes with legacy Blob reads and unchanged public backup shape; older app builds cannot read new scan records. The user-selected redaction batch is complete; resume bounded ODF group/matrix work in docs/ROADMAP.md.
 
 Native ODF stroke transforms are published from `3154878e39110ceb1d3e6ea41677e73e5a2cbe3f`; see docs/ODT_STROKE_TRANSFORMS.md. Rigid primitives/path vertices and axis-line geometry survive; skew/pressure strokes become editable unioned contours. Keep paint bounds, minimum-frame, bordered-contour, stroke-list scaling/shearing and complexity refusals explicit. Bounded group/matrix compatibility is next in docs/ROADMAP.md.
