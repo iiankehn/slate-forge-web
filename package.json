@@ -41,6 +41,7 @@
     "dompurify": "^3.4.17",
     "esbuild": "^0.28.2",
     "fflate": "^0.8.3",
+    "html2canvas": "1.4.1",
     "mammoth": "^1.13.0",
     "node-forge": "1.4.2",
     "pdf-lib": "1.17.1",

@@ -2,7 +2,7 @@
 export const APP_MENUS=[
  ['File',[
   ['New document','new'],['Open a file…','import'],['Save on this device','saveNow','Ctrl/⌘ S'],['Documents…','documents'],null,
-  ['Export document…','export'],['Print / Save as PDF…','export:print'],['Version history…','export:history'],['Duplicate document','export:duplicate'],null,
+  ['Export document…','export'],['Redact & share PDF…','redact'],['Print / Save as PDF…','export:print'],['Version history…','export:history'],['Duplicate document','export:duplicate'],null,
   ['Export workspace backup','backup'],['Encrypted workspace backup…','encryptedBackup'],['Device storage…','deviceStorage'],['Encrypted recovery…','recovery'],['Recently deleted…','trash'],['End session…','end']]],
  ['Edit',[
   ['Undo','command:undo','Ctrl/⌘ Z'],['Redo','command:redo','Ctrl/⌘ Shift Z'],null,['Find and replace','find','Ctrl/⌘ F'],['Select all text','selectAll','Ctrl/⌘ A'],['Command search…','commands','Ctrl/⌘ K']]],
@@ -20,7 +20,7 @@ export const APP_MENUS=[
   ['PDF & forms…','pdfTools'],['Scan & OCR…','ocrTools'],null,
   ['Getting started…','gettingStarted'],['Offline preparation…','offlineTools'],['App status…','appStatus'],['Install app…','installApp'],['Workspace privacy…','privacy'],['Open-source licenses','licenses'],['Keyboard shortcuts…','shortcuts']]],
  ['Review',[
-  ['Comments and tracked changes…','reviewTools'],['Comment on selection…','reviewTools:addComment'],['Track changes settings…','reviewTools'],['Compare documents…','reviewTools:compareDocs']]]
+  ['Comments and tracked changes…','reviewTools'],['Comment on selection…','reviewTools:addComment'],['Track changes settings…','reviewTools'],['Compare documents…','reviewTools:compareDocs'],['Redact & share PDF…','redact']]]
 ];
 // The catalog remains the source for command search. The ribbon presents a
 // smaller set of everyday tasks without duplicating editor controls or state.
@@ -28,7 +28,7 @@ export const RIBBON_TABS=[
  ['Home',[['Document',[['New','new'],['Save','saveNow']]],['Writing',[['Font settings','fontSettings'],['Find & replace','find'],['Link','link'],['Word count','stats']]]]],
  ['Insert',[['Add to your page',[['Image','insert:image'],['Table','insert:table'],['Link','link']]],['Structure',[['Page break','insert:pageBreak'],['Contents','insert:insertTOC'],['Footnote','insert:insertFootnote']]]]],
  ['Layout',[['Page',[['Page design','layout'],['Paragraph','paragraph'],['Sections & columns','productivity:insertColumnSection']]],['Output',[['Page preview','pagePreview'],['Print / PDF','export:print']]]]],
- ['Review',[['Review your writing',[['Comments & changes','reviewTools'],['Add comment','reviewTools:addComment'],['Compare','reviewTools:compareDocs']]],['Finish',[['Document checks','documentChecks'],['Writing tools','writingTools']]]]],
+ ['Review',[['Review your writing',[['Comments & changes','reviewTools'],['Add comment','reviewTools:addComment'],['Compare','reviewTools:compareDocs']]],['Finish',[['Document checks','documentChecks'],['Redact & share','redact'],['Writing tools','writingTools']]]]],
  ['View',[['Workspace',[['Continuous','continuousEditing'],['Paged','pagedEditing'],['Focus','focus']]],['Comfort',[['Appearance','appearance'],['Fit width','zoomFit'],['100%','zoomReset'],['Outline','outline']]],['Navigate',[['Go to page','goToPage'],['Previous','previousPage'],['Next','nextPage']]]]],
  ['Tools',[['Other file tools',[['PDF & forms','pdfTools'],['Scan & OCR','ocrTools'],['Drawing','designCanvas']]],['Reusable work',[['Snippets & templates','productivity'],['Design templates','productivity:openDesignTemplates']]],['App',[['Prepare offline','offlineTools'],['App status','appStatus'],['Install','installApp'],['Command search','commands']]]]]
 ];

@@ -1,5 +1,7 @@
 # Slate Forge web development
 
+2026-11-09 user-selected priority: suite-wide redaction, with a new flattened redacted PDF first. This explicitly supersedes the compatibility-only scope for this batch. Read docs/REDACTION.md for the output boundary; preserve originals, history and backups. Resume bounded ODF group/matrix work afterward.
+
 Native ODF stroke transforms are published from `3154878e39110ceb1d3e6ea41677e73e5a2cbe3f`; see docs/ODT_STROKE_TRANSFORMS.md. Rigid primitives/path vertices and axis-line geometry survive; skew/pressure strokes become editable unioned contours. Keep paint bounds, minimum-frame, bordered-contour, stroke-list scaling/shearing and complexity refusals explicit. Bounded group/matrix compatibility is next in docs/ROADMAP.md.
 
 Pages promotion 41926898336 reused main CI 41924728034 without rebuilding/rerunning browsers. See docs/RELEASE_PIPELINE.md. Docs/tooling-only changes use affected checks after confirming unchanged app/build inputs, respecting required checks. Preserve storage/origins, whole-image metadata disclosure, earlier modes and the confirmed mobile fix.
