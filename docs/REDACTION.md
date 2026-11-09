@@ -16,7 +16,7 @@ This creates a sharing copy. Original documents, imported files, saved PDF edits
 - Design canvases export their current scene. Scan tools export the current cropped/rotated scan page. PDF tools snapshot current edits; signed PDF source files produce a separate unsigned sharing copy.
 - PDF inputs must be unlocked and non-XFA. Redacted copies support at most 25 pages, 8 megapixels per page, 60 megapixels total and 40 MB input/output files. Image preparation has additional explicit memory limits. Existing ordinary PDF workflows retain their separate limits.
 - Each area must cover at least two source pixels per dimension. A one-pixel outward margin covers edge rounding; the preview shows the resulting pixels. At most 1,000 areas are accepted. All pages must render successfully and be visited before export.
-- Masks exist only in the open redaction dialog. Closing it or switching workspaces cancels export and discards masks. No storage identifiers, database versions or backup formats change.
+- Masks exist only in the open redaction dialog. Closing it or switching workspaces cancels export and discards masks. No storage identifiers, database versions or backup formats change. New scan records store bytes rather than Blob/File objects to avoid WebKit persistence failures. Reads accept legacy Blob records and expose the same Blob snapshot/backup shape. Older app builds cannot read these new byte-backed scan records; finish updates before reopening saved scans.
 
 Editable redacted DOCX/ODT/HTML, automatic discovery/OCR-based redaction and original-file erasure require separate format-specific work and are not included.
 
