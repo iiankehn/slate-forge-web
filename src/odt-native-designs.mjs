@@ -49,9 +49,23 @@ export function importNativeOdtCanvases(xml,styles,esc,files){
   const members=[],membership=new Map();let groupIndex=0;
   for(const node of shapes.slice(1)){if(node.localName!=='g'){members.push(node);continue}
    // One-level opaque stroke groups use absolute child coordinates. No group transform or paint is applied.
-   const allowedAttrs=new Set(['name','style-name']);for(const a of node.attributes)if(a.namespaceURI!==NS.draw||!allowedAttrs.has(a.localName))fail();
+   const allowedAttrs=new Set(['name','style-name']);for(const a of node.attributes){if(a.namespaceURI==='http://www.w3.org/2000/xmlns/')continue;if(a.namespaceURI!==NS.draw||!allowedAttrs.has(a.localName))fail();}
    if([...node.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()))fail();
-   const props=styles.resolve('graphic',attr(node,'draw','style-name'));const allowedProps=new Set(['loext:decorative','style:run-through']);if(Object.keys(props).some(k=>!allowedProps.has(k)))fail();
+   const {named,effective}=styles.graphicStyleProperties(attr(node,'draw','style-name'));
+   const metadata=new Set(['loext:decorative','style:run-through']),neutral={'draw:opacity':'100%','svg:stroke-opacity':'100%','loext:opacity':'100%','draw:shadow':'hidden','fo:clip':'auto','draw:color-mode':'standard'};
+   const defaultLengths=new Set(['draw:shadow-offset-x','draw:shadow-offset-y','draw:start-line-spacing-horizontal','draw:start-line-spacing-vertical','draw:end-line-spacing-horizontal','draw:end-line-spacing-vertical']);
+   for(const [key,value]of Object.entries(effective)){
+    if(metadata.has(key))continue;
+    if(Object.hasOwn(neutral,key)){if(value!==neutral[key])fail();continue}
+    // These defaults do not paint the group: colors alone do not enable a fill,
+    // offsets alone do not enable a shadow, and text/connector spacing has no
+    // geometry to act on in this absolute-coordinate line-only group.
+    if(Object.hasOwn(named,key))fail();
+    if(['svg:stroke-color','draw:fill-color'].includes(key)){if(!odtColor(value))fail();continue}
+    if(defaultLengths.has(key)){const n=odtLength(value);if(n===null||!Number.isFinite(n)||Math.abs(n)>100000)fail();continue}
+    if(key==='fo:wrap-option'&&['wrap','no-wrap'].includes(value)||key==='style:flow-with-text'&&value==='false')continue;
+    fail();
+   }
    const children=[...node.children];if(!children.length||children.some(n=>n.namespaceURI!==NS.draw||n.localName!=='line'))fail();
    const key='odt-stroke-group-'+(++groupIndex);for(const child of children){if(graphic(child,styles).opacity!==100)fail();members.push(child);membership.set(child,key)}
   }if(members.length>100)fail();
