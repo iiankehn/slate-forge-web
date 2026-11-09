@@ -18,7 +18,7 @@ The user-selected **suite-wide redacted PDF copy** is published. The active foll
 
 | Order | Item | Completion boundary |
 | --- | --- | --- |
-| 1 — next compatibility batch | Bounded native ODF group/matrix compatibility | Start with the actual one-level opaque group corpus. Prove child geometry/order and group paint semantics before adding supported groups. Raw matrices, deeper hierarchy, mirrored/skewed text, bordered contours and foreign stroke scaling/shearing lists remain explicit until representable and demonstrated in actual editors. |
+| 1 — current compatibility batch | Bounded native ODF group/matrix compatibility | One-level adjacent opaque line/arrow groups are implemented and awaiting CI/publication; see [ODT_GROUPS.md](ODT_GROUPS.md). Start further work from the actual group corpus. Prove child geometry/order and group paint semantics before adding supported groups. Raw matrices, deeper hierarchy, mirrored/skewed text, bordered contours and foreign stroke scaling/shearing lists remain explicit until representable and demonstrated in actual editors. |
 | Alongside each feature | Target-editor exchange evidence | Maintain a small representative document corpus. Record stable LibreOffice/Word behavior where those actual editors are available; keep headless, browser and physical-device evidence distinct. Fix reproduced data loss or incorrect output before broadening scope. |
 | Constrained research | ODT review history beyond inline text | Standard ODF formatting-change metadata does not include previous formatting. Do not invent Reject behavior. Any app-specific history retention is a separate, explicit design; native structural revisions need a bounded representation before implementation. |
 
