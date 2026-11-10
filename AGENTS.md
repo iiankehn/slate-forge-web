@@ -1,5 +1,9 @@
 # Slate Forge web development
 
+## Latest user mandate — November 9–10, 2026
+
+The user explicitly reopened broader Word/ODT compatibility and genuine editable redacted DOCX/ODT/HTML copies. This supersedes the earlier finite freeze below. Retain only Dev and Adversarial; root coordinates scope and release clearance. No device QA requirement. Preserve originals, backups, storage/origins/private Site and fonts. Do not claim universal Word/ODT parity or wrap flattened page images as editable output. Current branch implements fresh logical-range/object removal and a bounded opaque rectangle/ellipse/line group extension with actual LibreOffice exchange evidence. Read docs/EDITABLE_REDACTION.md and docs/COMPATIBILITY_INVENTORY.md. Both new features remain unpublished until reviewed PR/main checks, exact-artifact promotion and live verification. Earlier completion claims describe the previous release only.
+
 ## Required specialist workflow and finite finish line
 
 The user's latest instruction retains only `dev` and `adversarial_review`; this overrides the earlier five-specialist setup. Dev owns scoped implementation, verification and assigned integration; Adversarial independently challenges the concrete change and evidence. Root coordinates scope and clears integration/publication after review. Follow [docs/TEAM_WORKFLOW.md](docs/TEAM_WORKFLOW.md). Reuse existing exact-source results; keep updates concise.

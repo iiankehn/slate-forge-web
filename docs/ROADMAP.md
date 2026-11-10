@@ -1,5 +1,15 @@
 # Slate Forge development roadmap
 
+## Reopened user-selected work — November 9–10, 2026
+
+The user explicitly requested broader Word/ODT compatibility and true editable redacted DOCX/ODT/HTML output. This supersedes the historical finite freeze below. No device-testing gate is added.
+
+- Current editable batch: logical text/range and whole-object removal from a fresh sharing model, preserving unmarked editable writing and supported canvas vectors; no page-image wrappers. See [EDITABLE_REDACTION.md](EDITABLE_REDACTION.md).
+- Current compatibility batch: adjacent opaque untransformed rectangle/ellipse/line groups, backed by the actual LibreOffice corpus. Remaining known cases are inventoried and classified in [COMPATIBILITY_INVENTORY.md](COMPATIBILITY_INVENTORY.md); this batch does not complete that entire category.
+- Release only after independent Adversarial review and required exact-source PR/main checks, then reuse the successful main artifact for Pages and verify live files/cache.
+
+## Historical completion record — previous bounded release
+
 ## Finite completion boundary
 
 The active bounded implementation roadmap is complete and published. The user selected suite-wide flattened redacted PDF output and the bounded opaque ODF stroke-group follow-on. The release checklist below is complete; stop here. Unsupported compatibility cases and research are recorded limits, not an expanding backlog or automatic next batch.
