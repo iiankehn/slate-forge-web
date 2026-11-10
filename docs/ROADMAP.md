@@ -5,7 +5,7 @@
 The user explicitly requested broader Word/ODT compatibility and true editable redacted DOCX/ODT/HTML output. This supersedes the historical finite freeze below. No device-testing gate is added.
 
 - Current editable batch: logical text/range and whole-object removal from a fresh sharing model, preserving unmarked editable writing and supported canvas vectors; no page-image wrappers. See [EDITABLE_REDACTION.md](EDITABLE_REDACTION.md).
-- Current compatibility batch: adjacent opaque untransformed rectangle/ellipse/line groups, backed by the actual LibreOffice corpus. Remaining known cases are inventoried and classified in [COMPATIBILITY_INVENTORY.md](COMPATIBILITY_INVENTORY.md); this batch does not complete that entire category.
+- Current compatibility batch: adjacent opaque shapes, uniform text, PNG/JPEG, paths and lines using native leaf helpers; occupied path frames repair an observed editor shift. Flat child positions/rotations retain membership without unsupported raw group transforms. Actual corrected-editor exchange passes within existing tolerance; [ODT_HETEROGENEOUS_GROUPS.md](ODT_HETEROGENEOUS_GROUPS.md) retains both failed and corrected evidence. Remaining known cases are inventoried and classified in [COMPATIBILITY_INVENTORY.md](COMPATIBILITY_INVENTORY.md); this batch does not complete that entire category.
 - Release only after independent Adversarial review and required exact-source PR/main checks, then reuse the successful main artifact for Pages and verify live files/cache.
 
 ## Historical completion record — previous bounded release

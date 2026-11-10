@@ -1,0 +1,310 @@
+{
+  "pathAndAxisChecks": [
+    {
+      "group": "Heterogeneous A",
+      "member": "CanvasObject6",
+      "expectedWorldVerticesMm": [
+        [
+          77.62857143555556,
+          38.461428574888885
+        ],
+        [
+          87.50857143644444,
+          44.63642857544444
+        ],
+        [
+          102.32857143777777,
+          35.991428574666664
+        ]
+      ],
+      "resavedWorldVerticesMm": [
+        [
+          77.63002,
+          38.45676147806004
+        ],
+        [
+          87.50560578713072,
+          44.6405
+        ],
+        [
+          102.32897999999999,
+          35.98926
+        ]
+      ],
+      "maxSourceToResaveMm": 0.005037020325908511,
+      "cap": "round"
+    },
+    {
+      "group": "Heterogeneous B",
+      "member": "CanvasObject13",
+      "expectedWorldVerticesMm": [
+        [
+          82.92142857888888,
+          117.85428572488888
+        ],
+        [
+          92.80142857977778,
+          124.02928572544444
+        ],
+        [
+          107.6214285811111,
+          115.38428572466665
+        ]
+      ],
+      "resavedWorldVerticesMm": [
+        [
+          82.92084,
+          117.84700147806006
+        ],
+        [
+          92.79642578713072,
+          124.03074
+        ],
+        [
+          107.6198,
+          115.37950000000001
+        ]
+      ],
+      "maxSourceToResaveMm": 0.007307987203845502,
+      "cap": "round"
+    },
+    {
+      "group": "Heterogeneous C",
+      "member": "CanvasObject20",
+      "expectedWorldVerticesMm": [
+        [
+          77.26653011579798,
+          189.95025474019874
+        ],
+        [
+          86.33312767507266,
+          197.26748329495774
+        ],
+        [
+          102.08437445560968,
+          190.4655240248952
+        ]
+      ],
+      "resavedWorldVerticesMm": [
+        [
+          77.26934,
+          189.94881999999998
+        ],
+        [
+          86.33600861055176,
+          197.26909999999998
+        ],
+        [
+          102.09022,
+          190.46813045020463
+        ]
+      ],
+      "maxSourceToResaveMm": 0.006400300158035057,
+      "cap": "round"
+    },
+    {
+      "group": "Axis paths",
+      "member": "CanvasObject22",
+      "expectedWorldVerticesMm": [
+        [
+          19.054285716,
+          214.360714305
+        ],
+        [
+          33.87428571733333,
+          214.360714305
+        ]
+      ],
+      "resavedWorldVerticesMm": [
+        [
+          19.049999999999997,
+          214.36075999999997
+        ],
+        [
+          33.8709,
+          214.36075999999997
+        ]
+      ],
+      "maxSourceToResaveMm": 0.004285959596834191,
+      "cap": "round"
+    },
+    {
+      "group": "Axis paths",
+      "member": "CanvasObject23",
+      "expectedWorldVerticesMm": [
+        [
+          59.98571429111111,
+          216.65428573377775
+        ],
+        [
+          59.98571429111111,
+          231.4742857351111
+        ]
+      ],
+      "resavedWorldVerticesMm": [
+        [
+          59.98972,
+          216.64929999999998
+        ],
+        [
+          59.98972,
+          231.47019999999995
+        ]
+      ],
+      "maxSourceToResaveMm": 0.0063955644790239545,
+      "cap": "round"
+    }
+  ],
+  "textStyleEvidence": [
+    {
+      "group": "Heterogeneous A",
+      "input": [
+        {
+          "text": "Group A editable text",
+          "properties": {
+            "fo:line-height": "125%",
+            "fo:font-family": "Arial",
+            "fo:font-size": "11.002474690663666pt",
+            "fo:text-align": "left",
+            "fo:margin-top": "0mm",
+            "fo:margin-bottom": "0mm",
+            "fo:color": "#25322f",
+            "fo:font-weight": "normal",
+            "fo:font-style": "normal",
+            "style:text-underline-style": "none",
+            "style:text-line-through-style": "none"
+          }
+        }
+      ],
+      "output": [
+        {
+          "text": "Group A editable text",
+          "properties": {
+            "fo:line-height": "125%",
+            "style:text-autospace": "ideograph-alpha",
+            "style:punctuation-wrap": "hanging",
+            "style:line-break": "strict",
+            "style:writing-mode": "page",
+            "fo:color": "#000000",
+            "style:font-name": "Georgia",
+            "fo:font-size": "12pt",
+            "fo:language": "en",
+            "fo:country": "US",
+            "style:font-name-asian": "DejaVu Sans",
+            "style:font-size-asian": "12pt",
+            "style:language-asian": "zh",
+            "style:country-asian": "CN",
+            "style:font-name-complex": "Noto Sans",
+            "style:font-size-complex": "12pt",
+            "style:language-complex": "hi",
+            "style:country-complex": "IN",
+            "fo:margin-top": "0in",
+            "fo:margin-bottom": "0in",
+            "fo:text-align": "left",
+            "loext:paragraph-composer": "false"
+          }
+        }
+      ]
+    },
+    {
+      "group": "Heterogeneous B",
+      "input": [
+        {
+          "text": "Group B editable text",
+          "properties": {
+            "fo:line-height": "125%",
+            "fo:font-family": "Arial",
+            "fo:font-size": "11.002474690663666pt",
+            "fo:text-align": "left",
+            "fo:margin-top": "0mm",
+            "fo:margin-bottom": "0mm",
+            "fo:color": "#25322f",
+            "fo:font-weight": "normal",
+            "fo:font-style": "normal",
+            "style:text-underline-style": "none",
+            "style:text-line-through-style": "none"
+          }
+        }
+      ],
+      "output": [
+        {
+          "text": "Group B editable text",
+          "properties": {
+            "fo:line-height": "125%",
+            "style:text-autospace": "ideograph-alpha",
+            "style:punctuation-wrap": "hanging",
+            "style:line-break": "strict",
+            "style:writing-mode": "page",
+            "fo:color": "#000000",
+            "style:font-name": "Georgia",
+            "fo:font-size": "12pt",
+            "fo:language": "en",
+            "fo:country": "US",
+            "style:font-name-asian": "DejaVu Sans",
+            "style:font-size-asian": "12pt",
+            "style:language-asian": "zh",
+            "style:country-asian": "CN",
+            "style:font-name-complex": "Noto Sans",
+            "style:font-size-complex": "12pt",
+            "style:language-complex": "hi",
+            "style:country-complex": "IN",
+            "fo:margin-top": "0in",
+            "fo:margin-bottom": "0in",
+            "fo:text-align": "left",
+            "loext:paragraph-composer": "false"
+          }
+        }
+      ]
+    },
+    {
+      "group": "Heterogeneous C",
+      "input": [
+        {
+          "text": "Group C editable text",
+          "properties": {
+            "fo:line-height": "125%",
+            "fo:font-family": "Arial",
+            "fo:font-size": "11.002474690663666pt",
+            "fo:text-align": "left",
+            "fo:margin-top": "0mm",
+            "fo:margin-bottom": "0mm",
+            "fo:color": "#25322f",
+            "fo:font-weight": "normal",
+            "fo:font-style": "normal",
+            "style:text-underline-style": "none",
+            "style:text-line-through-style": "none"
+          }
+        }
+      ],
+      "output": [
+        {
+          "text": "Group C editable text",
+          "properties": {
+            "fo:line-height": "125%",
+            "style:text-autospace": "ideograph-alpha",
+            "style:punctuation-wrap": "hanging",
+            "style:line-break": "strict",
+            "style:writing-mode": "page",
+            "fo:color": "#000000",
+            "style:font-name": "Georgia",
+            "fo:font-size": "12pt",
+            "fo:language": "en",
+            "fo:country": "US",
+            "style:font-name-asian": "DejaVu Sans",
+            "style:font-size-asian": "12pt",
+            "style:language-asian": "zh",
+            "style:country-asian": "CN",
+            "style:font-name-complex": "Noto Sans",
+            "style:font-size-complex": "12pt",
+            "style:language-complex": "hi",
+            "style:country-complex": "IN",
+            "fo:margin-top": "0in",
+            "fo:margin-bottom": "0in",
+            "fo:text-align": "left",
+            "loext:paragraph-composer": "false"
+          }
+        }
+      ]
+    }
+  ]
+}

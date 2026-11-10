@@ -43,7 +43,19 @@ export function nativeStrokeObjects(scene){
 }
 export function nativeStrokeXML(o,common,scale,graphic,mm){
  if(o.type==='line'||o.type==='arrow'){const p={...o,fill:'none',strokeWidth:Math.max(1,o.strokeWidth)},style=graphic(p,o.type==='arrow'?o.strokeWidth:null),a=strokePoint(o,0,0),b=strokePoint(o,o.width,o.height);return '<draw:line draw:name="'+common+'" draw:style-name="'+style+'" svg:x1="'+mm(a[0]*scale)+'" svg:y1="'+mm(a[1]*scale)+'" svg:x2="'+mm(b[0]*scale)+'" svg:y2="'+mm(b[1]*scale)+'"/>'}
- if(o.type!=='path')return null;const data=o.outlines?' svg:d="'+outlinePath(o.outlines,1000000,1000000)+'"':' draw:points="'+o.points.map(p=>p.slice(0,2).map(n=>Math.round(n*1000000)).join(',')).join(' ')+'"';return '<draw:'+(o.outlines?'path':'polyline')+' draw:name="'+common+'" draw:style-name="'+graphic(o,null,true)+'" svg:x="'+mm(o.x*scale)+'" svg:y="'+mm(o.y*scale)+'" svg:width="'+mm(o.width*scale)+'" svg:height="'+mm(o.height*scale)+'" svg:viewBox="0 0 1000000 1000000"'+data+'/>';
+ if(o.type!=='path')return null;
+ // Writer normalizes path extents on save without adding a nonzero vertex
+ // minimum to svg:x/y. Emit the occupied frame so that normalization cannot
+ // move the visible vertices. This projection affects native XML only.
+ let minX=1,minY=1,maxX=0,maxY=0;for(const loop of o.outlines||[o.points])for(const p of loop){minX=Math.min(minX,p[0]);minY=Math.min(minY,p[1]);maxX=Math.max(maxX,p[0]);maxY=Math.max(maxY,p[1])}
+ const dx=maxX-minX,dy=maxY-minY;
+ if(dx<1e-10||dy<1e-10){
+  if(o.outlines||dx<1e-10&&dy<1e-10)error();
+  return '<draw:line draw:name="'+common+'" draw:style-name="'+graphic(o,null,true)+'" svg:x1="'+mm((o.x+minX*o.width)*scale)+'" svg:y1="'+mm((o.y+minY*o.height)*scale)+'" svg:x2="'+mm((o.x+maxX*o.width)*scale)+'" svg:y2="'+mm((o.y+maxY*o.height)*scale)+'"/>';
+ }
+ const map=loop=>loop.map(p=>[(p[0]-minX)/dx,(p[1]-minY)/dy]);
+ o={...o,x:o.x+minX*o.width,y:o.y+minY*o.height,width:o.width*dx,height:o.height*dy,...(o.outlines?{outlines:o.outlines.map(map)}:{points:map(o.points)})};
+ const data=o.outlines?' svg:d="'+outlinePath(o.outlines,1000000,1000000)+'"':' draw:points="'+o.points.map(p=>p.slice(0,2).map(n=>Math.round(n*1000000)).join(',')).join(' ')+'"';return '<draw:'+(o.outlines?'path':'polyline')+' draw:name="'+common+'" draw:style-name="'+graphic(o,null,true)+'" svg:x="'+mm(o.x*scale)+'" svg:y="'+mm(o.y*scale)+'" svg:width="'+mm(o.width*scale)+'" svg:height="'+mm(o.height*scale)+'" svg:viewBox="0 0 1000000 1000000"'+data+'/>';
 }
 function length(node,key){const n=odtLength(attr(node,'svg',key));if(n===null)error();return n}
 export function readOdtStroke(node,g,left,top,scale,canvasHeight,styles){
