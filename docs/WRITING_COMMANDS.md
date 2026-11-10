@@ -1,0 +1,19 @@
+# Writing commands and ribbon
+
+This UI batch starts from published main `d5c06e0`, independently of the paused editable-redaction/native-group feature branch. It changes no workspace identifiers, document formats, backups, origins or stored content migrations.
+
+Select All uses the document selection from the writing surface, document background, ribbon and header controls. Title/search fields, dialogs and separate editable roots keep their native selection. The writing context menu opens with right-click, ContextMenu or Shift+F10; Escape restores writing focus. Shift+right-click retains the browser menu, including browser spelling actions. Outside interaction, document scrolling and window changes dismiss the custom menu.
+
+Clipboard commands appear in Home and command search as well as the context menu:
+
+- Keep original passes supported rich HTML through the existing import sanitizer. It preserves supported formatting, not arbitrary web-page styles.
+- Merge formatting keeps paragraphs, basic emphasis, lists, tables, links and supported embedded images, while removing source fonts, sizes, colors and other appearance. Custom canvases, footnotes and generated contents require Keep original; merge explicitly refuses them instead of discarding them.
+- Text only inserts literal plain text with paragraph breaks; markup remains text.
+
+Clipboard permission failures explain the native keyboard alternative. Custom Cut deletes only after a successful clipboard write and unchanged document, selection and session. A text-only clipboard can cut plain paragraphs; formatted content and objects require rich clipboard access or the browser's native Cut. A stale clipboard operation, Escape, subsequent pointer interaction or a modal opened during it prevents a late document change. The text-only shortcut records keyboard intent rather than relying on nonstandard ClipboardEvent modifier fields. Originals and undo/review plugins remain in the normal editor transaction path.
+
+Compact and collapsed are independent device preferences under `slate-forge.ribbon-preferences`. Compact keeps every command reachable through horizontally scrollable groups. Collapse hides panels while retaining File, section tabs and the mode controls; choosing a tab expands that panel. Buttons expose actual expanded/pressed state. File is the familiar label for the existing backstage screen; brand wordmarks remain theme-aware and the compact symbol remains multicolor.
+
+The ribbon audit found existing coverage for text styles/fonts, emphasis, lists/alignment, undo/redo, Find and replace, images/tables/links, page and paragraph layout, comments/tracked changes, outline, zoom, preview, printing/export and command search. This batch adds the missing clipboard/selection controls and direct Clear formatting using the existing review-safe transaction. Decorative command icons accompany visible labels and shortcut tooltips; dense formatting controls retain their established icon/title convention. It does not add Word feature parity or new layout tools.
+
+Verification: focused clipboard/selection tests, actual bundled-app DOM integration and review-formatting regression checks. Browser scenarios cover selection scope, keyboard/right-click menu behavior, persisted modes, paste semantics and a simulated clipboard denial. Browser permission simulation is not certification of every system clipboard or physical device. Final CI/release evidence is recorded when available.

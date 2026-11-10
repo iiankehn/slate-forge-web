@@ -1,5 +1,9 @@
 # Slate Forge web development
 
+## Current user interface mandate (2026-11-10)
+
+The user requested writing-scoped Select All, writing context/clipboard commands with three paste modes, a common-command ribbon audit, independent compact/collapsed ribbon preferences, and the familiar File label. This explicitly overrides the historical finite freeze below for this UI batch only. Work lives in `feat/writing-commands-and-ribbon` from published main; preserve the separately paused `feat/editable-redaction-and-native-groups` checkpoint `4300ed9` and do not include or resume that feature batch. See docs/WRITING_COMMANDS.md. Dev implements/verifies; Adversarial reviews; root clears integration/publication.
+
 ## Required specialist workflow and finite finish line
 
 The user's latest instruction retains only `dev` and `adversarial_review`; this overrides the earlier five-specialist setup. Dev owns scoped implementation, verification and assigned integration; Adversarial independently challenges the concrete change and evidence. Root coordinates scope and clears integration/publication after review. Follow [docs/TEAM_WORKFLOW.md](docs/TEAM_WORKFLOW.md). Reuse existing exact-source results; keep updates concise.
