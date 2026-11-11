@@ -4,7 +4,11 @@
 
 The user explicitly stopped all sub-agents and requested solo work without rushing. Do not spawn, resume or delegate to any specialist unless the user explicitly requests agents again. The primary assistant owns implementation, verification, review and release. This overrides all earlier specialist requirements. Preserve every checkpoint and pending change, reuse existing evidence, and finish the current requested items without expanding scope or claiming unfinished work complete. No new deadline is imposed by this mode change.
 
-## Current extension — November 11, 2026
+## Current paragraph extension — November 11, 2026
+
+`feat/odt-paragraph-revisions` adds bounded top-level paragraph/heading revisions. Read docs/ODT_PARAGRAPH_REVISIONS.md. The initial actual Writer heading-loss failure is retained; corrected 17-case resaves plus paragraph design pass. Local final suite passes 656 cases. PR #27 CI had one WebKit retry-only failure (204 first-attempt browser passes); source evidence identifies a premature startup-dialog check, corrected in browser helpers without relaxing gates. Preserve prior checkpoints and required PR/main verification; no publication yet. Broader nested/object/boundary and native ODF effects remain unsupported. Continue solo.
+
+## Prior nested extension — November 11, 2026
 
 The user requested the remaining gaps. `feat/nested-native-groups` preserves PR #26 and adds eight-level opaque hierarchy across scene persistence, native ODT/DOCX, grouping/ungrouping/duplication and sanitized sharing. Read docs/NESTED_NATIVE_GROUPS.md and docs/COMPATIBILITY_INVENTORY.md. Actual 24-object Writer exchange passes within .1 unit. The tested text mirroring/skew and group-opacity representation loses effects in Writer; keep explicit native refusals. PR #26 CI remains queued with no jobs during the GitHub Actions outage. No merge, bypass or publication. Older completion/freeze records are historical.
 
