@@ -15,7 +15,7 @@ function rigidLeafMatrix(source){
  const args=match[1].trim().split(/[\s,]+/);if(args.length!==6)fail();
  const numeric=value=>{if(!/^[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[-+]?\d+)?$/i.test(value))fail();const n=Number(value);if(!Number.isFinite(n)||Math.abs(n)>10000)fail();return n};
  const linear=args.slice(0,4).map(numeric),[a,b,c,d]=linear;
- if(Math.abs(a*a+b*b-1)>1e-8||Math.abs(c*c+d*d-1)>1e-8||Math.abs(a*c+b*d)>1e-8||Math.abs(a*d-b*c-1)>1e-8)fail();
+ if(Math.abs(a*a+b*b-1)>1e-8||Math.abs(c*c+d*d-1)>1e-8||Math.abs(a*c+b*d)>1e-8||Math.abs(Math.abs(a*d-b*c)-1)>1e-8)fail();
  const translation=args.slice(4).map(value=>{if(/^[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[-+]?\d+)?$/i.test(value)){if(numeric(value)!==0)fail();return 0}if(!/^-?\d+(?:\.\d+)?(?:mm|cm|in|pt)$/.test(value))fail();const n=odtLength(value);if(n===null||!Number.isFinite(n)||Math.abs(n)>100000)fail();return n});
  return [...linear,...translation];
 }
@@ -33,6 +33,6 @@ export function nativeBoxXML(o,scale,paint=null,extraRotation=0){const box=nativ
  const corner=odtPoint(objectLinear(box),-w/2,-h/2);return ' svg:width="'+mm(w*scale)+'" svg:height="'+mm(h*scale)+'" draw:transform="'+(skew?'skewX('+clean(-skew*rad)+') ':'')+'rotate('+clean(-rotation*rad)+') translate('+mm((cx+corner[0])*scale)+' '+mm((cy+corner[1])*scale)+')"';
 }
 export function readNativeBox(node,left,top,scale){const length=key=>{const n=odtLength(attr(node,'svg',key));if(n===null||!Number.isFinite(n))fail();return n},w=length('width'),h=length('height'),source=attr(node,'draw','transform');if(!source)return {x:(length('x')-left)*scale,y:(length('y')-top)*scale,width:w*scale,height:h*scale};
- if(attr(node,'svg','x')||attr(node,'svg','y'))fail();const m=readOdtTransform(source),sx=Math.hypot(m[0],m[1]),det=m[0]*m[3]-m[1]*m[2],sy=det/sx,dot=m[0]*m[2]+m[1]*m[3],skew=Math.atan(dot/det)/rad,rotation=Math.atan2(m[1],m[0])/rad;if(sx<1e-6||sy<1e-6||Math.abs(sx-sy)>.00001||Math.abs(skew)>85.01)fail();const center=odtPoint(m,w/2,h/2);return {x:(center[0]-left-w*sx/2)*scale,y:(center[1]-top-h*sy/2)*scale,width:w*sx*scale,height:h*sy*scale,rotation,skewX:skew,transformScale:sx};
+ if(attr(node,'svg','x')||attr(node,'svg','y'))fail();const m=readOdtTransform(source),sx=Math.hypot(m[0],m[1]),det=m[0]*m[3]-m[1]*m[2],signedY=det/sx,sy=Math.abs(signedY),dot=m[0]*m[2]+m[1]*m[3],skew=Math.atan(dot/det)/rad,rotation=Math.atan2(m[1],m[0])/rad;if(sx<1e-6||sy<1e-6||Math.abs(sx-sy)>.00001||Math.abs(skew)>85.01)fail();const center=odtPoint(m,w/2,h/2);return {x:(center[0]-left-w*sx/2)*scale,y:(center[1]-top-h*sy/2)*scale,width:w*sx*scale,height:h*sy*scale,rotation,skewX:skew,transformScale:sx,...(signedY<0?{flipY:true}:{})};
 }
 export function validateNativeBox(o,height){if(!Object.values({x:o.x,y:o.y,width:o.width,height:o.height}).every(Number.isFinite)||o.x<-.1||o.y<-.1||o.width<19.9||o.height<19.9||o.x+o.width>900.1||o.y+o.height>height+.1)fail();const m=objectLinear(o),cx=o.x+o.width/2,cy=o.y+o.height/2;for(const x of [-o.width/2,o.width/2])for(const y of [-o.height/2,o.height/2]){const p=odtPoint(m,x,y);if(cx+p[0]<-.2||cx+p[0]>900.2||cy+p[1]<-.2||cy+p[1]>height+.2)fail()}}
