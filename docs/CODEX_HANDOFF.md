@@ -1,6 +1,12 @@
-# Slate Forge handoff — finite roadmap complete
+# Slate Forge handoff — reopened work in progress
 
-## Completed final batch — bounded ODF stroke groups
+## Current continuation — November 11, 2026
+
+The user reopened compatibility, editable redacted copies and writing UI work, then explicitly stopped every sub-agent. Continue solo; older delegation/freeze instructions below are historical. PR #26 preserves `7746538d07ba207b9c5752c76793a7418133ebe9`: local 631-test/build/static checks passed, but required Actions run 43097866141 remains queued with no jobs during the reported GitHub Actions outage. No merge or Pages release has occurred.
+
+`feat/nested-native-groups` extends that checkpoint with nested opaque hierarchy, native ODT/DOCX reconstruction, grouping controls and safe sharing IDs. All 642 Node tests, production build, static packaging and source checks pass; required browser CI and publication remain pending. See [NESTED_NATIVE_GROUPS.md](NESTED_NATIVE_GROUPS.md) and [COMPATIBILITY_INVENTORY.md](COMPATIBILITY_INVENTORY.md) for implementation and actual-editor evidence. Preserve the separate private Site and public Pages origins. Do not claim the whole compatibility inventory complete. No device QA gate is requested. Reuse completed evidence; do not rerun unchanged browsers on artifact promotion.
+
+## Historical completed batch — bounded ODF stroke groups
 
 The repaired batch merged through PR #24 at `d8535f28c91922d919a0f53f1df756c36e2fcb69`. Exact-source PR checks passed 582 Node cases and 165 browser scenarios without retries after independent review. Published runtime `d8535f28c91922d919a0f53f1df756c36e2fcb69` at https://slate-web.iiankehn.com/ . [PR verification](https://github.com/iiankehn/slate-forge-web/actions/runs/42580266841) and [merged-main verification](https://github.com/iiankehn/slate-forge-web/actions/runs/42683902860) each passed 582 Node cases and 165 browser scenarios without retries. [Pages promotion](https://github.com/iiankehn/slate-forge-web/actions/runs/42686729685) reused main artifact `13704782234`, archive SHA-256 `c285e2d9732a13e2a1428828da770c6f283feefa021c10e3e4069717f8592daf`, without rebuilding or rerunning browsers. All 53 verified live shell/worker URLs matched that exact archive; worker cache digest `2fd596f2fcf3bc65` reconciled. The finite bounded implementation roadmap is complete.
 

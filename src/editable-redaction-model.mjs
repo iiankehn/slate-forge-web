@@ -1,3 +1,4 @@
+import {remapObjectGroups} from './design-groups.mjs';
 import {finalDocumentJSON} from './review.mjs';
 import {formattingSnapshot,paragraphSnapshot} from './format-review.mjs';
 import {normalizeLayout} from './document-model.mjs';
@@ -10,7 +11,7 @@ const containers=new Set(['doc','paragraph','heading','blockquote','bulletList',
 const p=text=>({type:'paragraph',content:[{type:'text',text}]});
 const inline=text=>({type:'text',text:String(text||'')});
 const bounded=(value,min,max,fallback)=>Number.isFinite(Number(value))?Math.min(max,Math.max(min,Number(value))):fallback;
-export function cleanSharingScene(input){const scene=normalizeScene(input),groups=new Map();return normalizeScene({...scene,id:'sharing-canvas',title:'Sharing canvas',description:'',grid:false,snap:false,objects:scene.objects.filter(o=>!o.hidden).map((o,i)=>{if(o.group&&!groups.has(o.group))groups.set(o.group,'sharing-group-'+groups.size);return {...o,id:'sharing-object-'+i,group:o.group?groups.get(o.group):'',hidden:false,locked:false,text:o.type==='text'?o.text:'',...(o.type==='path'&&o.outlines?{points:[]}: {})}})})}
+export function cleanSharingScene(input){const scene=normalizeScene(input),groups=new Map();return normalizeScene({...scene,id:'sharing-canvas',title:'Sharing canvas',description:'',grid:false,snap:false,objects:scene.objects.filter(o=>!o.hidden).map((o,i)=>{return {...remapObjectGroups(o,groups,()=>'sharing-group-'+groups.size),id:'sharing-object-'+i,hidden:false,locked:false,text:o.type==='text'?o.text:'',...(o.type==='path'&&o.outlines?{points:[]}: {})}})})}
 export function sharingLayout(settings){const l=normalizeLayout(settings);return {...l,header:'',footer:'',trackChanges:false,reviewAuthor:'Reviewer'}}
 export async function prepareEditableSharingDocument(input,settings,{image,scene,signal}={}){
  if(!input||input.type!=='doc'||JSON.stringify(input).length>EDITABLE_REDACTION_LIMITS.sourceBytes)throw Error('The editable sharing snapshot exceeds its supported size.');

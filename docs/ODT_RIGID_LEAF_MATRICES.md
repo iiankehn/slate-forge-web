@@ -14,7 +14,7 @@ Adversarial executed exactly one isolated headless resave in LibreOfficeDev `26.
 
 Raw matrix geometry differs by at most `.01609764 mm`; normalized native controls by `.01897425 mm`. Known-source versus resaved vertices differ by at most `.01897421 mm`. Offset-corrected raw/control pairs differ by at most `.02518464 mm` (about `.14275` logical units), below the existing `.7`-unit tolerance. Names/order, meaningful text, exact image payload hashes, effective paint/crop values and line caps survive. Writer may normalize axis polylines into round-cap lines while preserving endpoint geometry; the app reopens those as editable sampled paths. Font styling moves into spans; Arial, color and emphasis remain, with `11.00247469 pt` rounded to `11 pt` and `125%` line height retained.
 
-Focused checks cover explicit units, coefficient signs, all supported leaf kinds, known world geometry, import/re-export without raw matrices and the negative cases above. Browser/PR/main/release proof remains pending. No additional raw-unitless, group-transform, affine, Microsoft Word, GUI or device certification is implied.
+Focused checks cover explicit units, coefficient signs, all supported leaf kinds, known world geometry, import/re-export without raw matrices and the negative cases above. Browser/PR/main/release proof remains pending. No additional raw-unitless, group-transform, general affine, Microsoft Word, GUI or device certification is implied.
 
 ## Reflected non-text leaves
 
