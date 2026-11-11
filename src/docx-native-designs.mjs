@@ -1,3 +1,4 @@
+import {orderedGroupTree,objectGroupPath} from './design-groups.mjs';
 import {resolveTextDirection} from './text-direction.mjs';
 import {nativeObjectTransform} from './design-affine.mjs';
 import {outlinePath,pressureOutlines} from './design-outlines.mjs';
@@ -25,12 +26,9 @@ export function nativeCanvasOptions(input,width,height){
   }
  }
  for(let i=1;i<children.length;i++){const object=sourceById.get(children[i].id);if(!object||object.type==='path'&&!object.outlines&&object.points.some(point=>point.length>2))continue;const id=unique();children[i]=nativeObjectTransform(children[i],object,id);sourceById.set(children[i].id,object)}
- // Native groups must remain adjacent in the layer stack: moving a separated
- // member across another layer would change what the document displays.
- const groups=new Map(),closed=new Set();let previous='';
- for(const child of children.slice(1)){const group=sourceById.get(child.id)?.group||'';if(previous&&group!==previous)closed.add(previous);if(group&&closed.has(group))throw Error('Native Word export requires grouped layers to be adjacent. Move the layers together or use preview-image export.');previous=group;if(group){if(!groups.has(group))groups.set(group,[]);groups.get(group).push(child)}}
- const emitted=new Set(),grouped=[children[0]];
- for(const child of children.slice(1)){const group=sourceById.get(child.id)?.group||'';if(!group){grouped.push(child);continue}if(emitted.has(group))continue;emitted.add(group);const members=groups.get(group),left=Math.min(...members.map(item=>item.transformation.offset.left)),top=Math.min(...members.map(item=>item.transformation.offset.top));grouped.push({id:unique(),type:'group',transformation:{offset:{left,top}},children:members})}
+ const tree=orderedGroupTree(children.slice(1),child=>objectGroupPath(sourceById.get(child.id)));
+ function wrap(node){if(node.item)return node.item;const members=node.children.map(wrap),left=Math.min(...members.map(item=>item.transformation.offset.left)),top=Math.min(...members.map(item=>item.transformation.offset.top));return {id:unique(),type:'group',transformation:{offset:{left,top}},children:members}}
+ const grouped=[children[0],...tree.map(wrap)];
  return {children:grouped,transformation:{width,height},altText:{name:'SlateForgeNativeCanvas',title:scene.title,description:scene.description||scene.title}};
 }
 class NativeCanvasRun extends ShapeGroupRun{

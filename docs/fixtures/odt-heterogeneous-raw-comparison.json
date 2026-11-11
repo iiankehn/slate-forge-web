@@ -1,0 +1,2672 @@
+{
+  "scope": "One isolated actual LibreOffice Writer resave of valid combined corpus; negative variant not resaved. No GUI/device/universal editor certification.",
+  "input": {
+    "path": "/workspace/scratch/heterogeneous-group-probe/input.odt",
+    "sha256": "953a0fc533c567cafdcea4f512291f4cb1c36f27632c32af457759db51d924ec",
+    "generator": "",
+    "rootOrder": [
+      "SlateForgeCanvasBackground",
+      "Heterogeneous A",
+      "Heterogeneous B",
+      "Heterogeneous C",
+      "CanvasObject22"
+    ],
+    "groups": [
+      {
+        "name": "Heterogeneous A",
+        "attrs": {
+          "draw:name": "Heterogeneous A"
+        },
+        "transform": "",
+        "matrix": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "namedGraphic": {},
+        "members": [
+          {
+            "name": "CanvasObject1",
+            "type": "rect",
+            "attrs": {
+              "draw:name": "CanvasObject1",
+              "draw:style-name": "Forge2",
+              "svg:x": "12.35mm",
+              "svg:y": "8.8214286mm",
+              "svg:width": "19.4071429mm",
+              "svg:height": "12.35mm",
+              "draw:corner-radius": "1.4114286mm"
+            },
+            "pointsPt": [
+              [
+                35.00787401574804,
+                25.00562437795276
+              ],
+              [
+                90.0202475905512,
+                25.00562437795276
+              ],
+              [
+                90.0202475905512,
+                60.0134983937008
+              ],
+              [
+                35.00787401574804,
+                60.0134983937008
+              ]
+            ],
+            "paint": {
+              "draw:fill": "solid",
+              "draw:fill-color": "#55aa99",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#224466",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 1.5003374173228348,
+              "clipPt": null
+            },
+            "text": [],
+            "picture": null
+          },
+          {
+            "name": "CanvasObject2",
+            "type": "ellipse",
+            "attrs": {
+              "draw:name": "CanvasObject2",
+              "draw:style-name": "Forge3",
+              "svg:x": "37.05mm",
+              "svg:y": "10.5857143mm",
+              "svg:width": "21.1714286mm",
+              "svg:height": "12.35mm"
+            },
+            "pointsPt": [
+              [
+                105.0236220472441,
+                30.006749196850397
+              ],
+              [
+                165.0371204409449,
+                30.006749196850397
+              ],
+              [
+                165.0371204409449,
+                65.01462321259844
+              ],
+              [
+                105.0236220472441,
+                65.01462321259844
+              ]
+            ],
+            "paint": {
+              "draw:fill": "solid",
+              "draw:fill-color": "#eeaa44",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#444466",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 1.0002248503937008,
+              "clipPt": null
+            },
+            "text": [],
+            "picture": null
+          },
+          {
+            "name": "CanvasObject3",
+            "type": "frame",
+            "attrs": {
+              "draw:name": "CanvasObject3",
+              "draw:style-name": "Forge4",
+              "svg:x": "65.2785714mm",
+              "svg:y": "8.8214286mm",
+              "svg:width": "70.5714286mm",
+              "svg:height": "15.8785714mm"
+            },
+            "pointsPt": [
+              [
+                185.04161971653545,
+                25.00562437795276
+              ],
+              [
+                385.0866141732284,
+                25.00562437795276
+              ],
+              [
+                385.0866141732284,
+                70.01574803149607
+              ],
+              [
+                185.04161971653545,
+                70.01574803149607
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#ffffff",
+              "draw:stroke": "none",
+              "svg:stroke-color": "#000000",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0,
+              "clipPt": null
+            },
+            "text": [
+              {
+                "text": "Group A editable text",
+                "properties": {
+                  "fo:line-height": "125%",
+                  "fo:font-family": "Arial",
+                  "fo:font-size": "11.002474690663666pt",
+                  "fo:text-align": "left",
+                  "fo:margin-top": "0mm",
+                  "fo:margin-bottom": "0mm",
+                  "fo:color": "#25322f",
+                  "fo:font-weight": "normal",
+                  "fo:font-style": "normal",
+                  "style:text-underline-style": "none",
+                  "style:text-line-through-style": "none"
+                }
+              }
+            ],
+            "picture": null
+          },
+          {
+            "name": "CanvasPicture4",
+            "type": "frame",
+            "attrs": {
+              "draw:name": "CanvasPicture4",
+              "draw:style-name": "Forge6",
+              "svg:x": "12.35mm",
+              "svg:y": "29.9928571mm",
+              "svg:width": "21.1714286mm",
+              "svg:height": "19.4071429mm"
+            },
+            "pointsPt": [
+              [
+                35.00787401574804,
+                85.01912248818898
+              ],
+              [
+                95.02137240944883,
+                85.01912248818898
+              ],
+              [
+                95.02137240944883,
+                140.03149606299215
+              ],
+              [
+                35.00787401574804,
+                140.03149606299215
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#ffffff",
+              "draw:stroke": "none",
+              "svg:stroke-color": "#000000",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0,
+              "clipPt": [
+                29.16666680314961,
+                52.499999905511814,
+                29.16666680314961,
+                22.500000000000004
+              ]
+            },
+            "text": [],
+            "picture": {
+              "path": "Pictures/native-picture-0.png",
+              "sha256": "31cc728053617f252e1feca190e09c4434a71e731267ec633fbdf3fee8039e9f",
+              "bytes": 1279
+            }
+          },
+          {
+            "name": "CanvasPicture5",
+            "type": "frame",
+            "attrs": {
+              "draw:name": "CanvasPicture5",
+              "draw:style-name": "Forge7",
+              "svg:x": "42.3428571mm",
+              "svg:y": "29.9928571mm",
+              "svg:width": "22.9357143mm",
+              "svg:height": "19.4071429mm"
+            },
+            "pointsPt": [
+              [
+                120.02699650393703,
+                85.01912248818898
+              ],
+              [
+                185.04161971653548,
+                85.01912248818898
+              ],
+              [
+                185.04161971653548,
+                140.03149606299215
+              ],
+              [
+                120.02699650393703,
+                140.03149606299215
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#ffffff",
+              "draw:stroke": "none",
+              "svg:stroke-color": "#000000",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0,
+              "clipPt": [
+                22.115384503937012,
+                11.250000000000002,
+                22.115384503937012,
+                26.250000094488193
+              ]
+            },
+            "text": [],
+            "picture": {
+              "path": "Pictures/native-picture-1.jpg",
+              "sha256": "523be15df8c4a3c9b07720b6bbe2d0fbf3e38d776d41b3891bc57055b1c79979",
+              "bytes": 4783
+            }
+          },
+          {
+            "name": "CanvasObject6",
+            "type": "polyline",
+            "attrs": {
+              "draw:name": "CanvasObject6",
+              "draw:style-name": "Forge8",
+              "svg:x": "77.6285714mm",
+              "svg:y": "33.5214286mm",
+              "svg:width": "24.7mm",
+              "svg:height": "12.35mm",
+              "svg:viewBox": "0 0 1000000 1000000",
+              "draw:points": "0,400000 400000,900000 1000000,200000"
+            },
+            "pointsPt": [
+              [
+                220.04949373228348,
+                109.02452201574805
+              ],
+              [
+                248.05579294488192,
+                126.52845902362206
+              ],
+              [
+                290.06524176377957,
+                102.02294721259844
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#ffffff",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#2233aa",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 1.5003374173228348,
+              "clipPt": null
+            },
+            "text": [],
+            "picture": null
+          },
+          {
+            "name": "CanvasObject7",
+            "type": "line",
+            "attrs": {
+              "draw:name": "CanvasObject7",
+              "draw:style-name": "Forge9",
+              "svg:x1": "109.3857143mm",
+              "svg:y1": "35.2857143mm",
+              "svg:x2": "134.0857143mm",
+              "svg:y2": "45.8714286mm"
+            },
+            "pointsPt": [
+              [
+                310.0697413228347,
+                100.02249722834647
+              ],
+              [
+                380.0854893543308,
+                130.02924642519687
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#ffffff",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#117733",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 2.000449984251969,
+              "clipPt": null
+            },
+            "text": [],
+            "picture": null
+          }
+        ]
+      },
+      {
+        "name": "Heterogeneous B",
+        "attrs": {
+          "draw:name": "Heterogeneous B",
+          "draw:transform": "translate(5.2928571mm 3.5285714mm)"
+        },
+        "transform": "translate(5.2928571mm 3.5285714mm)",
+        "matrix": [
+          1,
+          0,
+          0,
+          1,
+          15.003374456692915,
+          10.002249637795277
+        ],
+        "namedGraphic": {},
+        "members": [
+          {
+            "name": "CanvasObject8",
+            "type": "rect",
+            "attrs": {
+              "draw:name": "CanvasObject8",
+              "draw:style-name": "Forge2",
+              "svg:x": "12.35mm",
+              "svg:y": "84.6857143mm",
+              "svg:width": "19.4071429mm",
+              "svg:height": "12.35mm",
+              "draw:corner-radius": "1.4114286mm"
+            },
+            "pointsPt": [
+              [
+                35.00787401574804,
+                240.0539932913386
+              ],
+              [
+                90.0202475905512,
+                240.0539932913386
+              ],
+              [
+                90.0202475905512,
+                275.06186730708663
+              ],
+              [
+                35.00787401574804,
+                275.06186730708663
+              ]
+            ],
+            "paint": {
+              "draw:fill": "solid",
+              "draw:fill-color": "#55aa99",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#224466",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 1.5003374173228348,
+              "clipPt": null
+            },
+            "text": [],
+            "picture": null
+          },
+          {
+            "name": "CanvasObject9",
+            "type": "ellipse",
+            "attrs": {
+              "draw:name": "CanvasObject9",
+              "draw:style-name": "Forge3",
+              "svg:x": "37.05mm",
+              "svg:y": "86.45mm",
+              "svg:width": "21.1714286mm",
+              "svg:height": "12.35mm"
+            },
+            "pointsPt": [
+              [
+                105.0236220472441,
+                245.05511811023626
+              ],
+              [
+                165.0371204409449,
+                245.05511811023626
+              ],
+              [
+                165.0371204409449,
+                280.0629921259843
+              ],
+              [
+                105.0236220472441,
+                280.0629921259843
+              ]
+            ],
+            "paint": {
+              "draw:fill": "solid",
+              "draw:fill-color": "#eeaa44",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#444466",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 1.0002248503937008,
+              "clipPt": null
+            },
+            "text": [],
+            "picture": null
+          },
+          {
+            "name": "CanvasObject10",
+            "type": "frame",
+            "attrs": {
+              "draw:name": "CanvasObject10",
+              "draw:style-name": "Forge4",
+              "svg:x": "65.2785714mm",
+              "svg:y": "84.6857143mm",
+              "svg:width": "70.5714286mm",
+              "svg:height": "15.8785714mm"
+            },
+            "pointsPt": [
+              [
+                185.04161971653545,
+                240.0539932913386
+              ],
+              [
+                385.0866141732284,
+                240.0539932913386
+              ],
+              [
+                385.0866141732284,
+                285.0641169448819
+              ],
+              [
+                185.04161971653545,
+                285.0641169448819
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#ffffff",
+              "draw:stroke": "none",
+              "svg:stroke-color": "#000000",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0,
+              "clipPt": null
+            },
+            "text": [
+              {
+                "text": "Group B editable text",
+                "properties": {
+                  "fo:line-height": "125%",
+                  "fo:font-family": "Arial",
+                  "fo:font-size": "11.002474690663666pt",
+                  "fo:text-align": "left",
+                  "fo:margin-top": "0mm",
+                  "fo:margin-bottom": "0mm",
+                  "fo:color": "#25322f",
+                  "fo:font-weight": "normal",
+                  "fo:font-style": "normal",
+                  "style:text-underline-style": "none",
+                  "style:text-line-through-style": "none"
+                }
+              }
+            ],
+            "picture": null
+          },
+          {
+            "name": "CanvasPicture11",
+            "type": "frame",
+            "attrs": {
+              "draw:name": "CanvasPicture11",
+              "draw:style-name": "Forge6",
+              "svg:x": "12.35mm",
+              "svg:y": "105.8571429mm",
+              "svg:width": "21.1714286mm",
+              "svg:height": "19.4071429mm"
+            },
+            "pointsPt": [
+              [
+                35.00787401574804,
+                300.0674916850394
+              ],
+              [
+                95.02137240944883,
+                300.0674916850394
+              ],
+              [
+                95.02137240944883,
+                355.07986525984256
+              ],
+              [
+                35.00787401574804,
+                355.07986525984256
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#ffffff",
+              "draw:stroke": "none",
+              "svg:stroke-color": "#000000",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0,
+              "clipPt": [
+                29.16666680314961,
+                52.499999905511814,
+                29.16666680314961,
+                22.500000000000004
+              ]
+            },
+            "text": [],
+            "picture": {
+              "path": "Pictures/native-picture-0.png",
+              "sha256": "31cc728053617f252e1feca190e09c4434a71e731267ec633fbdf3fee8039e9f",
+              "bytes": 1279
+            }
+          },
+          {
+            "name": "CanvasPicture12",
+            "type": "frame",
+            "attrs": {
+              "draw:name": "CanvasPicture12",
+              "draw:style-name": "Forge7",
+              "svg:x": "42.3428571mm",
+              "svg:y": "105.8571429mm",
+              "svg:width": "22.9357143mm",
+              "svg:height": "19.4071429mm"
+            },
+            "pointsPt": [
+              [
+                120.02699650393703,
+                300.0674916850394
+              ],
+              [
+                185.04161971653548,
+                300.0674916850394
+              ],
+              [
+                185.04161971653548,
+                355.07986525984256
+              ],
+              [
+                120.02699650393703,
+                355.07986525984256
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#ffffff",
+              "draw:stroke": "none",
+              "svg:stroke-color": "#000000",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0,
+              "clipPt": [
+                22.115384503937012,
+                11.250000000000002,
+                22.115384503937012,
+                26.250000094488193
+              ]
+            },
+            "text": [],
+            "picture": {
+              "path": "Pictures/native-picture-1.jpg",
+              "sha256": "523be15df8c4a3c9b07720b6bbe2d0fbf3e38d776d41b3891bc57055b1c79979",
+              "bytes": 4783
+            }
+          },
+          {
+            "name": "CanvasObject13",
+            "type": "polyline",
+            "attrs": {
+              "draw:name": "CanvasObject13",
+              "draw:style-name": "Forge8",
+              "svg:x": "77.6285714mm",
+              "svg:y": "109.3857143mm",
+              "svg:width": "24.7mm",
+              "svg:height": "12.35mm",
+              "svg:viewBox": "0 0 1000000 1000000",
+              "draw:points": "0,400000 400000,900000 1000000,200000"
+            },
+            "pointsPt": [
+              [
+                220.04949373228348,
+                324.0728909291339
+              ],
+              [
+                248.05579294488192,
+                341.5768279370079
+              ],
+              [
+                290.06524176377957,
+                317.0713161259843
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#ffffff",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#2233aa",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 1.5003374173228348,
+              "clipPt": null
+            },
+            "text": [],
+            "picture": null
+          },
+          {
+            "name": "CanvasObject14",
+            "type": "line",
+            "attrs": {
+              "draw:name": "CanvasObject14",
+              "draw:style-name": "Forge9",
+              "svg:x1": "109.3857143mm",
+              "svg:y1": "111.15mm",
+              "svg:x2": "134.0857143mm",
+              "svg:y2": "121.7357143mm"
+            },
+            "pointsPt": [
+              [
+                310.0697413228347,
+                315.0708661417323
+              ],
+              [
+                380.0854893543308,
+                345.0776153385827
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#ffffff",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#117733",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 2.000449984251969,
+              "clipPt": null
+            },
+            "text": [],
+            "picture": null
+          }
+        ]
+      },
+      {
+        "name": "Heterogeneous C",
+        "attrs": {
+          "draw:name": "Heterogeneous C",
+          "draw:transform": "translate(-79.3928571mm -187.0142857mm) rotate(-0.12) translate(79.3928571mm 187.0142857mm)"
+        },
+        "transform": "translate(-79.3928571mm -187.0142857mm) rotate(-0.12) translate(79.3928571mm 187.0142857mm)",
+        "matrix": [
+          0.9928086358538663,
+          0.11971220728891936,
+          -0.11971220728891936,
+          0.9928086358538663,
+          65.08016470407586,
+          -23.129025838347275
+        ],
+        "namedGraphic": {},
+        "members": [
+          {
+            "name": "CanvasObject15",
+            "type": "rect",
+            "attrs": {
+              "draw:name": "CanvasObject15",
+              "draw:style-name": "Forge2",
+              "svg:x": "12.35mm",
+              "svg:y": "160.55mm",
+              "svg:width": "19.4071429mm",
+              "svg:height": "12.35mm",
+              "draw:corner-radius": "1.4114286mm"
+            },
+            "pointsPt": [
+              [
+                35.00787401574804,
+                455.1023622047245
+              ],
+              [
+                90.0202475905512,
+                455.1023622047245
+              ],
+              [
+                90.0202475905512,
+                490.11023622047253
+              ],
+              [
+                35.00787401574804,
+                490.11023622047253
+              ]
+            ],
+            "paint": {
+              "draw:fill": "solid",
+              "draw:fill-color": "#55aa99",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#224466",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 1.5003374173228348,
+              "clipPt": null
+            },
+            "text": [],
+            "picture": null
+          },
+          {
+            "name": "CanvasObject16",
+            "type": "ellipse",
+            "attrs": {
+              "draw:name": "CanvasObject16",
+              "draw:style-name": "Forge3",
+              "svg:x": "37.05mm",
+              "svg:y": "162.3142857mm",
+              "svg:width": "21.1714286mm",
+              "svg:height": "12.35mm"
+            },
+            "pointsPt": [
+              [
+                105.0236220472441,
+                460.1034870236221
+              ],
+              [
+                165.0371204409449,
+                460.1034870236221
+              ],
+              [
+                165.0371204409449,
+                495.11136103937014
+              ],
+              [
+                105.0236220472441,
+                495.11136103937014
+              ]
+            ],
+            "paint": {
+              "draw:fill": "solid",
+              "draw:fill-color": "#eeaa44",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#444466",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 1.0002248503937008,
+              "clipPt": null
+            },
+            "text": [],
+            "picture": null
+          },
+          {
+            "name": "CanvasObject17",
+            "type": "frame",
+            "attrs": {
+              "draw:name": "CanvasObject17",
+              "draw:style-name": "Forge4",
+              "svg:x": "65.2785714mm",
+              "svg:y": "160.55mm",
+              "svg:width": "70.5714286mm",
+              "svg:height": "15.8785714mm"
+            },
+            "pointsPt": [
+              [
+                185.04161971653545,
+                455.1023622047245
+              ],
+              [
+                385.0866141732284,
+                455.1023622047245
+              ],
+              [
+                385.0866141732284,
+                500.1124858582678
+              ],
+              [
+                185.04161971653545,
+                500.1124858582678
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#ffffff",
+              "draw:stroke": "none",
+              "svg:stroke-color": "#000000",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0,
+              "clipPt": null
+            },
+            "text": [
+              {
+                "text": "Group C editable text",
+                "properties": {
+                  "fo:line-height": "125%",
+                  "fo:font-family": "Arial",
+                  "fo:font-size": "11.002474690663666pt",
+                  "fo:text-align": "left",
+                  "fo:margin-top": "0mm",
+                  "fo:margin-bottom": "0mm",
+                  "fo:color": "#25322f",
+                  "fo:font-weight": "normal",
+                  "fo:font-style": "normal",
+                  "style:text-underline-style": "none",
+                  "style:text-line-through-style": "none"
+                }
+              }
+            ],
+            "picture": null
+          },
+          {
+            "name": "CanvasPicture18",
+            "type": "frame",
+            "attrs": {
+              "draw:name": "CanvasPicture18",
+              "draw:style-name": "Forge6",
+              "svg:x": "12.35mm",
+              "svg:y": "181.7214286mm",
+              "svg:width": "21.1714286mm",
+              "svg:height": "19.4071429mm"
+            },
+            "pointsPt": [
+              [
+                35.00787401574804,
+                515.1158605984252
+              ],
+              [
+                95.02137240944883,
+                515.1158605984252
+              ],
+              [
+                95.02137240944883,
+                570.1282341732284
+              ],
+              [
+                35.00787401574804,
+                570.1282341732284
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#ffffff",
+              "draw:stroke": "none",
+              "svg:stroke-color": "#000000",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0,
+              "clipPt": [
+                29.16666680314961,
+                52.499999905511814,
+                29.16666680314961,
+                22.500000000000004
+              ]
+            },
+            "text": [],
+            "picture": {
+              "path": "Pictures/native-picture-0.png",
+              "sha256": "31cc728053617f252e1feca190e09c4434a71e731267ec633fbdf3fee8039e9f",
+              "bytes": 1279
+            }
+          },
+          {
+            "name": "CanvasPicture19",
+            "type": "frame",
+            "attrs": {
+              "draw:name": "CanvasPicture19",
+              "draw:style-name": "Forge7",
+              "svg:x": "42.3428571mm",
+              "svg:y": "181.7214286mm",
+              "svg:width": "22.9357143mm",
+              "svg:height": "19.4071429mm"
+            },
+            "pointsPt": [
+              [
+                120.02699650393703,
+                515.1158605984252
+              ],
+              [
+                185.04161971653548,
+                515.1158605984252
+              ],
+              [
+                185.04161971653548,
+                570.1282341732284
+              ],
+              [
+                120.02699650393703,
+                570.1282341732284
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#ffffff",
+              "draw:stroke": "none",
+              "svg:stroke-color": "#000000",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0,
+              "clipPt": [
+                22.115384503937012,
+                11.250000000000002,
+                22.115384503937012,
+                26.250000094488193
+              ]
+            },
+            "text": [],
+            "picture": {
+              "path": "Pictures/native-picture-1.jpg",
+              "sha256": "523be15df8c4a3c9b07720b6bbe2d0fbf3e38d776d41b3891bc57055b1c79979",
+              "bytes": 4783
+            }
+          },
+          {
+            "name": "CanvasObject20",
+            "type": "polyline",
+            "attrs": {
+              "draw:name": "CanvasObject20",
+              "draw:style-name": "Forge8",
+              "svg:x": "77.6285714mm",
+              "svg:y": "185.25mm",
+              "svg:width": "24.7mm",
+              "svg:height": "12.35mm",
+              "svg:viewBox": "0 0 1000000 1000000",
+              "draw:points": "0,400000 400000,900000 1000000,200000"
+            },
+            "pointsPt": [
+              [
+                220.04949373228348,
+                539.1212598425197
+              ],
+              [
+                248.05579294488192,
+                556.6251968503938
+              ],
+              [
+                290.06524176377957,
+                532.1196850393702
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#ffffff",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#2233aa",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 1.5003374173228348,
+              "clipPt": null
+            },
+            "text": [],
+            "picture": null
+          },
+          {
+            "name": "CanvasObject21",
+            "type": "line",
+            "attrs": {
+              "draw:name": "CanvasObject21",
+              "draw:style-name": "Forge9",
+              "svg:x1": "109.3857143mm",
+              "svg:y1": "187.0142857mm",
+              "svg:x2": "134.0857143mm",
+              "svg:y2": "197.6mm"
+            },
+            "pointsPt": [
+              [
+                310.0697413228347,
+                530.1192350551181
+              ],
+              [
+                380.0854893543308,
+                560.1259842519686
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#ffffff",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#117733",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 2.000449984251969,
+              "clipPt": null
+            },
+            "text": [],
+            "picture": null
+          }
+        ]
+      }
+    ]
+  },
+  "output": {
+    "path": "/workspace/scratch/heterogeneous-group-probe/resaved/input.odt",
+    "sha256": "04b344508508a9fa4c29122a88f76edb75faa20a859990957b0a0dfb7e45838e",
+    "generator": "LibreOfficeDev/26.8.0.0.alpha0$Linux_X86_64 LibreOffice_project/2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+    "rootOrder": [
+      "SlateForgeCanvasBackground",
+      "Heterogeneous A",
+      "Heterogeneous B",
+      "Heterogeneous C",
+      "CanvasObject22"
+    ],
+    "groups": [
+      {
+        "name": "Heterogeneous A",
+        "attrs": {
+          "draw:name": "Heterogeneous A",
+          "draw:style-name": "gr3"
+        },
+        "transform": "",
+        "matrix": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "namedGraphic": {
+          "loext:decorative": "false",
+          "style:run-through": "background"
+        },
+        "members": [
+          {
+            "name": "CanvasObject1",
+            "type": "rect",
+            "attrs": {
+              "draw:name": "CanvasObject1",
+              "draw:style-name": "gr4",
+              "draw:text-style-name": "P4",
+              "svg:width": "0.7642in",
+              "svg:height": "0.4862in",
+              "svg:x": "0.4862in",
+              "svg:y": "0.3472in",
+              "draw:corner-radius": "0.0555in"
+            },
+            "pointsPt": [
+              [
+                35.0064,
+                24.9984
+              ],
+              [
+                90.02879999999999,
+                24.9984
+              ],
+              [
+                90.02879999999999,
+                60.0048
+              ],
+              [
+                35.0064,
+                60.0048
+              ]
+            ],
+            "paint": {
+              "draw:fill": "solid",
+              "draw:fill-color": "#55aa99",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#224466",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 1.5048,
+              "clipPt": null
+            },
+            "text": [
+              {
+                "text": "",
+                "properties": {
+                  "fo:line-height": "165%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN"
+                }
+              }
+            ],
+            "picture": null
+          },
+          {
+            "name": "CanvasObject2",
+            "type": "ellipse",
+            "attrs": {
+              "draw:name": "CanvasObject2",
+              "draw:style-name": "gr5",
+              "draw:text-style-name": "P5",
+              "svg:width": "0.8335in",
+              "svg:height": "0.4862in",
+              "svg:x": "1.4583in",
+              "svg:y": "0.4165in"
+            },
+            "pointsPt": [
+              [
+                104.99759999999999,
+                29.988
+              ],
+              [
+                165.00959999999998,
+                29.988
+              ],
+              [
+                165.00959999999998,
+                64.9944
+              ],
+              [
+                104.99759999999999,
+                64.9944
+              ]
+            ],
+            "paint": {
+              "draw:fill": "solid",
+              "draw:fill-color": "#eeaa44",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#444466",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0.9936,
+              "clipPt": null
+            },
+            "text": [
+              {
+                "text": "",
+                "properties": {
+                  "fo:line-height": "165%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN"
+                }
+              }
+            ],
+            "picture": null
+          },
+          {
+            "name": "CanvasObject3",
+            "type": "frame",
+            "attrs": {
+              "draw:name": "CanvasObject3",
+              "draw:style-name": "gr6",
+              "draw:text-style-name": "P7",
+              "svg:width": "2.778in",
+              "svg:height": "0.6252in",
+              "svg:x": "2.5701in",
+              "svg:y": "0.3472in"
+            },
+            "pointsPt": [
+              [
+                185.0472,
+                24.9984
+              ],
+              [
+                385.0632,
+                24.9984
+              ],
+              [
+                385.0632,
+                70.0128
+              ],
+              [
+                185.0472,
+                70.0128
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#729fcf",
+              "draw:stroke": "none",
+              "svg:stroke-color": "#000000",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0,
+              "clipPt": null
+            },
+            "text": [
+              {
+                "text": "Group A editable text",
+                "properties": {
+                  "fo:line-height": "125%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN",
+                  "fo:margin-top": "0in",
+                  "fo:margin-bottom": "0in",
+                  "fo:text-align": "left",
+                  "loext:paragraph-composer": "false"
+                }
+              }
+            ],
+            "picture": null
+          },
+          {
+            "name": "CanvasPicture4",
+            "type": "frame",
+            "attrs": {
+              "draw:name": "CanvasPicture4",
+              "draw:style-name": "gr7",
+              "draw:text-style-name": "P7",
+              "svg:width": "0.8335in",
+              "svg:height": "0.7642in",
+              "svg:x": "0.4862in",
+              "svg:y": "1.1807in"
+            },
+            "pointsPt": [
+              [
+                35.0064,
+                85.0104
+              ],
+              [
+                95.0184,
+                85.0104
+              ],
+              [
+                95.0184,
+                140.0328
+              ],
+              [
+                35.0064,
+                140.0328
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#729fcf",
+              "draw:stroke": "none",
+              "svg:stroke-color": "#3465a4",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0,
+              "clipPt": [
+                29.1672,
+                52.4952,
+                29.1672,
+                22.507199999999997
+              ]
+            },
+            "text": [
+              {
+                "text": "",
+                "properties": {
+                  "fo:line-height": "165%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN"
+                }
+              }
+            ],
+            "picture": {
+              "path": "Pictures/100000000000012C000000C8D4EA2EAB.png",
+              "sha256": "31cc728053617f252e1feca190e09c4434a71e731267ec633fbdf3fee8039e9f",
+              "bytes": 1279
+            }
+          },
+          {
+            "name": "CanvasPicture5",
+            "type": "frame",
+            "attrs": {
+              "draw:name": "CanvasPicture5",
+              "draw:style-name": "gr8",
+              "draw:text-style-name": "P7",
+              "svg:width": "0.9031in",
+              "svg:height": "0.7642in",
+              "svg:x": "1.6665in",
+              "svg:y": "1.1807in"
+            },
+            "pointsPt": [
+              [
+                119.988,
+                85.0104
+              ],
+              [
+                185.0112,
+                85.0104
+              ],
+              [
+                185.0112,
+                140.0328
+              ],
+              [
+                119.988,
+                140.0328
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#729fcf",
+              "draw:stroke": "none",
+              "svg:stroke-color": "#3465a4",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0,
+              "clipPt": [
+                22.1112,
+                11.253599999999999,
+                22.1112,
+                26.251199999999997
+              ]
+            },
+            "text": [
+              {
+                "text": "",
+                "properties": {
+                  "fo:line-height": "165%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN"
+                }
+              }
+            ],
+            "picture": {
+              "path": "Pictures/100000000000012C000000C841C07C6C.jpg",
+              "sha256": "523be15df8c4a3c9b07720b6bbe2d0fbf3e38d776d41b3891bc57055b1c79979",
+              "bytes": 4783
+            }
+          },
+          {
+            "name": "CanvasObject6",
+            "type": "polyline",
+            "attrs": {
+              "draw:name": "CanvasObject6",
+              "draw:style-name": "gr9",
+              "draw:text-style-name": "P7",
+              "svg:width": "0.9724in",
+              "svg:height": "0.3402in",
+              "svg:x": "3.0563in",
+              "svg:y": "1.3197in",
+              "svg:viewBox": "0 0 2471 865",
+              "draw:points": "0,247 988,865 2471,0"
+            },
+            "pointsPt": [
+              [
+                220.0536,
+                102.01275468208094
+              ],
+              [
+                248.04738648320517,
+                119.51280000000001
+              ],
+              [
+                290.0664,
+                95.01840000000001
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#729fcf",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#2233aa",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 1.5048,
+              "clipPt": null
+            },
+            "text": [
+              {
+                "text": "",
+                "properties": {
+                  "fo:line-height": "165%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN"
+                }
+              }
+            ],
+            "picture": null
+          },
+          {
+            "name": "CanvasObject7",
+            "type": "line",
+            "attrs": {
+              "draw:name": "CanvasObject7",
+              "draw:style-name": "gr10",
+              "draw:text-style-name": "P7",
+              "svg:x1": "4.3067in",
+              "svg:y1": "1.3894in",
+              "svg:x2": "5.2791in",
+              "svg:y2": "1.8059in"
+            },
+            "pointsPt": [
+              [
+                310.0824,
+                100.0368
+              ],
+              [
+                380.0952,
+                130.0248
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#729fcf",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#117733",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 2.016,
+              "clipPt": null
+            },
+            "text": [
+              {
+                "text": "",
+                "properties": {
+                  "fo:line-height": "165%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN"
+                }
+              }
+            ],
+            "picture": null
+          }
+        ]
+      },
+      {
+        "name": "Heterogeneous B",
+        "attrs": {
+          "draw:name": "Heterogeneous B",
+          "draw:style-name": "gr3"
+        },
+        "transform": "",
+        "matrix": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "namedGraphic": {
+          "loext:decorative": "false",
+          "style:run-through": "background"
+        },
+        "members": [
+          {
+            "name": "CanvasObject8",
+            "type": "rect",
+            "attrs": {
+              "draw:name": "CanvasObject8",
+              "draw:style-name": "gr4",
+              "draw:text-style-name": "P4",
+              "svg:width": "0.7642in",
+              "svg:height": "0.4862in",
+              "svg:x": "0.4862in",
+              "svg:y": "3.3339in",
+              "draw:corner-radius": "0.0555in"
+            },
+            "pointsPt": [
+              [
+                35.0064,
+                240.0408
+              ],
+              [
+                90.02879999999999,
+                240.0408
+              ],
+              [
+                90.02879999999999,
+                275.0472
+              ],
+              [
+                35.0064,
+                275.0472
+              ]
+            ],
+            "paint": {
+              "draw:fill": "solid",
+              "draw:fill-color": "#55aa99",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#224466",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 1.5048,
+              "clipPt": null
+            },
+            "text": [
+              {
+                "text": "",
+                "properties": {
+                  "fo:line-height": "165%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN"
+                }
+              }
+            ],
+            "picture": null
+          },
+          {
+            "name": "CanvasObject9",
+            "type": "ellipse",
+            "attrs": {
+              "draw:name": "CanvasObject9",
+              "draw:style-name": "gr5",
+              "draw:text-style-name": "P5",
+              "svg:width": "0.8335in",
+              "svg:height": "0.4862in",
+              "svg:x": "1.4583in",
+              "svg:y": "3.4035in"
+            },
+            "pointsPt": [
+              [
+                104.99759999999999,
+                245.05200000000002
+              ],
+              [
+                165.00959999999998,
+                245.05200000000002
+              ],
+              [
+                165.00959999999998,
+                280.0584
+              ],
+              [
+                104.99759999999999,
+                280.0584
+              ]
+            ],
+            "paint": {
+              "draw:fill": "solid",
+              "draw:fill-color": "#eeaa44",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#444466",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0.9936,
+              "clipPt": null
+            },
+            "text": [
+              {
+                "text": "",
+                "properties": {
+                  "fo:line-height": "165%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN"
+                }
+              }
+            ],
+            "picture": null
+          },
+          {
+            "name": "CanvasObject10",
+            "type": "frame",
+            "attrs": {
+              "draw:name": "CanvasObject10",
+              "draw:style-name": "gr6",
+              "draw:text-style-name": "P7",
+              "svg:width": "2.778in",
+              "svg:height": "0.6252in",
+              "svg:x": "2.5701in",
+              "svg:y": "3.3339in"
+            },
+            "pointsPt": [
+              [
+                185.0472,
+                240.0408
+              ],
+              [
+                385.0632,
+                240.0408
+              ],
+              [
+                385.0632,
+                285.0552
+              ],
+              [
+                185.0472,
+                285.0552
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#729fcf",
+              "draw:stroke": "none",
+              "svg:stroke-color": "#000000",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0,
+              "clipPt": null
+            },
+            "text": [
+              {
+                "text": "Group B editable text",
+                "properties": {
+                  "fo:line-height": "125%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN",
+                  "fo:margin-top": "0in",
+                  "fo:margin-bottom": "0in",
+                  "fo:text-align": "left",
+                  "loext:paragraph-composer": "false"
+                }
+              }
+            ],
+            "picture": null
+          },
+          {
+            "name": "CanvasPicture11",
+            "type": "frame",
+            "attrs": {
+              "draw:name": "CanvasPicture11",
+              "draw:style-name": "gr7",
+              "draw:text-style-name": "P7",
+              "svg:width": "0.8335in",
+              "svg:height": "0.7642in",
+              "svg:x": "0.4862in",
+              "svg:y": "4.1681in"
+            },
+            "pointsPt": [
+              [
+                35.0064,
+                300.1032
+              ],
+              [
+                95.0184,
+                300.1032
+              ],
+              [
+                95.0184,
+                355.1256
+              ],
+              [
+                35.0064,
+                355.1256
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#729fcf",
+              "draw:stroke": "none",
+              "svg:stroke-color": "#3465a4",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0,
+              "clipPt": [
+                29.1672,
+                52.4952,
+                29.1672,
+                22.507199999999997
+              ]
+            },
+            "text": [
+              {
+                "text": "",
+                "properties": {
+                  "fo:line-height": "165%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN"
+                }
+              }
+            ],
+            "picture": {
+              "path": "Pictures/100000000000012C000000C8D4EA2EAB.png",
+              "sha256": "31cc728053617f252e1feca190e09c4434a71e731267ec633fbdf3fee8039e9f",
+              "bytes": 1279
+            }
+          },
+          {
+            "name": "CanvasPicture12",
+            "type": "frame",
+            "attrs": {
+              "draw:name": "CanvasPicture12",
+              "draw:style-name": "gr8",
+              "draw:text-style-name": "P7",
+              "svg:width": "0.9031in",
+              "svg:height": "0.7642in",
+              "svg:x": "1.6665in",
+              "svg:y": "4.1681in"
+            },
+            "pointsPt": [
+              [
+                119.988,
+                300.1032
+              ],
+              [
+                185.0112,
+                300.1032
+              ],
+              [
+                185.0112,
+                355.1256
+              ],
+              [
+                119.988,
+                355.1256
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#729fcf",
+              "draw:stroke": "none",
+              "svg:stroke-color": "#3465a4",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0,
+              "clipPt": [
+                22.1112,
+                11.253599999999999,
+                22.1112,
+                26.251199999999997
+              ]
+            },
+            "text": [
+              {
+                "text": "",
+                "properties": {
+                  "fo:line-height": "165%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN"
+                }
+              }
+            ],
+            "picture": {
+              "path": "Pictures/100000000000012C000000C841C07C6C.jpg",
+              "sha256": "523be15df8c4a3c9b07720b6bbe2d0fbf3e38d776d41b3891bc57055b1c79979",
+              "bytes": 4783
+            }
+          },
+          {
+            "name": "CanvasObject13",
+            "type": "polyline",
+            "attrs": {
+              "draw:name": "CanvasObject13",
+              "draw:style-name": "gr9",
+              "draw:text-style-name": "P7",
+              "svg:width": "0.9724in",
+              "svg:height": "0.3402in",
+              "svg:x": "3.0563in",
+              "svg:y": "4.3067in",
+              "svg:viewBox": "0 0 2471 865",
+              "draw:points": "0,247 988,865 2471,0"
+            },
+            "pointsPt": [
+              [
+                220.0536,
+                317.07675468208095
+              ],
+              [
+                248.04738648320517,
+                334.5768
+              ],
+              [
+                290.0664,
+                310.0824
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#729fcf",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#2233aa",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 1.5048,
+              "clipPt": null
+            },
+            "text": [
+              {
+                "text": "",
+                "properties": {
+                  "fo:line-height": "165%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN"
+                }
+              }
+            ],
+            "picture": null
+          },
+          {
+            "name": "CanvasObject14",
+            "type": "line",
+            "attrs": {
+              "draw:name": "CanvasObject14",
+              "draw:style-name": "gr10",
+              "draw:text-style-name": "P7",
+              "svg:x1": "4.3067in",
+              "svg:y1": "4.376in",
+              "svg:x2": "5.2791in",
+              "svg:y2": "4.7929in"
+            },
+            "pointsPt": [
+              [
+                310.0824,
+                315.072
+              ],
+              [
+                380.0952,
+                345.08880000000005
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#729fcf",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#117733",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 2.016,
+              "clipPt": null
+            },
+            "text": [
+              {
+                "text": "",
+                "properties": {
+                  "fo:line-height": "165%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN"
+                }
+              }
+            ],
+            "picture": null
+          }
+        ]
+      },
+      {
+        "name": "Heterogeneous C",
+        "attrs": {
+          "draw:name": "Heterogeneous C",
+          "draw:style-name": "gr3"
+        },
+        "transform": "",
+        "matrix": [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "namedGraphic": {
+          "loext:decorative": "false",
+          "style:run-through": "background"
+        },
+        "members": [
+          {
+            "name": "CanvasObject15",
+            "type": "rect",
+            "attrs": {
+              "draw:name": "CanvasObject15",
+              "draw:style-name": "gr4",
+              "draw:text-style-name": "P4",
+              "svg:width": "0.7642in",
+              "svg:height": "0.4862in",
+              "svg:x": "0.4862in",
+              "svg:y": "6.3209in",
+              "draw:corner-radius": "0.0555in"
+            },
+            "pointsPt": [
+              [
+                35.0064,
+                455.1048
+              ],
+              [
+                90.02879999999999,
+                455.1048
+              ],
+              [
+                90.02879999999999,
+                490.1112
+              ],
+              [
+                35.0064,
+                490.1112
+              ]
+            ],
+            "paint": {
+              "draw:fill": "solid",
+              "draw:fill-color": "#55aa99",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#224466",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 1.5048,
+              "clipPt": null
+            },
+            "text": [
+              {
+                "text": "",
+                "properties": {
+                  "fo:line-height": "165%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN"
+                }
+              }
+            ],
+            "picture": null
+          },
+          {
+            "name": "CanvasObject16",
+            "type": "ellipse",
+            "attrs": {
+              "draw:name": "CanvasObject16",
+              "draw:style-name": "gr5",
+              "draw:text-style-name": "P5",
+              "svg:width": "0.8335in",
+              "svg:height": "0.4862in",
+              "svg:x": "1.4583in",
+              "svg:y": "6.3902in"
+            },
+            "pointsPt": [
+              [
+                104.99759999999999,
+                460.0944
+              ],
+              [
+                165.00959999999998,
+                460.0944
+              ],
+              [
+                165.00959999999998,
+                495.1008
+              ],
+              [
+                104.99759999999999,
+                495.1008
+              ]
+            ],
+            "paint": {
+              "draw:fill": "solid",
+              "draw:fill-color": "#eeaa44",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#444466",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0.9936,
+              "clipPt": null
+            },
+            "text": [
+              {
+                "text": "",
+                "properties": {
+                  "fo:line-height": "165%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN"
+                }
+              }
+            ],
+            "picture": null
+          },
+          {
+            "name": "CanvasObject17",
+            "type": "frame",
+            "attrs": {
+              "draw:name": "CanvasObject17",
+              "draw:style-name": "gr6",
+              "draw:text-style-name": "P7",
+              "svg:width": "2.778in",
+              "svg:height": "0.6252in",
+              "svg:x": "2.5701in",
+              "svg:y": "6.3209in"
+            },
+            "pointsPt": [
+              [
+                185.0472,
+                455.1048
+              ],
+              [
+                385.0632,
+                455.1048
+              ],
+              [
+                385.0632,
+                500.1192
+              ],
+              [
+                185.0472,
+                500.1192
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#729fcf",
+              "draw:stroke": "none",
+              "svg:stroke-color": "#000000",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0,
+              "clipPt": null
+            },
+            "text": [
+              {
+                "text": "Group C editable text",
+                "properties": {
+                  "fo:line-height": "125%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN",
+                  "fo:margin-top": "0in",
+                  "fo:margin-bottom": "0in",
+                  "fo:text-align": "left",
+                  "loext:paragraph-composer": "false"
+                }
+              }
+            ],
+            "picture": null
+          },
+          {
+            "name": "CanvasPicture18",
+            "type": "frame",
+            "attrs": {
+              "draw:name": "CanvasPicture18",
+              "draw:style-name": "gr7",
+              "draw:text-style-name": "P7",
+              "svg:width": "0.8335in",
+              "svg:height": "0.7642in",
+              "svg:x": "0.4862in",
+              "svg:y": "7.1543in"
+            },
+            "pointsPt": [
+              [
+                35.0064,
+                515.1096
+              ],
+              [
+                95.0184,
+                515.1096
+              ],
+              [
+                95.0184,
+                570.132
+              ],
+              [
+                35.0064,
+                570.132
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#729fcf",
+              "draw:stroke": "none",
+              "svg:stroke-color": "#3465a4",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0,
+              "clipPt": [
+                29.1672,
+                52.4952,
+                29.1672,
+                22.507199999999997
+              ]
+            },
+            "text": [
+              {
+                "text": "",
+                "properties": {
+                  "fo:line-height": "165%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN"
+                }
+              }
+            ],
+            "picture": {
+              "path": "Pictures/100000000000012C000000C8D4EA2EAB.png",
+              "sha256": "31cc728053617f252e1feca190e09c4434a71e731267ec633fbdf3fee8039e9f",
+              "bytes": 1279
+            }
+          },
+          {
+            "name": "CanvasPicture19",
+            "type": "frame",
+            "attrs": {
+              "draw:name": "CanvasPicture19",
+              "draw:style-name": "gr8",
+              "draw:text-style-name": "P7",
+              "svg:width": "0.9031in",
+              "svg:height": "0.7642in",
+              "svg:x": "1.6665in",
+              "svg:y": "7.1543in"
+            },
+            "pointsPt": [
+              [
+                119.988,
+                515.1096
+              ],
+              [
+                185.0112,
+                515.1096
+              ],
+              [
+                185.0112,
+                570.132
+              ],
+              [
+                119.988,
+                570.132
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#729fcf",
+              "draw:stroke": "none",
+              "svg:stroke-color": "#3465a4",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 0,
+              "clipPt": [
+                22.1112,
+                11.253599999999999,
+                22.1112,
+                26.251199999999997
+              ]
+            },
+            "text": [
+              {
+                "text": "",
+                "properties": {
+                  "fo:line-height": "165%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN"
+                }
+              }
+            ],
+            "picture": {
+              "path": "Pictures/100000000000012C000000C841C07C6C.jpg",
+              "sha256": "523be15df8c4a3c9b07720b6bbe2d0fbf3e38d776d41b3891bc57055b1c79979",
+              "bytes": 4783
+            }
+          },
+          {
+            "name": "CanvasObject20",
+            "type": "polyline",
+            "attrs": {
+              "draw:name": "CanvasObject20",
+              "draw:style-name": "gr9",
+              "draw:text-style-name": "P7",
+              "svg:width": "0.9724in",
+              "svg:height": "0.3402in",
+              "svg:x": "3.0563in",
+              "svg:y": "7.2933in",
+              "svg:viewBox": "0 0 2471 865",
+              "draw:points": "0,247 988,865 2471,0"
+            },
+            "pointsPt": [
+              [
+                220.0536,
+                532.111954682081
+              ],
+              [
+                248.04738648320517,
+                549.6120000000001
+              ],
+              [
+                290.0664,
+                525.1176
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#729fcf",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#2233aa",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 1.5048,
+              "clipPt": null
+            },
+            "text": [
+              {
+                "text": "",
+                "properties": {
+                  "fo:line-height": "165%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN"
+                }
+              }
+            ],
+            "picture": null
+          },
+          {
+            "name": "CanvasObject21",
+            "type": "line",
+            "attrs": {
+              "draw:name": "CanvasObject21",
+              "draw:style-name": "gr10",
+              "draw:text-style-name": "P7",
+              "svg:x1": "4.3067in",
+              "svg:y1": "7.3626in",
+              "svg:x2": "5.2791in",
+              "svg:y2": "7.7795in"
+            },
+            "pointsPt": [
+              [
+                310.0824,
+                530.1071999999999
+              ],
+              [
+                380.0952,
+                560.124
+              ]
+            ],
+            "paint": {
+              "draw:fill": "none",
+              "draw:fill-color": "#729fcf",
+              "draw:stroke": "solid",
+              "svg:stroke-color": "#117733",
+              "draw:opacity": "100%",
+              "svg:stroke-opacity": "100%",
+              "draw:image-opacity": "100%",
+              "style:mirror": "none",
+              "strokeWidthPt": 2.016,
+              "clipPt": null
+            },
+            "text": [
+              {
+                "text": "",
+                "properties": {
+                  "fo:line-height": "165%",
+                  "style:text-autospace": "ideograph-alpha",
+                  "style:punctuation-wrap": "hanging",
+                  "style:line-break": "strict",
+                  "style:writing-mode": "page",
+                  "fo:color": "#000000",
+                  "style:font-name": "Georgia",
+                  "fo:font-size": "12pt",
+                  "fo:language": "en",
+                  "fo:country": "US",
+                  "style:font-name-asian": "DejaVu Sans",
+                  "style:font-size-asian": "12pt",
+                  "style:language-asian": "zh",
+                  "style:country-asian": "CN",
+                  "style:font-name-complex": "Noto Sans",
+                  "style:font-size-complex": "12pt",
+                  "style:language-complex": "hi",
+                  "style:country-complex": "IN"
+                }
+              }
+            ],
+            "picture": null
+          }
+        ]
+      }
+    ]
+  },
+  "comparisons": [
+    {
+      "group": "Heterogeneous A",
+      "members": 7,
+      "sourceTransform": "",
+      "resavedTransform": "",
+      "maxLocalDeltaMm": 2.474970376761236,
+      "maxIntendedWorldDeltaMm": 2.474970376761236,
+      "paintTextPictureChanges": []
+    },
+    {
+      "group": "Heterogeneous B",
+      "members": 7,
+      "sourceTransform": "translate(5.2928571mm 3.5285714mm)",
+      "resavedTransform": "",
+      "maxLocalDeltaMm": 2.4694560807287655,
+      "maxIntendedWorldDeltaMm": 8.001378037813424,
+      "paintTextPictureChanges": []
+    },
+    {
+      "group": "Heterogeneous C",
+      "members": 7,
+      "sourceTransform": "translate(-79.3928571mm -187.0142857mm) rotate(-0.12) translate(79.3928571mm 187.0142857mm)",
+      "resavedTransform": "",
+      "maxLocalDeltaMm": 2.4741017773850085,
+      "maxIntendedWorldDeltaMm": 8.645058171325534,
+      "paintTextPictureChanges": []
+    }
+  ]
+}

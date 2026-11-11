@@ -1,0 +1,23 @@
+# Bounded rigid leaf matrices — unpublished
+
+Native ODT import accepts a standalone `matrix(a b c d e f)` on a supported leaf. The first four finite, unitless coefficients must be orthonormal with determinant +1 or −1 within `1e-8`; rotation/translation and bounded non-text reflection are represented. The final two values require explicit decimal `mm`, `cm`, `in` or `pt` lengths, with unitless exact zero also permitted. Nonzero unitless translations are ambiguous and remain refused. Singular matrices, reflected text, scale/shear, other units, malformed operands, oversized translations, mixed transform lists and raw group transforms remain refused. Existing leaf paint, clipping and text restrictions still apply.
+
+Imported matrices normalize into the current editable scene. Native re-export emits the existing rotation/translation lists or baked endpoints/vertices, without carrying raw matrix source or private canvas data. No document-storage migration is involved.
+
+## Dialect and units
+
+[ODF 1.3 part 3 §19.228](https://docs.oasis-open.org/office/OpenDocument/v1.3/os/part3-schema/OpenDocument-v1.3-os-part3-schema.html) defines a column-major six-value affine matrix, but its default-double wording does not establish a safe universal interpretation for nonzero unitless translation in foreign files. The supported measured translation dialect is established by the actual Writer corpus and [LibreOffice's source at the tested build](https://github.com/LibreOffice/core/blob/2c87e51eeaa2b413ff4ae097b2705eea1995d8e5/xmloff/source/draw/xexptran.cxx): matrix e/f use `Imp_GetDoubleChar(..., true)` and measure conversion, while a–d use unitless conversion. Matrix coefficients retain their mathematical signs; the separate historical Writer rotate-angle sign convention is not applied to them. This is not a general SVG/ODF matrix-parity claim.
+
+## Actual exchange
+
+Adversarial executed exactly one isolated headless resave in LibreOfficeDev `26.8.0.0.alpha0`, build `2c87e51eeaa2b413ff4ae097b2705eea1995d8e5`. [Input](fixtures/odt-rigid-leaf-matrix-input.odt) contains nine explicit-unit raw leaf matrices beside nine app-native controls offset by 600 logical y units. The nine cases are rectangle, ellipse, uniform editable text, cropped PNG, cropped JPEG, the previously failing inset-y path, butt-cap line, horizontal and vertical round-cap paths. Each leaf rotates `.12` radians about its own center. [Manifest](fixtures/odt-rigid-leaf-matrix-manifest.json) records original matrix strings and centers; [actual resave](../test/fixtures/odt-rigid-leaf-matrix-libreoffice-resaved.odt), [comparison](fixtures/odt-rigid-leaf-matrix-comparison.json) and [independent world checks](fixtures/odt-rigid-leaf-matrix-world-check.json) retain the evidence.
+
+Raw matrix geometry differs by at most `.01609764 mm`; normalized native controls by `.01897425 mm`. Known-source versus resaved vertices differ by at most `.01897421 mm`. Offset-corrected raw/control pairs differ by at most `.02518464 mm` (about `.14275` logical units), below the existing `.7`-unit tolerance. Names/order, meaningful text, exact image payload hashes, effective paint/crop values and line caps survive. Writer may normalize axis polylines into round-cap lines while preserving endpoint geometry; the app reopens those as editable sampled paths. Font styling moves into spans; Arial, color and emphasis remain, with `11.00247469 pt` rounded to `11 pt` and `125%` line height retained.
+
+Focused checks cover explicit units, coefficient signs, all supported leaf kinds, known world geometry, import/re-export without raw matrices and the negative cases above. Browser/PR/main/release proof remains pending. No additional raw-unitless, group-transform, general affine, Microsoft Word, GUI or device certification is implied.
+
+## Reflected non-text leaves
+
+The reflected rigid subset preserves symmetric primitives, line/arrow endpoints, sampled and filled path winding/holes, and post-clip picture reflection combined with native crop/mirroring. Padded picture frames retain their transformed painted center. Reflected text, nonrigid matrices and unsupported bordered contours remain refused.
+
+The saved [actual reflection input](fixtures/odt-rigid-reflections-input.odt) and [LibreOffice resave](../test/fixtures/odt-rigid-reflections-libreoffice-resaved.odt) contain eight raw reflected leaves and eight normalized controls. Reopened scenes and native re-exports pass known-world corner, path-vertex, hole, arrow-wing, picture-coordinate and paint comparisons. Existing tolerances apply; no additional editor run was needed to recover this interrupted proof.

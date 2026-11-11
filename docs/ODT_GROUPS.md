@@ -1,4 +1,10 @@
-# Bounded native ODF stroke groups
+# Bounded native ODF groups
+
+## Current reopened extension — unpublished
+
+The November 10 user mandate extends membership to adjacent opaque rectangles/ellipses, uniform text, PNG/JPEG pictures, bounded paths and lines. Each child uses the existing native geometry/paint reader. Named or inherited group text/paragraph overrides are refused when text is present; image opacity is checked after picture decoding. Group paint effects, nonadjacent membership, raw group transforms and deeper nesting remain refused. Flat scene child positions and rotations are exported per leaf; no unsupported raw group transform is emitted. See [COMPATIBILITY_INVENTORY.md](COMPATIBILITY_INVENTORY.md) for actual-editor failures, the occupied-path repair and [corrected actual-editor proof](ODT_HETEROGENEOUS_GROUPS.md). These features are not published yet.
+
+## Previously published stroke boundary
 
 This batch supports one-level groups of adjacent opaque native lines/arrows, with absolute child geometry and no group transform or paint effects. Group membership and child order survive reopening and native ODT re-export. Hidden objects remain omitted; locking and original group names are not transferred.
 
@@ -16,4 +22,4 @@ The original merged-main run `42572161888` failed the existing Firefox OCR scena
 
 Merged runtime: `d8535f28c91922d919a0f53f1df756c36e2fcb69`; required main CI: `42683902860`. Published runtime `d8535f28c91922d919a0f53f1df756c36e2fcb69` at https://slate-web.iiankehn.com/ . [PR verification](https://github.com/iiankehn/slate-forge-web/actions/runs/42580266841) and [merged-main verification](https://github.com/iiankehn/slate-forge-web/actions/runs/42683902860) each passed 582 Node cases and 165 browser scenarios without retries. [Pages promotion](https://github.com/iiankehn/slate-forge-web/actions/runs/42686729685) reused main artifact `13704782234`, archive SHA-256 `c285e2d9732a13e2a1428828da770c6f283feefa021c10e3e4069717f8592daf`, without rebuilding or rerunning browsers. All 53 verified live shell/worker URLs matched that exact archive; worker cache digest `2fd596f2fcf3bc65` reconciled. The finite bounded implementation roadmap is complete.
 
-Additional group geometry, paint and matrix features are optional/deferred, not completion requirements. The bounded implementation roadmap is complete; there is no automatic next feature batch.
+The completion above applies to that historical bounded stroke release. The user subsequently reopened broader compatibility; the current extension and remaining cases are tracked separately above and in the inventory.

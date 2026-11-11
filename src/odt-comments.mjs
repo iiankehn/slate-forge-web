@@ -2,7 +2,7 @@ import {reviewAttrs} from './review.mjs';
 const OFFICE='urn:oasis:names:tc:opendocument:xmlns:office:1.0',TEXT='urn:oasis:names:tc:opendocument:xmlns:text:1.0',DC='http://purl.org/dc/elements/1.1/',LOEXT='urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0';
 export function odtComments(content,escape){
  const records=new Map();let visited=0;
- function scan(node,depth=0){if(++visited>100000||depth>100)throw Error('ODT comments exceed document complexity limits.');if(node.marks?.some(mark=>mark.type==='reviewChange'&&mark.attrs?.kind==='delete'))return;
+ function scan(node,depth=0){if(++visited>100000||depth>100)throw Error('ODT comments exceed document complexity limits.');if(node.type==='blockRevision'&&node.attrs?.kind==='delete'||node.marks?.some(mark=>mark.type==='reviewChange'&&mark.attrs?.kind==='delete'))return;
   const comments=node.type==='commentAnchor'?[{attrs:node.attrs}]:node.type==='text'?(node.marks||[]).filter(mark=>mark.type==='comment'):[];
   for(const mark of comments){const attrs=reviewAttrs(mark.attrs),record=records.get(attrs.id);if(record){if(node.type==='commentAnchor'||record.point)throw Error('ODT comment IDs cannot combine anchors and ranges.');record.last=node}else{if(records.size>=300)throw Error('ODT supports up to 300 comments in this export.');records.set(attrs.id,{attrs,first:node,last:node,point:node.type==='commentAnchor',name:'ForgeComment'+records.size})}}
   for(const child of node.content||[])scan(child,depth+1);

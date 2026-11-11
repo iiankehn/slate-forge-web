@@ -1,0 +1,96 @@
+{
+  "angleRadians": 0.12,
+  "scaleMm": 0.17642857144444443,
+  "matrices": [
+    {
+      "index": 0,
+      "name": "CanvasObject1",
+      "type": "rect",
+      "transform": "matrix(0.99280863585387 0.11971220728892 -0.11971220728892 0.99280863585387 13.159004792425mm 7.704199318869mm)",
+      "centreLogical": [
+        125,
+        85
+      ]
+    },
+    {
+      "index": 1,
+      "name": "CanvasObject2",
+      "type": "ellipse",
+      "transform": "matrix(0.99280863585387 0.11971220728892 -0.11971220728892 0.99280863585387 3.786534860469cm 0.936288175012cm)",
+      "centreLogical": [
+        270,
+        95
+      ]
+    },
+    {
+      "index": 2,
+      "name": "CanvasObject3",
+      "type": "frame",
+      "transform": "matrix(0.99280863585387 0.11971220728892 -0.11971220728892 0.99280863585387 2.617431229715in 0.183243785316in)",
+      "centreLogical": [
+        570,
+        95
+      ]
+    },
+    {
+      "index": 3,
+      "name": "CanvasPicture4",
+      "type": "frame",
+      "transform": "matrix(0.99280863585387 0.11971220728892 -0.11971220728892 0.99280863585387 38.51648981872pt 81.624755318386pt)",
+      "centreLogical": [
+        130,
+        225
+      ]
+    },
+    {
+      "index": 4,
+      "name": "CanvasPicture5",
+      "type": "frame",
+      "transform": "matrix(0.99280863585387 0.11971220728892 -0.11971220728892 0.99280863585387 43.586962596891mm 28.689796518839mm)",
+      "centreLogical": [
+        305,
+        225
+      ]
+    },
+    {
+      "index": 5,
+      "name": "CanvasObject6",
+      "type": "polyline",
+      "transform": "matrix(0.99280863585387 0.11971220728892 -0.11971220728892 0.99280863585387 7.816091847248cm 3.453962683957cm)",
+      "centreLogical": [
+        510,
+        225
+      ]
+    },
+    {
+      "index": 6,
+      "name": "CanvasObject7",
+      "type": "line",
+      "transform": "matrix(0.99280863585387 0.11971220728892 -0.11971220728892 0.99280863585387 0.225716386058in -0.562261251207in)",
+      "centreLogical": [
+        690,
+        230
+      ]
+    },
+    {
+      "index": 7,
+      "name": "CanvasObject8",
+      "type": "line",
+      "transform": "matrix(0.99280863585387 0.11971220728892 -0.11971220728892 0.99280863585387 22.391866550433pt -7.667716223218pt)",
+      "centreLogical": [
+        150,
+        365
+      ]
+    },
+    {
+      "index": 8,
+      "name": "CanvasObject9",
+      "type": "line",
+      "transform": "matrix(0.99280863585387 0.11971220728892 -0.11971220728892 0.99280863585387 8.668434064447mm -6.686205043406mm)",
+      "centreLogical": [
+        340,
+        390
+      ]
+    }
+  ]
+}

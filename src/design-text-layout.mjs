@@ -24,3 +24,6 @@ export function layoutDesignText(value,boxWidth,size,font='Arial',bold=false,ita
  }
  return lines.slice(0,150);
 }
+
+// Shared with privacy export preflight so wrapping and clipping use the same metrics.
+export const measureDesignText=width;

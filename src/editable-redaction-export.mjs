@@ -1,0 +1,7 @@
+import {generateHTML} from '@tiptap/core';
+import {prepareEditableSharingDocument} from './editable-redaction-model.mjs';
+import {createSharingMediaPreparer,sharingImageMap} from './editable-redaction-media.mjs';
+import {exportHTMLDocument} from './html-documents.mjs';
+import {exportDocx} from './docx-export.mjs';
+import {exportODT} from './odt.mjs';
+export async function exportEditableSharingCopy(model,layout,format,extensions,{signal}={}){if(!['docx','odt','html'].includes(format))throw Error('Choose DOCX, ODT or HTML for an editable sharing copy.');const check=()=>{if(signal?.aborted)throw new DOMException('Sharing copy cancelled.','AbortError')};check();const fresh=await prepareEditableSharingDocument(model,layout,{...createSharingMediaPreparer(),signal});check();if(typeof document!=='undefined')await document.fonts?.ready;check();const images=sharingImageMap(fresh.doc);let bytes,type;if(format==='html'){const html=generateHTML(fresh.doc,extensions);bytes=exportHTMLDocument(html,'Redacted document',fresh.layout,html);type='text/html'}else if(format==='odt'){bytes=exportODT(fresh.doc,fresh.layout,'Redacted document',images,{editableDesigns:false,nativeDesigns:true});type='application/vnd.oasis.opendocument.text'}else{bytes=await exportDocx(fresh.doc,fresh.layout,'Redacted document',images,{editableDesigns:false,nativeDesigns:true,reviewHTML:''});type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'}check();return {name:'redacted.'+format,bytes,type}}

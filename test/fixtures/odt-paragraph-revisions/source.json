@@ -1,0 +1,969 @@
+{
+  "middleInsert": {
+    "source": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Before"
+            }
+          ]
+        },
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "blocks",
+            "kind": "insert",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "New one"
+                }
+              ]
+            },
+            {
+              "type": "heading",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "New two"
+                }
+              ],
+              "attrs": {
+                "level": 2
+              }
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "After"
+            }
+          ]
+        }
+      ]
+    },
+    "accept": [
+      "Before",
+      "New one",
+      "New two",
+      "After"
+    ],
+    "reject": [
+      "Before",
+      "After"
+    ]
+  },
+  "middleDelete": {
+    "source": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Before"
+            }
+          ]
+        },
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "blocks",
+            "kind": "delete",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Old one"
+                }
+              ]
+            },
+            {
+              "type": "heading",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Old two"
+                }
+              ],
+              "attrs": {
+                "level": 2
+              }
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "After"
+            }
+          ]
+        }
+      ]
+    },
+    "accept": [
+      "Before",
+      "After"
+    ],
+    "reject": [
+      "Before",
+      "Old one",
+      "Old two",
+      "After"
+    ]
+  },
+  "leadingInsert": {
+    "source": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "blocks",
+            "kind": "insert",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "New one"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "New two"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "After"
+            }
+          ]
+        }
+      ]
+    },
+    "accept": [
+      "New one",
+      "New two",
+      "After"
+    ],
+    "reject": [
+      "After"
+    ]
+  },
+  "leadingDelete": {
+    "source": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "blocks",
+            "kind": "delete",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Old one"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Old two"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "After"
+            }
+          ]
+        }
+      ]
+    },
+    "accept": [
+      "After"
+    ],
+    "reject": [
+      "Old one",
+      "Old two",
+      "After"
+    ]
+  },
+  "trailingInsert": {
+    "source": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Before"
+            }
+          ]
+        },
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "blocks",
+            "kind": "insert",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "New one"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "New two"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "accept": [
+      "Before",
+      "New one",
+      "New two"
+    ],
+    "reject": [
+      "Before"
+    ]
+  },
+  "trailingDelete": {
+    "source": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Before"
+            }
+          ]
+        },
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "blocks",
+            "kind": "delete",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Old one"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Old two"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "accept": [
+      "Before"
+    ],
+    "reject": [
+      "Before",
+      "Old one",
+      "Old two"
+    ]
+  },
+  "replace": {
+    "source": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Before"
+            }
+          ]
+        },
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "blocks",
+            "kind": "delete",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Old"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "blocks",
+            "kind": "insert",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "heading",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "New"
+                }
+              ],
+              "attrs": {
+                "level": 2
+              }
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "After"
+            }
+          ]
+        }
+      ]
+    },
+    "accept": [
+      "Before",
+      "New",
+      "After"
+    ],
+    "reject": [
+      "Before",
+      "Old",
+      "After"
+    ]
+  },
+  "tailReplace": {
+    "source": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Before"
+            }
+          ]
+        },
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "blocks",
+            "kind": "delete",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Old"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "blocks",
+            "kind": "insert",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "New"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "accept": [
+      "Before",
+      "New"
+    ],
+    "reject": [
+      "Before",
+      "Old"
+    ]
+  },
+  "wholeInsert": {
+    "source": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "blocks",
+            "kind": "insert",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "New one"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "New two"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "accept": [
+      "New one",
+      "New two"
+    ],
+    "reject": [
+      ""
+    ]
+  },
+  "wholeDelete": {
+    "source": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "blocks",
+            "kind": "delete",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Old one"
+                }
+              ]
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Old two"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "accept": [
+      ""
+    ],
+    "reject": [
+      "Old one",
+      "Old two"
+    ]
+  },
+  "soleInsert": {
+    "source": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "blocks",
+            "kind": "insert",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "New one"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "accept": [
+      "New one"
+    ],
+    "reject": [
+      ""
+    ]
+  },
+  "soleDelete": {
+    "source": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "blocks",
+            "kind": "delete",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Old one"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "accept": [
+      ""
+    ],
+    "reject": [
+      "Old one"
+    ]
+  },
+  "emptyInsert": {
+    "source": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Before"
+            }
+          ]
+        },
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "blocks",
+            "kind": "insert",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": []
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "After"
+            }
+          ]
+        }
+      ]
+    },
+    "accept": [
+      "Before",
+      "",
+      "After"
+    ],
+    "reject": [
+      "Before",
+      "After"
+    ]
+  },
+  "emptyDelete": {
+    "source": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Before"
+            }
+          ]
+        },
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "blocks",
+            "kind": "delete",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": []
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "After"
+            }
+          ]
+        }
+      ]
+    },
+    "accept": [
+      "Before",
+      "After"
+    ],
+    "reject": [
+      "Before",
+      "",
+      "After"
+    ]
+  },
+  "adjacentTail": {
+    "source": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Before"
+            }
+          ]
+        },
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "a",
+            "kind": "insert",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "A"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "b",
+            "kind": "insert",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "B"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "accept": [
+      "Before",
+      "A",
+      "B"
+    ],
+    "reject": [
+      "Before"
+    ]
+  },
+  "separateTailReplacements": {
+    "source": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "paragraph",
+          "content": [
+            {
+              "type": "text",
+              "text": "Before"
+            }
+          ]
+        },
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "a",
+            "kind": "delete",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Old A"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "a",
+            "kind": "insert",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "New A"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "b",
+            "kind": "delete",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Old B"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "b",
+            "kind": "insert",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "New B"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "accept": [
+      "Before",
+      "New A",
+      "New B"
+    ],
+    "reject": [
+      "Before",
+      "Old A",
+      "Old B"
+    ]
+  },
+  "emptyAnchor": {
+    "source": {
+      "type": "doc",
+      "content": [
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "blocks",
+            "kind": "delete",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Old"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "blockRevision",
+          "attrs": {
+            "id": "blocks",
+            "kind": "insert",
+            "author": "Slate Reviewer",
+            "date": "2026-11-11T12:00:00.000Z"
+          },
+          "content": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "type": "text",
+                  "text": "New"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "content": []
+        }
+      ]
+    },
+    "accept": [
+      "New",
+      ""
+    ],
+    "reject": [
+      "Old",
+      ""
+    ]
+  }
+}
