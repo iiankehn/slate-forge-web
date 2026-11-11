@@ -1,6 +1,6 @@
-# Editable redacted sharing copies — implementation in progress
+# Editable redacted sharing copies — published
 
-The user selected genuine editable DOCX, ODT and HTML sharing copies after the flattened PDF release. This implementation is not published yet. It removes logical content from a separate frozen writing model; it does not put PDF/page images inside nominally editable containers.
+The user selected genuine editable DOCX, ODT and HTML sharing copies after the flattened PDF release. Published through PR #28; see [published release evidence](RELEASE_2026_11_11.md). It removes logical content from a separate frozen writing model; it does not put PDF/page images inside nominally editable containers.
 
 ## Sharing boundary
 
@@ -20,6 +20,6 @@ Unsupported native canvas features are refused per format rather than silently f
 
 After marking, export consumes only the current sharing model, fresh assets and sanitized layout. It does not reread the original document. Cancellation/closing or switching workspace prevents late output. No original-file erasure is implied. Unmarked content remains readable, including in editable source; automatic sensitive-data discovery is not included.
 
-## Evidence pending release
+## Verification
 
-Focused checks cover split-run text removal, unchanged tables/originals, current-review projection, metadata/history/link removal, header/footer/note conversion, rebuilt contents, fresh IDs/hidden-layer removal, unused path data, actual text ink bounds, decoded-media budgets, three genuine editable format outputs and temporary-editor disposal. Browser scenarios inspect real downloads, native vectors, PNG crop pixels and stripped source metadata, plus actual LibreOffice group download/reopen/reload. Final CI/release evidence will be recorded after execution. No device or universal external-editor certification is claimed.
+Focused checks cover split-run text removal, unchanged tables/originals, current-review projection, metadata/history/link removal, header/footer/note conversion, rebuilt contents, fresh IDs/hidden-layer removal, unused path data, actual text ink bounds, decoded-media budgets, three genuine editable format outputs and temporary-editor disposal. Browser scenarios inspect real downloads, native vectors, PNG crop pixels and stripped source metadata, plus actual LibreOffice group download/reopen/reload. PR/main CI each passed 656 Node tests and 210 browser scenarios without retries; Pages promoted the exact verified main artifact. See [published release evidence](RELEASE_2026_11_11.md). No device or universal external-editor certification is claimed.

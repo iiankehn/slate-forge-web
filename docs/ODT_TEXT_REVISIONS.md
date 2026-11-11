@@ -1,6 +1,6 @@
 # Native ODT text revisions
 
-November 11 continuation: [ODT_PARAGRAPH_REVISIONS.md](ODT_PARAGRAPH_REVISIONS.md) extends the implemented dialect to bounded whole-paragraph changes. It remains unpublished; the inline-only limits below describe the published release.
+November 11 continuation: [ODT_PARAGRAPH_REVISIONS.md](ODT_PARAGRAPH_REVISIONS.md) extends the implemented dialect to bounded whole-paragraph changes. It is published through PR #28; the inline-only limits below describe the earlier release. See [published release evidence](RELEASE_2026_11_11.md).
 
 Current continuation: [ODT_EDITABLE_CANVASES.md](ODT_EDITABLE_CANVASES.md) records published optional original-canvas retention. Preview-only behavior below describes earlier releases or image-only copies; native ODF objects remain separate.
 

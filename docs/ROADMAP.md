@@ -1,5 +1,11 @@
 # Slate Forge development roadmap
 
+## Current batch published — November 11, 2026
+
+The writing/sharing/native office batch is merged through PR #28 and live from runtime `994a2ae0e1859939ed9d013ce89128485847a055`. PR/main verification each passed 656 Node cases and 210 browser scenarios without retries. Pages 43116607297 promoted the exact main artifact; all 56 checked live shell/worker URLs match. See [RELEASE_2026_11_11.md](RELEASE_2026_11_11.md). PRs #25–#27 are closed as superseded with their branches/history preserved.
+
+The implemented items described below are published. Broader compatibility cases remain inventoried and are not marked complete by this release. Earlier pending/failed CI statements below record implementation history.
+
 ## Reopened user-selected work — November 9–10, 2026
 
 The user explicitly requested broader Word/ODT compatibility and true editable redacted DOCX/ODT/HTML output, and subsequently requested document-scoped writing commands, clipboard/context-menu improvements and independent ribbon density/collapse controls. This supersedes the historical finite freeze below. No device-testing gate is added.
@@ -8,9 +14,9 @@ The user explicitly requested broader Word/ODT compatibility and true editable r
 - Current compatibility batch: adjacent opaque shapes, uniform text, PNG/JPEG, paths and lines using native leaf helpers; occupied path frames repair an observed editor shift. Flat child positions/rotations retain membership without unsupported raw group transforms. Actual corrected-editor exchange passes within existing tolerance; [ODT_HETEROGENEOUS_GROUPS.md](ODT_HETEROGENEOUS_GROUPS.md) retains both failed and corrected evidence. Remaining known cases are inventoried and classified in [COMPATIBILITY_INVENTORY.md](COMPATIBILITY_INVENTORY.md); this batch does not complete that entire category.
 - A further bounded rigid leaf-matrix importer normalizes explicit-unit rotation/translation to existing native output, backed by one actual raw/control Writer corpus; general affine and ambiguous unitless translations remain refused. See [ODT_RIGID_LEAF_MATRICES.md](ODT_RIGID_LEAF_MATRICES.md).
 - The isolated UI-only checkpoint is integrated after its failed browser trace exposed asynchronous Select All focus and stale scroll-event menu dismissal. Both have targeted product repairs; no unchanged failed CI is rerun. See [WRITING_COMMANDS.md](WRITING_COMMANDS.md).
-- Nested opaque canvas hierarchy is now implemented through eight levels across native ODT/DOCX, grouping controls and fresh sharing copies. Actual 24-object Writer exchange passes with maximum .1-unit geometry delta. See [NESTED_NATIVE_GROUPS.md](NESTED_NATIVE_GROUPS.md); this extension remains unpublished.
+- Nested opaque canvas hierarchy is now implemented through eight levels across native ODT/DOCX, grouping controls and fresh sharing copies. Actual 24-object Writer exchange passes with maximum .1-unit geometry delta. See [NESTED_NATIVE_GROUPS.md](NESTED_NATIVE_GROUPS.md); this extension is published in PR #28.
 - Native whole-paragraph ODT revision support now preserves bounded paragraph/heading changes through safe boundary anchors and existing review decisions. The corrected 17-case Writer corpus and a paragraph-design fixture pass; the initial heading-loss failure is retained. See [ODT_PARAGRAPH_REVISIONS.md](ODT_PARAGRAPH_REVISIONS.md). Nested/object/row/boundary changes remain unsupported.
-- Work solo under the latest user instruction. Release after source review and required exact-source PR/main checks, then reuse the successful main artifact for Pages and verify live files/cache. PR #27 browser run 43102981189 had 204 first-attempt passes and one retry-only WebKit timeout, so its strict gate failed. The trace-backed startup-helper repair waits for the actual workspace dialog. The current source needs fresh required PR/main checks; no bypass or unchanged rerun. PR #26 remains a preserved earlier checkpoint.
+- Work solo under the latest user instruction. Release after source review and required exact-source PR/main checks, then reuse the successful main artifact for Pages and verify live files/cache. PR #27 browser run 43102981189 had 204 first-attempt passes and one retry-only WebKit timeout, so its strict gate failed. The trace-backed startup-helper repair waits for the actual workspace dialog. The corrected PR #28 source passed both required PR/main checks and exact-artifact publication; see the release evidence above. PR #26 remains a preserved earlier checkpoint.
 
 ## Historical completion record — previous bounded release
 

@@ -4,7 +4,11 @@
 
 The user explicitly stopped all sub-agents and requested solo work without rushing. Do not spawn, resume or delegate to any specialist unless the user explicitly requests agents again. The primary assistant owns implementation, verification, review and release. This overrides all earlier specialist requirements. Preserve every checkpoint and pending change, reuse existing evidence, and finish the current requested items without expanding scope or claiming unfinished work complete. No new deadline is imposed by this mode change.
 
-## Current paragraph extension — November 11, 2026
+## Published current release — November 11, 2026
+
+PR #28 merged runtime `994a2ae0e1859939ed9d013ce89128485847a055`, now live at https://slate-web.iiankehn.com/ . PR CI 43109802080 and main CI 43113409833 each passed 656 Node tests and 210 browser scenarios without retries. Pages 43116607297 promoted exact artifact 13897563650 (archive SHA-256 `96998929fd8f57e316429f797cb7608b96e8b68621ab16adb35f156b00c2bf09`) without rebuilding or repeating browsers. All 56 checked live shell/worker URLs match; worker cache digest `7a265b853d0cacfe` reconciles. Read docs/RELEASE_2026_11_11.md and docs/COMPATIBILITY_INVENTORY.md. PRs #25–#27 are closed as superseded; branches/checkpoints are preserved. The implemented writing/sharing/native batch is published; broader compatibility gaps remain explicit. Continue solo and preserve storage/origins/private Site/fonts/mobile safe areas. Earlier pending-release statuses below are historical.
+
+## Historical paragraph implementation checkpoint — November 11, 2026
 
 `feat/odt-paragraph-revisions` adds bounded top-level paragraph/heading revisions. Read docs/ODT_PARAGRAPH_REVISIONS.md. The initial actual Writer heading-loss failure is retained; corrected 17-case resaves plus paragraph design pass. Local final suite passes 656 cases. PR #27 CI had one WebKit retry-only failure (204 first-attempt browser passes); source evidence identifies a premature startup-dialog check, corrected in browser helpers without relaxing gates. Preserve prior checkpoints and required PR/main verification; no publication yet. Broader nested/object/boundary and native ODF effects remain unsupported. Continue solo.
 

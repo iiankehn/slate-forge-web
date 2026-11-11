@@ -1,6 +1,6 @@
 # Native ODT whole-paragraph revisions — November 11, 2026
 
-Implemented on `feat/odt-paragraph-revisions`, including the preserved writing/sharing and nested-group checkpoints. Not published. This is a bounded extension of inline revisions, not support for every structural ODF change.
+Implemented on `feat/odt-paragraph-revisions`, including the preserved writing/sharing and nested-group checkpoints. Published through PR #28; see [published release evidence](RELEASE_2026_11_11.md). This is a bounded extension of inline revisions, not support for every structural ODF change.
 
 ## Behavior
 
@@ -22,6 +22,6 @@ Writer renames native change IDs, can split paired replacements or merge adjacen
 
 ## Validation and release
 
-The final full local suite passes **656 Node cases** (89.12 seconds). This includes 14 new paragraph-revision tests, existing inline/structural review, comments, source integration, saving/recovery, backup and native-format coverage. Production build, static packaging (284 files, 84.3 MiB), browser-source syntax and source whitespace checks pass. A new browser journey covers actual ODT download, reopen, save/reload, block Accept, Undo, Reject and an actual Writer tail-replacement fixture across the existing five CI profiles (210 scenarios total). The current main-targeted release PR combines all unpublished checkpoints; the earlier branches/PRs remain preserved. Browser results remain pending for this source.
+The final full local suite passes **656 Node cases** (89.12 seconds). This includes 14 new paragraph-revision tests, existing inline/structural review, comments, source integration, saving/recovery, backup and native-format coverage. Production build, static packaging (284 files, 84.3 MiB), browser-source syntax and source whitespace checks pass. A new browser journey covers actual ODT download, reopen, save/reload, block Accept, Undo, Reject and an actual Writer tail-replacement fixture across the existing five CI profiles (210 scenarios total). PR #28 combined the earlier checkpoints and merged as runtime `994a2ae0e1859939ed9d013ce89128485847a055`. Both PR/main CI passed all 656 Node tests and 210 browser scenarios without retries; exact-artifact Pages publication and live verification passed. See [published release evidence](RELEASE_2026_11_11.md). Earlier branches/checkpoints remain preserved.
 
 The previous PR #27 run `43102981189` passed 642 Node cases and static checks. Its browser result was 204 first-attempt passes and one retry-only WebKit scenario; the strict gate failed. The retained trace shows the test checked startup dialogs before they existed, then File was blocked by the later workspace modal. Browser helpers now wait for the workspace dialog to be attached before checking/dismissing startup UI and assert it is hidden before continuing. No sleep, skipped assertion, extra retry or relaxed gate was added. No unchanged failed run is being treated as release success.

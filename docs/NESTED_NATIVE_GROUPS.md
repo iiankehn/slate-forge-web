@@ -1,6 +1,6 @@
 # Nested editable canvas groups — November 11, 2026
 
-Implemented on `feat/nested-native-groups`, stacked on the preserved PR #26 checkpoint. Not published. This closes the loss of nested opaque group hierarchy; it does not enable arbitrary ODF group transforms or effects.
+Implemented on `feat/nested-native-groups`, stacked on the preserved PR #26 checkpoint. Published through PR #28; see [published release evidence](RELEASE_2026_11_11.md). This closes the loss of nested opaque group hierarchy; it does not enable arbitrary ODF group transforms or effects.
 
 Canvas objects retain an optional outer-to-inner `groupPath` of up to eight levels alongside the legacy outermost `group`. Existing single-group documents retain their behavior. Selection/movement still operate on the outer group. Group adds an outer level; Ungroup removes one level, exposing existing subgroups. Duplication regenerates every group ID independently. Fresh editable sharing copies regenerate every surviving hierarchy ID and omit hidden-only membership. Version, storage identifiers, origins and backup envelopes are unchanged. Older app builds can read the outer membership but do not retain the additional hierarchy.
 
@@ -12,11 +12,11 @@ LibreOfficeDev `26.8.0.0.alpha0`, build `2c87e51eeaa2b413ff4ae097b2705eea1995d8e
 
 All 24 objects, six user groups across three levels, sibling order, editable uniform text, exact PNG/JPEG bytes and path samples survive the actual editor resave and subsequent app-native re-export. Maximum reopened frame/rotation/stroke-width delta is .1 canvas unit; maximum visible sampled-path vertex delta is .1 unit, below the existing .7-unit tolerance. Tests also cover eight levels, ninth-level rejection, ancestor paint/text/transform refusals, reparented/separated membership, sharing cleanup, UI group/ungroup/duplicate/undo, and DOCX reopening with affine leaf wrappers.
 
-The five-profile browser scenario adds native download, reopen, device-save/reload and HTML reconstruction. It is pending required CI; local browser automation remains policy-blocked. This evidence does not certify Microsoft Word rendering.
+The five-profile browser scenario adds native download, reopen, device-save/reload and HTML reconstruction. It passed required PR/main CI in all five profiles; local browser automation remained policy-blocked. This evidence does not certify Microsoft Word rendering.
 
 ## Local validation
 
-All 642 Node cases pass (85.45 seconds), including the hierarchy, UI, redaction, legacy formats, saving/recovery and backup regressions. Production build, static packaging (284 files, 84.3 MiB), browser-source syntax and source whitespace checks pass. The required five-profile browser suite remains pending GitHub Actions; it is not counted as passed. The previous PR #26 checkpoint remains untouched.
+All 642 Node cases pass (85.45 seconds), including the hierarchy, UI, redaction, legacy formats, saving/recovery and backup regressions. Production build, static packaging (284 files, 84.3 MiB), browser-source syntax and source whitespace checks pass. The final release passed 656 Node tests and all 210 browser scenarios on both PR/main without retries. See [published release evidence](RELEASE_2026_11_11.md). The previous PR #26 checkpoint remains preserved.
 
 ## Confirmed exchange limits
 
