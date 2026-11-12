@@ -1,3 +1,4 @@
+import {prepareOdtBoundaryChanges} from './odt-boundary-changes.mjs';
 import {prepareOdtBlockChanges} from './odt-block-changes.mjs';
 import {reviewAttrs} from './review.mjs';
 const TEXT='urn:oasis:names:tc:opendocument:xmlns:text:1.0',OFFICE='urn:oasis:names:tc:opendocument:xmlns:office:1.0',DC='http://purl.org/dc/elements/1.1/',XML='http://www.w3.org/XML/1998/namespace';
@@ -30,11 +31,12 @@ export function importOdtChanges(root,styles,escape){
  for(const [index,region]of regions.entries()){
   const key=region.getAttributeNS(XML,'id')||region.getAttributeNS(TEXT,'id'),legacy=region.getAttributeNS(TEXT,'id');if(!key||key.length>200||records.has(key)||legacy&&legacy!==key)throw Error('ODT revision IDs are missing, duplicated or ambiguous.');
   const kinds=[...region.children].filter(child=>child.namespaceURI===TEXT&&['insertion','deletion','format-change'].includes(child.localName));if(kinds.length!==1||region.children.length!==1)throw Error('An ODT revision has an unsupported change definition.');const node=kinds[0],kind=node.localName==='insertion'?'insert':node.localName==='deletion'?'delete':'format',info=direct(node,OFFICE,'change-info')[0];if(!info||direct(node,OFFICE,'change-info').length!==1||kind==='insert'&&node.children.length!==1)throw Error('An ODT revision has invalid change metadata.');
-  const native=/^Forge(Text|Block)Change_(\d+)_(\d+)_(insert|delete)$/.exec(key),groupKey=native?'native:'+native[1]+':'+native[2]:'external:'+index,prior=groups.get(groupKey),id=prior?.id||'odt-change-'+groups.size;if(native&&native[4]!==kind)throw Error('An ODT revision has inconsistent group metadata.');
+  const native=/^Forge(Text|Block|Boundary)Change_(\d+)_(\d+)_(insert|delete)$/.exec(key),groupKey=native?'native:'+native[1]+':'+native[2]:'external:'+index,prior=groups.get(groupKey),id=prior?.id||'odt-change-'+groups.size;if(native&&native[4]!==kind)throw Error('An ODT revision has inconsistent group metadata.');
   const attrs=reviewAttrs({id,kind,author:info?.getElementsByTagNameNS(DC,'creator')[0]?.textContent,date:info?.getElementsByTagNameNS(DC,'date')[0]?.textContent,body:info?direct(info,TEXT,'p').map(p=>p.textContent).join('\n'):''});if(prior&&['author','date','body'].some(key=>prior[key]!==attrs[key]))throw Error('An ODT revision group has conflicting metadata.');groups.set(groupKey,attrs);
   records.set(key,{node,kind,attrs,encoded:escape(encodeURIComponent(JSON.stringify(attrs))),starts:0,ends:0,points:0,textNodes:0,paragraph:null});
  }
  function bounded(value){outputSize+=value.length;if(outputSize>MAX_HTML)throw Error('Expanded ODT text revisions exceed the 20 MB import limit.');return value}
+ const boundary=prepareOdtBoundaryChanges(root,records,styles,escape,bounded);
  const block=prepareOdtBlockChanges(root,records,styles,escape,bounded);
  function paragraph(node){for(let parent=node.parentElement;parent&&parent!==root;parent=parent.parentElement)if(parent.namespaceURI===TEXT&&['p','h'].includes(parent.localName))return parent;return null}
  let active=null;
@@ -69,5 +71,5 @@ export function importOdtChanges(root,styles,escape){
  const deletionHTML=new Map();for(const record of records.values())if(record.kind==='delete')deletionHTML.set(record,deleted(record));
  function marker(node){if(node.namespaceURI!==TEXT||!['change','change-start','change-end'].includes(node.localName))return null;return node.localName==='change'?deletionHTML.get(byMarker.get(node))||'':''}
  function wrap(node,value){const record=byNode.get(node);return bounded(record?'<span data-forge-change="'+record.encoded+'">'+value+'</span>':value)}
- return {marker,wrap,block,trackChanges:!!container&&(!container.hasAttributeNS(TEXT,'track-changes')||['true','1'].includes(container.getAttributeNS(TEXT,'track-changes')))};
+ return {marker,wrap,block,boundary,boundaryCount:boundary.count||0,blockCount:block.count||0,trackChanges:!!container&&(!container.hasAttributeNS(TEXT,'track-changes')||['true','1'].includes(container.getAttributeNS(TEXT,'track-changes')))};
 }
