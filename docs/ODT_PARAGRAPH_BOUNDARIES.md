@@ -25,3 +25,9 @@ Twelve new Node cases cover review semantics, source refusals, marker corruption
 ## Release state
 
 All 668 Node tests, the production build, static packaging checks and source whitespace checks pass locally. Required PR/main browser checks and exact main-artifact publication remain the release gates; see the current roadmap and handoff for the latest status.
+
+## Initial PR verification failure and repair
+
+PR #29 run `43148907325` at source `f88edde84afee8b5fcec62a1745b4f0ecbf1b65a` passed 668 Node tests and all five new ODT browser cases. The strict browser gate nevertheless failed: 214 first-attempt passes and one existing editable-redaction scenario that passed only on retry. It is not accepted release evidence.
+
+The first-attempt trace shows `setInputFiles` finishing at 2908.471 ms, followed by an immediate document-count read at 2909.014 ms returning the original `1`. HTML import continues asynchronously after file selection; the imported document subsequently made the count `2`. All original-content and redacted-download checks passed, but the final unchanged-count assertion compared against that prematurely captured value. The scenario now waits for the imported source title and body before taking its baseline count. The final original-preservation/count assertion, strict retry gate and timeouts are unchanged; no sleep or broad matcher replaces the evidence. Browser-results artifact `13914185348` retains the original trace (archive SHA-256 `aa88d441132ca6540010a1372f44e7512aa455aeafd5f056c3fd552052c84a3c`). Required verification runs again on the corrected source; unchanged product tests/build are reused locally.
