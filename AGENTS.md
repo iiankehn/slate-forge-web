@@ -1,16 +1,18 @@
 # Slate Forge web development
 
-## Current continuation — November 12, 2026
+## Published paragraph-boundary continuation — November 12, 2026
 
-The remaining active implementation is native tracked ODT paragraph splits/joins. It is implemented with 19 corrected actual Writer resaves, independent DOCX-to-ODT controls and explicit formatting refusals; see [ODT_PARAGRAPH_BOUNDARIES.md](docs/ODT_PARAGRAPH_BOUNDARIES.md). Source checks and required PR/main browser verification precede exact-artifact publication. This is not yet live. Work solo; preserve existing storage, originals, origins and mobile protection.
+PR #29 is merged and live at https://slate-web.iiankehn.com/ from runtime `34486e3a8d1520feab44df5ccc57e82c5c6f8dd6`. PR CI 43150746850 and main CI 43152635085 each passed 668 Node tests and all 215 browser scenarios without retries. Pages 43154942139 promoted exact main artifact 13914789082 without rebuilding or repeating browsers. All 56 checked live shell/worker URLs match; worker cache digest `8d5ba8bf49c9c1f2` reconciles. See [RELEASE_2026_11_12.md](docs/RELEASE_2026_11_12.md).
 
-The earlier writing commands/ribbon, genuine editable redaction, native group hierarchy and whole-paragraph review work are already published through PR #28. The compatibility inventory still lists substantive unsupported structures, paint and layout cases; do not claim those are implemented or silently mark the entire broader compatibility mandate complete.
+The supported ODT paragraph split/join extension is published with 19 corrected actual Writer resaves and independent DOCX-to-ODT controls; see [ODT_PARAGRAPH_BOUNDARIES.md](docs/ODT_PARAGRAPH_BOUNDARIES.md). Earlier writing selection/context/clipboard/ribbon controls, genuine editable redaction and native group/whole-paragraph review work remain published. PR #29 is merged; no feature PR remains open. The initial retry-only redaction-test failure was repaired from trace evidence and remains recorded.
+
+The implemented batch and its publication are complete. The broader [compatibility inventory](docs/COMPATIBILITY_INVENTORY.md) still contains substantive unsupported paint, layout and nested/object/list/table/row review cases. Rich paragraph joins combined with keep/page-break flags explicitly refuse after demonstrated Writer formatting loss. Do not claim those limits are implemented or universal Office parity. Continue solo and preserve originals, backups, fonts, storage formats/origins and mobile safe areas. Reuse this runtime/artifact evidence for documentation-only follow-up; no background CI watcher or device QA gate is added.
 
 ## Latest working mode — November 11, 2026
 
 The user explicitly stopped all sub-agents and requested solo work without rushing. Do not spawn, resume or delegate to any specialist unless the user explicitly requests agents again. The primary assistant owns implementation, verification, review and release. This overrides all earlier specialist requirements. Preserve every checkpoint and pending change, reuse existing evidence, and finish the current requested items without expanding scope or claiming unfinished work complete. No new deadline is imposed by this mode change.
 
-## Published current release — November 11, 2026
+## Previous release — November 11, 2026
 
 PR #28 merged runtime `994a2ae0e1859939ed9d013ce89128485847a055`, now live at https://slate-web.iiankehn.com/ . PR CI 43109802080 and main CI 43113409833 each passed 656 Node tests and 210 browser scenarios without retries. Pages 43116607297 promoted exact artifact 13897563650 (archive SHA-256 `96998929fd8f57e316429f797cb7608b96e8b68621ab16adb35f156b00c2bf09`) without rebuilding or repeating browsers. All 56 checked live shell/worker URLs match; worker cache digest `7a265b853d0cacfe` reconciles. Read docs/RELEASE_2026_11_11.md and docs/COMPATIBILITY_INVENTORY.md. PRs #25–#27 are closed as superseded; branches/checkpoints are preserved. The implemented writing/sharing/native batch is published; broader compatibility gaps remain explicit. Continue solo and preserve storage/origins/private Site/fonts/mobile safe areas. Earlier pending-release statuses below are historical.
 

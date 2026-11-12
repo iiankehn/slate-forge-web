@@ -1,12 +1,14 @@
 # Slate Forge development roadmap
 
-## Current continuation — November 12, 2026
+## Published paragraph-boundary continuation — November 12, 2026
 
-The remaining active implementation is native tracked ODT paragraph splits/joins. It is implemented with 19 corrected actual Writer resaves, independent DOCX-to-ODT controls and explicit formatting refusals; see [ODT_PARAGRAPH_BOUNDARIES.md](ODT_PARAGRAPH_BOUNDARIES.md). Source checks and required PR/main browser verification precede exact-artifact publication. This is not yet live. Work solo; preserve existing storage, originals, origins and mobile protection.
+PR #29 is merged and live at https://slate-web.iiankehn.com/ from runtime `34486e3a8d1520feab44df5ccc57e82c5c6f8dd6`. PR CI 43150746850 and main CI 43152635085 each passed 668 Node tests and all 215 browser scenarios without retries. Pages 43154942139 promoted exact main artifact 13914789082 without rebuilding or repeating browsers. All 56 checked live shell/worker URLs match; worker cache digest `8d5ba8bf49c9c1f2` reconciles. See [RELEASE_2026_11_12.md](RELEASE_2026_11_12.md).
 
-The earlier writing commands/ribbon, genuine editable redaction, native group hierarchy and whole-paragraph review work are already published through PR #28. The compatibility inventory still lists substantive unsupported structures, paint and layout cases; do not claim those are implemented or silently mark the entire broader compatibility mandate complete.
+The supported ODT paragraph split/join extension is published with 19 corrected actual Writer resaves and independent DOCX-to-ODT controls; see [ODT_PARAGRAPH_BOUNDARIES.md](ODT_PARAGRAPH_BOUNDARIES.md). Earlier writing selection/context/clipboard/ribbon controls, genuine editable redaction and native group/whole-paragraph review work remain published. PR #29 is merged; no feature PR remains open. The initial retry-only redaction-test failure was repaired from trace evidence and remains recorded.
 
-## Current batch published — November 11, 2026
+The implemented batch and its publication are complete. The broader [compatibility inventory](COMPATIBILITY_INVENTORY.md) still contains substantive unsupported paint, layout and nested/object/list/table/row review cases. Rich paragraph joins combined with keep/page-break flags explicitly refuse after demonstrated Writer formatting loss. Do not claim those limits are implemented or universal Office parity. Continue solo and preserve originals, backups, fonts, storage formats/origins and mobile safe areas. Reuse this runtime/artifact evidence for documentation-only follow-up; no background CI watcher or device QA gate is added.
+
+## Previous batch published — November 11, 2026
 
 The writing/sharing/native office batch is merged through PR #28 and live from runtime `994a2ae0e1859939ed9d013ce89128485847a055`. PR/main verification each passed 656 Node cases and 210 browser scenarios without retries. Pages 43116607297 promoted the exact main artifact; all 56 checked live shell/worker URLs match. See [RELEASE_2026_11_11.md](RELEASE_2026_11_11.md). PRs #25–#27 are closed as superseded with their branches/history preserved.
 
