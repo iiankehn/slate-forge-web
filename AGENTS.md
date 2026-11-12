@@ -1,5 +1,11 @@
 # Slate Forge web development
 
+## Current continuation — November 12, 2026
+
+The remaining active implementation is native tracked ODT paragraph splits/joins. It is implemented with 19 corrected actual Writer resaves, independent DOCX-to-ODT controls and explicit formatting refusals; see [ODT_PARAGRAPH_BOUNDARIES.md](docs/ODT_PARAGRAPH_BOUNDARIES.md). Source checks and required PR/main browser verification precede exact-artifact publication. This is not yet live. Work solo; preserve existing storage, originals, origins and mobile protection.
+
+The earlier writing commands/ribbon, genuine editable redaction, native group hierarchy and whole-paragraph review work are already published through PR #28. The compatibility inventory still lists substantive unsupported structures, paint and layout cases; do not claim those are implemented or silently mark the entire broader compatibility mandate complete.
+
 ## Latest working mode — November 11, 2026
 
 The user explicitly stopped all sub-agents and requested solo work without rushing. Do not spawn, resume or delegate to any specialist unless the user explicitly requests agents again. The primary assistant owns implementation, verification, review and release. This overrides all earlier specialist requirements. Preserve every checkpoint and pending change, reuse existing evidence, and finish the current requested items without expanding scope or claiming unfinished work complete. No new deadline is imposed by this mode change.

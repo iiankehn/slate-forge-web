@@ -1,0 +1,932 @@
+{
+  "insert-middle": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Before"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "boundary",
+            "kind": "insert",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Left"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Right"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "After"
+          }
+        ]
+      }
+    ]
+  },
+  "insert-emptyLeft": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Before"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "boundary",
+            "kind": "insert",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": []
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Right"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "After"
+          }
+        ]
+      }
+    ]
+  },
+  "insert-emptyRight": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Before"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "boundary",
+            "kind": "insert",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Left"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": []
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "After"
+          }
+        ]
+      }
+    ]
+  },
+  "insert-bothEmpty": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Before"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "boundary",
+            "kind": "insert",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": []
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": []
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "After"
+          }
+        ]
+      }
+    ]
+  },
+  "delete-middle": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Before"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "boundary",
+            "kind": "delete",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Left"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Right"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "After"
+          }
+        ]
+      }
+    ]
+  },
+  "delete-emptyLeft": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Before"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "boundary",
+            "kind": "delete",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": []
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Right"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "After"
+          }
+        ]
+      }
+    ]
+  },
+  "delete-emptyRight": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Before"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "boundary",
+            "kind": "delete",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Left"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": []
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "After"
+          }
+        ]
+      }
+    ]
+  },
+  "delete-bothEmpty": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Before"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "boundary",
+            "kind": "delete",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": []
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": []
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "After"
+          }
+        ]
+      }
+    ]
+  },
+  "spaceJoin": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "boundary",
+            "kind": "delete",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Left  "
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "  Right"
+          }
+        ]
+      }
+    ]
+  },
+  "tabSplit": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "boundary",
+            "kind": "insert",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Left\t"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "\tRight"
+          }
+        ]
+      }
+    ]
+  },
+  "deleteChain": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "a",
+            "kind": "delete",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "A"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "b",
+            "kind": "delete",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "B"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "C"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "After"
+          }
+        ]
+      }
+    ]
+  },
+  "insertChain": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "a",
+            "kind": "insert",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "A"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "b",
+            "kind": "insert",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "B"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "C"
+          }
+        ]
+      }
+    ]
+  },
+  "mixedChain": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "a",
+            "kind": "delete",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "A"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "b",
+            "kind": "insert",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "B"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "c",
+            "kind": "delete",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "C"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "D"
+          }
+        ]
+      }
+    ]
+  },
+  "withBlocks": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Before"
+          }
+        ]
+      },
+      {
+        "type": "blockRevision",
+        "attrs": {
+          "id": "block",
+          "kind": "delete",
+          "author": "Boundary <Reviewer>",
+          "date": "2026-11-11T23:10:00.000Z"
+        },
+        "content": [
+          {
+            "type": "paragraph",
+            "attrs": {},
+            "content": [
+              {
+                "type": "text",
+                "text": "Old"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "blockRevision",
+        "attrs": {
+          "id": "block",
+          "kind": "insert",
+          "author": "Boundary <Reviewer>",
+          "date": "2026-11-11T23:10:00.000Z"
+        },
+        "content": [
+          {
+            "type": "paragraph",
+            "attrs": {},
+            "content": [
+              {
+                "type": "text",
+                "text": "New"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "boundary",
+            "kind": "delete",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "A"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "B"
+          }
+        ]
+      },
+      {
+        "type": "blockRevision",
+        "attrs": {
+          "id": "block",
+          "kind": "insert",
+          "author": "Boundary <Reviewer>",
+          "date": "2026-11-11T23:10:00.000Z"
+        },
+        "content": [
+          {
+            "type": "paragraph",
+            "attrs": {},
+            "content": [
+              {
+                "type": "text",
+                "text": "Tail"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "design": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {
+          "indent": 3,
+          "paragraphSpacing": "12pt",
+          "paragraphLine": "2",
+          "keepTogether": true,
+          "widowControl": false,
+          "paragraphBoundaryChange": {
+            "id": "boundary",
+            "kind": "delete",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Left"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "indent": 3,
+          "paragraphSpacing": "12pt",
+          "paragraphLine": "2",
+          "keepTogether": true,
+          "widowControl": false
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Right"
+          }
+        ]
+      }
+    ]
+  },
+  "rich": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "boundary",
+            "kind": "delete",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Left  ",
+            "marks": [
+              {
+                "type": "bold"
+              },
+              {
+                "type": "comment",
+                "attrs": {
+                  "id": "comment",
+                  "author": "Reader",
+                  "body": "Crossing comment",
+                  "date": "2026-11-11T23:10:00Z"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "  Right",
+            "marks": [
+              {
+                "type": "italic"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "emptyItalic": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "boundary",
+            "kind": "delete",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": []
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Right",
+            "marks": [
+              {
+                "type": "italic"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "boldToPlain": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {
+          "paragraphBoundaryChange": {
+            "id": "boundary",
+            "kind": "delete",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Left",
+            "marks": [
+              {
+                "type": "bold"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Right"
+          }
+        ]
+      }
+    ]
+  },
+  "styledItalic": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {
+          "indent": 3,
+          "paragraphSpacing": "12pt",
+          "paragraphLine": "2",
+          "keepTogether": false,
+          "widowControl": false,
+          "paragraphBoundaryChange": {
+            "id": "boundary",
+            "kind": "delete",
+            "author": "Boundary <Reviewer>",
+            "date": "2026-11-11T23:10:00.000Z"
+          }
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Left"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {
+          "indent": 3,
+          "paragraphSpacing": "12pt",
+          "paragraphLine": "2",
+          "keepTogether": false,
+          "widowControl": false
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Right",
+            "marks": [
+              {
+                "type": "italic"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

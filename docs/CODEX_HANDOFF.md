@@ -1,5 +1,11 @@
 # Slate Forge handoff — reopened work in progress
 
+## Current continuation — November 12, 2026
+
+The remaining active implementation is native tracked ODT paragraph splits/joins. It is implemented with 19 corrected actual Writer resaves, independent DOCX-to-ODT controls and explicit formatting refusals; see [ODT_PARAGRAPH_BOUNDARIES.md](ODT_PARAGRAPH_BOUNDARIES.md). Source checks and required PR/main browser verification precede exact-artifact publication. This is not yet live. Work solo; preserve existing storage, originals, origins and mobile protection.
+
+The earlier writing commands/ribbon, genuine editable redaction, native group hierarchy and whole-paragraph review work are already published through PR #28. The compatibility inventory still lists substantive unsupported structures, paint and layout cases; do not claim those are implemented or silently mark the entire broader compatibility mandate complete.
+
 ## Published current release — November 11, 2026
 
 All work consolidated from PRs #25–#27 plus the paragraph-revision extension is merged through PR #28 and published at https://slate-web.iiankehn.com/ . Runtime: `994a2ae0e1859939ed9d013ce89128485847a055`. PR/main CI each passed 656 Node tests and all 210 browser scenarios without retries. Pages 43116607297 promoted the exact successful main artifact without rebuilding or repeating browsers. All 56 checked live shell/worker URLs match; cache digest `7a265b853d0cacfe` reconciles. See [RELEASE_2026_11_11.md](RELEASE_2026_11_11.md) for provenance, archive digest and evidence limits.
