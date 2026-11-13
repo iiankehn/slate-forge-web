@@ -1,5 +1,11 @@
 # Slate Forge handoff — current published state
 
+## Current retained-review continuation — November 13, 2026
+
+The user explicitly confirmed aiming for completion across all areas and approved continuing to discover work; do not impose a new finite freeze or restart sub-agents. `feat/odt-contained-review` adds explicit ODT review retention for the full existing model, including rows, cell/list replacements, nested and formatting histories. Read [ODT_RETAINED_REVIEW.md](ODT_RETAINED_REVIEW.md). Default native export is unchanged. Fresh guarded copies restore full review; other editors see accepted editable content, and externally modified packages use current native content. Export is opt-in with retained-data disclosure. Safe private table-width preservation also applies to DOCX snapshots.
+
+Two actual native Word row controls lost their row history through Writer conversion. Keep that native interoperability limit explicit. Eight accepted-view resaves verify current-content fallback, not native row history. All 688 Node tests, affected app checks, build and static packaging pass locally. Required PR/main/browser/publication gates are pending. Continue solo and preserve originals, storage formats/origins/private Site/fonts/mobile safe areas. No device gate or background watcher.
+
 ## Published whole-list/table review continuation — November 13, 2026
 
 PR #30 is merged and live at https://slate-web.iiankehn.com/ from runtime `07a3d52e980f762723adf20f56037523c087c6c7`. PR CI 43510468689 and main CI 43512922483 each passed 678 Node tests and all 220 browser scenarios without retries. Pages 43515979791 promoted exact main artifact 14080667059 without rebuilding or repeating browsers. All 56 checked live shell/worker URLs byte-match; worker cache digest `3256efdb04040b43` reconciles. See [RELEASE_2026_11_13.md](RELEASE_2026_11_13.md).

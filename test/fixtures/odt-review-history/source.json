@@ -1,0 +1,554 @@
+{
+  "nested": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Before"
+          }
+        ]
+      },
+      {
+        "type": "blockRevision",
+        "attrs": {
+          "id": "outer",
+          "kind": "insert",
+          "author": "History <Reviewer>",
+          "date": "2026-11-13T22:10:00.000Z"
+        },
+        "content": [
+          {
+            "type": "paragraph",
+            "attrs": {},
+            "content": [
+              {
+                "type": "text",
+                "text": "Outer"
+              }
+            ]
+          },
+          {
+            "type": "blockRevision",
+            "attrs": {
+              "id": "inner",
+              "kind": "delete",
+              "author": "History <Reviewer>",
+              "date": "2026-11-13T22:10:00.000Z"
+            },
+            "content": [
+              {
+                "type": "paragraph",
+                "attrs": {},
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Inner deleted"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "After"
+          }
+        ]
+      }
+    ]
+  },
+  "unanchored": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "blockRevision",
+        "attrs": {
+          "id": "replace",
+          "kind": "delete",
+          "author": "History <Reviewer>",
+          "date": "2026-11-13T22:10:00.000Z"
+        },
+        "content": [
+          {
+            "type": "paragraph",
+            "attrs": {},
+            "content": [
+              {
+                "type": "text",
+                "text": "Old"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "blockRevision",
+        "attrs": {
+          "id": "replace",
+          "kind": "insert",
+          "author": "History <Reviewer>",
+          "date": "2026-11-13T22:10:00.000Z"
+        },
+        "content": [
+          {
+            "type": "paragraph",
+            "attrs": {},
+            "content": [
+              {
+                "type": "text",
+                "text": "New"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "cell": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "table",
+        "content": [
+          {
+            "type": "tableRow",
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "colwidth": [
+                    120
+                  ]
+                },
+                "content": [
+                  {
+                    "type": "blockRevision",
+                    "attrs": {
+                      "id": "cell",
+                      "kind": "delete",
+                      "author": "History <Reviewer>",
+                      "date": "2026-11-13T22:10:00.000Z"
+                    },
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {},
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Old cell"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "blockRevision",
+                    "attrs": {
+                      "id": "cell",
+                      "kind": "insert",
+                      "author": "History <Reviewer>",
+                      "date": "2026-11-13T22:10:00.000Z"
+                    },
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "attrs": {},
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "New cell"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "list": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "blockRevision",
+        "attrs": {
+          "id": "list",
+          "kind": "delete",
+          "author": "History <Reviewer>",
+          "date": "2026-11-13T22:10:00.000Z"
+        },
+        "content": [
+          {
+            "type": "orderedList",
+            "attrs": {
+              "start": 3
+            },
+            "content": [
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {},
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Old item"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "blockRevision",
+        "attrs": {
+          "id": "list",
+          "kind": "insert",
+          "author": "History <Reviewer>",
+          "date": "2026-11-13T22:10:00.000Z"
+        },
+        "content": [
+          {
+            "type": "orderedList",
+            "attrs": {
+              "start": 3
+            },
+            "content": [
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {},
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "New item"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "row-insert": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Before"
+          }
+        ]
+      },
+      {
+        "type": "table",
+        "content": [
+          {
+            "type": "tableRow",
+            "attrs": {
+              "rowChange": null
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "colwidth": [
+                    120
+                  ]
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {},
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "First"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "rowChange": {
+                "id": "history",
+                "kind": "insert",
+                "author": "History <Reviewer>",
+                "date": "2026-11-13T22:10:00.000Z"
+              }
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "colwidth": [
+                    120
+                  ]
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {},
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Changed"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "rowChange": null
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "colwidth": [
+                    120
+                  ]
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {},
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Last"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "After"
+          }
+        ]
+      }
+    ]
+  },
+  "row-delete": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Before"
+          }
+        ]
+      },
+      {
+        "type": "table",
+        "content": [
+          {
+            "type": "tableRow",
+            "attrs": {
+              "rowChange": null
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "colwidth": [
+                    120
+                  ]
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {},
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "First"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "rowChange": {
+                "id": "history",
+                "kind": "delete",
+                "author": "History <Reviewer>",
+                "date": "2026-11-13T22:10:00.000Z"
+              }
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "colwidth": [
+                    120
+                  ]
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {},
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Changed"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "tableRow",
+            "attrs": {
+              "rowChange": null
+            },
+            "content": [
+              {
+                "type": "tableCell",
+                "attrs": {
+                  "colwidth": [
+                    120
+                  ]
+                },
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "attrs": {},
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Last"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "After"
+          }
+        ]
+      }
+    ]
+  },
+  "format": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Current",
+            "marks": [
+              {
+                "type": "bold"
+              },
+              {
+                "type": "formatChange",
+                "attrs": {
+                  "id": "format",
+                  "author": "Formatter",
+                  "date": "2026-11-13T22:10:00.000Z",
+                  "before": [
+                    {
+                      "type": "italic"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "comments": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "paragraph",
+        "attrs": {},
+        "content": [
+          {
+            "type": "text",
+            "text": "Commented",
+            "marks": [
+              {
+                "type": "comment",
+                "attrs": {
+                  "id": "comment",
+                  "kind": "insert",
+                  "author": "History <Reviewer>",
+                  "date": "2026-11-13T22:10:00.000Z",
+                  "body": "Private comment"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
