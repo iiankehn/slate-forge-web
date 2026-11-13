@@ -33,3 +33,7 @@ Ten focused Node cases cover the model, real resaves, corrupt markers/fields, ex
 ## Release state
 
 Implemented on `feat/odt-list-table-revisions`. All 678 Node tests, the production build, static packaging and source whitespace checks pass locally. Required PR/main browser verification precedes exact main-artifact Pages promotion. The preceding PR #29 runtime remains the published version until promotion succeeds. Broader remaining cases stay in [COMPATIBILITY_INVENTORY.md](COMPATIBILITY_INVENTORY.md).
+
+## Initial PR verification and repair
+
+Run `43508856264` was cancelled as superseded after the download/reopen browser check was strengthened to wait for an additional imported document. Corrected-source run `43509384461` passed Node/build checks but stopped with 41 browser passes, one failure (also failing its built-in retry) and 178 unrun cases: the existing paragraph-review scenario expected the guidance phrase “whole-paragraph changes,” which the expanded list/table wording had separated. The phrase is restored while retaining the new guidance. Assertions and strict retry policy are unchanged. Neither run is accepted release evidence; required CI runs again on the repaired source.
