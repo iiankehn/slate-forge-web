@@ -3,37 +3,53 @@ import {reviewAttrs} from './review.mjs';
 const TEXT='urn:oasis:names:tc:opendocument:xmlns:text:1.0',OFFICE='urn:oasis:names:tc:opendocument:xmlns:office:1.0';
 const fail=message=>{throw Error(message||'Decide unsupported structural revisions before ODT export, or use DOCX/HTML to retain them.')};
 const paragraph=node=>['paragraph','heading'].includes(node?.type);
+const container=node=>['bulletList','orderedList','table'].includes(node?.type);
+const structureTypes=new Set(['paragraph','heading','text','hardBreak','commentAnchor','bulletList','orderedList','listItem','table','tableRow','tableCell','tableHeader']);
 const info=(a,esc)=>'<office:change-info><dc:creator>'+esc(a.author)+'</dc:creator><dc:date>'+esc(a.date)+'</dc:date>'+(a.body?'<text:p>'+esc(a.body)+'</text:p>':'')+'</office:change-info>';
-const insert=(xml,value,edge)=>edge==='before'?xml.replace(/^(<text:(?:p|h)\b[^>]*>)/,'$1'+value):xml.replace(/(<\/text:(?:p|h)>)$/,value+'$1');
+const insert=(xml,value,edge)=>{if(edge==='outside')return value+xml;if(!/^<text:(?:p|h)\b/.test(xml))fail('An ODT structural change needs an unchanged paragraph anchor.');return edge==='before'?xml.replace(/^(<text:(?:p|h)\b[^>]*>)/,'$1'+value):xml.replace(/(<\/text:(?:p|h)>)$/,value+'$1')};
 const emptyLike=xml=>xml.match(/^<text:(p|h)\b[^>]*>/)[0]+'</text:'+xml.match(/^<text:(p|h)\b/)[1]+'>';
 
+// Writer canonicalizes columns with no visible cell boundary in any row.
+function stableTable(node){
+ const rows=node.content||[],grid=rows.map(()=>[]),edges=new Set([0]);let cells=0,width=0;
+ for(let y=0;y<rows.length;y++){let x=0;for(const cell of rows[y].content||[]){while(grid[y][x])x++;const w=Number(cell.attrs?.colspan||1),h=Number(cell.attrs?.rowspan||1);if(!Number.isInteger(w)||!Number.isInteger(h)||w<1||w>100||h<1||h>rows.length-y)fail('Invalid merged table in an ODT revision.');edges.add(x);edges.add(x+w);for(let dy=0;dy<h;dy++)for(let dx=0;dx<w;dx++){if(++cells>10000||grid[y+dy][x+dx])fail('Invalid or oversized merged table in an ODT revision.');grid[y+dy][x+dx]=true}x+=w}width=Math.max(width,grid[y].length)}
+ if(!width||grid.some(row=>row.length!==width||Array.from({length:width},(_,x)=>!row[x]).some(Boolean)))fail('An ODT table revision requires a complete rectangular cell grid.');
+ for(let x=1;x<width;x++)if(!edges.has(x))fail('Writer collapses a table column hidden inside merged cells in every row. Split a cell in that column before ODT export, or use DOCX/HTML.');
+}
+
 export function odtBlockChanges(content,esc,{boundaries}={}){
- const records=new Map(),groups=new Map();let visited=0;
+ const records=new Map(),groups=new Map(),textNodes=new WeakSet();let visited=0;
  function scan(node,parent,inside=false,depth=0){if(++visited>100000||depth>100)fail('ODT structural revisions exceed document complexity limits.');if(node.attrs?.rowChange||node.attrs?.paragraphBoundaryChange&&!boundaries?.handles(node))fail('Decide table-row and paragraph-boundary revisions before ODT export, or use DOCX/HTML to retain them.');
   if(node.type==='blockRevision'){
-   if(inside||parent!==content||node.attrs?.operation==='move'||!node.content?.length||!node.content.every(paragraph))fail();
+   if(inside||parent!==content||node.attrs?.operation==='move'||!node.content?.length||!node.content.every(n=>paragraph(n)||container(n)))fail();
    if(parent.content.length===1&&node.content.length===1&&!node.content[0].content?.some(n=>n.type==='hardBreak'||n.type==='text'&&n.text))fail('An empty whole-document structural suggestion requires a decision before ODT export.');
-   const attrs=reviewAttrs(node.attrs);let group=groups.get(attrs.id);if(!group){group={index:groups.size+1,attrs};groups.set(attrs.id,group)}else if(['author','date','body'].some(key=>group.attrs[key]!==attrs[key]))fail('An ODT structural revision has inconsistent author/date metadata.');
-   if(records.size>=1000)fail('ODT supports up to 1,000 structural revision ranges.');records.set(node,{attrs,name:'ForgeBlockChange_'+group.index+'_'+(records.size+1)+'_'+attrs.kind,parts:''});inside=true;
-  }else if(inside&&!paragraph(node)&&!['text','hardBreak','commentAnchor'].includes(node.type))fail();
+   const attrs=reviewAttrs(node.attrs);if(node.content.some(container)&&attrs.body)fail('ODT list/table changes with notes require a compatible editor.');let group=groups.get(attrs.id);if(!group){group={index:groups.size+1,attrs};groups.set(attrs.id,group)}else if(['author','date','body'].some(key=>group.attrs[key]!==attrs[key]))fail('An ODT structural revision has inconsistent author/date metadata.');
+   if(records.size>=1000)fail('ODT supports up to 1,000 structural revision ranges.');records.set(node,{attrs,container:node.content.some(container),name:'ForgeBlockChange_'+group.index+'_'+(records.size+1)+'_'+attrs.kind,parts:''});inside=true;
+  }else if(inside&&!structureTypes.has(node.type))fail();
+  if(inside&&container(node)&&(!node.content?.length||!(node.type==='table'?node.content.every(n=>n.type==='tableRow'):node.content.every(n=>n.type==='listItem'))))fail('An ODT structural revision contains an empty or malformed list/table.');
+  if(inside&&node.type==='orderedList'&&(!Number.isInteger(Number(node.attrs?.start??1))||Number(node.attrs?.start??1)<1||Number(node.attrs?.start??1)>100))fail('ODT list revisions support start values from 1 to 100.');
+  if(inside&&node.type==='table')stableTable(node);
+  if(inside&&node.type==='tableRow'&&!(node.content||[]).every(n=>['tableCell','tableHeader'].includes(n.type)))fail();
+  if(inside&&node.type==='listItem'&&node.content?.[0]?.type!=='paragraph')fail();
+  if(inside&&node.type==='text')textNodes.add(node);
   if(inside&&(node.attrs?.paragraphChange||node.marks?.some(m=>['reviewChange','formatChange'].includes(m.type))))fail('Decide nested text or formatting changes inside structural revisions before ODT export, or use HTML.');
   for(const child of node.content||[])scan(child,node,inside,depth+1);
  }scan(content,null);
- if(records.size&&!content.content.every(node=>paragraph(node)||records.has(node)))fail('Native ODT structural revisions currently require a body of top-level paragraphs and headings. Use DOCX/HTML for lists, tables, sections or objects.');
+ if([...records.values()].some(r=>!r.container)&&!content.content.every(node=>paragraph(node)||records.has(node)))fail('Native ODT structural revisions currently require a body of top-level paragraphs and headings. Use DOCX/HTML for lists, tables, sections or objects.');
  function render(renderNode){if(!records.size&&!boundaries?.size)return null;
   const units=[],deletions=[];
   for(const node of content.content){const record=records.get(node);if(!record){units.push({xml:renderNode(node),node});continue}if(record.attrs.kind==='delete'){record.parts=node.content.map(renderNode).join('');deletions.push({record,at:units.length});continue}record.first=units.length;for(const child of node.content)units.push({xml:renderNode(child),node:child,record});record.end=units.length}
   const insertions=[...records.values()].filter(r=>r.attrs.kind==='insert');
   if(records.size>1&&!units.some(unit=>!unit.record))fail('Whole-document replacements or independent changes need an unchanged paragraph anchor before ODT export, or use DOCX/HTML.');
   if(!units.length){if(deletions.length!==1)fail('Decide multiple whole-document deletions before ODT export, or use DOCX/HTML.');units.push({xml:'<text:p></text:p>',placeholder:true})}
-  for(const record of insertions){let end=record.end;while(end<units.length&&units[end].record)end=units[end].record.end;record.mode=end<units.length?'right':record.first>0?'left':'sole';if(record.mode==='sole'&&insertions.length>1)fail('Independent insertions covering the whole document need decisions before ODT export, or use DOCX/HTML.');}
+  for(const record of insertions){if(record.container){if(units[record.end]?.record||units[record.end]?.node?.type!=='paragraph'||units[record.end].node.attrs?.paragraphBoundaryChange)fail('An ODT list/table insertion needs a following unchanged paragraph anchor.');record.mode='container';continue}let end=record.end;while(end<units.length&&units[end].record)end=units[end].record.end;record.mode=end<units.length?'right':record.first>0?'left':'sole';if(record.mode==='sole'&&insertions.length>1)fail('Independent insertions covering the whole document need decisions before ODT export, or use DOCX/HTML.');}
   const events=new Map();function event(at,edge,priority,xml){const key=at+':'+edge;if(!events.has(key))events.set(key,[]);events.get(key).push({priority,xml})}
-  for(const record of insertions){const start='<text:change-start text:change-id="'+record.name+'"/>',end='<text:change-end text:change-id="'+record.name+'"/>';if(record.mode==='left'){event(record.first-1,'after',2,start);event(record.end-1,'after',0,end)}else{event(record.first,'before',2,start);event(record.end<units.length?record.end:record.end-1,record.end<units.length?'before':'after',0,end)}}
-  for(const {record,at}of deletions){let index,edge;if(units[0].placeholder){index=0;edge='before'}else if(at>0&&units[at-1].record?.mode!=='right'&&(!units[at-1].xml.includes('<office:annotation')||units[at-1].node.content?.some(n=>n.type==='hardBreak'||n.type==='text'&&n.text))){index=at-1;edge='after';record.parts=emptyLike(units[index].xml)+record.parts}else if(at<units.length&&units[at].record?.mode!=='left'){index=at;edge='before';if(emptyLike(record.parts)!==emptyLike(units[index].xml))fail('A leading paragraph deletion needs a compatible paragraph anchor to retain its formatting in ODT. Use DOCX/HTML or decide the change.');record.parts+=emptyLike(units[index].xml)}else fail('An ODT paragraph deletion has no safe unchanged anchor. Use DOCX/HTML or decide the change.');event(index,edge,1,'<text:change text:change-id="'+record.name+'"/>')}
-  const values=units.map((unit,i)=>{let xml=unit.xml;for(const edge of ['before','after']){const values=events.get(i+':'+edge);if(values)xml=insert(xml,values.sort((a,b)=>a.priority-b.priority).map(e=>e.xml).join(''),edge)}return xml});return boundaries?.finish(units,values)??values.join('');
+  for(const record of insertions){const start='<text:change-start text:change-id="'+record.name+'"/>',end='<text:change-end text:change-id="'+record.name+'"/>';if(record.mode==='container'){event(record.first,paragraph(units[record.first].node)?'before':'outside',2,start);event(record.end,'before',0,end)}else if(record.mode==='left'){event(record.first-1,'after',2,start);event(record.end-1,'after',0,end)}else{event(record.first,'before',2,start);event(record.end<units.length?record.end:record.end-1,record.end<units.length?'before':'after',0,end)}}
+  for(const {record,at}of deletions){let index,edge;if(record.container){if(deletions.some(other=>other.record!==record&&other.at===at))fail('An ODT list/table deletion needs a separate paragraph anchor between independent changes.');const a=units[at-1],b=units[at];if(!a||!b||a.record||b.record||a.node?.type!=='paragraph'||b.node?.type!=='paragraph'||a.node.attrs?.paragraphBoundaryChange||b.node.attrs?.paragraphBoundaryChange||emptyLike(a.xml)!==emptyLike(b.xml))fail('An ODT list/table deletion needs matching unchanged paragraphs before and after the change.');record.parts=emptyLike(a.xml)+record.parts+emptyLike(b.xml);event(at-1,'after',1,'<text:change text:change-id="'+record.name+'"/>');continue}if(units[0].placeholder){index=0;edge='before'}else if(at>0&&units[at-1].record?.mode!=='right'&&(!units[at-1].xml.includes('<office:annotation')||units[at-1].node.content?.some(n=>n.type==='hardBreak'||n.type==='text'&&n.text))){index=at-1;edge='after';record.parts=emptyLike(units[index].xml)+record.parts}else if(at<units.length&&units[at].record?.mode!=='left'){index=at;edge='before';if(emptyLike(record.parts)!==emptyLike(units[index].xml))fail('A leading paragraph deletion needs a compatible paragraph anchor to retain its formatting in ODT. Use DOCX/HTML or decide the change.');record.parts+=emptyLike(units[index].xml)}else fail('An ODT paragraph deletion has no safe unchanged anchor. Use DOCX/HTML or decide the change.');event(index,edge,1,'<text:change text:change-id="'+record.name+'"/>')}
+  const values=units.map((unit,i)=>{let xml=unit.xml;for(const edge of ['before','after','outside']){const values=events.get(i+':'+edge);if(values)xml=insert(xml,values.sort((a,b)=>a.priority-b.priority).map(e=>e.xml).join(''),edge)}return xml});return boundaries?.finish(units,values)??values.join('');
  }
  function xml(){return [...records.values()].map(r=>{const kind=r.attrs.kind==='delete'?'deletion':'insertion';return '<text:changed-region xml:id="'+r.name+'" text:id="'+r.name+'"><text:'+kind+'>'+info(r.attrs,esc)+(kind==='deletion'?r.parts:'')+'</text:'+kind+'></text:changed-region>'}).join('')}
- return {size:records.size,handles:node=>records.has(node),render,xml};
+ return {size:records.size,preservesText:node=>textNodes.has(node),handles:node=>records.has(node),render,xml};
 }
 
 const isParagraph=n=>n?.namespaceURI===TEXT&&['p','h'].includes(n.localName);

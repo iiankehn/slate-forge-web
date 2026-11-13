@@ -1,3 +1,4 @@
+import {prepareOdtContainerChanges} from './odt-container-changes.mjs';
 import {prepareOdtBoundaryChanges} from './odt-boundary-changes.mjs';
 import {prepareOdtBlockChanges} from './odt-block-changes.mjs';
 import {reviewAttrs} from './review.mjs';
@@ -36,8 +37,10 @@ export function importOdtChanges(root,styles,escape){
   records.set(key,{node,kind,attrs,encoded:escape(encodeURIComponent(JSON.stringify(attrs))),starts:0,ends:0,points:0,textNodes:0,paragraph:null});
  }
  function bounded(value){outputSize+=value.length;if(outputSize>MAX_HTML)throw Error('Expanded ODT text revisions exceed the 20 MB import limit.');return value}
+ const containerChanges=prepareOdtContainerChanges(root,records,styles,bounded);
  const boundary=prepareOdtBoundaryChanges(root,records,styles,escape,bounded);
- const block=prepareOdtBlockChanges(root,records,styles,escape,bounded);
+ const paragraphs=prepareOdtBlockChanges(root,records,styles,escape,bounded);
+ const block=(node,value)=>containerChanges(node,paragraphs(node,value));block.count=containerChanges.count+paragraphs.count;
  function paragraph(node){for(let parent=node.parentElement;parent&&parent!==root;parent=parent.parentElement)if(parent.namespaceURI===TEXT&&['p','h'].includes(parent.localName))return parent;return null}
  let active=null;
  function walk(node,depth=0){

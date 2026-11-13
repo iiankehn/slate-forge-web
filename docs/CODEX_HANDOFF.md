@@ -1,5 +1,11 @@
 # Slate Forge handoff — current published state
 
+## Current continuation — November 13, 2026
+
+`feat/odt-list-table-revisions` implements complete native ODT list/table review decisions with 39 accepted actual Writer resaves. Read [ODT_CONTAINER_REVISIONS.md](ODT_CONTAINER_REVISIONS.md). Both outcomes, stable table grids/design, numbering, empty anchors, rich runs and independent history survive; retained failures explain the explicit anchor/grid refusals. Standard hyperlink types are also corrected. Source validation covers 117 XML parts with documented LibreOffice extension exclusions.
+
+All 678 Node tests, the production build and static packaging pass locally. Required PR/main browser gates precede exact-artifact publication. This extension is not yet live. Individual row/cell/list-item changes and nested histories remain unsupported; do not close every broader compatibility row. Continue solo, preserve the PR #29 release, storage/origins/private Site/fonts/mobile safe areas, and reuse unchanged evidence. No background watcher or device QA gate.
+
 ## Published paragraph-boundary continuation — November 12, 2026
 
 PR #29 is merged and live at https://slate-web.iiankehn.com/ from runtime `34486e3a8d1520feab44df5ccc57e82c5c6f8dd6`. PR CI 43150746850 and main CI 43152635085 each passed 668 Node tests and all 215 browser scenarios without retries. Pages 43154942139 promoted exact main artifact 13914789082 without rebuilding or repeating browsers. All 56 checked live shell/worker URLs match; worker cache digest `8d5ba8bf49c9c1f2` reconciles. See [RELEASE_2026_11_12.md](RELEASE_2026_11_12.md).

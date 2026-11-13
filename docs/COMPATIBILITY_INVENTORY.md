@@ -1,4 +1,4 @@
-# Word/ODT compatibility inventory — November 12, 2026
+# Word/ODT compatibility inventory — November 13, 2026
 
 This inventory separates delivered behavior, the current concrete extension and named remaining cases. It is not a claim of universal Word/ODT parity. The reopened user mandate includes broader compatibility; publishing the current group extension does not mark every row complete. Device QA is excluded from this mandate.
 
@@ -22,7 +22,8 @@ This inventory separates delivered behavior, the current concrete extension and 
 | ODT formatting Reject without previous values | Inherent source-information limit | Standard formatting-change metadata does not supply prior formatting. A faithful Reject cannot be invented; app-specific history would be a separate explicit format design. |
 | ODT whole-paragraph revisions | Delivered bounded implementation | Top-level paragraphs/headings, safe boundary anchors, replacements, meaningful empty paragraphs and both app decisions survive 17 actual Writer resaves plus a paragraph-design fixture. See ODT_PARAGRAPH_REVISIONS.md. |
 | ODT tracked paragraph splits/joins | Delivered bounded implementation | Adjacent top-level paragraphs with matching design retain both decisions through 19 corrected Writer resaves. Rich joins with keep/page-break flags remain refused. See ODT_PARAGRAPH_BOUNDARIES.md. |
-| ODT nested/object/list/table/row revisions and unanchored whole-document replacements | Remaining bounded format work | These cases remain explicit refusals; existing DOCX/HTML/backups retain the broader local review model. Native formatting Reject still cannot invent previous values. |
+| ODT whole-list and whole-table revisions | Implemented; release gates pending | Complete top-level containers retain both decisions through 39 Writer resaves. Anchor requirements and lossy merged-column/adjacent-history cases explicitly refuse. See ODT_CONTAINER_REVISIONS.md. |
+| ODT nested/object/list-item/cell/row revisions and unanchored whole-document replacements | Remaining bounded format work | These cases remain explicit refusals; existing DOCX/HTML/backups retain the broader local review model. Native formatting Reject still cannot invent previous values. |
 | Exact page/column/furniture/paper-size behavior across editors | Remaining bounded layout cases | Supported sections/orientation/plain furniture work; arbitrary mixed page geometry and unsupported nested section designs need model/layout work. No exact-layout parity claim. |
 | Arbitrary external drawings, effects, SmartArt/charts and broad typography | Outside current bounded native dialect | Requires separate representations or maintained explicit fallbacks; not a finite promise that all office-file features are interchangeable. |
 
