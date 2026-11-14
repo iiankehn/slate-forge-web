@@ -1,5 +1,9 @@
 # Slate Forge handoff — current published state
 
+## Current thin-picture continuation — November 14, 2026
+
+`feat/odt-thin-picture-transforms` extends native ODT picture transforms to painted frames at least 2 canvas units thick while preserving 20-unit editable viewports. Read [ODT_THIN_PICTURES.md](ODT_THIN_PICTURES.md). The 16-picture actual Writer resave preserves 400 source points within .22071 unit and both original PNGs. An independent padded control keeps all rendered ink within two pixels at 144 DPI; the renders are not pixel-identical. Four XML parts pass core ODF 1.3. One-unit transformed frames lost visible ink; retained failed fixtures explain the explicit floor, and the provisional zoom adjustment was removed. All 701 local cases pass across the suite and affected OCR rerun after a validation-sandbox V8 reservation limit was corrected; product code/assertions were unchanged. Build, packaging and whitespace checks pass. PR/main browser/publication gates remain pending; PR #32 remains live. Continue solo under the broader completion mandate, with focused security guidance only; preserve originals, backups, storage/origins/private Site/fonts/mobile safe areas. No device gate or background watcher.
+
 ## Published static-picture continuation — November 14, 2026
 
 PR #32 is merged and live at https://slate-web.iiankehn.com/ from runtime `43310f89b995d5b59b35e4eb015b887f82088944`. PR CI 43628252747 and main CI 43630236627 each passed 697 Node tests and all 230 browser scenarios without retries. Pages 43632316106 promoted exact main artifact 14128586915 without rebuilding or repeating browsers. All 56 checked live shell/worker URLs byte-match; worker cache digest `68f8fe3c30c581b4` reconciles. See [RELEASE_2026_11_14_STATIC_PICTURES.md](RELEASE_2026_11_14_STATIC_PICTURES.md).
