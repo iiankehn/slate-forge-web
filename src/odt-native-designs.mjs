@@ -9,7 +9,7 @@ const fail=()=>{throw Error('This native ODT canvas contains unsupported geometr
 const mm=value=>Number(value.toFixed(7))+'mm';
 const textXML=(text,esc)=>esc(text).replace(/ {2,}/g,s=>'<text:s text:c="'+s.length+'"/>').replace(/\t/g,'<text:tab/>');
 export function nativeOdtCanvas(input,width,styleId,esc,pictureAssets){
- const scene=normalizeScene(input),scale=width/900,geometry=o=>nativeBoxXML(o,scale);
+ const pictureStart=pictureAssets?.extraMarkup||0,scene=normalizeScene(input),scale=width/900,geometry=o=>nativeBoxXML(o,scale);
  const objects=nativeStrokeObjects(scene);try{orderedGroupTree(objects)}catch(error){throw Error('Native ODT groups require adjacent opaque supported objects with consistent nested membership. '+error.message)}
  for(const o of objects)if(o.group&&(!['line','arrow','rect','ellipse','text','image','path'].includes(o.type)||o.opacity!==100||['rect','ellipse'].includes(o.type)&&(o.skewX||o.flipX||o.flipY)))throw Error('Native ODT groups require adjacent opaque supported objects. Group effects and unsupported transforms require preview export.');
 
@@ -30,7 +30,7 @@ export function nativeOdtCanvas(input,width,styleId,esc,pictureAssets){
   }else body+='<draw:'+o.type+common+(o.type==='rect'&&o.radius?' draw:corner-radius="'+mm(o.radius*scale)+'"':'')+'/>';
  }
  body+='</draw:g>'.repeat(openGroups.length);
- const markupSize=encodeScene({...scene,objects}).length;if(markupSize>15000000)throw Error('Native ODT exceeds the 15 MB per-canvas reopening limit. Split the canvas into smaller copies.');
+ const markupSize=encodeScene({...scene,objects}).length+(pictureAssets?.extraMarkup||0)-pictureStart;if(markupSize>15000000)throw Error('Native ODT exceeds the 15 MB per-canvas reopening limit. Split the canvas into smaller copies.');
  const groupStyle=styleId('graphic','<style:graphic-properties style:vertical-pos="from-top" style:horizontal-pos="from-left" style:horizontal-rel="paragraph" style:flow-with-text="false"/>');
  return {markupSize,xml:'<draw:g draw:name="SlateForgeNativeCanvas" text:anchor-type="as-char" svg:y="0mm" draw:style-name="'+groupStyle+'"><svg:title>'+esc(scene.title)+'</svg:title><svg:desc>'+esc(scene.description)+'</svg:desc>'+body+'</draw:g>'};
 }
