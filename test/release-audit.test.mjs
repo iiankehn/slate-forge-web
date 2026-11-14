@@ -33,8 +33,8 @@ test('nested DOCX review snapshot is sanitized and ignored after external packag
  const dom=new JSDOM(''),Parser=dom.window.DOMParser,purifier=createDOMPurify(dom.window);
  try{
   const files={'[Content_Types].xml':strToU8('<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"/>'),'word/document.xml':strToU8('<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body><w:p/></w:body></w:document>')};
-  const bytes=await attachReviewTree(zipSync(files),'<div data-forge-block-change="pending"><p onclick="alert(1)">Kept<script>alert(1)</script></p></div>',{}, {Parser}),archive=unzipSync(bytes),warnings=[];
-  const restored=await restoreReviewTree(archive,Parser,warnings,{purifier});assert.ok(restored);assert.match(restored.html,/Kept/);assert.doesNotMatch(restored.html,/onclick|<script/);assert.match(warnings.join(' '),/Nested Slate Forge review was restored/);
+  const bytes=await attachReviewTree(zipSync(files),'<div data-forge-block-change="pending"><p onclick="alert(1)">Kept<script>alert(1)</script></p><table><tr><td colwidth="120"><p>Width kept</p></td><td colwidth="0;position:fixed"><p>Unsafe width removed</p></td></tr></table></div>',{}, {Parser}),archive=unzipSync(bytes),warnings=[];
+  const restored=await restoreReviewTree(archive,Parser,warnings,{purifier});assert.ok(restored);assert.match(restored.html,/Kept/);assert.doesNotMatch(restored.html,/onclick|<script|position:fixed/);assert.match(restored.html,/colwidth="120"/);assert.match(warnings.join(' '),/Nested Slate Forge review was restored/);
   archive['word/document.xml']=strToU8('<changed/>');assert.equal(await restoreReviewTree(archive,Parser,warnings,{purifier}),null);assert.match(warnings.join(' '),/changed outside/);
  }finally{dom.window.close()}
 });
