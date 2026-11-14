@@ -1,5 +1,9 @@
 # Slate Forge web development
 
+## Current static-picture continuation — November 14, 2026
+
+`feat/odt-static-picture-formats` adds static GIF and WebP native-canvas ODT export. GIF remains original bytes; WebP is normalized to full-resolution PNG before embedding. Read [ODT_STATIC_PICTURES.md](docs/ODT_STATIC_PICTURES.md). Raw cropped WebP failed actual Writer density/rendering probes; retain the failure and explicit import refusal. The corrected six-picture Writer resave preserves geometry, crop, effects and opaque membership. Independent 144-DPI PDF renders match an all-PNG control exactly. Four generated XML parts pass core ODF 1.3 validation. All 697 Node tests, build, packaging and source whitespace checks pass locally. PR/main browser verification and publication gates remain pending; PR #31 remains published. Continue solo under the broader completion mandate; preserve storage/origins/private Site/fonts/mobile safe areas. No device gate or background watcher.
+
 ## Published retained-review continuation — November 14, 2026
 
 PR #31 is merged and live at https://slate-web.iiankehn.com/ from runtime `f7488f3f50df43c71e9e9851bbaedb3a02008096`. PR CI 43571680009 and main CI 43573166532 each passed 688 Node tests and all 225 browser scenarios without retries. Pages 43574825195 promoted exact main artifact 14106330531 without rebuilding or repeating browsers. All 56 checked live shell/worker URLs byte-match; worker cache digest `03d2a194f9797fda` reconciles. See [RELEASE_2026_11_14.md](docs/RELEASE_2026_11_14.md).

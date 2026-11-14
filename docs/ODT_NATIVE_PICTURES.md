@@ -1,5 +1,8 @@
 # Native ODF canvas pictures
 
+The static GIF/WebP extension is implemented with release gates pending; see [ODT_STATIC_PICTURES.md](ODT_STATIC_PICTURES.md). WebP becomes PNG for reliable crop, and GIF remains embedded. The PNG/JPEG evidence below is the original published subset.
+
+
 Native-canvas ODT export includes bounded embedded PNG/JPEG pictures as actual `draw:frame` / `draw:image` objects, with crop, horizontal/vertical mirroring and image opacity within the [bounded transform extension](ODT_NATIVE_TRANSFORMS.md). Reopening reads current picture bytes, geometry and styles; it does not restore an old private scene. Hidden objects and private scene snapshots are omitted. Preview and retained-original export modes remain available.
 
 Native editable pictures include the **whole original image file**, including cropped-out pixels and metadata. The export dialog explains this. Choose flattened preview export with original-canvas retention off when original image files must be excluded.
