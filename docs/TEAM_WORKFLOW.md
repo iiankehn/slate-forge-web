@@ -8,7 +8,7 @@ Reuse exact-source evidence. Run meaningful affected checks after changes, then 
 
 Promote the successful merged-main immutable artifact through Pages without rebuilding or repeating browsers. Verify live files/cache against that artifact and update the handoff honestly. Do not describe unpublished work or unsupported compatibility cases as complete.
 
-The current editable-redaction, compatibility and writing-interface work remains in progress. The prior published-release record below does not close or narrow the later user mandate. No test, CI, merge or deployment is started merely by this workflow change.
+The writing-interface and editable-redaction batch is published through PR #28. Subsequent native ODT paragraph, boundary and whole-container review extensions are published through PRs #28–#30. Read the current top sections of ROADMAP.md and CODEX_HANDOFF.md for later release evidence and active work. The historical release record below does not close or narrow the user's broader completion mandate. Work remains solo; do not impose a new finite freeze.
 
 ## Previous published release (historical)
 

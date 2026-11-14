@@ -1,5 +1,7 @@
 # Slate Forge navigation and writing batch · 2026-10-29
 
+This is a historical batch record. Current published behavior and verification are recorded in [RELEASE_2026_11_14.md](RELEASE_2026_11_14.md); use the current top sections of [ROADMAP.md](ROADMAP.md) and [CODEX_HANDOFF.md](CODEX_HANDOFF.md) to continue development. Private Site and old verification-limit statements below describe this earlier batch.
+
 This release makes the expanding toolset and saved text documents easier to find. The Site remains owner-private and local-first; existing origins, documents and storage identifiers are preserved.
 
 ## Included
