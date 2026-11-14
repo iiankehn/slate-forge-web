@@ -1,0 +1,39 @@
+{
+  "writer_build": "2c87e51eeaa2b413ff4ae097b2705eea1995d8e5",
+  "source_points_per_roundtrip": 400,
+  "maximum_point_distance": {
+    "fresh": 0.0643323477463741,
+    "resaved": 0.22070965741373458
+  },
+  "raster_dpi": 144,
+  "raster_pages": [
+    {
+      "page": 1,
+      "mean_channel_delta": 0.048928423987507255,
+      "max_channel_delta": 145,
+      "unmatched_ink_radius_1": 38,
+      "unmatched_ink_radius_2": 0,
+      "unmatched_ink_radius_3": 0
+    },
+    {
+      "page": 2,
+      "mean_channel_delta": 0.03851281683090319,
+      "max_channel_delta": 147,
+      "unmatched_ink_radius_1": 10,
+      "unmatched_ink_radius_2": 0,
+      "unmatched_ink_radius_3": 0
+    }
+  ],
+  "core_odf_13_parts_validated": 8,
+  "three_column": {
+    "max_source_point_distance": 0.5280328482902579,
+    "tolerance": 0.7,
+    "native_ink_pixels": 184,
+    "control_ink_pixels": 194,
+    "unmatched_ink_radius_1": 0
+  },
+  "failed_narrow": {
+    "native_ink_pixels": 0,
+    "control_ink_pixels": 18
+  }
+}

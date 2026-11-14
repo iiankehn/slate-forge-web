@@ -1,5 +1,8 @@
 # Native ODF canvas pictures
 
+The transformed thin-picture extension is implemented with release gates pending; see [ODT_THIN_PICTURES.md](ODT_THIN_PICTURES.md) for the 2-unit/.35-mm page-scale floors, actual Writer corpora and retained one-unit/narrow-column rendering failures.
+
+
 The static GIF/WebP extension is published through PR #32; see [ODT_STATIC_PICTURES.md](ODT_STATIC_PICTURES.md). WebP becomes PNG for reliable crop, and GIF remains embedded. The PNG/JPEG evidence below is the original published subset.
 
 
