@@ -1,8 +1,12 @@
 # Slate Forge web development
 
-## Current static-picture continuation — November 14, 2026
+## Published static-picture continuation — November 14, 2026
 
-`feat/odt-static-picture-formats` adds static GIF and WebP native-canvas ODT export. GIF remains original bytes; WebP is normalized to full-resolution PNG before embedding. Read [ODT_STATIC_PICTURES.md](docs/ODT_STATIC_PICTURES.md). Raw cropped WebP failed actual Writer density/rendering probes; retain the failure and explicit import refusal. The corrected six-picture Writer resave preserves geometry, crop, effects and opaque membership. Independent 144-DPI PDF renders match an all-PNG control exactly. Four generated XML parts pass core ODF 1.3 validation. All 697 Node tests, build, packaging and source whitespace checks pass locally. PR/main browser verification and publication gates remain pending; PR #31 remains published. Continue solo under the broader completion mandate; preserve storage/origins/private Site/fonts/mobile safe areas. No device gate or background watcher.
+PR #32 is merged and live at https://slate-web.iiankehn.com/ from runtime `43310f89b995d5b59b35e4eb015b887f82088944`. PR CI 43628252747 and main CI 43630236627 each passed 697 Node tests and all 230 browser scenarios without retries. Pages 43632316106 promoted exact main artifact 14128586915 without rebuilding or repeating browsers. All 56 checked live shell/worker URLs byte-match; worker cache digest `68f8fe3c30c581b4` reconciles. See [RELEASE_2026_11_14_STATIC_PICTURES.md](docs/RELEASE_2026_11_14_STATIC_PICTURES.md).
+
+Static GIF and WebP canvas pictures now export through native editable ODT. GIF retains original bytes; WebP becomes full-resolution PNG for reliable editable crop. Originals and retained-review HTML are unchanged. The corrected six-picture actual Writer resave preserves crop, geometry, rotation, mirroring, opacity and opaque membership; its 144-DPI PDF render is pixel-identical to an independent all-PNG control. Four generated content/styles XML parts pass core ODF 1.3 validation. Read [ODT_STATIC_PICTURES.md](docs/ODT_STATIC_PICTURES.md).
+
+Raw cropped WebP failed actual density/rendering probes and remains explicitly refused on native import. Animation, WebP orientation/color metadata, partial GIF frames and unsupported picture effects remain explicit limits. Converted PNG bytes count toward existing reopening budgets. Continue solo under the broader completion mandate; do not impose a new finite freeze. Preserve originals, backups, storage formats/identifiers/origins, private Site, fonts and mobile safe areas. No device gate or background watcher.
 
 ## Published retained-review continuation — November 14, 2026
 
