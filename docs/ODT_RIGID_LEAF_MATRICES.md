@@ -1,6 +1,6 @@
 # Bounded rigid leaf matrices — published
 
-The picture-only affine extension is implemented with release gates pending; see [ODT_AFFINE_PICTURES.md](ODT_AFFINE_PICTURES.md). Other leaves keep the rigid bounds documented below; the original rigid release evidence remains historical.
+The picture-only affine extension is published through PR #34; see [ODT_AFFINE_PICTURES.md](ODT_AFFINE_PICTURES.md). Other leaves keep the rigid bounds documented below; the original rigid release evidence remains historical.
 
 
 Native ODT import accepts a standalone `matrix(a b c d e f)` on a supported leaf. The first four finite, unitless coefficients must be orthonormal with determinant +1 or −1 within `1e-8`; rotation/translation and bounded non-text reflection are represented. The final two values require explicit decimal `mm`, `cm`, `in` or `pt` lengths, with unitless exact zero also permitted. Nonzero unitless translations are ambiguous and remain refused. Singular matrices, reflected text, scale/shear, other units, malformed operands, oversized translations, mixed transform lists and raw group transforms remain refused. Existing leaf paint, clipping and text restrictions still apply.

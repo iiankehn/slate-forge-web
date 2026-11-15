@@ -1,6 +1,6 @@
 # Affine matrices on native ODT pictures
 
-Native-canvas ODT imports now accept a standalone measured affine matrix on a validated picture frame. Nonuniform scale, X shear, rotation and reflection normalize into the existing editable image geometry. Native export writes ordinary frame dimensions and rotation/skew lists, without retaining raw matrices or private originals. Original picture payloads, current crop, opacity and supported opaque membership remain intact.
+Native-canvas ODT imports now accept a standalone measured affine matrix on a validated picture frame. Nonuniform scale, X shear, rotation and reflection normalize into the existing editable image geometry. Native export writes ordinary frame dimensions and rotation/skew lists, without retaining raw matrices or private originals. PNG/JPEG payloads, current crop, opacity and supported opaque membership remain intact. Existing WebP normalization and unsupported-format limits remain.
 
 The extension is picture-only. Shapes, text, strokes and groups keep their existing rigid-matrix or refusal rules. Nonuniform transform lists, mixed matrix/list syntax and nonzero unitless translations remain refused.
 
@@ -32,4 +32,6 @@ Six new Node cases cover explicit opt-in at the picture branch, parser units/ran
 
 Focused source review follows the installed Cloudflare security-audit guidance while staying solo. The parser flag is selected by validated element type, not document attributes; finite scales, explicit units, numeric/layout/image budgets and the other paint/model guards remain. Final functional/editor checks run in an offline OS namespace with allowlisted environment, read-only checkout/toolchains and bounded scratch/resources. This is guidance-mode review, not the full multi-agent audit.
 
-Implemented on `feat/odt-affine-picture-matrices`; all 709 Node tests, production build, static packaging and source whitespace checks pass locally. Accepted raw fixtures store the mimetype member first and uncompressed; six affected checks pass after refreshing that package metadata. Required PR/main browser verification (240 scenarios) and exact-artifact publication remain pending. PR #33 remains published. Broader paint, text/stroke/group affine, layout and native-review cases remain explicit in [COMPATIBILITY_INVENTORY.md](COMPATIBILITY_INVENTORY.md).
+## Release state
+
+PR #34 is merged and live at https://slate-web.iiankehn.com/ from runtime `0d3bc17f6331831ba199c5c2bbe9c29515638546`. PR CI 43662647488 and main CI 43664296030 each passed 709 Node tests and all 240 browser scenarios without retries. Pages 43665651054 promoted exact main artifact 14142112437 without rebuilding or repeating browsers. All 56 checked live shell/worker URLs byte-match; worker cache digest `50af55de1fd327f3` reconciles. See [RELEASE_2026_11_15_AFFINE_PICTURES.md](RELEASE_2026_11_15_AFFINE_PICTURES.md). Local tests, production/static packaging and source whitespace checks pass; the accepted raw archives store mimetype first and uncompressed. Broader paint, text/stroke/group affine, layout and native-review cases remain explicit in [COMPATIBILITY_INVENTORY.md](COMPATIBILITY_INVENTORY.md).

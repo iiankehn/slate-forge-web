@@ -1,6 +1,6 @@
 # Native ODF canvas pictures
 
-The measured affine-picture import extension is implemented with release gates pending; see [ODT_AFFINE_PICTURES.md](ODT_AFFINE_PICTURES.md) for bounds, original mirror-style failures and normalized Writer exchange.
+The measured affine-picture import extension is published through PR #34; see [ODT_AFFINE_PICTURES.md](ODT_AFFINE_PICTURES.md) for bounds, original mirror-style failures and normalized Writer exchange.
 
 
 The transformed thin-picture extension is published through PR #33; see [ODT_THIN_PICTURES.md](ODT_THIN_PICTURES.md) for the 2-unit/.35-mm page-scale floors, actual Writer corpora and retained one-unit/narrow-column rendering failures.
