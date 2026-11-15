@@ -56,6 +56,7 @@ function blocks(nodes,ctx,list={}){return (nodes||[]).flatMap(node=>{
     case 'tableOfContents':return [new Paragraph({children:[new TextRun({text:String(node.attrs?.title||'Contents').slice(0,80),bold:true,size:30})]}),new TableOfContents('Contents',{hyperlink:true,headingStyleRange:tocStart(node.attrs?.startDepth,node.attrs?.depth)+'-'+tocDepth(node.attrs?.depth),cachedEntries:ctx.headings.filter(h=>h.level>=tocStart(node.attrs?.startDepth,node.attrs?.depth)&&h.level<=tocDepth(node.attrs?.depth)),beginDirty:true})];
     case 'pageBreak':return [new Paragraph({children:[new TextRun({text:'',break:1})],pageBreakBefore:true})];
     case 'horizontalRule':return [new Paragraph({border:{bottom:{style:BorderStyle.SINGLE,size:4,color:'9BAE9C'}},children:[]})];
+    case 'columnSection':{const attrs=sectionAttrs(node.attrs);if(attrs.blankHeader||attrs.blankFooter)throw Error('Word cannot preserve nested sections that clear header or footer text. Use ODT or editable HTML.');return blocks(node.content,ctx)}
     case 'blockquote':return blocks(node.content,ctx).map(p=>p instanceof Paragraph?p:new Paragraph({text:'Quotation'}));
     case 'bulletList':case 'orderedList':{
       let level=Math.min(8,list._level||0),reference='ordered-'+ctx.nextList++;

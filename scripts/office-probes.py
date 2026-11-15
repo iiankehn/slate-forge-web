@@ -101,6 +101,7 @@ def run_case(key, spec, output):
         native = json.loads(command(['node', str(ROOT / 'scripts/check-office-import.mjs'),
                                      str(case_output / 'resaved' / (key + '.' + exchange_format)), key]))
         documents = [fitz.open(case_output / folder / (key + '.pdf')) for folder in ['source-pdf', 'resaved-pdf', *(['normalized-pdf'] if spec.get('normalize') and exchange_format == 'odt' else [])]]
+        (case_output / 'page-texts.json').write_text(json.dumps({str(index): [{'text': page.get_text(), 'sorted_text': page.get_text(sort=True), 'words': page.get_text('words')} for page in document] for index, document in enumerate(documents)}, indent=2) + '\n')
         for document in documents:
             require(['landscape' if page.rect.width > page.rect.height else 'portrait' for page in document] == spec['pages'],
                     'Office page count/orientations changed.')
@@ -111,7 +112,7 @@ def run_case(key, spec, output):
                 b = companion[page_index]
                 require(abs(a.rect.width - b.rect.width) < .1 and abs(a.rect.height - b.rect.height) < .1,
                         'Office paper dimensions changed.')
-                require(' '.join(a.get_text().split()) == ' '.join(b.get_text().split()), 'Office text/page placement changed.')
+                require(' '.join(a.get_text().split()) == ' '.join(b.get_text().split()), key + ': page ' + str(page_index + 1) + ' text/page placement changed; see page-texts.json.')
                 left, right = [page.get_pixmap(matrix=fitz.Matrix(2, 2), alpha=False) for page in [a, b]]
                 identical = left.width == right.width and left.height == right.height and left.samples == right.samples
                 if spec['pixel_identical']:
