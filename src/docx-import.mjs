@@ -25,7 +25,7 @@ export async function importDOCX(bytes,Parser=DOMParser,{prepare=prepareImage}={
  if(nativeParagraphFormatting.has(p))attributes['data-forge-paragraph-change']=encodeURIComponent(JSON.stringify(nativeParagraphFormatting.get(p)));
  for(const [key,name]of [['data-keep-together','keepLines'],['data-keep-next','keepNext'],['data-break-before','pageBreakBefore']])if(enabled(desc(props,name)[0]))attributes[key]='true';
  const widow=desc(props,'widowControl')[0];if(widow&&!enabled(widow))attributes['data-widow-control']='false';
- const after=val(spacing,'after'),line=val(spacing,'line'),rule=val(spacing,'lineRule');if(after!==''&&Number.isFinite(Number(after))){const points=Number(after)/20;if([0,6,12,18,24].includes(points))style.marginBottom=points+'pt';else warnings.push('Unsupported paragraph spacing uses the document default.')}
+ const after=val(spacing,'after'),line=val(spacing,'line'),rule=val(spacing,'lineRule');if(after!==''&&Number.isFinite(Number(after))){const points=Number(after)/20;if([0,6,8,12,18,24].includes(points))style.marginBottom=points+'pt';else warnings.push('Unsupported paragraph spacing uses the document default.')}
  if(line!==''&&(!rule||rule==='auto')){const ratio=Number(line)/240,match=[1.3,1.65,2].find(n=>Math.abs(n-ratio)<.005);if(match)style.lineHeight=String(match);else warnings.push('Unsupported line spacing uses the document default.')}
  if(!Object.keys(attributes).length&&!Object.keys(style).length&&!['ForgeCode','SlateForgeCode'].includes(styleId))continue;
  if(desc(props,'numPr').length){warnings.push('List paragraph design and formatting revisions were simplified.');continue}
