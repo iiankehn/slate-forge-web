@@ -8,7 +8,7 @@ The user moved testing to GitHub and reserved Codex for development. This supers
 
 ## Word section-flow development continuation
 
-`feat/word-section-flow` reconstructs bounded native DOCX sections and adds document-wide sequential export while explicitly refusing mixed balanced/sequential columns. Read [WORD_SECTION_FLOW.md](docs/WORD_SECTION_FLOW.md). GitHub acceptance and publication are pending. Run solo; all execution stays on GitHub.
+`feat/word-section-flow` reconstructs bounded native DOCX sections and retains 8-point spacing. Attempted sequential export was withdrawn after Writer removed its native setting; export stays refused, and the failed corpus remains retained. Read [WORD_SECTION_FLOW.md](docs/WORD_SECTION_FLOW.md). GitHub acceptance and publication are pending. Run solo; all execution stays on GitHub.
 
 ## Published sequential-column continuation — November 15, 2026
 

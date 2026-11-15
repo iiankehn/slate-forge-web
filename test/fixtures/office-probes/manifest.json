@@ -103,7 +103,7 @@
     "normalize": true,
     "pixel_identical": true
   },
-  "word-sequential-columns": {
+  "word-balanced-columns": {
     "input": "docs/fixtures/odt-master-page-runs/columns-raw-input.odt",
     "pages": [
       "portrait",
@@ -121,9 +121,9 @@
       2
     ],
     "flows": [
-      "sequential",
-      "sequential",
-      "sequential"
+      "balance",
+      "balance",
+      "balance"
     ],
     "markers": [
       "Portrait opening",

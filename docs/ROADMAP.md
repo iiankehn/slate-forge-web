@@ -2,7 +2,7 @@
 
 ## Active Word section-flow continuation
 
-The bounded DOCX section/reopening and sequential-flow gap is in development; GitHub acceptance and publication are pending. See [WORD_SECTION_FLOW.md](WORD_SECTION_FLOW.md). Mixed balancing modes and the documented unsupported section designs retain explicit limits.
+Bounded DOCX section reopening and 8-point spacing are in development; GitHub acceptance and publication are pending. See [WORD_SECTION_FLOW.md](WORD_SECTION_FLOW.md). Sequential DOCX export remains refused after the actual Writer loss of its native setting; the failed corpus is retained. Unsupported section designs keep explicit fallbacks.
 
 ## Published sequential-column continuation — November 15, 2026
 
