@@ -1,0 +1,397 @@
+{
+  "orientation": {
+    "pages": {
+      "raw": [
+        {
+          "size_points": [
+            595.303955078125,
+            841.8897705078125
+          ],
+          "text_lines": [
+            "Common header",
+            "Portrait opening",
+            "Common footer 1"
+          ]
+        },
+        {
+          "size_points": [
+            841.8897705078125,
+            595.303955078125
+          ],
+          "text_lines": [
+            "Common header",
+            "Landscape middle",
+            "Wide page body",
+            "\u2022Landscape list item",
+            "Common footer 2"
+          ]
+        },
+        {
+          "size_points": [
+            595.303955078125,
+            841.8897705078125
+          ],
+          "text_lines": [
+            "Common header",
+            "Portrait return",
+            "End of document",
+            "Common footer 3"
+          ]
+        }
+      ],
+      "control": [
+        {
+          "size_points": [
+            595.303955078125,
+            841.8897705078125
+          ],
+          "text_lines": [
+            "Common header",
+            "Portrait opening",
+            "Common footer 1"
+          ]
+        },
+        {
+          "size_points": [
+            841.8897705078125,
+            595.303955078125
+          ],
+          "text_lines": [
+            "Common header",
+            "Landscape middle",
+            "Wide page body",
+            "\u2022Landscape list item",
+            "Common footer 2"
+          ]
+        },
+        {
+          "size_points": [
+            595.303955078125,
+            841.8897705078125
+          ],
+          "text_lines": [
+            "Common header",
+            "Portrait return",
+            "End of document",
+            "Common footer 3"
+          ]
+        }
+      ],
+      "normalized": [
+        {
+          "size_points": [
+            595.303955078125,
+            841.8897705078125
+          ],
+          "text_lines": [
+            "Common header",
+            "Portrait opening",
+            "Common footer 1"
+          ]
+        },
+        {
+          "size_points": [
+            841.8897705078125,
+            595.303955078125
+          ],
+          "text_lines": [
+            "Common header",
+            "Landscape middle",
+            "Wide page body",
+            "\u2022Landscape list item",
+            "Common footer 2"
+          ]
+        },
+        {
+          "size_points": [
+            595.303955078125,
+            841.8897705078125
+          ],
+          "text_lines": [
+            "Common header",
+            "Portrait return",
+            "End of document",
+            "Common footer 3"
+          ]
+        }
+      ]
+    },
+    "odf13_parts": [
+      "raw/content.xml",
+      "raw/styles.xml",
+      "control/content.xml",
+      "control/styles.xml",
+      "normalized/content.xml",
+      "normalized/styles.xml",
+      "wide-end/content.xml",
+      "wide-end/styles.xml"
+    ],
+    "render_144_dpi": [
+      {
+        "against": "control",
+        "page": 1,
+        "maximum_channel_delta": 0,
+        "mean_channel_delta": 0.0
+      },
+      {
+        "against": "control",
+        "page": 2,
+        "maximum_channel_delta": 0,
+        "mean_channel_delta": 0.0
+      },
+      {
+        "against": "control",
+        "page": 3,
+        "maximum_channel_delta": 0,
+        "mean_channel_delta": 0.0
+      },
+      {
+        "against": "normalized",
+        "page": 1,
+        "maximum_channel_delta": 0,
+        "mean_channel_delta": 0.0
+      },
+      {
+        "against": "normalized",
+        "page": 2,
+        "maximum_channel_delta": 0,
+        "mean_channel_delta": 0.0
+      },
+      {
+        "against": "normalized",
+        "page": 3,
+        "maximum_channel_delta": 0,
+        "mean_channel_delta": 0.0
+      },
+      {
+        "against": "wide-end",
+        "page": 1,
+        "maximum_channel_delta": 0,
+        "mean_channel_delta": 0.0
+      },
+      {
+        "against": "wide-end",
+        "page": 2,
+        "maximum_channel_delta": 0,
+        "mean_channel_delta": 0.0
+      }
+    ],
+    "status": "accepted"
+  },
+  "columns": {
+    "pages": {
+      "raw": [
+        {
+          "size_points": [
+            595.303955078125,
+            841.8897705078125
+          ],
+          "text_lines": [
+            "Common header",
+            "Portrait opening",
+            "Common footer 1"
+          ]
+        },
+        {
+          "size_points": [
+            841.8897705078125,
+            595.303955078125
+          ],
+          "text_lines": [
+            "Common header",
+            "Landscape middle",
+            "Wide page body Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. ",
+            "Common footer 2"
+          ]
+        },
+        {
+          "size_points": [
+            595.303955078125,
+            841.8897705078125
+          ],
+          "text_lines": [
+            "Common header",
+            "Portrait return",
+            "End of document",
+            "Common footer 3"
+          ]
+        }
+      ],
+      "control": [
+        {
+          "size_points": [
+            595.303955078125,
+            841.8897705078125
+          ],
+          "text_lines": [
+            "Common header",
+            "Portrait opening",
+            "Common footer 1"
+          ]
+        },
+        {
+          "size_points": [
+            841.8897705078125,
+            595.303955078125
+          ],
+          "text_lines": [
+            "Common header",
+            "Landscape middle",
+            "Wide page body Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. ",
+            "Common footer 2"
+          ]
+        },
+        {
+          "size_points": [
+            595.303955078125,
+            841.8897705078125
+          ],
+          "text_lines": [
+            "Common header",
+            "Portrait return",
+            "End of document",
+            "Common footer 3"
+          ]
+        }
+      ],
+      "normalized": [
+        {
+          "size_points": [
+            595.303955078125,
+            841.8897705078125
+          ],
+          "text_lines": [
+            "Common header",
+            "Portrait opening",
+            "Common footer 1"
+          ]
+        },
+        {
+          "size_points": [
+            841.8897705078125,
+            595.303955078125
+          ],
+          "text_lines": [
+            "Common header",
+            "Landscape middle",
+            "Wide page body Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text. Column layout ",
+            "preserves wrapped text.",
+            "Common footer 2"
+          ]
+        },
+        {
+          "size_points": [
+            595.303955078125,
+            841.8897705078125
+          ],
+          "text_lines": [
+            "Common header",
+            "Portrait return",
+            "End of document",
+            "Common footer 3"
+          ]
+        }
+      ]
+    },
+    "odf13_parts": [
+      "raw/content.xml",
+      "raw/styles.xml",
+      "control/content.xml",
+      "control/styles.xml",
+      "normalized/content.xml",
+      "normalized/styles.xml"
+    ],
+    "render_144_dpi": [
+      {
+        "against": "control",
+        "page": 1,
+        "maximum_channel_delta": 0,
+        "mean_channel_delta": 0.0
+      },
+      {
+        "against": "control",
+        "page": 2,
+        "maximum_channel_delta": 255,
+        "mean_channel_delta": 4.893807674741878
+      },
+      {
+        "against": "control",
+        "page": 3,
+        "maximum_channel_delta": 255,
+        "mean_channel_delta": 0.24009445345235744
+      },
+      {
+        "against": "normalized",
+        "page": 1,
+        "maximum_channel_delta": 0,
+        "mean_channel_delta": 0.0
+      },
+      {
+        "against": "normalized",
+        "page": 2,
+        "maximum_channel_delta": 255,
+        "mean_channel_delta": 4.893807674741878
+      },
+      {
+        "against": "normalized",
+        "page": 3,
+        "maximum_channel_delta": 255,
+        "mean_channel_delta": 0.24009445345235744
+      }
+    ],
+    "status": "retained failed representation; automatic projection refused"
+  }
+}
