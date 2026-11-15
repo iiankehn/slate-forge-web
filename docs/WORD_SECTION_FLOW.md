@@ -6,7 +6,7 @@ Word's existing 8-point paragraph spacing is now retained through sanitizing, ed
 
 Current native settings and section properties are authoritative on import. An explicit `w:noColumnBalance` declaration imports as sequential flow. Native DOCX export of sequential sections remains refused: the actual Writer resave removed this document-wide declaration. ODT and editable HTML remain the reliable supported outputs for sequential sections. Missing settings never resurrect a private or guessed flow mode.
 
-Custom/unequal columns or gaps, column separators, gutters/vertical text, mixed paper/margins/numbering, odd/even/column starts, nested/history assignments, complex or active first/even furniture, and sequential objects/notes keep a warned document fallback. Inactive first/even references are ignored. This is bounded interoperability, not universal Word layout parity. Backups, database identifiers, origins and private Site are unchanged.
+Custom/unequal columns or gaps, column separators, gutters/vertical text, mixed paper/margins/numbering, odd/even/column starts, nested/history assignments, complex or active first/even furniture, and sequential objects/notes keep a warned document fallback. Inactive first/even references are ignored. This is bounded interoperability, not universal Word layout parity. Backup envelopes, database identifiers, origins and private Site are unchanged. Older app builds may simplify the newly supported 8-point paragraph spacing when reopening or saving.
 
 ## GitHub acceptance
 
