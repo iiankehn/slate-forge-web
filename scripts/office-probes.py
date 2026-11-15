@@ -30,8 +30,13 @@ def select_cases(manifest, choice):
         require(isinstance(spec['pages'], list) and 0 < len(spec['pages']) <= 20 and
                 all(value in {'portrait', 'landscape'} for value in spec['pages']), 'Invalid expected pages.')
         require(isinstance(spec['pixel_identical'], bool), 'An explicit render policy is required.')
+        if 'numbering' in spec:
+            require(isinstance(spec['numbering'], list) and len(spec['numbering']) == len(spec['sections']) and
+                    all(isinstance(value, bool) for value in spec['numbering']), 'Invalid section numbering.')
+        if 'page_field_values' in spec:
+            require(spec['page_field_values'] == ['1', '', '3'] and len(spec['pages']) == 3, 'Invalid page-field control.')
         require(isinstance(spec.get('normalize', False), bool), 'Invalid normalization policy.')
-        require(spec.get('source_transform') in {None, 'furniture', 'geometry'}, 'Invalid source transform.')
+        require(spec.get('source_transform') in {None, 'furniture', 'geometry', 'numbering'}, 'Invalid source transform.')
         require(spec.get('normalized_format', 'odt') in {'odt', 'docx'} and
                 (spec.get('normalized_format', 'odt') == 'odt' or spec.get('normalize')), 'Invalid normalized format.')
     return cases
@@ -71,7 +76,7 @@ def run_case(key, spec, output):
         inputs.mkdir()
         input_copy = inputs / (key + '.odt')
         shutil.copyfile(source, input_copy)
-        if spec.get('source_transform') in {'furniture', 'geometry'}:
+        if spec.get('source_transform') in {'furniture', 'geometry', 'numbering'}:
             generator = ROOT / ('scripts/prepare-' + spec['source_transform'] + '-probe.mjs')
             command(['node', str(generator), str(input_copy), str(input_copy)])
             validate_input(input_copy)
@@ -106,6 +111,11 @@ def run_case(key, spec, output):
         for document in documents:
             require(['landscape' if page.rect.width > page.rect.height else 'portrait' for page in document] == spec['pages'],
                     'Office page count/orientations changed.')
+            if 'page_field_values' in spec:
+                fields = [' '.join(word[4] for word in page.get_text('words')
+                                   if word[1] > page.rect.height * .75 and re.fullmatch(r'[0-9]+', word[4]))
+                          for page in document]
+                require(fields == spec['page_field_values'], 'Office hidden/continued page fields changed.')
         pages = []
         for page_index, a in enumerate(documents[0]):
             checks = []

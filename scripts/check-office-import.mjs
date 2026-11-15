@@ -10,3 +10,5 @@ for(const key of ['header','footer'])if(spec[key+'s']&&JSON.stringify(sections.m
 if(spec.sizes&&JSON.stringify(sections.map(a=>a.size||result.layout.size))!==JSON.stringify(spec.sizes))throw Error('Native section paper differs.');if(spec.margins&&JSON.stringify(sections.map(a=>a.margin??result.layout.margin))!==JSON.stringify(spec.margins))throw Error('Native section margins differ.');
 for(const marker of spec.markers)if(!doc.body.textContent.includes(marker))throw Error('Missing native content: '+marker);
 console.log(JSON.stringify({sections:orientations,warnings:result.warnings,markers:spec.markers.length}));
+
+if(spec.numbering&&JSON.stringify(sections.map(a=>typeof a.pageNumbers==='boolean'?a.pageNumbers:result.layout.pageNumbers))!==JSON.stringify(spec.numbering))throw Error('Native page-number visibility differs.');
