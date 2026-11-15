@@ -1,8 +1,10 @@
 # Slate Forge development roadmap
 
-## Active section paper/margin continuation
+## Published section paper/margin continuation — November 15, 2026
 
-Supported mixed A4/Letter paper and 15/22/30 mm uniform margins are in development. Native import, preview, ODT and document-level Word share optional overrides; nested Word geometry still refuses output. GitHub acceptance and publication are pending. Read [SECTION_PAPER_GEOMETRY.md](SECTION_PAPER_GEOMETRY.md).
+PR #41 is merged and live at https://slate-web.iiankehn.com/ from runtime `6039a864bfc7842698b95cc70e2a10bfcc727992`. PR CI 43757442567 and main CI 43758352155 each passed 758 Node regressions, 20 tooling-policy checks, all 270 browser cases without flaky results and ten fresh LibreOffice 24.2.7.2 exchange probes. Pages 43759063028 promoted exact main artifact 14179515809 without rebuilding or repeating browsers. GitHub verified all 56 live shell/worker URLs on its first publication check; worker cache `0b3fcca8b8e92f8e` reconciles. See [RELEASE_2026_11_15_SECTION_GEOMETRY.md](RELEASE_2026_11_15_SECTION_GEOMETRY.md).
+
+Optional A4/Letter paper and 15/22/30 mm uniform section margins survive measured preview, native ODT, document-level Word, saving, HTML, sharing and backups. ODT nested scopes restore parent geometry; nested Word overrides explicitly refuse output. Media uses active paper/content bounds. Strict ODT raw/normalized/resaved and Word direct/resaved renders pass; an asymmetric shorthand-margin parser bug is repaired without relaxing the guards. Custom paper/asymmetric margins, numbering/history, sequential Word export and broader paint/layout cases remain in the inventory. Read [SECTION_PAPER_GEOMETRY.md](SECTION_PAPER_GEOMETRY.md). Continue solo with GitHub-owned execution and no background watcher. Preserve originals, backup/storage/session identifiers, origins, private Site, body fonts and mobile safe areas.
 
 ## Published section header/footer continuation — November 15, 2026
 
