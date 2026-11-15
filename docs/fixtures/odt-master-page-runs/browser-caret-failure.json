@@ -1,0 +1,12 @@
+{
+  "run": 43675690686,
+  "source": "fc0f487505da33997bf8a95aa53dfdd2f824194b",
+  "profile": "desktop-chromium",
+  "expected_pages": 3,
+  "observed_pages": 4,
+  "first_and_retry": "failed",
+  "other_first_attempt_passes": 49,
+  "not_run": 200,
+  "cause": "A generated empty root caret paragraph after the final section started an output page.",
+  "repair": "Keep editor/storage structure intact; omit only a single plain empty section cursor tail from preview and native ODT projection."
+}

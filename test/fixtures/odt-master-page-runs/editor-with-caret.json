@@ -1,0 +1,220 @@
+{
+  "type": "doc",
+  "content": [
+    {
+      "type": "paragraph",
+      "attrs": {
+        "textDirection": "ltr",
+        "widowControl": true,
+        "keepTogether": false,
+        "keepWithNext": false,
+        "pageBreakBefore": false,
+        "paragraphSpacing": null,
+        "paragraphLine": "1.65",
+        "indent": 0
+      },
+      "content": [
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "textStyle",
+              "attrs": {
+                "color": "",
+                "fontSize": "12pt",
+                "fontFamily": "Georgia"
+              }
+            }
+          ],
+          "text": "Portrait opening"
+        }
+      ]
+    },
+    {
+      "type": "columnSection",
+      "attrs": {
+        "columns": 1,
+        "orientation": "landscape",
+        "header": "Common header",
+        "footer": "Common footer",
+        "pageBreak": true
+      },
+      "content": [
+        {
+          "type": "heading",
+          "attrs": {
+            "textDirection": "ltr",
+            "widowControl": true,
+            "keepTogether": false,
+            "keepWithNext": true,
+            "pageBreakBefore": false,
+            "paragraphSpacing": "6pt",
+            "paragraphLine": "1.65",
+            "indent": 0,
+            "level": 2
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "#25322F",
+                    "fontSize": "21pt",
+                    "fontFamily": "Arial"
+                  }
+                },
+                {
+                  "type": "bold"
+                }
+              ],
+              "text": "Landscape middle"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textDirection": "ltr",
+            "widowControl": true,
+            "keepTogether": false,
+            "keepWithNext": false,
+            "pageBreakBefore": false,
+            "paragraphSpacing": null,
+            "paragraphLine": "1.65",
+            "indent": 0
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "",
+                    "fontSize": "12pt",
+                    "fontFamily": "Georgia"
+                  }
+                }
+              ],
+              "text": "Wide page body"
+            }
+          ]
+        },
+        {
+          "type": "bulletList",
+          "content": [
+            {
+              "type": "listItem",
+              "content": [
+                {
+                  "type": "paragraph",
+                  "attrs": {
+                    "textDirection": "ltr",
+                    "widowControl": true,
+                    "keepTogether": false,
+                    "keepWithNext": false,
+                    "pageBreakBefore": false,
+                    "paragraphSpacing": null,
+                    "paragraphLine": "1.65",
+                    "indent": 0
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "marks": [
+                        {
+                          "type": "textStyle",
+                          "attrs": {
+                            "color": "",
+                            "fontSize": "12pt",
+                            "fontFamily": "Georgia"
+                          }
+                        }
+                      ],
+                      "text": "Landscape list item"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "columnSection",
+      "attrs": {
+        "columns": 1,
+        "orientation": "portrait",
+        "header": "Common header",
+        "footer": "Common footer",
+        "pageBreak": true
+      },
+      "content": [
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textDirection": "ltr",
+            "widowControl": true,
+            "keepTogether": false,
+            "keepWithNext": false,
+            "pageBreakBefore": false,
+            "paragraphSpacing": null,
+            "paragraphLine": "1.65",
+            "indent": 0
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "",
+                    "fontSize": "12pt",
+                    "fontFamily": "Georgia"
+                  }
+                }
+              ],
+              "text": "Portrait return"
+            }
+          ]
+        },
+        {
+          "type": "paragraph",
+          "attrs": {
+            "textDirection": "ltr",
+            "widowControl": true,
+            "keepTogether": false,
+            "keepWithNext": false,
+            "pageBreakBefore": false,
+            "paragraphSpacing": null,
+            "paragraphLine": "1.65",
+            "indent": 0
+          },
+          "content": [
+            {
+              "type": "text",
+              "marks": [
+                {
+                  "type": "textStyle",
+                  "attrs": {
+                    "color": "",
+                    "fontSize": "12pt",
+                    "fontFamily": "Georgia"
+                  }
+                }
+              ],
+              "text": "End of document"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "paragraph"
+    }
+  ]
+}

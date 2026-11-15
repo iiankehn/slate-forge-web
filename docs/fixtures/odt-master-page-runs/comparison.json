@@ -122,7 +122,9 @@
       "control/content.xml",
       "control/styles.xml",
       "normalized/content.xml",
-      "normalized/styles.xml"
+      "normalized/styles.xml",
+      "wide-end/content.xml",
+      "wide-end/styles.xml"
     ],
     "render_144_dpi": [
       {
@@ -158,6 +160,18 @@
       {
         "against": "normalized",
         "page": 3,
+        "maximum_channel_delta": 0,
+        "mean_channel_delta": 0.0
+      },
+      {
+        "against": "wide-end",
+        "page": 1,
+        "maximum_channel_delta": 0,
+        "mean_channel_delta": 0.0
+      },
+      {
+        "against": "wide-end",
+        "page": 2,
         "maximum_channel_delta": 0,
         "mean_channel_delta": 0.0
       }
