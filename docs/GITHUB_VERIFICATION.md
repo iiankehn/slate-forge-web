@@ -20,6 +20,8 @@ Add a case to `test/fixtures/office-probes/manifest.json` and extend the committ
 
 Cases may declare `normalized_format: docx` with `normalize: true`. The current DOCX generator projects its ODT seed into explicitly balanced columns. That case compares freshly generated DOCX against its actual DOCX resave, with the generated document as the explicit render reference; its ODT seed is not a cross-format pixel control. ODT cases retain their original/normalized/resaved comparison. The report records exchange format and render reference. Retain failed representations separately instead of relaxing accepted render assertions.
 
+The bounded `source_transform: furniture` option authors a raw master-page control in Actions from the committed seed without using the importer/exporter under test. It retains `reference-input.odt`, validates its XML and records the transformed render reference. `page-texts.json` retains extracted per-page text and word positions for failure diagnosis; inspect that report instead of rerunning a local PDF probe.
+
 No local editor conversion or PDF comparison is required. `office-results` contains the source/resaved PDFs, actual resave, editor version and JSON report. Failure leaves the job red and retains available evidence. Existing fixture regression cases continue to run in the Node suite.
 
 ## Publication and release evidence
