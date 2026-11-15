@@ -30,6 +30,7 @@ def select_cases(manifest, choice):
         require(isinstance(spec['pages'], list) and 0 < len(spec['pages']) <= 20 and
                 all(value in {'portrait', 'landscape'} for value in spec['pages']), 'Invalid expected pages.')
         require(isinstance(spec['pixel_identical'], bool), 'An explicit render policy is required.')
+        require(isinstance(spec.get('normalize', False), bool), 'Invalid normalization policy.')
     return cases
 
 
@@ -46,16 +47,19 @@ def run_case(key, spec, output):
     require(source.stat().st_size <= 5_000_000, 'Oversized Office input.')
     schema = etree.RelaxNG(etree.parse(str(MANIFEST.parent / 'OpenDocument-v1.3-schema.rng'),
                                      etree.XMLParser(resolve_entities=False, no_network=True)))
-    with zipfile.ZipFile(source) as bundle:
-        entries = bundle.infolist()
-        require(len(entries) <= 1000 and sum(entry.file_size for entry in entries) <= 50_000_000,
-                'Office input exceeds archive bounds.')
-        require(entries[0].filename == 'mimetype' and entries[0].compress_type == 0, 'Invalid ODT mimetype placement.')
-        for part in ['content.xml', 'styles.xml']:
-            data = bundle.read(part)
-            require(len(data) <= 20_000_000 and b'<!DOCTYPE' not in data and b'<!ENTITY' not in data, 'Unsafe input XML.')
-            node = etree.fromstring(data, etree.XMLParser(resolve_entities=False, no_network=True))
-            require(schema.validate(node), 'ODF 1.3 input validation failed: ' + str(schema.error_log))
+    def validate_input(path):
+        with zipfile.ZipFile(path) as bundle:
+            entries = bundle.infolist()
+            require(len(entries) <= 1000 and sum(entry.file_size for entry in entries) <= 50_000_000,
+                    'Office input exceeds archive bounds.')
+            require(entries[0].filename == 'mimetype' and entries[0].compress_type == 0, 'Invalid ODT mimetype placement.')
+            for part in ['content.xml', 'styles.xml']:
+                data = bundle.read(part)
+                require(len(data) <= 20_000_000 and b'<!DOCTYPE' not in data and b'<!ENTITY' not in data, 'Unsafe input XML.')
+                node = etree.fromstring(data, etree.XMLParser(resolve_entities=False, no_network=True))
+                require(schema.validate(node), 'ODF 1.3 input validation failed: ' + str(schema.error_log))
+    validate_input(source)
+    validated_parts = 2
     case_output = output / key
     case_output.mkdir()
     with tempfile.TemporaryDirectory(prefix='slate-office-') as temporary:
@@ -64,10 +68,18 @@ def run_case(key, spec, output):
         inputs.mkdir()
         input_copy = inputs / (key + '.odt')
         shutil.copyfile(source, input_copy)
-        for index, (fmt, destination, input_path) in enumerate([
-                ('odt', case_output / 'resaved', input_copy),
-                ('pdf', case_output / 'source-pdf', input_copy),
-                ('pdf', case_output / 'resaved-pdf', case_output / 'resaved' / (key + '.odt'))]):
+        app_input = input_copy
+        conversions = []
+        if spec.get('normalize'):
+            app_input = case_output / (key + '.odt')
+            command(['node', str(ROOT / 'scripts/prepare-office-probe.mjs'), str(input_copy), str(app_input)])
+            validate_input(app_input)
+            validated_parts += 2
+            conversions.append(('pdf', case_output / 'normalized-pdf', app_input))
+        conversions += [('odt', case_output / 'resaved', app_input),
+                        ('pdf', case_output / 'source-pdf', input_copy),
+                        ('pdf', case_output / 'resaved-pdf', case_output / 'resaved' / (key + '.odt'))]
+        for index, (fmt, destination, input_path) in enumerate(conversions):
             destination.mkdir()
             profile = work / ('profile-' + str(index))
             profile.mkdir()
@@ -78,21 +90,25 @@ def run_case(key, spec, output):
             require((destination / (key + '.' + fmt)).is_file(), 'Office conversion produced no output.')
         native = json.loads(command(['node', str(ROOT / 'scripts/check-office-import.mjs'),
                                      str(case_output / 'resaved' / (key + '.odt')), key]))
-        documents = [fitz.open(case_output / folder / (key + '.pdf')) for folder in ['source-pdf', 'resaved-pdf']]
+        documents = [fitz.open(case_output / folder / (key + '.pdf')) for folder in ['source-pdf', 'resaved-pdf', *(['normalized-pdf'] if spec.get('normalize') else [])]]
         for document in documents:
             require(['landscape' if page.rect.width > page.rect.height else 'portrait' for page in document] == spec['pages'],
                     'Office page count/orientations changed.')
         pages = []
-        for a, b in zip(*documents):
-            require(abs(a.rect.width - b.rect.width) < .1 and abs(a.rect.height - b.rect.height) < .1,
-                    'Office paper dimensions changed.')
-            require(' '.join(a.get_text().split()) == ' '.join(b.get_text().split()), 'Office text/page placement changed.')
-            left, right = [page.get_pixmap(matrix=fitz.Matrix(2, 2), alpha=False) for page in [a, b]]
-            identical = left.width == right.width and left.height == right.height and left.samples == right.samples
-            if spec['pixel_identical']:
-                require(identical, 'Office 144-DPI render changed; retained PDFs need review.')
-            pages.append({'width_points': a.rect.width, 'height_points': a.rect.height, 'pixel_identical': identical})
-        return {'input': spec['input'], 'odf13_parts_verified': 2, 'native_import': native, 'pages': pages}
+        for page_index, a in enumerate(documents[0]):
+            checks = []
+            for companion in documents[1:]:
+                b = companion[page_index]
+                require(abs(a.rect.width - b.rect.width) < .1 and abs(a.rect.height - b.rect.height) < .1,
+                        'Office paper dimensions changed.')
+                require(' '.join(a.get_text().split()) == ' '.join(b.get_text().split()), 'Office text/page placement changed.')
+                left, right = [page.get_pixmap(matrix=fitz.Matrix(2, 2), alpha=False) for page in [a, b]]
+                identical = left.width == right.width and left.height == right.height and left.samples == right.samples
+                if spec['pixel_identical']:
+                    require(identical, 'Office 144-DPI render changed; retained PDFs need review.')
+                checks.append(identical)
+            pages.append({'width_points': a.rect.width, 'height_points': a.rect.height, 'pixel_identical': all(checks)})
+        return {'input': spec['input'], 'odf13_parts_verified': validated_parts, 'native_import': native, 'pages': pages}
 
 
 def main():

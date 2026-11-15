@@ -1,30 +1,106 @@
 {
   "master-page-raw": {
     "input": "docs/fixtures/odt-master-page-runs/orientation-raw-input.odt",
-    "pages": ["portrait", "landscape", "portrait"],
-    "sections": ["landscape", "portrait"],
-    "markers": ["Portrait opening", "Landscape middle", "Portrait return", "End of document"],
+    "pages": [
+      "portrait",
+      "landscape",
+      "portrait"
+    ],
+    "sections": [
+      "landscape",
+      "portrait"
+    ],
+    "markers": [
+      "Portrait opening",
+      "Landscape middle",
+      "Portrait return",
+      "End of document"
+    ],
     "pixel_identical": true
   },
   "master-page-control": {
     "input": "docs/fixtures/odt-master-page-runs/orientation-control-input.odt",
-    "pages": ["portrait", "landscape", "portrait"],
-    "sections": ["landscape"],
-    "markers": ["Portrait opening", "Landscape middle", "Portrait return", "End of document"],
+    "pages": [
+      "portrait",
+      "landscape",
+      "portrait"
+    ],
+    "sections": [
+      "landscape"
+    ],
+    "markers": [
+      "Portrait opening",
+      "Landscape middle",
+      "Portrait return",
+      "End of document"
+    ],
     "pixel_identical": true
   },
   "master-page-normalized": {
     "input": "docs/fixtures/odt-master-page-runs/orientation-normalized-input.odt",
-    "pages": ["portrait", "landscape", "portrait"],
-    "sections": ["landscape", "portrait"],
-    "markers": ["Portrait opening", "Landscape middle", "Portrait return", "End of document"],
+    "pages": [
+      "portrait",
+      "landscape",
+      "portrait"
+    ],
+    "sections": [
+      "landscape",
+      "portrait"
+    ],
+    "markers": [
+      "Portrait opening",
+      "Landscape middle",
+      "Portrait return",
+      "End of document"
+    ],
     "pixel_identical": true
   },
   "landscape-ending": {
     "input": "docs/fixtures/odt-master-page-runs/orientation-wide-end-input.odt",
-    "pages": ["portrait", "landscape"],
-    "sections": ["landscape"],
-    "markers": ["Portrait opening", "Landscape middle", "Landscape list item"],
+    "pages": [
+      "portrait",
+      "landscape"
+    ],
+    "sections": [
+      "landscape"
+    ],
+    "markers": [
+      "Portrait opening",
+      "Landscape middle",
+      "Landscape list item"
+    ],
+    "pixel_identical": true
+  },
+  "sequential-columns": {
+    "input": "docs/fixtures/odt-master-page-runs/columns-raw-input.odt",
+    "pages": [
+      "portrait",
+      "landscape",
+      "portrait"
+    ],
+    "sections": [
+      "portrait",
+      "landscape",
+      "portrait"
+    ],
+    "columns": [
+      2,
+      3,
+      2
+    ],
+    "flows": [
+      "sequential",
+      "sequential",
+      "sequential"
+    ],
+    "markers": [
+      "Portrait opening",
+      "Landscape middle",
+      "Column layout preserves wrapped text.",
+      "Portrait return",
+      "End of document"
+    ],
+    "normalize": true,
     "pixel_identical": true
   }
 }

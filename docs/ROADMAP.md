@@ -1,5 +1,9 @@
 # Slate Forge development roadmap
 
+## Active sequential-column continuation
+
+Sequential page-column flow is in development on `feat/sequential-column-flow`; GitHub acceptance is pending. See [SEQUENTIAL_COLUMNS.md](SEQUENTIAL_COLUMNS.md) for supported text sections, persistence, explicit DOCX limits and the fresh normalized Office render gate. This addresses the retained failed balanced projection without claiming arbitrary layout parity.
+
 ## GitHub-owned verification mandate — November 15, 2026
 
 The user moved testing to GitHub and reserved Codex for development. This supersedes earlier local test/build/editor-probe instructions, including skill defaults. Work solo. Codex authors code/tests/probes, reviews source, pushes coherent PRs and diagnoses GitHub reports. Do not run routine local Node/Python suites, builds, browser checks, LibreOffice conversions or release-byte probes. Execute them in Actions; use local execution only if the user specifically requests it to diagnose a problem. Never bypass the browser policy.
