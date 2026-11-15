@@ -31,6 +31,7 @@ def select_cases(manifest, choice):
                 all(value in {'portrait', 'landscape'} for value in spec['pages']), 'Invalid expected pages.')
         require(isinstance(spec['pixel_identical'], bool), 'An explicit render policy is required.')
         require(isinstance(spec.get('normalize', False), bool), 'Invalid normalization policy.')
+        require(spec.get('source_transform') in {None, 'furniture'}, 'Invalid source transform.')
         require(spec.get('normalized_format', 'odt') in {'odt', 'docx'} and
                 (spec.get('normalized_format', 'odt') == 'odt' or spec.get('normalize')), 'Invalid normalized format.')
     return cases
@@ -70,6 +71,11 @@ def run_case(key, spec, output):
         inputs.mkdir()
         input_copy = inputs / (key + '.odt')
         shutil.copyfile(source, input_copy)
+        if spec.get('source_transform') == 'furniture':
+            command(['node', str(ROOT / 'scripts/prepare-furniture-probe.mjs'), str(input_copy), str(input_copy)])
+            validate_input(input_copy)
+            validated_parts += 2
+            shutil.copyfile(input_copy, case_output / 'reference-input.odt')
         app_input = input_copy
         exchange_format = spec.get('normalized_format', 'odt')
         conversions = []
@@ -112,7 +118,7 @@ def run_case(key, spec, output):
                     require(identical, 'Office 144-DPI render changed; retained PDFs need review.')
                 checks.append(identical)
             pages.append({'width_points': a.rect.width, 'height_points': a.rect.height, 'pixel_identical': all(checks)})
-        return {'input': spec['input'], 'exchange_format': exchange_format, 'render_reference': 'generated-docx' if exchange_format == 'docx' else 'original-odt', 'odf13_parts_verified': validated_parts, 'native_import': native, 'pages': pages}
+        return {'input': spec['input'], 'exchange_format': exchange_format, 'render_reference': 'generated-docx' if exchange_format == 'docx' else 'transformed-odt' if spec.get('source_transform') else 'original-odt', 'odf13_parts_verified': validated_parts, 'native_import': native, 'pages': pages}
 
 
 def main():

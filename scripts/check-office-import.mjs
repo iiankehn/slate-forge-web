@@ -6,5 +6,6 @@ const Parser=new JSDOM('').window.DOMParser,result=await (input.endsWith('.docx'
 if(result.warnings.length)throw Error('Unexpected native import warnings: '+result.warnings.join('; '));
 if(JSON.stringify(orientations)!==JSON.stringify(spec.sections))throw Error('Native section orientations differ.');
 const sections=[...doc.querySelectorAll('section[data-forge-section]')].map(n=>JSON.parse(decodeURIComponent(n.getAttribute('data-forge-section'))));if(spec.columns&&JSON.stringify(sections.map(a=>a.columns))!==JSON.stringify(spec.columns))throw Error('Native column counts differ.');if(spec.flows&&JSON.stringify(sections.map(a=>a.columnFlow||'balance'))!==JSON.stringify(spec.flows))throw Error('Native column flow differs.');
+for(const key of ['header','footer'])if(spec[key+'s']&&JSON.stringify(sections.map(a=>a[key]))!==JSON.stringify(spec[key+'s']))throw Error('Native '+key+' text differs.');if(spec.blanks&&JSON.stringify(sections.map(a=>[a.blankHeader===true,a.blankFooter===true]))!==JSON.stringify(spec.blanks))throw Error('Native blank furniture differs.');
 for(const marker of spec.markers)if(!doc.body.textContent.includes(marker))throw Error('Missing native content: '+marker);
 console.log(JSON.stringify({sections:orientations,warnings:result.warnings,markers:spec.markers.length}));

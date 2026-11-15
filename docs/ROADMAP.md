@@ -1,5 +1,9 @@
 # Slate Forge development roadmap
 
+## Active section furniture continuation
+
+Distinct and explicitly cleared section header/footer text is in development, including scoped ODT/Word handling and bounded bare-text master-page projection. GitHub acceptance and publication are pending. Read [SECTION_FURNITURE.md](SECTION_FURNITURE.md). Existing paper, numbering, complex-furniture and native-history limits remain explicit.
+
 ## Published Word section continuation — November 15, 2026
 
 PR #39 is merged and live at https://slate-web.iiankehn.com/ from runtime `0af0982d15975fe70ec1f1b980f092fd91933fd0`. PR CI 43702290793 and main CI 43703001781 each passed 738 Node regressions, 20 tooling-policy checks, all 260 browser cases without flaky results, and six fresh LibreOffice 24.2.7.2 exchange probes. Pages 43703683677 promoted exact main artifact 14156904280 without rebuilding or repeating browsers. GitHub verified all 56 live shell/worker URLs on its first publication check; worker cache `cc8999a9b1828511` reconciles. See [RELEASE_2026_11_15_WORD_SECTIONS.md](RELEASE_2026_11_15_WORD_SECTIONS.md).
