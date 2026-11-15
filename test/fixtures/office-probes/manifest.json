@@ -221,5 +221,67 @@
       ]
     ],
     "normalized_format": "docx"
+  },
+  "odt-section-geometry": {
+    "input": "docs/fixtures/odt-master-page-runs/orientation-raw-input.odt",
+    "pages": [
+      "portrait",
+      "landscape",
+      "portrait"
+    ],
+    "sections": [
+      "landscape",
+      "portrait"
+    ],
+    "markers": [
+      "Portrait opening",
+      "Landscape middle",
+      "Portrait return",
+      "End of document"
+    ],
+    "pixel_identical": true,
+    "normalize": true,
+    "source_transform": "geometry",
+    "sizes": [
+      "Letter",
+      "A4"
+    ],
+    "margins": [
+      15,
+      22
+    ]
+  },
+  "word-section-geometry": {
+    "input": "docs/fixtures/odt-master-page-runs/orientation-raw-input.odt",
+    "pages": [
+      "portrait",
+      "landscape",
+      "portrait"
+    ],
+    "sections": [
+      "portrait",
+      "landscape",
+      "portrait"
+    ],
+    "markers": [
+      "Portrait opening",
+      "Landscape middle",
+      "Portrait return",
+      "End of document"
+    ],
+    "pixel_identical": true,
+    "normalize": true,
+    "source_transform": "geometry",
+    "sizes": [
+      "A4",
+      "Letter",
+      "A4"
+    ],
+    "margins": [
+      22,
+      15,
+      22
+    ],
+    "normalized_format": "docx"
   }
 }
