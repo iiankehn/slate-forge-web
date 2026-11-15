@@ -96,6 +96,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run-id', required=True)
     parser.add_argument('--output', required=True)
+    parser.add_argument('--metadata')
     args = parser.parse_args()
     repo = os.environ.get('GITHUB_REPOSITORY', '')
     require(re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+', repo), 'Missing repository identity.')
@@ -116,6 +117,19 @@ def main():
                 detail = ' (HTTP ' + status.group(1) + ')' if status else ''
                 raise ValueError('GitHub artifact download failed' + detail + '; no deployment was prepared.')
         digest = extract_verified(archive, artifact['digest'], args.output)
+    manifest = {}
+    for path in sorted(Path(args.output).rglob('*')):
+        if path.is_file():
+            manifest[path.relative_to(args.output).as_posix()] = {
+                'bytes': path.stat().st_size,
+                'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
+    metadata = {'source': run['head_sha'], 'ci_run': run['id'], 'artifact_id': artifact['id'],
+                'archive_sha256': digest, 'files': manifest}
+    if args.metadata:
+        Path(args.metadata).write_text(json.dumps(metadata, indent=2) + '\n')
+    if os.environ.get('GITHUB_OUTPUT'):
+        with open(os.environ['GITHUB_OUTPUT'], 'a') as file:
+            file.write('artifact_id=' + str(artifact['id']) + '\n')
     summary = ('Verified source: `' + run['head_sha'] + '`\n\nCI run: https://github.com/' + repo + '/actions/runs/' +
                args.run_id + '\n\nArtifact: `' + str(artifact['id']) + '`\n\nSHA-256: `' + digest + '`\n')
     if os.environ.get('GITHUB_STEP_SUMMARY'):

@@ -1,18 +1,6 @@
 name: Pages promotion checks
 on:
-  pull_request:
-    paths:
-      - .github/workflows/pages.yml
-      - .github/workflows/promotion-checks.yml
-      - scripts/promote-pages.py
-      - test/pages-promotion_test.py
-  push:
-    branches: [main]
-    paths:
-      - .github/workflows/pages.yml
-      - .github/workflows/promotion-checks.yml
-      - scripts/promote-pages.py
-      - test/pages-promotion_test.py
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
