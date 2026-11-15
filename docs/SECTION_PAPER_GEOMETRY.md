@@ -15,3 +15,7 @@ Two new actual Office cases use a GitHub-only native XML generator to change the
 ## Initial GitHub diagnosis
 
 Run 43756347772 passed all ten Office probes, including the new mixed-paper controls. Two Node assertions failed: an unsupported-geometry fixture unexpectedly produced a section and needs a case-specific diagnostic, while the page-image assertion incorrectly expected the anchor to move. The existing placement rule preserves the requested x coordinate and shrinks width at the paper edge; its expectation now checks x=205 mm and the Letter-specific remaining width of 10.9 mm. No rendering assertion or Office tolerance was relaxed. Fresh full acceptance remains pending.
+
+Source review isolated an existing margin-precedence error: missing side attributes inherited the selected left margin, even when a different shorthand margin was declared. Side resolution now falls back to the actual shorthand, so asymmetric layouts cannot pass the uniform-margin projection check. The negative geometry assertion and all strict exchange/render criteria remain in place.
+
+Run 43756990378 confirmed the exact asymmetric case: a 30 mm left override plus 15 mm shorthand incorrectly projected as uniform 30 mm with no warning. The corrected shorthand resolution addresses that product bug; the image-placement assertion now passes. Fresh GitHub acceptance is pending.
