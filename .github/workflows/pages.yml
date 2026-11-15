@@ -14,6 +14,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   promote:
+    outputs:
+      artifact_id: ${{ steps.candidate.outputs.artifact_id }}
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
@@ -25,10 +27,17 @@ jobs:
         with:
           persist-credentials: false
       - name: Retrieve and verify the exact successful CI artifact
+        id: candidate
         env:
           GH_TOKEN: ${{ github.token }}
           VERIFIED_CI_RUN_ID: ${{ inputs.verification_run_id }}
-        run: python3 scripts/promote-pages.py --run-id "$VERIFIED_CI_RUN_ID" --output "$RUNNER_TEMP/slate-pages-site"
+        run: python3 scripts/promote-pages.py --run-id "$VERIFIED_CI_RUN_ID" --output "$RUNNER_TEMP/slate-pages-site" --metadata "$RUNNER_TEMP/release-metadata.json"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release-metadata
+          path: ${{ runner.temp }}/release-metadata.json
+          if-no-files-found: error
+          retention-days: 30
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: ${{ runner.temp }}/slate-pages-site
@@ -45,3 +54,34 @@ jobs:
       - name: Deploy verified static site
         id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+  verify-live:
+    needs: [promote, deploy]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: release-metadata
+          path: release-evidence/
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          artifact-ids: ${{ needs.promote.outputs.artifact_id }}
+          merge-multiple: true
+          run-id: ${{ inputs.verification_run_id }}
+          github-token: ${{ github.token }}
+          path: verified-site/
+      - name: Verify published bytes and worker cache
+        run: python3 scripts/verify-live.py --site verified-site --metadata release-evidence/release-metadata.json --output release-evidence/live-verification.json
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: release-evidence
+          path: release-evidence/
+          if-no-files-found: error
+          retention-days: 30

@@ -1,5 +1,11 @@
 # Verify once per source, promote the verified artifact
 
+## GitHub-owned execution — November 15, 2026
+
+The user moved routine testing/building and release-byte verification to GitHub. The current pipeline revision is documented in [GITHUB_VERIFICATION.md](GITHUB_VERIFICATION.md). One build feeds Node tests and five separate browser runners; Office and tooling jobs run alongside them. The stable `verify` aggregator must pass every required stage. The build artifact exists before tests finish and is **not promotable** unless the complete main workflow and `verify` job succeed. Documentation-only runs intentionally produce no runtime artifact.
+
+Pages now records a per-file promotion manifest and performs its own live byte/cache verification after deployment. That proof is retained as `release-evidence`, with source/run/artifact/digest details in the Actions summary. Codex does not repeat those checks locally. The older execution details below are historical where they conflict with this section. Manual promotion and exact-main-artifact provenance remain unchanged.
+
 The old flow ran the full browser suite on the PR, on the merged main commit, and again in the manual Pages workflow. The Pages run rebuilt the same merged source and duplicated main verification. PR and main checks cover different commits; Pages does not need another build or browser suite.
 
 ## Current flow

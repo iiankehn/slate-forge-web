@@ -16,3 +16,10 @@ dist/build-meta.json
 # Local Python release-tool bytecode
 __pycache__/
 *.py[cod]
+
+# GitHub verification artifacts
+node-tests.log
+playwright-results.json
+office-results/
+release-evidence/
+verified-site/

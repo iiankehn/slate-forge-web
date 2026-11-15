@@ -1,5 +1,11 @@
 # Slate Forge handoff — current published state
 
+## GitHub-owned verification mandate — November 15, 2026
+
+The user moved testing to GitHub and reserved Codex for development. This supersedes earlier local test/build/editor-probe instructions, including skill defaults. Work solo. Codex authors code/tests/probes, reviews source, pushes coherent PRs and diagnoses GitHub reports. Do not run routine local Node/Python suites, builds, browser checks, LibreOffice conversions or release-byte probes. Execute them in Actions; use local execution only if the user specifically requests it to diagnose a problem. Never bypass the browser policy.
+
+`chore/github-owned-verification` implements one shared build, parallel browser profiles, Node/tooling/Office jobs, a stable fail-closed `verify` gate, explicit docs-only handling, stale-PR cancellation, and Actions-owned post-deploy byte/cache proof. Read [GITHUB_VERIFICATION.md](GITHUB_VERIFICATION.md). Required PR/main checks and reviewed merges remain; Pages promotes the exact accepted main artifact and performs live verification on GitHub. This configuration is pending GitHub validation/merge; PR #36 remains the published product baseline. Preserve originals, backups, storage/origins/private Site, fonts and mobile safe areas.
+
 ## Published master-page orientation continuation — November 15, 2026
 
 PR #36 is merged and live at https://slate-web.iiankehn.com/ from runtime `3ecc0bb8eca2612fa2899cd495ae1a29466fd36a`. PR CI 43676895517 and main CI 43678207478 each passed 723 Node tests and all 250 browser scenarios without retries. Pages 43684656595 promoted exact main artifact 14147094969 without rebuilding or repeating browsers. All 56 checked live shell/worker URLs byte-match; worker cache digest `f9ac5bd25803f1ed` reconciles. See [RELEASE_2026_11_15_MASTER_PAGES.md](RELEASE_2026_11_15_MASTER_PAGES.md).
