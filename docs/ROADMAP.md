@@ -1,8 +1,10 @@
 # Slate Forge development roadmap
 
-## Active Word section-flow continuation
+## Published Word section continuation — November 15, 2026
 
-Bounded DOCX section reopening and 8-point spacing are in development; GitHub acceptance and publication are pending. See [WORD_SECTION_FLOW.md](WORD_SECTION_FLOW.md). Sequential DOCX export remains refused after the actual Writer loss of its native setting; the failed corpus is retained. Unsupported section designs keep explicit fallbacks.
+PR #39 is merged and live at https://slate-web.iiankehn.com/ from runtime `0af0982d15975fe70ec1f1b980f092fd91933fd0`. PR CI 43702290793 and main CI 43703001781 each passed 738 Node regressions, 20 tooling-policy checks, all 260 browser cases without flaky results, and six fresh LibreOffice 24.2.7.2 exchange probes. Pages 43703683677 promoted exact main artifact 14156904280 without rebuilding or repeating browsers. GitHub verified all 56 live shell/worker URLs on its first publication check; worker cache `cc8999a9b1828511` reconciles. See [RELEASE_2026_11_15_WORD_SECTIONS.md](RELEASE_2026_11_15_WORD_SECTIONS.md).
+
+Bounded native DOCX section boundaries, equal columns, orientation and simple default furniture now reopen instead of flattening. Eight-point paragraph spacing survives sanitizing, editing, review snapshots and ODT; the paragraph panel exposes it. A generated terminal section caret no longer creates an extra DOCX section/page. The distinct balanced DOCX actual Writer exchange has pixel-identical direct/resaved renders. The initial sequential experiment lost its native setting in Writer; its input/resave/specification remain retained, and sequential DOCX export stays refused. Current native declarations remain authoritative on import. Broader paint, native history and arbitrary layout remain in the compatibility inventory. Continue solo, execute tests/builds/Office/browser/live verification on GitHub, preserve originals/backups/storage/origins/private Site/fonts/mobile safe areas, and leave no background watcher.
 
 ## Published sequential-column continuation — November 15, 2026
 

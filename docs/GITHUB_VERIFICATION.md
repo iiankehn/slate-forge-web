@@ -18,6 +18,8 @@ Updated PRs cancel their obsolete checks. Main push checks remain separate becau
 
 Add a case to `test/fixtures/office-probes/manifest.json` and extend the committed checker when a new feature needs different geometry/content assertions. Author new fixture generators as committed workflow steps and execute them in Actions before promoting accepted outputs into the regression corpus. The manifest explicitly declares input, expected pages/sections/text and render policy. The reusable workflow can also be dispatched for one accepted case. Keep failed representations as evidence and name their limits; do not silently relax a render policy to turn a failure green.
 
+Cases may declare `normalized_format: docx` with `normalize: true`. The current DOCX generator projects its ODT seed into explicitly balanced columns. That case compares freshly generated DOCX against its actual DOCX resave, with the generated document as the explicit render reference; its ODT seed is not a cross-format pixel control. ODT cases retain their original/normalized/resaved comparison. The report records exchange format and render reference. Retain failed representations separately instead of relaxing accepted render assertions.
+
 No local editor conversion or PDF comparison is required. `office-results` contains the source/resaved PDFs, actual resave, editor version and JSON report. Failure leaves the job red and retains available evidence. Existing fixture regression cases continue to run in the Node suite.
 
 ## Publication and release evidence
