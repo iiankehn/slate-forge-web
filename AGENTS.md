@@ -1,5 +1,9 @@
 # Slate Forge web development
 
+## Current master-page orientation continuation — November 15, 2026
+
+`feat/odt-master-page-runs` preserves compatible top-level single-column ODT master-page orientation switches using existing editable sections. Read [ODT_MASTER_PAGE_RUNS.md](docs/ODT_MASTER_PAGE_RUNS.md). A three-page raw/control/normalized actual Writer corpus preserves portrait → landscape → portrait with text, furniture and numbering. Both inherited heading margins must be explicit to repair a demonstrated 12-point shift; custom supported bottom spacing still wins. Corrected 144-DPI renders are pixel-identical; six accepted XML parts pass core ODF 1.3. A separate sequential-column projection failed rendering and remains retained with a specific fallback warning. Existing sections/review histories, nested assignments and mixed paper/furniture keep their limits. All 722 local Node cases, production/static build and whitespace checks pass. Required PR/main/browser/publication gates remain pending, with PR #35 still live. Continue solo under the broader completion mandate and preserve originals, backups, storage/origins/private Site, fonts and mobile safe areas. No device gate or background watcher.
+
 ## Published rigid bordered-contour continuation — November 15, 2026
 
 PR #35 is merged and live at https://slate-web.iiankehn.com/ from runtime `dc926eaea040715f0068f3b861951158ff566555`. PR CI 43670387334 and main CI 43671937605 each passed 714 Node tests and all 245 browser scenarios without retries. Pages 43673306080 promoted exact main artifact 14144513795 without rebuilding or repeating browsers. All 56 checked live shell/worker URLs byte-match; worker cache digest `604a77522bd67826` reconciles. See [RELEASE_2026_11_15_RIGID_BORDERS.md](docs/RELEASE_2026_11_15_RIGID_BORDERS.md).
