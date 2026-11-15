@@ -1,0 +1,507 @@
+{
+  "version": 1,
+  "id": "canvas",
+  "title": "Rigid bordered contours",
+  "description": "",
+  "width": 900,
+  "height": 1000,
+  "background": "#ffffff",
+  "grid": true,
+  "snap": true,
+  "objects": [
+    {
+      "id": "object-0",
+      "type": "path",
+      "x": 90,
+      "y": 70,
+      "width": 190,
+      "height": 125,
+      "rotation": 23,
+      "fill": "#cceedd",
+      "stroke": "#226644",
+      "strokeWidth": 2,
+      "opacity": 100,
+      "text": "",
+      "font": "Arial",
+      "fontSize": 28,
+      "textColor": "#25322f",
+      "bold": false,
+      "align": "left",
+      "radius": 0,
+      "locked": false,
+      "hidden": false,
+      "group": "rigid-pair",
+      "groupPath": [
+        "rigid-pair",
+        "inner-pair"
+      ],
+      "outlines": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0.9,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            0.25,
+            0.25
+          ],
+          [
+            0.25,
+            0.7
+          ],
+          [
+            0.65,
+            0.7
+          ],
+          [
+            0.65,
+            0.25
+          ]
+        ]
+      ],
+      "points": []
+    },
+    {
+      "id": "object-1",
+      "type": "path",
+      "x": 510,
+      "y": 70,
+      "width": 190,
+      "height": 125,
+      "rotation": -37,
+      "fill": "#ffe0cc",
+      "stroke": "#aa4422",
+      "strokeWidth": 5,
+      "opacity": 100,
+      "text": "",
+      "font": "Arial",
+      "fontSize": 28,
+      "textColor": "#25322f",
+      "bold": false,
+      "align": "left",
+      "radius": 0,
+      "locked": false,
+      "hidden": false,
+      "group": "rigid-pair",
+      "groupPath": [
+        "rigid-pair",
+        "inner-pair"
+      ],
+      "flipX": true,
+      "outlines": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0.9,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            0.25,
+            0.25
+          ],
+          [
+            0.25,
+            0.7
+          ],
+          [
+            0.65,
+            0.7
+          ],
+          [
+            0.65,
+            0.25
+          ]
+        ]
+      ],
+      "points": []
+    },
+    {
+      "id": "object-2",
+      "type": "path",
+      "x": 90,
+      "y": 305,
+      "width": 190,
+      "height": 125,
+      "rotation": 90,
+      "fill": "#cceedd",
+      "stroke": "#226644",
+      "strokeWidth": 8,
+      "opacity": 90,
+      "text": "",
+      "font": "Arial",
+      "fontSize": 28,
+      "textColor": "#25322f",
+      "bold": false,
+      "align": "left",
+      "radius": 0,
+      "locked": false,
+      "hidden": false,
+      "group": "",
+      "flipY": true,
+      "outlines": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0.9,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            0.25,
+            0.25
+          ],
+          [
+            0.25,
+            0.7
+          ],
+          [
+            0.65,
+            0.7
+          ],
+          [
+            0.65,
+            0.25
+          ]
+        ]
+      ],
+      "points": []
+    },
+    {
+      "id": "object-3",
+      "type": "path",
+      "x": 510,
+      "y": 305,
+      "width": 190,
+      "height": 125,
+      "rotation": 180,
+      "fill": "#ffe0cc",
+      "stroke": "#aa4422",
+      "strokeWidth": 12,
+      "opacity": 55,
+      "text": "",
+      "font": "Arial",
+      "fontSize": 28,
+      "textColor": "#25322f",
+      "bold": false,
+      "align": "left",
+      "radius": 0,
+      "locked": false,
+      "hidden": false,
+      "group": "",
+      "flipX": true,
+      "flipY": true,
+      "outlines": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0.9,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            0.25,
+            0.25
+          ],
+          [
+            0.25,
+            0.7
+          ],
+          [
+            0.65,
+            0.7
+          ],
+          [
+            0.65,
+            0.25
+          ]
+        ]
+      ],
+      "points": []
+    },
+    {
+      "id": "object-4",
+      "type": "path",
+      "x": 90,
+      "y": 540,
+      "width": 190,
+      "height": 125,
+      "rotation": 23,
+      "fill": "#cceedd",
+      "stroke": "#226644",
+      "strokeWidth": 2,
+      "opacity": 75,
+      "text": "",
+      "font": "Arial",
+      "fontSize": 28,
+      "textColor": "#25322f",
+      "bold": false,
+      "align": "left",
+      "radius": 0,
+      "locked": false,
+      "hidden": false,
+      "group": "",
+      "outlines": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0.9,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            0.25,
+            0.25
+          ],
+          [
+            0.25,
+            0.7
+          ],
+          [
+            0.65,
+            0.7
+          ],
+          [
+            0.65,
+            0.25
+          ]
+        ]
+      ],
+      "points": []
+    },
+    {
+      "id": "object-5",
+      "type": "path",
+      "x": 510,
+      "y": 540,
+      "width": 190,
+      "height": 125,
+      "rotation": -37,
+      "fill": "none",
+      "stroke": "#aa4422",
+      "strokeWidth": 5,
+      "opacity": 90,
+      "text": "",
+      "font": "Arial",
+      "fontSize": 28,
+      "textColor": "#25322f",
+      "bold": false,
+      "align": "left",
+      "radius": 0,
+      "locked": false,
+      "hidden": false,
+      "group": "",
+      "flipX": true,
+      "outlines": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0.9,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            0.25,
+            0.25
+          ],
+          [
+            0.25,
+            0.7
+          ],
+          [
+            0.65,
+            0.7
+          ],
+          [
+            0.65,
+            0.25
+          ]
+        ]
+      ],
+      "points": []
+    },
+    {
+      "id": "object-6",
+      "type": "path",
+      "x": 90,
+      "y": 775,
+      "width": 190,
+      "height": 125,
+      "rotation": 90,
+      "fill": "#cceedd",
+      "stroke": "#226644",
+      "strokeWidth": 8,
+      "opacity": 55,
+      "text": "",
+      "font": "Arial",
+      "fontSize": 28,
+      "textColor": "#25322f",
+      "bold": false,
+      "align": "left",
+      "radius": 0,
+      "locked": false,
+      "hidden": false,
+      "group": "",
+      "flipY": true,
+      "outlines": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0.9,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            0.25,
+            0.25
+          ],
+          [
+            0.25,
+            0.7
+          ],
+          [
+            0.65,
+            0.7
+          ],
+          [
+            0.65,
+            0.25
+          ]
+        ]
+      ],
+      "points": []
+    },
+    {
+      "id": "object-7",
+      "type": "path",
+      "x": 510,
+      "y": 775,
+      "width": 190,
+      "height": 125,
+      "rotation": 180,
+      "fill": "#ffe0cc",
+      "stroke": "#aa4422",
+      "strokeWidth": 12,
+      "opacity": 75,
+      "text": "",
+      "font": "Arial",
+      "fontSize": 28,
+      "textColor": "#25322f",
+      "bold": false,
+      "align": "left",
+      "radius": 0,
+      "locked": false,
+      "hidden": false,
+      "group": "",
+      "flipX": true,
+      "flipY": true,
+      "outlines": [
+        [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0.9,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      ],
+      "points": []
+    }
+  ]
+}

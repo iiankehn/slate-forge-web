@@ -1,5 +1,9 @@
 # Slate Forge handoff — current published state
 
+## Current rigid bordered-contour continuation — November 15, 2026
+
+`feat/odt-rigid-bordered-contours` supports rigid rotation/reflection of editable bordered paths while preserving width, paint, holes and supported nested membership. Read [ODT_RIGID_BORDERED_CONTOURS.md](ODT_RIGID_BORDERED_CONTOURS.md). Eight actual raw/control Writer-resaved contours retain all 60 source vertices within .14285 unit and border widths within .1; independent rendered ink agrees within one pixel at 144 DPI, without a pixel-identical claim. Four XML parts pass core ODF 1.3. An exact integer-boundary equality check avoids a false XOR-sliver refusal; unequal fill rules and shear/scale/edge/join limits remain enforced. All 714 local Node cases pass; the final explicit-round-join guard passes 27 affected checks. Production build/static packaging and whitespace checks pass. Required PR/main/browser/publication gates remain pending; PR #34 remains live. Continue solo under the broader completion mandate. Preserve originals, backups, storage/origins/private Site, fonts and mobile safe areas; no device gate or background watcher.
+
 ## Published affine-picture continuation — November 15, 2026
 
 PR #34 is merged and live at https://slate-web.iiankehn.com/ from runtime `0d3bc17f6331831ba199c5c2bbe9c29515638546`. PR CI 43662647488 and main CI 43664296030 each passed 709 Node tests and all 240 browser scenarios without retries. Pages 43665651054 promoted exact main artifact 14142112437 without rebuilding or repeating browsers. All 56 checked live shell/worker URLs byte-match; worker cache digest `50af55de1fd327f3` reconciles. See [RELEASE_2026_11_15_AFFINE_PICTURES.md](RELEASE_2026_11_15_AFFINE_PICTURES.md).

@@ -1,5 +1,7 @@
 # Native ODF stroke transforms
 
+The rigid bordered-contour extension is implemented with release gates pending; see [ODT_RIGID_BORDERED_CONTOURS.md](ODT_RIGID_BORDERED_CONTOURS.md). Earlier blanket bordered-contour refusals below describe the previous implementation. Sheared borders remain refused.
+
 Native ODT canvases now export/reimport rigidly rotated/reflected lines, supported triangular arrows and straight-segment paths. Lines/arrows stay native primitives when their endpoints and paint have a faithful representation. Skewed line/arrow shafts and heads, skewed uniform paths and pressure strokes become editable filled contours. Transformed fill-only contours retain real holes. Current native endpoint/path edits are read; no original private scene is restored.
 
 A thin endpoint box is not enlarged and mistaken for new line geometry. The importer finds a legal pre-rotation frame with the same segment length/midpoint and restores its direction. Horizontal/vertical and near-axis lines can therefore reopen without changing their endpoints. Rotation/control values may normalize to an equivalent representation; use HTML/workspace backups for exact original scene controls.
