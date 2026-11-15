@@ -283,5 +283,68 @@
       22
     ],
     "normalized_format": "docx"
+  },
+  "odt-section-numbering": {
+    "input": "docs/fixtures/odt-master-page-runs/orientation-raw-input.odt",
+    "pages": [
+      "portrait",
+      "landscape",
+      "portrait"
+    ],
+    "sections": [
+      "landscape",
+      "portrait"
+    ],
+    "markers": [
+      "Portrait opening",
+      "Landscape middle",
+      "Portrait return",
+      "End of document"
+    ],
+    "pixel_identical": true,
+    "normalize": true,
+    "source_transform": "numbering",
+    "numbering": [
+      false,
+      true
+    ],
+    "page_field_values": [
+      "1",
+      "",
+      "3"
+    ]
+  },
+  "word-section-numbering": {
+    "input": "docs/fixtures/odt-master-page-runs/orientation-raw-input.odt",
+    "pages": [
+      "portrait",
+      "landscape",
+      "portrait"
+    ],
+    "sections": [
+      "portrait",
+      "landscape",
+      "portrait"
+    ],
+    "markers": [
+      "Portrait opening",
+      "Landscape middle",
+      "Portrait return",
+      "End of document"
+    ],
+    "pixel_identical": true,
+    "normalize": true,
+    "source_transform": "numbering",
+    "normalized_format": "docx",
+    "numbering": [
+      true,
+      false,
+      true
+    ],
+    "page_field_values": [
+      "1",
+      "",
+      "3"
+    ]
   }
 }

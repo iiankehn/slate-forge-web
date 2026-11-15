@@ -1,5 +1,9 @@
 # Slate Forge development roadmap
 
+## Active section-numbering continuation
+
+`feat/section-page-number-visibility` adds scoped Show/Hide/Document default footer fields without restarts. Read [SECTION_NUMBERING.md](SECTION_NUMBERING.md). GitHub acceptance/publication are pending. Continue in this environment; DEV/Windows setup is deferred. Remain solo with GitHub-owned execution and preserve storage/origins/private Site/fonts/mobile invariants.
+
 ## Published section paper/margin continuation — November 15, 2026
 
 PR #41 is merged and live at https://slate-web.iiankehn.com/ from runtime `6039a864bfc7842698b95cc70e2a10bfcc727992`. PR CI 43757442567 and main CI 43758352155 each passed 758 Node regressions, 20 tooling-policy checks, all 270 browser cases without flaky results and ten fresh LibreOffice 24.2.7.2 exchange probes. Pages 43759063028 promoted exact main artifact 14179515809 without rebuilding or repeating browsers. GitHub verified all 56 live shell/worker URLs on its first publication check; worker cache `0b3fcca8b8e92f8e` reconciles. See [RELEASE_2026_11_15_SECTION_GEOMETRY.md](RELEASE_2026_11_15_SECTION_GEOMETRY.md).

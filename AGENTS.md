@@ -1,5 +1,9 @@
 # Slate Forge web development
 
+## Active section-numbering continuation
+
+`feat/section-page-number-visibility` adds scoped Show/Hide/Document default footer fields without restarts. Read [SECTION_NUMBERING.md](docs/SECTION_NUMBERING.md). GitHub acceptance/publication are pending. Continue in this environment; DEV/Windows setup is deferred. Remain solo with GitHub-owned execution and preserve storage/origins/private Site/fonts/mobile invariants.
+
 > **Moving to DEV:** Read the complete [remote-computer handoff](docs/DEV_HANDOFF.md) for current setup, tools, release state and remaining work. Older chronological instructions below are subject to the latest GitHub-only verification and solo-work rules.
 
 ## GitHub-owned verification mandate — November 15, 2026
