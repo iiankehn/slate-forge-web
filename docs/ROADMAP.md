@@ -1,5 +1,9 @@
 # Slate Forge development roadmap
 
+## Active section paper/margin continuation
+
+Supported mixed A4/Letter paper and 15/22/30 mm uniform margins are in development. Native import, preview, ODT and document-level Word share optional overrides; nested Word geometry still refuses output. GitHub acceptance and publication are pending. Read [SECTION_PAPER_GEOMETRY.md](SECTION_PAPER_GEOMETRY.md).
+
 ## Published section header/footer continuation — November 15, 2026
 
 PR #40 is merged and live at https://slate-web.iiankehn.com/ from runtime `88f1ac35fd7225f871aa295146407c810b46ea3a`. PR CI 43751089431 and main CI 43751865237 each passed 750 Node regressions, 20 tooling-policy checks, all 265 browser cases without flaky results, and eight fresh LibreOffice 24.2.7.2 exchange probes. Pages 43752611036 promoted exact main artifact 14176866776 without rebuilding or repeating browsers. GitHub verified all 56 live shell/worker URLs on its first publication check; worker cache `5aa762c0cfe499fb` reconciles. See [RELEASE_2026_11_15_SECTION_FURNITURE.md](RELEASE_2026_11_15_SECTION_FURNITURE.md).

@@ -16,7 +16,7 @@ class OfficeProbeTests(unittest.TestCase):
 
     def test_committed_cases_have_explicit_geometry_and_render_expectations(self):
         cases = office.select_cases(self.manifest, 'all')
-        self.assertEqual(len(cases), 8)
+        self.assertEqual(len(cases), 10)
         for key, case in cases.items():
             self.assertTrue((ROOT / case['input']).is_file())
             self.assertTrue(case['pixel_identical'])
