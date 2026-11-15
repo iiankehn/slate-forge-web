@@ -1,6 +1,6 @@
 # Sequential page columns
 
-This development batch adds an explicit sequential flow mode to two- and three-column writing sections. Each column fills from top to bottom before the next column begins. Balanced sections keep their existing behavior. In continuous editing, sequential sections show one readable column; Page preview supplies the measured paper layout.
+PR #38 adds an explicit sequential flow mode to two- and three-column writing sections. Each column fills from top to bottom before the next column begins. Balanced sections keep their existing behavior. In continuous editing, sequential sections show one readable column; Page preview supplies the measured paper layout.
 
 Use Layout → Section tools → Column flow. Sequential sections start on a new page, except an imported section at the beginning of a document. The initial implementation supports top-level text, headings and lists. Nested sections, tables, pictures, notes and other block objects refuse sequential output instead of silently changing the layout. Existing originals and editable storage remain intact.
 
@@ -10,6 +10,6 @@ Editable HTML, ordinary saving, workspace backups and editable sharing preserve 
 
 ## GitHub acceptance evidence
 
-Verification is pending. No local test, build, browser or Office conversion was run. The GitHub suite adds model, sanitized editor, backup, sharing and refusal regressions, plus a browser scenario in each of five profiles covering measured flow, long paragraph splitting, saved reopening and export controls.
+PR #38 passed GitHub CI [43695075902](https://github.com/iiankehn/slate-forge-web/actions/runs/43695075902): 730 Node tests, 20 tooling-policy tests, 255 browser cases with no flaky results, and five actual LibreOffice 24.2.7.2 exchange probes. Merged source `ee78d80a71683373379566fc9d115de0027e1b32` passed the same gates in main CI 43695717942. Pages 43696317217 published exact artifact 14154665205. GitHub verified all 56 live shell/worker URLs and worker cache `6c849419557374a3`. See [RELEASE_2026_11_15_SEQUENTIAL_COLUMNS.md](RELEASE_2026_11_15_SEQUENTIAL_COLUMNS.md). No local test, build, browser or Office conversion was run. The GitHub suite adds model, sanitized editor, backup, sharing and refusal regressions, plus a browser scenario in each of five profiles covering measured flow, long paragraph splitting, saved reopening and export controls.
 
 A fifth actual Office probe reconstructs the committed raw 2 → 3 → 2 column corpus through the sanitized editor model, generates fresh native ODT, validates ODF 1.3 XML, converts it and independently resaves it in LibreOffice. Original, directly normalized and resaved PDFs must retain page text/geometry and identical 144-DPI pixels. The old failed balanced normalization remains a failed historical fixture; it is not passing evidence for this feature. GitHub retains the fresh generated ODT, resave, PDFs and report for review.

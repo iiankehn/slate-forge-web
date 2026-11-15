@@ -1,8 +1,10 @@
 # Slate Forge development roadmap
 
-## Active sequential-column continuation
+## Published sequential-column continuation — November 15, 2026
 
-Sequential page-column flow is in development on `feat/sequential-column-flow`; GitHub acceptance is pending. See [SEQUENTIAL_COLUMNS.md](SEQUENTIAL_COLUMNS.md) for supported text sections, persistence, explicit DOCX limits and the fresh normalized Office render gate. This addresses the retained failed balanced projection without claiming arbitrary layout parity.
+PR #38 is merged and live at https://slate-web.iiankehn.com/ from runtime `ee78d80a71683373379566fc9d115de0027e1b32`. PR CI 43695075902 and main CI 43695717942 each passed 730 Node regressions, 20 tooling-policy tests, all 255 browser cases without flaky results, and five fresh LibreOffice 24.2.7.2 exchange probes. Pages 43696317217 promoted exact main artifact 14154665205 without rebuilding or repeating browsers. GitHub verified all 56 live shell/worker URLs against that artifact; worker cache `6c849419557374a3` reconciles. See [RELEASE_2026_11_15_SEQUENTIAL_COLUMNS.md](RELEASE_2026_11_15_SEQUENTIAL_COLUMNS.md).
+
+Two- and three-column top-level text, headings and lists now support explicit sequential flow through native ODT, measured preview, saving, editable HTML, sharing and workspace backups. The fresh sanitized-editor 2 → 3 → 2 column probe has pixel-identical original/normalized/Writer-resaved PDFs. The old failed balanced projection remains historical failure evidence. Native DOCX and object/nested/note sequential flows remain explicitly unsupported. Older app builds may rebalance this new optional mode. Broader paint, native-history and arbitrary-layout cases remain in the compatibility inventory. Continue solo, use GitHub for execution, preserve storage/origins/private Site/fonts/mobile safe areas, and leave no background watcher.
 
 ## GitHub-owned verification mandate — November 15, 2026
 

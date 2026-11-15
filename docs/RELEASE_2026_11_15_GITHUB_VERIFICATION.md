@@ -23,4 +23,4 @@ App source, build inputs, package versions, fonts, private Site identity, public
 
 Use [GITHUB_VERIFICATION.md](GITHUB_VERIFICATION.md) and the current top sections of AGENTS.md/CODEX_HANDOFF.md. Earlier local validation commands are historical defaults overridden by the user. Run a local diagnostic only when the user specifically requests it. Do not turn passing CI into another local test cycle. The separate promotion-checks workflow is now a manual focused diagnostic; its tests are included in the main tooling job.
 
-The final docs-only follow-up is being validated through the new lightweight Actions path. It reuses the runtime/publication evidence above and creates no runtime artifact.
+The final docs-only follow-up passed CI 43688949267 through the new lightweight Actions path. Plan and verify succeeded; runtime jobs explicitly skipped and no runtime artifact was created. It reuses the runtime/publication evidence above.
