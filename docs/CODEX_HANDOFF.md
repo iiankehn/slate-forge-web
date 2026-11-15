@@ -1,5 +1,7 @@
 # Slate Forge handoff — current published state
 
+> **Moving to DEV:** Read the complete [remote-computer handoff](DEV_HANDOFF.md) for current setup, tools, release state and remaining work. Older chronological instructions below are subject to the latest GitHub-only verification and solo-work rules.
+
 ## GitHub-owned verification mandate — November 15, 2026
 
 The user moved testing to GitHub and reserved Codex for development. This supersedes earlier local test/build/editor-probe instructions, including skill defaults. Work solo. Codex authors code/tests/probes, reviews source, pushes coherent PRs and diagnoses GitHub reports. Do not run routine local Node/Python suites, builds, browser checks, LibreOffice conversions or release-byte probes. Execute them in Actions; use local execution only if the user specifically requests it to diagnose a problem. Never bypass the browser policy.

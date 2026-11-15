@@ -1,6 +1,6 @@
 # Slate Forge
 
-> **Codex continuation:** Start with [docs/CODEX_HANDOFF.md](docs/CODEX_HANDOFF.md) and [AGENTS.md](AGENTS.md). The focused interface and stability release is complete; [docs/ROADMAP.md](docs/ROADMAP.md) and [docs/PRODUCT_FOCUS.md](docs/PRODUCT_FOCUS.md) define its scope. [docs/UX_STABILITY.md](docs/UX_STABILITY.md) records current evidence. Older release/test-count notes are historical. Generated bundles are rebuilt with `npm ci` and `npm run build`; publication uses the existing GitHub Pages workflow.
+> **Development continuation:** Start with [docs/DEV_HANDOFF.md](docs/DEV_HANDOFF.md) and [AGENTS.md](AGENTS.md). The DEV handoff includes tool installation, the published release, remaining compatibility work and the GitHub-owned build/test/release workflow. Older release/test-count notes below are historical; current evidence is in [docs/ROADMAP.md](docs/ROADMAP.md).
 
 The account-free, local-first web edition of Slate Forge. This is a working development build, not a production-certified release. No paid services, application accounts, cloud document backend, analytics or external account providers are configured. The public beta is hosted at https://slate-web.iiankehn.com/. The original private Site remains separate.
 
