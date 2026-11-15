@@ -6,6 +6,8 @@ The user moved routine testing/building and release-byte verification to GitHub.
 
 Pages now records a per-file promotion manifest and performs its own live byte/cache verification after deployment. That proof is retained as `release-evidence`, with source/run/artifact/digest details in the Actions summary. Codex does not repeat those checks locally. The older execution details below are historical where they conflict with this section. Manual promotion and exact-main-artifact provenance remain unchanged.
 
+PR #37 is merged. PR CI 43687642290 and main CI 43688210737 passed the new GitHub-only pipeline: 723 Node regressions, 20 tooling-policy tests, all 250 browser scenarios across five parallel profiles, and four fresh LibreOffice 24.2.7.2 exchange probes. Browser retry-only passes remain failures. Pages 43688736615 promoted main artifact 14151247002 from source `23fe7078146c1295a6702abac5f3d38a38739298`; GitHub verified all 56 live shell/worker URLs and cache `f9ac5bd25803f1ed` on its first publication check. No local test, build, editor or release-byte suite ran for this work. See [RELEASE_2026_11_15_GITHUB_VERIFICATION.md](RELEASE_2026_11_15_GITHUB_VERIFICATION.md).
+
 The old flow ran the full browser suite on the PR, on the merged main commit, and again in the manual Pages workflow. The Pages run rebuilt the same merged source and duplicated main verification. PR and main checks cover different commits; Pages does not need another build or browser suite.
 
 ## Current flow

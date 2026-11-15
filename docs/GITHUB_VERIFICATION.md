@@ -16,7 +16,7 @@ Updated PRs cancel their obsolete checks. Main push checks remain separate becau
 
 ## Office probe development
 
-Add a case to `test/fixtures/office-probes/manifest.json` and extend the committed checker when a new feature needs different geometry/content assertions. The manifest explicitly declares input, expected pages/sections/text and render policy. The reusable workflow can also be dispatched for one accepted case. Keep failed representations as evidence and name their limits; do not silently relax a render policy to turn a failure green.
+Add a case to `test/fixtures/office-probes/manifest.json` and extend the committed checker when a new feature needs different geometry/content assertions. Author new fixture generators as committed workflow steps and execute them in Actions before promoting accepted outputs into the regression corpus. The manifest explicitly declares input, expected pages/sections/text and render policy. The reusable workflow can also be dispatched for one accepted case. Keep failed representations as evidence and name their limits; do not silently relax a render policy to turn a failure green.
 
 No local editor conversion or PDF comparison is required. `office-results` contains the source/resaved PDFs, actual resave, editor version and JSON report. Failure leaves the job red and retains available evidence. Existing fixture regression cases continue to run in the Node suite.
 
@@ -32,4 +32,4 @@ After deployment, `verify-live` retrieves that artifact by its exact ID and vali
 
 Develop and review a coherent batch, push it, and let Actions execute. Read summaries at integration points. When a check fails, retrieve the relevant log/profile report, make a source-backed repair and push a new revision. Avoid repeated full-log downloads, routine local reruns and continual status polling. Do not leave a watcher running after ending a turn.
 
-This workflow revision is pending validation in GitHub. The current published app remains PR #36 until a deliberate promotion succeeds. No product/storage format change is part of this work.
+PR #37 is merged. PR CI 43687642290 and main CI 43688210737 passed the new GitHub-only pipeline: 723 Node regressions, 20 tooling-policy tests, all 250 browser scenarios across five parallel profiles, and four fresh LibreOffice 24.2.7.2 exchange probes. Browser retry-only passes remain failures. Pages 43688736615 promoted main artifact 14151247002 from source `23fe7078146c1295a6702abac5f3d38a38739298`; GitHub verified all 56 live shell/worker URLs and cache `f9ac5bd25803f1ed` on its first publication check. No local test, build, editor or release-byte suite ran for this work. See [RELEASE_2026_11_15_GITHUB_VERIFICATION.md](RELEASE_2026_11_15_GITHUB_VERIFICATION.md). Product and storage/build inputs are unchanged from PR #36. The documentation-only path is being exercised by this follow-up commit.
