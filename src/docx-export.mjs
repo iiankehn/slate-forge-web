@@ -59,11 +59,11 @@ function blocks(nodes,ctx,list={}){return (nodes||[]).flatMap(node=>{
     case 'columnSection':{const attrs=sectionAttrs(node.attrs);if(attrs.blankHeader||attrs.blankFooter)throw Error('Word cannot preserve nested sections that clear header or footer text. Use ODT or editable HTML.');return blocks(node.content,ctx)}
     case 'blockquote':return blocks(node.content,ctx).map(p=>p instanceof Paragraph?p:new Paragraph({text:'Quotation'}));
     case 'bulletList':case 'orderedList':{
-      let level=Math.min(8,list._level||0),reference='ordered-'+ctx.nextList++;
-      if(node.type==='orderedList')ctx.numbering.push({reference,levels:Array.from({length:9},(_,i)=>({level:i,format:LevelFormat.DECIMAL,text:'%'+(i+1)+'.',start:node.attrs?.start||1,alignment:AlignmentType.LEFT,style:{paragraph:{indent:{left:720*(i+1),hanging:360}}}}))});
+      let level=Math.min(8,list._level||0),ordered=node.type==='orderedList',reference=ordered?'ordered-'+ctx.nextList++:'forge-bullets';
+      if(ordered||!ctx.bulletNumbering){ctx.numbering.push({reference,levels:Array.from({length:9},(_,i)=>({level:i,format:ordered?LevelFormat.DECIMAL:LevelFormat.BULLET,text:ordered?'%'+(i+1)+'.':['•','○','▪'][i%3],start:ordered?node.attrs?.start||1:undefined,alignment:AlignmentType.LEFT,style:{...(!ordered?{run:{font:'Arial'}}:{}),paragraph:{indent:{left:720*(i+1),hanging:360}}}}))});if(!ordered)ctx.bulletNumbering=true}
       return (node.content||[]).flatMap(item=>(item.content||[]).flatMap((child,index)=>{
         if(['bulletList','orderedList'].includes(child.type))return blocks([child],ctx,{_level:level+1});
-        return blocks([child],ctx,index===0?(node.type==='bulletList'?{bullet:{level}}:{numbering:{reference,level}}):{});
+        return blocks([child],ctx,index===0?{numbering:{reference,level}}:{});
       }));
     }
     case 'table':{
