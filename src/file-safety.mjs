@@ -12,7 +12,7 @@ export function safeStyle(style){let declarations=[];for(let [name,valid]of Obje
  'background-color':v=>/^#[a-f\d]{3,8}$/i.test(v)||/^rgba?\([\d\s.,%]+\)$/i.test(v)||['yellow','transparent'].includes(v),
  'text-align':v=>['left','right','center','justify'].includes(v),
  'line-height':v=>['1.3','1.65','2'].includes(v),
- 'margin-bottom':v=>['0pt','6pt','12pt','18pt','24pt'].includes(v),
+ 'margin-bottom':v=>['0pt','6pt','8pt','12pt','18pt','24pt'].includes(v),
  'clip-path':v=>safeContourStyle(v),
  'shape-outside':v=>safeContourStyle(v.replace(/ border-box$/,'')),
  'margin-left':v=>/^\d+pt$/.test(v)&&parseFloat(v)<=144

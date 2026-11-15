@@ -17,7 +17,7 @@ export const ParagraphDesign=Extension.create({name:'paragraphDesign',addGlobalA
   keepTogether:{default:false,parseHTML:el=>el.getAttribute('data-keep-together')==='true',renderHTML:a=>a.keepTogether===true?{'data-keep-together':'true',style:'break-inside:avoid'}:{}},
   keepWithNext:{default:false,parseHTML:el=>el.getAttribute('data-keep-next')==='true',renderHTML:a=>a.keepWithNext===true?{'data-keep-next':'true',style:'break-after:avoid'}:{}},
   pageBreakBefore:{default:false,parseHTML:el=>el.getAttribute('data-break-before')==='true',renderHTML:a=>a.pageBreakBefore===true?{'data-break-before':'true',style:'break-before:page'}:{}},
-  paragraphSpacing:{default:null,parseHTML:el=>['0pt','6pt','12pt','18pt','24pt'].includes(el.style.marginBottom)?el.style.marginBottom:null,renderHTML:a=>a.paragraphSpacing?{style:`margin-bottom:${a.paragraphSpacing}`} :{}},
+  paragraphSpacing:{default:null,parseHTML:el=>['0pt','6pt','8pt','12pt','18pt','24pt'].includes(el.style.marginBottom)?el.style.marginBottom:null,renderHTML:a=>a.paragraphSpacing?{style:`margin-bottom:${a.paragraphSpacing}`} :{}},
   paragraphLine:{default:null,parseHTML:el=>['1.3','1.65','2'].includes(el.style.lineHeight)?el.style.lineHeight:null,renderHTML:a=>a.paragraphLine?{style:`line-height:${a.paragraphLine}`} :{}},
   indent:{default:0,parseHTML:el=>Math.min(6,Math.max(0,Math.round(parseFloat(el.style.marginLeft||'0')/24))),renderHTML:a=>a.indent?{style:`margin-left:${Math.min(6,Math.max(0,a.indent))*24}pt`}: {}}
 }}]}});

@@ -11,7 +11,7 @@ on:
         description: Committed exchange probe to execute
         type: choice
         default: all
-        options: [all, master-page-raw, master-page-control, master-page-normalized, landscape-ending, sequential-columns]
+        options: [all, master-page-raw, master-page-control, master-page-normalized, landscape-ending, sequential-columns, word-balanced-columns]
 permissions:
   contents: read
 jobs:

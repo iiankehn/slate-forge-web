@@ -1,3 +1,4 @@
+import {sectionOutputDocument} from './section-output.mjs';
 import {imagePlacement,imagePageSize,fitPageImage} from './image-placement.mjs';
 import {needsReviewTree,wordReviewProjection,reviewHTMLSnapshot,attachReviewTree} from './docx-review-tree.mjs';
 import {paragraphTextDirection} from './text-direction.mjs';
@@ -89,6 +90,7 @@ function blocks(nodes,ctx,list={}){return (nodes||[]).flatMap(node=>{
 export function buildDocx(content,settings,title,images=new Map(),options={}){
  if(hasSequentialColumns(content))throw Error('Sequential column flow currently requires native ODT or HTML. DOCX cannot preserve this mode yet.');
  assertExportableBlockRevisions(content);
+  if(!needsReviewTree(content))content=sectionOutputDocument(content);
   const layout=normalizeLayout(settings),font=layout.font==='system-ui'?'Arial':layout.font;
   const paper=layout.size==='Letter'?[215.9,279.4]:[210,297];const contentWidth=((layout.orientation==='landscape'?paper[1]:paper[0])-2*layout.margin)*96/25.4;const contentHeight=((layout.orientation==='landscape'?paper[0]:paper[1])-2*layout.margin)*96/25.4;const ctx={font,layout,images,nativeDesigns:options.nativeDesigns===true,contentWidth,contentHeight,numbering:[],nextList:1,referenceCounters:{noteIndex:0,changeIndex:1},comments:[],commentRanges:new Map(),footnotes:{},designIndex:0,headingIndex:0,headings:[]};
   function indexComments(node){const marks=node.type==='commentAnchor'?[{attrs:node.attrs}]:node.type==='text'?(node.marks||[]).filter(m=>m.type==='comment'):[];for(const mark of marks){const a=reviewAttrs(mark.attrs),existing=ctx.commentRanges.get(a.id);if(existing)existing.last=node;else{if(ctx.comments.length>=300)throw Error('DOCX supports up to 300 comments in this export.');const id=ctx.comments.length;ctx.commentRanges.set(a.id,{id,first:node,last:node});ctx.comments.push({id,author:a.author,date:new Date(a.date),resolved:a.resolved,children:a.body.split('\n').map(text=>new Paragraph(text))})}}for(const child of node.content||[])indexComments(child)}indexComments(content);

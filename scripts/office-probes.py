@@ -31,6 +31,8 @@ def select_cases(manifest, choice):
                 all(value in {'portrait', 'landscape'} for value in spec['pages']), 'Invalid expected pages.')
         require(isinstance(spec['pixel_identical'], bool), 'An explicit render policy is required.')
         require(isinstance(spec.get('normalize', False), bool), 'Invalid normalization policy.')
+        require(spec.get('normalized_format', 'odt') in {'odt', 'docx'} and
+                (spec.get('normalized_format', 'odt') == 'odt' or spec.get('normalize')), 'Invalid normalized format.')
     return cases
 
 
@@ -69,16 +71,18 @@ def run_case(key, spec, output):
         input_copy = inputs / (key + '.odt')
         shutil.copyfile(source, input_copy)
         app_input = input_copy
+        exchange_format = spec.get('normalized_format', 'odt')
         conversions = []
         if spec.get('normalize'):
-            app_input = case_output / (key + '.odt')
+            app_input = case_output / (key + '.' + exchange_format)
             command(['node', str(ROOT / 'scripts/prepare-office-probe.mjs'), str(input_copy), str(app_input)])
-            validate_input(app_input)
-            validated_parts += 2
-            conversions.append(('pdf', case_output / 'normalized-pdf', app_input))
-        conversions += [('odt', case_output / 'resaved', app_input),
-                        ('pdf', case_output / 'source-pdf', input_copy),
-                        ('pdf', case_output / 'resaved-pdf', case_output / 'resaved' / (key + '.odt'))]
+            if exchange_format == 'odt':
+                validate_input(app_input)
+                validated_parts += 2
+                conversions.append(('pdf', case_output / 'normalized-pdf', app_input))
+        conversions += [(exchange_format, case_output / 'resaved', app_input),
+                        ('pdf', case_output / 'source-pdf', app_input if exchange_format == 'docx' else input_copy),
+                        ('pdf', case_output / 'resaved-pdf', case_output / 'resaved' / (key + '.' + exchange_format))]
         for index, (fmt, destination, input_path) in enumerate(conversions):
             destination.mkdir()
             profile = work / ('profile-' + str(index))
@@ -89,8 +93,8 @@ def run_case(key, spec, output):
                      '--convert-to', fmt, '--outdir', str(destination), str(input_path)], env=env)
             require((destination / (key + '.' + fmt)).is_file(), 'Office conversion produced no output.')
         native = json.loads(command(['node', str(ROOT / 'scripts/check-office-import.mjs'),
-                                     str(case_output / 'resaved' / (key + '.odt')), key]))
-        documents = [fitz.open(case_output / folder / (key + '.pdf')) for folder in ['source-pdf', 'resaved-pdf', *(['normalized-pdf'] if spec.get('normalize') else [])]]
+                                     str(case_output / 'resaved' / (key + '.' + exchange_format)), key]))
+        documents = [fitz.open(case_output / folder / (key + '.pdf')) for folder in ['source-pdf', 'resaved-pdf', *(['normalized-pdf'] if spec.get('normalize') and exchange_format == 'odt' else [])]]
         for document in documents:
             require(['landscape' if page.rect.width > page.rect.height else 'portrait' for page in document] == spec['pages'],
                     'Office page count/orientations changed.')
@@ -108,7 +112,7 @@ def run_case(key, spec, output):
                     require(identical, 'Office 144-DPI render changed; retained PDFs need review.')
                 checks.append(identical)
             pages.append({'width_points': a.rect.width, 'height_points': a.rect.height, 'pixel_identical': all(checks)})
-        return {'input': spec['input'], 'odf13_parts_verified': validated_parts, 'native_import': native, 'pages': pages}
+        return {'input': spec['input'], 'exchange_format': exchange_format, 'render_reference': 'generated-docx' if exchange_format == 'docx' else 'original-odt', 'odf13_parts_verified': validated_parts, 'native_import': native, 'pages': pages}
 
 
 def main():
