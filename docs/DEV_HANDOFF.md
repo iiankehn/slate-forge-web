@@ -1,5 +1,7 @@
 # Slate Forge Web — DEV remote-computer handoff
 
+> **Continuation update:** DEV/Windows boot repair is deferred by the user. Continue in the hosted workspace, solo, with verification on GitHub. PR #42 is merged and published; its current release status is in [SECTION_NUMBERING.md](SECTION_NUMBERING.md). The transfer snapshot below records the earlier handoff, not a claim that DEV boots or has been configured.
+
 Prepared November 15, 2026. This is the current entry point for continuing on **DEV**, the remote development computer. It describes the source and workflow; it does not assert that DEV has already been connected, provisioned or authenticated. No DEV hostname or filesystem path was supplied. Run the setup in the actual remote session and discover its checkout before cloning.
 
 ## 1. Read first and preserve the working agreement

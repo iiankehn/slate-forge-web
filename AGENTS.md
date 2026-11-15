@@ -1,10 +1,13 @@
 # Slate Forge web development
 
-## Active section-numbering continuation
+## Published section-numbering continuation — November 15, 2026
 
-`feat/section-page-number-visibility` adds scoped Show/Hide/Document default footer fields without restarts. Read [SECTION_NUMBERING.md](docs/SECTION_NUMBERING.md). GitHub acceptance/publication are pending. Continue in this environment; DEV/Windows setup is deferred. Remain solo with GitHub-owned execution and preserve storage/origins/private Site/fonts/mobile invariants.
+PR #42 is merged and live at https://slate-web.iiankehn.com/ from runtime `47810a065e348bcad272c01642a0b37a75dd8dd4`. Accepted PR source `1878739d585d4111d9df2d34f17d9ab2d6e0c498` passed CI 43767894931; main CI 43768694819 passed the same 765 Node regressions, 20 tooling-policy checks, all 275 browser cases without flaky results and twelve actual LibreOffice 24.2.7.2 exchange probes. Pages 43776714174 promoted exact artifact 14183427377, archive SHA-256 `80284e355b79d81af089b9c85bbb7a92ac3243d0376d9fe761b97bf0f60dde23`, without rebuilding or repeating browsers. GitHub verified all 56 live shell/worker URLs and cache `9b0e64938ba1f59e` on its first publication check. See [release evidence](docs/RELEASE_2026_11_15_SECTION_NUMBERING.md).
 
-> **Moving to DEV:** Read the complete [remote-computer handoff](docs/DEV_HANDOFF.md) for current setup, tools, release state and remaining work. Older chronological instructions below are subject to the latest GitHub-only verification and solo-work rules.
+Sections can inherit, show or hide footer page numbers while hidden pages still count. Preview, ODT and document-level Word retain current visibility; nested ODT restores parent scope, and explicit nested Word overrides refuse output. HTML/saving/backups/sharing retain optional boolean intent with legacy defaults unchanged. Independent raw controls require 1/hidden/3 footer values and strict actual resave render equality. Restart values, numbering styles, first/even-page furniture, complex paint/history/layout and other inventory limits remain open. Read [SECTION_NUMBERING.md](docs/SECTION_NUMBERING.md). Continue solo in this hosted environment with GitHub-owned execution; DEV/Windows boot repair is deferred by the user. Preserve originals, storage/backup/session identifiers, origins, private Site, fonts and mobile safe areas. No background watcher or device gate.
+
+
+> **Environment setup:** Windows/DEV repair is deferred; development continues in the hosted workspace. Read the complete [remote-computer handoff](docs/DEV_HANDOFF.md) for current setup, tools, release state and remaining work. Older chronological instructions below are subject to the latest GitHub-only verification and solo-work rules.
 
 ## GitHub-owned verification mandate — November 15, 2026
 

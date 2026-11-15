@@ -1,5 +1,7 @@
 # Next-session handoff — Slate Forge Web
 
+Development is continuing in the hosted workspace; Windows/DEV repair is deferred. Read the latest AGENTS.md and SECTION_NUMBERING.md status before selecting new roadmap work.
+
 Start with the complete [DEV remote-computer handoff](DEV_HANDOFF.md). It covers the current published runtime, repository state, installation inventory, credentials, architecture, remaining roadmap limits, storage invariants, GitHub-owned verification and release procedure, plus a starter prompt.
 
 Read [AGENTS.md](../AGENTS.md), [GitHub verification](GITHUB_VERIFICATION.md), the newest [roadmap](ROADMAP.md) entries and [compatibility inventory](COMPATIBILITY_INVENTORY.md) before development. Work solo; keep routine builds/tests/browser/Office/live verification in Actions.
