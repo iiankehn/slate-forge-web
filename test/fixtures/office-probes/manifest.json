@@ -102,5 +102,38 @@
     ],
     "normalize": true,
     "pixel_identical": true
+  },
+  "word-sequential-columns": {
+    "input": "docs/fixtures/odt-master-page-runs/columns-raw-input.odt",
+    "pages": [
+      "portrait",
+      "landscape",
+      "portrait"
+    ],
+    "sections": [
+      "portrait",
+      "landscape",
+      "portrait"
+    ],
+    "columns": [
+      2,
+      3,
+      2
+    ],
+    "flows": [
+      "sequential",
+      "sequential",
+      "sequential"
+    ],
+    "markers": [
+      "Portrait opening",
+      "Landscape middle",
+      "Column layout preserves wrapped text.",
+      "Portrait return",
+      "End of document"
+    ],
+    "normalize": true,
+    "pixel_identical": true,
+    "normalized_format": "docx"
   }
 }

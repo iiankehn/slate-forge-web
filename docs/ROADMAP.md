@@ -1,5 +1,9 @@
 # Slate Forge development roadmap
 
+## Active Word section-flow continuation
+
+The bounded DOCX section/reopening and sequential-flow gap is in development; GitHub acceptance and publication are pending. See [WORD_SECTION_FLOW.md](WORD_SECTION_FLOW.md). Mixed balancing modes and the documented unsupported section designs retain explicit limits.
+
 ## Published sequential-column continuation — November 15, 2026
 
 PR #38 is merged and live at https://slate-web.iiankehn.com/ from runtime `ee78d80a71683373379566fc9d115de0027e1b32`. PR CI 43695075902 and main CI 43695717942 each passed 730 Node regressions, 20 tooling-policy tests, all 255 browser cases without flaky results, and five fresh LibreOffice 24.2.7.2 exchange probes. Pages 43696317217 promoted exact main artifact 14154665205 without rebuilding or repeating browsers. GitHub verified all 56 live shell/worker URLs against that artifact; worker cache `6c849419557374a3` reconciles. See [RELEASE_2026_11_15_SEQUENTIAL_COLUMNS.md](RELEASE_2026_11_15_SEQUENTIAL_COLUMNS.md).

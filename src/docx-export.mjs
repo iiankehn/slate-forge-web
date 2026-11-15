@@ -1,3 +1,4 @@
+import {sectionOutputDocument} from './section-output.mjs';
 import {imagePlacement,imagePageSize,fitPageImage} from './image-placement.mjs';
 import {needsReviewTree,wordReviewProjection,reviewHTMLSnapshot,attachReviewTree} from './docx-review-tree.mjs';
 import {paragraphTextDirection} from './text-direction.mjs';
@@ -9,7 +10,7 @@ import {formatAttrs,formattingSnapshot,paragraphChangeAttrs} from './format-revi
 export function docxTextColor(value){if(/^#[a-f\d]{6}$/i.test(value||''))return value.slice(1);const match=/^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/i.exec(value||'');return match&&match.slice(1).every(n=>Number(n)<=255)?match.slice(1).map(n=>Number(n).toString(16).padStart(2,'0')).join(''):null}
 import {imageExportKey} from './image-shapes.mjs';
 import {reviewAttrs} from './review.mjs';
-import {sectionAttrs,hasSequentialColumns} from './sections.mjs';
+import {sectionAttrs,wordSequentialColumns} from './sections.mjs';
 import {normalizeScene,sceneKey} from './design-model.mjs';
 import {XmlComponent,InsertedTextRun,DeletedTextRun,CommentRangeStart,CommentRangeEnd,CommentReference,SectionType,FootnoteReferenceRun,TableOfContents,Bookmark,Document,Packer,Paragraph,TextRun,Table,TableRow,TableCell,WidthType,ExternalHyperlink,ImageRun,Header,Footer,PageNumber,AlignmentType,BorderStyle,PageOrientation,LevelFormat,HorizontalPositionRelativeFrom,VerticalPositionRelativeFrom,TextWrappingType,TextWrappingSide} from 'docx';
 import {noteText,tocDepth,tocStart} from './references.mjs';
@@ -87,7 +88,7 @@ function blocks(nodes,ctx,list={}){return (nodes||[]).flatMap(node=>{
   }
 })}
 export function buildDocx(content,settings,title,images=new Map(),options={}){
- if(hasSequentialColumns(content))throw Error('Sequential column flow currently requires native ODT or HTML. DOCX cannot preserve this mode yet.');
+ const sequential=wordSequentialColumns(content);if(sequential)content=sectionOutputDocument(content);
  assertExportableBlockRevisions(content);
   const layout=normalizeLayout(settings),font=layout.font==='system-ui'?'Arial':layout.font;
   const paper=layout.size==='Letter'?[215.9,279.4]:[210,297];const contentWidth=((layout.orientation==='landscape'?paper[1]:paper[0])-2*layout.margin)*96/25.4;const contentHeight=((layout.orientation==='landscape'?paper[0]:paper[1])-2*layout.margin)*96/25.4;const ctx={font,layout,images,nativeDesigns:options.nativeDesigns===true,contentWidth,contentHeight,numbering:[],nextList:1,referenceCounters:{noteIndex:0,changeIndex:1},comments:[],commentRanges:new Map(),footnotes:{},designIndex:0,headingIndex:0,headings:[]};
@@ -96,12 +97,12 @@ export function buildDocx(content,settings,title,images=new Map(),options={}){
   const sections=[];function section(nodes,attributes={}){const attrs=sectionAttrs({...attributes,orientation:attributes.orientation||layout.orientation,columns:attributes.columns||1});const [pw,ph]=paper;ctx.contentWidth=((attrs.orientation==='landscape'?ph:pw)-2*layout.margin)*96/25.4;ctx.contentHeight=((attrs.orientation==='landscape'?pw:ph)-2*layout.margin)*96/25.4;ctx.orientation=attrs.orientation;const children=blocks(nodes,ctx),footerRuns=[new TextRun(attrs.footer||layout.footer)];if(layout.pageNumbers)footerRuns.push(new TextRun('   '),new TextRun({children:[PageNumber.CURRENT]}));sections.push({properties:{type:sections.length?(attrs.pageBreak?SectionType.NEXT_PAGE:SectionType.CONTINUOUS):undefined,column:{count:attrs.columns,space:360},page:{size:{width:twips(pw),height:twips(ph),orientation:attrs.orientation==='landscape'?PageOrientation.LANDSCAPE:PageOrientation.PORTRAIT},margin:{top:twips(layout.margin),bottom:twips(layout.margin),left:twips(layout.margin),right:twips(layout.margin)}}},headers:attrs.header||layout.header?{default:new Header({children:[new Paragraph(attrs.header||layout.header)]})}:undefined,footers:attrs.footer||layout.footer||layout.pageNumbers?{default:new Footer({children:[new Paragraph({children:footerRuns,alignment:AlignmentType.RIGHT})]})}:undefined,children:children.length?children:[new Paragraph('')]})}let buffer=[];for(const node of content.content||[]){if(node.type==='columnSection'){if(buffer.length){section(buffer);buffer=[]}section(node.content,node.attrs)}else buffer.push(node)}if(buffer.length||!sections.length)section(buffer);
   const [width,height]=layout.size==='Letter'?[215.9,279.4]:[210,297];
   const footerRuns=[new TextRun(layout.footer)];if(layout.pageNumbers)footerRuns.push(new TextRun('   '),new TextRun({children:[PageNumber.CURRENT]}));
-  return new Document({creator:'Slate Forge',title,description:'Created with Slate Forge',
+  return new Document({compatibility:sequential?{noColumnBalance:true}:undefined,creator:'Slate Forge',title,description:'Created with Slate Forge',
     comments:{children:ctx.comments},footnotes:ctx.footnotes,features:{updateFields:true,trackRevisions:layout.trackChanges},styles:{paragraphStyles:[{id:'ForgeCode',name:'Slate Forge Code',basedOn:'Normal',run:{font:'Courier New'}}],default:{document:{run:{font,size:24,language:{value:layout.language}},paragraph:{spacing:{line:Math.round(Number(layout.line)*240)}}}}},
     numbering:{config:ctx.numbering},sections});
 }
 export async function exportDocx(content,settings,title,images,options={}){
- if(hasSequentialColumns(content))throw Error('Sequential column flow currently requires native ODT or HTML. DOCX cannot preserve this mode yet.');
+ wordSequentialColumns(content);
  const nested=needsReviewTree(content),projection=nested?wordReviewProjection(content):content,blob=await Packer.toBlob(buildDocx(projection,settings,title,images,options));
  if(!nested&&(options.nativeDesigns||options.editableDesigns===false))return blob;
  let bytes=new Uint8Array(await blob.arrayBuffer());if(!options.nativeDesigns&&options.editableDesigns!==false)bytes=await attachEditableDesigns(bytes,projection,options);
