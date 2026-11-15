@@ -1,0 +1,71 @@
+{
+  "raster_dpi": 144,
+  "supported": [
+    {
+      "page": 1,
+      "maximum_channel_delta": 125,
+      "mean_channel_delta": 0.018645548927593,
+      "unmatched_ink_radius_1": 0,
+      "unmatched_ink_radius_2": 0
+    },
+    {
+      "page": 2,
+      "maximum_channel_delta": 157,
+      "mean_channel_delta": 0.023029676918402932,
+      "unmatched_ink_radius_1": 0,
+      "unmatched_ink_radius_2": 0
+    }
+  ],
+  "normalized_mirror": [
+    {
+      "page": 1,
+      "maximum_channel_delta": 0,
+      "mean_channel_delta": 0.0
+    },
+    {
+      "page": 2,
+      "maximum_channel_delta": 157,
+      "mean_channel_delta": 0.018266950665222742
+    }
+  ],
+  "core_odf_13_parts_validated": 6,
+  "points": {
+    "fresh": {
+      "maximum": 0.05810153415452492,
+      "worst": {
+        "s": 1,
+        "i": 1,
+        "u": 1,
+        "v": 0
+      }
+    },
+    "resaved": {
+      "maximum": 0.1455789378308594,
+      "worst": {
+        "s": 0,
+        "i": 6,
+        "u": 1,
+        "v": 0
+      }
+    },
+    "controlResaved": {
+      "maximum": 0.12655816789371338,
+      "worst": {
+        "s": 1,
+        "i": 0,
+        "u": 1,
+        "v": 0.25
+      }
+    },
+    "normalizedMirror": {
+      "maximum": 0.12655816789371338,
+      "worst": {
+        "s": 1,
+        "i": 0,
+        "u": 1,
+        "v": 0.25
+      }
+    }
+  },
+  "writer_build": "2c87e51eeaa2b413ff4ae097b2705eea1995d8e5"
+}

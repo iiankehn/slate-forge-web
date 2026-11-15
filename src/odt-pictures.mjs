@@ -1,4 +1,4 @@
-import {nativeBoxXML,nativeBox,validateNativeBox,objectLinear,odtPoint} from './odt-transforms.mjs';
+import {nativeBoxXML,nativeBox,validateNativeBox,objectLinear,odtPoint,odtMillimetres as mm} from './odt-transforms.mjs';
 import {odtAttr as attr,odtLength,ODT_NS as NS} from './odt-styles.mjs';
 import {safeImage} from './file-safety.mjs';
 import {staticPictureDimensions} from './odt-static-pictures.mjs';
@@ -45,7 +45,6 @@ export function odtPictureAssets(files,prepared=new Map()){
  }};
 }
 
-const mm=value=>Number(value.toFixed(7))+'mm';
 export function nativeOdtPicture(o,index,scale,styleId,assets,canvasHeight){
  // Export only the painted intersection; mirror letterbox placement about the original viewport.
  const asset=assets.add(o.src),base=o.fit==='contain'?Math.min(o.width,o.height*o.aspectRatio):Math.max(o.width,o.height*o.aspectRatio),iw=base*o.zoom/100,ih=iw/o.aspectRatio,dx=(o.width-iw)*o.cropX/100,dy=(o.height-ih)*o.cropY/100,w=Math.min(o.width,iw),h=Math.min(o.height,ih),x=o.x+(o.flipX?o.width-Math.max(0,dx)-w:Math.max(0,dx)),y=o.y+(o.flipY?o.height-Math.max(0,dy)-h:Math.max(0,dy)),crop=[Math.max(0,-dy/ih),Math.max(0,(iw-o.width+dx)/iw),Math.max(0,(ih-o.height+dy)/ih),Math.max(0,-dx/iw)],lengths=crop.map((n,i)=>n*(i%2?asset.preferredWidth:asset.preferredHeight)*25.4/72),mirror=(o.flipX!==o.flipY)?'horizontal':'none';

@@ -1,5 +1,9 @@
 # Slate Forge development roadmap
 
+## Current affine-picture continuation — November 15, 2026
+
+`feat/odt-affine-picture-matrices` accepts bounded standalone measured affine matrices only on validated native picture frames, normalizing scale/shear/reflection into the current editable model. Read [ODT_AFFINE_PICTURES.md](ODT_AFFINE_PICTURES.md). The 16-picture raw/control Writer resaves preserve 400 source points within .14558 unit and all three original assets. Rendered ink matches within one pixel at 144 DPI; the renders are not pixel-identical. Six XML parts pass core ODF 1.3. Vertical mirror styles have a retained direct-Writer failure; app import warns and native normalization before exchange has a passing actual resave. An invalid batched control remains rejected. Fixed-decimal crop/box lengths repair tiny normalization residues. Other leaves/groups and ambiguous syntax keep their guards. All 709 Node tests, build, packaging and whitespace checks pass locally. Refreshed standards-compliant raw package metadata passes the six affected checks. PR/main browser/publication gates remain pending, with PR #33 still live. Continue solo under the broader completion mandate, preserving originals, backups, storage/origins/private Site/fonts/mobile safe areas. No device gate or background watcher.
+
 ## Published thin-picture continuation — November 14, 2026
 
 PR #33 is merged and live at https://slate-web.iiankehn.com/ from runtime `558a182333ead95a33334ced953f4b3cfcb14655`. PR CI 43637905866 and main CI 43639813636 each passed 703 Node tests and all 235 browser scenarios without retries. Pages 43641365732 promoted exact main artifact 14132241999 without rebuilding or repeating browsers. All 56 checked live shell/worker URLs byte-match; worker cache digest `899e2816e4b1f5e7` reconciles. See [RELEASE_2026_11_14_THIN_PICTURES.md](RELEASE_2026_11_14_THIN_PICTURES.md).
