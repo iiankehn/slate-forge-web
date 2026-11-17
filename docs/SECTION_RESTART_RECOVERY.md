@@ -24,3 +24,7 @@ Use GitHub Actions for all routine tests, builds, browser/Office execution and p
 ## Continue in another checkout
 
 Fetch `origin` and inspect local status first. The checkpoint is pushed on `feat/section-page-number-restarts`; its exact SHA is available from GitHub/Git. If another checkout has pending work or a conflicting branch, create a separate worktree from the remote branch instead of resetting or overwriting it. Do not force-push, clean, discard or silently stash changes. This recovery creates no PR, triggers no deployment and changes no runtime release.
+
+## Continuation status
+
+The checkpoint was fetched at `77328c38bd9577caa071ed520c6e0b31270a37c1` into a clean checkout. Raw projection, input validation, tests, browser coverage and independent Office controls are now authored; see [SECTION_RESTARTS.md](SECTION_RESTARTS.md). The recovery description above records the original checkpoint. No merge or publication is authorized for this continuation.

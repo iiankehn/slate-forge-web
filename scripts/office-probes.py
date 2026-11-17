@@ -33,10 +33,13 @@ def select_cases(manifest, choice):
         if 'numbering' in spec:
             require(isinstance(spec['numbering'], list) and len(spec['numbering']) == len(spec['sections']) and
                     all(isinstance(value, bool) for value in spec['numbering']), 'Invalid section numbering.')
+        if 'starts' in spec:
+            require(isinstance(spec['starts'], list) and len(spec['starts']) == len(spec['sections']) and
+                    all(value is None or type(value) is int and 1 <= value <= 9999 for value in spec['starts']), 'Invalid section starts.')
         if 'page_field_values' in spec:
-            require(spec['page_field_values'] == ['1', '', '3'] and len(spec['pages']) == 3, 'Invalid page-field control.')
+            require(spec['page_field_values'] == (['1', '', '8'] if spec.get('source_transform') == 'restart' else ['1', '', '3']) and len(spec['pages']) == 3, 'Invalid page-field control.')
         require(isinstance(spec.get('normalize', False), bool), 'Invalid normalization policy.')
-        require(spec.get('source_transform') in {None, 'furniture', 'geometry', 'numbering'}, 'Invalid source transform.')
+        require(spec.get('source_transform') in {None, 'furniture', 'geometry', 'numbering', 'restart'}, 'Invalid source transform.')
         require(spec.get('normalized_format', 'odt') in {'odt', 'docx'} and
                 (spec.get('normalized_format', 'odt') == 'odt' or spec.get('normalize')), 'Invalid normalized format.')
     return cases
@@ -76,7 +79,7 @@ def run_case(key, spec, output):
         inputs.mkdir()
         input_copy = inputs / (key + '.odt')
         shutil.copyfile(source, input_copy)
-        if spec.get('source_transform') in {'furniture', 'geometry', 'numbering'}:
+        if spec.get('source_transform') in {'furniture', 'geometry', 'numbering', 'restart'}:
             generator = ROOT / ('scripts/prepare-' + spec['source_transform'] + '-probe.mjs')
             command(['node', str(generator), str(input_copy), str(input_copy)])
             validate_input(input_copy)

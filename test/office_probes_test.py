@@ -16,7 +16,7 @@ class OfficeProbeTests(unittest.TestCase):
 
     def test_committed_cases_have_explicit_geometry_and_render_expectations(self):
         cases = office.select_cases(self.manifest, 'all')
-        self.assertEqual(len(cases), 12)
+        self.assertEqual(len(cases), 14)
         for key, case in cases.items():
             self.assertTrue((ROOT / case['input']).is_file())
             self.assertTrue(case['pixel_identical'])
@@ -32,7 +32,7 @@ class OfficeProbeTests(unittest.TestCase):
                 office.select_cases(manifest, 'all')
 
     def test_invalid_page_or_render_expectations_are_refused(self):
-        for change in [{'pages': []}, {'pages': ['arbitrary']}, {'pixel_identical': None}, {'normalize': 'yes'}, {'numbering': [True, 'false']}, {'page_field_values': ['1', '2', '3']}, {'source_transform': 'arbitrary'}, {'normalized_format': 'pdf'}, {'normalized_format': 'docx', 'normalize': False}]:
+        for change in [{'starts': [0]}, {'starts': [True]}, {'starts': [10000]}, {'page_field_values': ['1', '', '8']}, {'pages': []}, {'pages': ['arbitrary']}, {'pixel_identical': None}, {'normalize': 'yes'}, {'numbering': [True, 'false']}, {'page_field_values': ['1', '2', '3']}, {'source_transform': 'arbitrary'}, {'normalized_format': 'pdf'}, {'normalized_format': 'docx', 'normalize': False}]:
             manifest = copy.deepcopy(self.manifest)
             manifest['landscape-ending'].update(change)
             with self.assertRaises(ValueError):
