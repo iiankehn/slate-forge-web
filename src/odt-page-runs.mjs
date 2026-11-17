@@ -5,11 +5,11 @@ import {nativePageStart} from './sections.mjs';
 export function odtPageRuns(root,styles,base){
  if(!base||root.getElementsByTagNameNS(NS.text,'section').length||root.getElementsByTagNameNS(NS.text,'tracked-changes').length)return null;
  const properties=node=>styles.resolve(node.localName==='table'?'table':'paragraph',attr(node,node.localName==='table'?'table':'text','style-name'));
- let blocks=0;for(const [namespace,name]of [[NS.text,'p'],[NS.text,'h'],[NS.table,'table']])for(const node of root.getElementsByTagNameNS(namespace,name)){if(++blocks>100000)throw Error('ODT page-run content exceeds safety limits.');const props=properties(node);if(node.parentNode!==root&&(props['style:master-page-name']||props['style:page-number']&&props['style:page-number']!=='auto'))return null;}
+ let blocks=0;for(const [namespace,name]of [[NS.text,'p'],[NS.text,'h'],[NS.table,'table']])for(const node of root.getElementsByTagNameNS(namespace,name)){if(++blocks>100000)throw Error('ODT page-run content exceeds safety limits.');if(node.parentNode!==root){const props=properties(node);if(props['style:master-page-name']||props['style:page-number']&&props['style:page-number']!=='auto')return null;}}
  const key=page=>JSON.stringify([page.size,page.margin,page.orientation,page.columns,page.header,page.footer,page.pageNumbers]);
  let page=base,interesting=base.columns>1,runs=[],nodes=[],first=true,breakBefore=false,masterNode=null,pageStart;
  const hasContent=()=>nodes.some(n=>n.nodeType===1&&['p','h','table','list','table-of-content','frame'].includes(n.localName)||n.nodeType===3&&n.nodeValue.trim());
- const flush=()=>{if(nodes.length){runs.push({nodes,page,breakBefore,masterNode,first,pageStart});first=false;nodes=[];if(runs.length>100)throw Error('ODT exceeds 100 top-level page runs.');}};
+ const flush=()=>{if(nodes.length){runs.push({nodes,page,breakBefore,masterNode,first,pageStart});first=false;nodes=[];if(runs.length>100&&interesting)throw Error('ODT exceeds 100 top-level page runs.');}};
  let direct=0;for(const node of root.childNodes){
   if(++direct>100000)throw Error('ODT page-run content exceeds safety limits.');
   const block=node.nodeType===1&&['p','h','table'].includes(node.localName),props=block?properties(node):{},master=props['style:master-page-name'],value=props['style:page-number'],restart=value&&value!=='auto',start=nativePageStart(value);
