@@ -28,3 +28,5 @@ Fetch `origin` and inspect local status first. The checkpoint is pushed on `feat
 ## Continuation status
 
 The checkpoint was fetched at `77328c38bd9577caa071ed520c6e0b31270a37c1` into a clean checkout. Raw projection, input validation, tests, browser coverage and independent Office controls are now authored; see [SECTION_RESTARTS.md](SECTION_RESTARTS.md). The recovery description above records the original checkpoint. No merge or publication is authorized for this continuation.
+
+The continuation runtime `863eac999094b32b80874475459fd60f2de16bba` passed diagnostic Actions run [44008946678](https://github.com/iiankehn/slate-forge-web/actions/runs/44008946678): 777 Node regressions, 20 tooling checks, all 280 browser cases without flaky results and fourteen actual Office exchanges. It remains unmerged/unpublished; the user explicitly withheld those steps. See SECTION_RESTARTS.md for the initial failed run and repaired evidence.
