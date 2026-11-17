@@ -1,5 +1,13 @@
 # Slate Forge handoff — current published state
 
+## Published section-restart continuation — November 17, 2026
+
+PR #43 is merged and live with the test-readiness repair from PR #44. Feature PR CI 44011077841 and repair PR CI 44013844481 passed; final main CI 44014921358 passed 777 Node regressions, 20 tooling-policy checks, all 280 browser cases without flaky results and fourteen actual LibreOffice 24.2.7.2 exchanges. Pages 44016060269 promoted exact artifact 14297719448 (50,271,449 bytes), archive SHA-256 `fc16b52166aaa9ded7a8ef8d2ca041dde7b48b82fae8e4aed72ff757dd0dfaf4`, from runtime `cc64a5bd9c2a805631fc55aa570e11cc66e1c903`. GitHub verified all 56 live shell/worker URLs and cache `bef14a8c919d6728` on its first publication check. See [release evidence](RELEASE_2026_11_17_SECTION_RESTARTS.md).
+
+Top-level sections starting on a new page can restart decimal numbering from 1 to 9999 in preview, native ODT/Word, raw ODT projection, HTML, saving, sharing and backups. A hidden page restarted at 7 advances to visible 8; physical preview labels remain sequential. Initial main CI 44012394774 correctly failed on a retry-only WebKit pass: the retained trace established a test reload-readiness race, repaired in PR #44 without changing app code, timeouts, assertions or retry policy. That failed artifact was not promoted. Read [SECTION_RESTARTS.md](SECTION_RESTARTS.md).
+
+Nested/continuous restarts, nondecimal numbering, first/even-page furniture, complex native history/paint/layout and sequential DOCX export retain explicit limits. Preserve originals, storage/backup/session identifiers, hosting identities, fonts and mobile safe areas. Work solo with GitHub-owned verification, no background watcher and no device gate. Windows recovery is off the task list.
+
 ## Published section-numbering continuation — November 15, 2026
 
 PR #42 is merged and live at https://slate-web.iiankehn.com/ from runtime `47810a065e348bcad272c01642a0b37a75dd8dd4`. Accepted PR source `1878739d585d4111d9df2d34f17d9ab2d6e0c498` passed CI 43767894931; main CI 43768694819 passed the same 765 Node regressions, 20 tooling-policy checks, all 275 browser cases without flaky results and twelve actual LibreOffice 24.2.7.2 exchange probes. Pages 43776714174 promoted exact artifact 14183427377, archive SHA-256 `80284e355b79d81af089b9c85bbb7a92ac3243d0376d9fe761b97bf0f60dde23`, without rebuilding or repeating browsers. GitHub verified all 56 live shell/worker URLs and cache `9b0e64938ba1f59e` on its first publication check. See [release evidence](RELEASE_2026_11_15_SECTION_NUMBERING.md).

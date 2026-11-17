@@ -1,5 +1,7 @@
 # Slate Forge
 
+Published November 17: [bounded section page-number restarts](docs/SECTION_RESTARTS.md), including a hidden restart at 7 followed by visible 8. [Release verification](docs/RELEASE_2026_11_17_SECTION_RESTARTS.md) records the accepted PR/main checks and exact-artifact Pages publication.
+
 > **Development continuation:** Start with [docs/DEV_HANDOFF.md](docs/DEV_HANDOFF.md) and [AGENTS.md](AGENTS.md). The DEV handoff includes tool installation, the published release, remaining compatibility work and the GitHub-owned build/test/release workflow. Older release/test-count notes below are historical; current evidence is in [docs/ROADMAP.md](docs/ROADMAP.md).
 
 The account-free, local-first web edition of Slate Forge. This is a working development build, not a production-certified release. No paid services, application accounts, cloud document backend, analytics or external account providers are configured. The public beta is hosted at https://slate-web.iiankehn.com/. The original private Site remains separate.

@@ -1,8 +1,14 @@
-> Active development: recovered section page-number restart batch is continued but **not merged or published**. See [SECTION_RESTARTS.md](SECTION_RESTARTS.md) for scope and verification status. PR #42 remains live. Windows recovery is off the task list.
-
 # Slate Forge Web — DEV remote-computer handoff
 
-> **Continuation update:** DEV/Windows boot repair is deferred by the user. Continue in the hosted workspace, solo, with verification on GitHub. PR #42 is merged and published; its current release status is in [SECTION_NUMBERING.md](SECTION_NUMBERING.md). The transfer snapshot below records the earlier handoff, not a claim that DEV boots or has been configured.
+## Published section-restart continuation — November 17, 2026
+
+PR #43 is merged and live with the test-readiness repair from PR #44. Feature PR CI 44011077841 and repair PR CI 44013844481 passed; final main CI 44014921358 passed 777 Node regressions, 20 tooling-policy checks, all 280 browser cases without flaky results and fourteen actual LibreOffice 24.2.7.2 exchanges. Pages 44016060269 promoted exact artifact 14297719448 (50,271,449 bytes), archive SHA-256 `fc16b52166aaa9ded7a8ef8d2ca041dde7b48b82fae8e4aed72ff757dd0dfaf4`, from runtime `cc64a5bd9c2a805631fc55aa570e11cc66e1c903`. GitHub verified all 56 live shell/worker URLs and cache `bef14a8c919d6728` on its first publication check. See [release evidence](RELEASE_2026_11_17_SECTION_RESTARTS.md).
+
+Top-level sections starting on a new page can restart decimal numbering from 1 to 9999 in preview, native ODT/Word, raw ODT projection, HTML, saving, sharing and backups. A hidden page restarted at 7 advances to visible 8; physical preview labels remain sequential. Initial main CI 44012394774 correctly failed on a retry-only WebKit pass: the retained trace established a test reload-readiness race, repaired in PR #44 without changing app code, timeouts, assertions or retry policy. That failed artifact was not promoted. Read [SECTION_RESTARTS.md](SECTION_RESTARTS.md).
+
+Nested/continuous restarts, nondecimal numbering, first/even-page furniture, complex native history/paint/layout and sequential DOCX export retain explicit limits. Preserve originals, storage/backup/session identifiers, hosting identities, fonts and mobile safe areas. Work solo with GitHub-owned verification, no background watcher and no device gate. Windows recovery is off the task list.
+
+> **Continuation update:** DEV/Windows boot repair is deferred by the user. Continue in the hosted workspace, solo, with verification on GitHub. PR #43 and the PR #44 readiness repair are merged and published; current release status is in [SECTION_RESTARTS.md](SECTION_RESTARTS.md). The transfer snapshot below records the earlier handoff, not a claim that DEV boots or has been configured.
 
 Prepared November 15, 2026. This is the current entry point for continuing on **DEV**, the remote development computer. It describes the source and workflow; it does not assert that DEV has already been connected, provisioned or authenticated. No DEV hostname or filesystem path was supplied. Run the setup in the actual remote session and discover its checkout before cloning.
 
@@ -181,7 +187,7 @@ The latest feature and release are complete. No partially implemented next featu
 
 | Remaining area | Boundary / evidence needed |
 | --- | --- |
-| Section/layout fidelity | Custom paper and asymmetric/custom margins, numbering restarts, complex furniture and nested Word geometry remain bounded/refused. Extending these needs an explicit supported representation and independent actual-editor controls. |
+| Section/layout fidelity | Custom paper and asymmetric/custom margins, numbering styles/first-even variants, complex furniture and nested Word geometry remain bounded/refused. Bounded decimal restarts are delivered through PR #43. Extending these needs an explicit supported representation and independent actual-editor controls. |
 | Sequential DOCX export | Still refused: Writer discarded the tested noColumnBalance setting. Keep the original failed representation; do not remove the guard without a different representation and strict actual-resave evidence. Explicit foreign declarations may import; absent declarations are never guessed. See WORD_SECTION_FLOW.md and SEQUENTIAL_COLUMNS.md. |
 | Native structural review | Individual row/cell/list-item/object/nested or unanchored revisions remain incomplete. App-retained history already preserves broader data but does not establish native editor history exchange. |
 | Rich paragraph boundaries | Keep/page-break combinations retain explicit refusals after actual Writer formatting loss. |
@@ -189,7 +195,7 @@ The latest feature and release are complete. No partially implemented next featu
 | Other picture dialects | Unsupported animation/effects/metadata and raw cropped WebP remain refused after actual failures; supported WebP export already normalizes to full-resolution PNG. |
 | Inherent missing history | Native ODT format-change metadata lacks prior values. Do not invent faithful Reject; app-retained full review is a distinct delivered path. |
 
-Recommended next planning step, **not a new user-selected priority**: inspect the section/layout rows following PR #41 and compare their representation cost with a bounded native-review extension. Define acceptance and refusal behavior before coding. Do not rerun baseline suites simply to start work. Update the inventory when a row changes and explain actual progress without declaring the whole project complete.
+Recommended next planning step, **not a new user-selected priority**: inspect the section/layout rows following PR #43 and compare their representation cost with a bounded native-review extension. Define acceptance and refusal behavior before coding. Do not rerun baseline suites simply to start work. Update the inventory when a row changes and explain actual progress without declaring the whole project complete.
 
 ## 8. Last-batch traps to preserve
 

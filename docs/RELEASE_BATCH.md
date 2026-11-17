@@ -1,5 +1,13 @@
 # Slate Forge navigation and writing batch · 2026-10-29
 
+## Published section-restart continuation — November 17, 2026
+
+PR #43 is merged and live with the test-readiness repair from PR #44. Feature PR CI 44011077841 and repair PR CI 44013844481 passed; final main CI 44014921358 passed 777 Node regressions, 20 tooling-policy checks, all 280 browser cases without flaky results and fourteen actual LibreOffice 24.2.7.2 exchanges. Pages 44016060269 promoted exact artifact 14297719448 (50,271,449 bytes), archive SHA-256 `fc16b52166aaa9ded7a8ef8d2ca041dde7b48b82fae8e4aed72ff757dd0dfaf4`, from runtime `cc64a5bd9c2a805631fc55aa570e11cc66e1c903`. GitHub verified all 56 live shell/worker URLs and cache `bef14a8c919d6728` on its first publication check. See [release evidence](RELEASE_2026_11_17_SECTION_RESTARTS.md).
+
+Top-level sections starting on a new page can restart decimal numbering from 1 to 9999 in preview, native ODT/Word, raw ODT projection, HTML, saving, sharing and backups. A hidden page restarted at 7 advances to visible 8; physical preview labels remain sequential. Initial main CI 44012394774 correctly failed on a retry-only WebKit pass: the retained trace established a test reload-readiness race, repaired in PR #44 without changing app code, timeouts, assertions or retry policy. That failed artifact was not promoted. Read [SECTION_RESTARTS.md](SECTION_RESTARTS.md).
+
+Nested/continuous restarts, nondecimal numbering, first/even-page furniture, complex native history/paint/layout and sequential DOCX export retain explicit limits. Preserve originals, storage/backup/session identifiers, hosting identities, fonts and mobile safe areas. Work solo with GitHub-owned verification, no background watcher and no device gate. Windows recovery is off the task list.
+
 This is a historical batch record. Current published behavior and verification are recorded in [RELEASE_2026_11_15_MASTER_PAGES.md](RELEASE_2026_11_15_MASTER_PAGES.md); use the current top sections of [ROADMAP.md](ROADMAP.md) and [CODEX_HANDOFF.md](CODEX_HANDOFF.md) to continue development. Private Site and old verification-limit statements below describe this earlier batch.
 
 This release makes the expanding toolset and saved text documents easier to find. The Site remains owner-private and local-first; existing origins, documents and storage identifiers are preserved.

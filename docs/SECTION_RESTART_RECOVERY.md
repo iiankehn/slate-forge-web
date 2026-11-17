@@ -1,3 +1,5 @@
+> Historical recovery checkpoint. The completed batch is now merged and published; see [release evidence](RELEASE_2026_11_17_SECTION_RESTARTS.md). The incomplete/untested status below describes the original checkpoint, and the earlier merge/publication hold was subsequently lifted by the user.
+
 # Recovered section-restart checkpoint — November 17, 2026
 
 The original `feat/section-page-number-restarts` branch and all six previously uncommitted source files were recovered from the original hosted workspace. This checkpoint preserves the original changes, not a reconstructed implementation. Its base is `c06b72862bbe601619a6d9da91ffc91e6ec8fad0` (documentation following the published PR #42 runtime). The source diff was checked for whitespace only. No test, build, browser, Office conversion or release verification has run for this checkpoint. It is incomplete and must not be merged or published as a finished feature.
