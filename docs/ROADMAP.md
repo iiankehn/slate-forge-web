@@ -1,3 +1,5 @@
+> Active development: recovered section page-number restart batch is continued but **not merged or published**. See [SECTION_RESTARTS.md](SECTION_RESTARTS.md) for scope and verification status. PR #42 remains live. Windows recovery is off the task list.
+
 # Slate Forge development roadmap
 
 ## Published section-numbering continuation — November 15, 2026

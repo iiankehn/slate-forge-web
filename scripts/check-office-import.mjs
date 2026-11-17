@@ -12,3 +12,5 @@ for(const marker of spec.markers)if(!doc.body.textContent.includes(marker))throw
 console.log(JSON.stringify({sections:orientations,warnings:result.warnings,markers:spec.markers.length}));
 
 if(spec.numbering&&JSON.stringify(sections.map(a=>typeof a.pageNumbers==='boolean'?a.pageNumbers:result.layout.pageNumbers))!==JSON.stringify(spec.numbering))throw Error('Native page-number visibility differs.');
+
+if(spec.starts&&JSON.stringify(sections.map(a=>a.pageStart??null))!==JSON.stringify(spec.starts))throw Error('Native page-number starts differ.');

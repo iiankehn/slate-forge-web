@@ -1,3 +1,5 @@
+> Active development: recovered section page-number restart batch is continued but **not merged or published**. See [SECTION_RESTARTS.md](SECTION_RESTARTS.md) for scope and verification status. PR #42 remains live. Windows recovery is off the task list.
+
 # Word/ODT compatibility inventory — November 15, 2026
 
 This inventory separates delivered behavior, the current concrete extension and named remaining cases. It is not a claim of universal Word/ODT parity. The reopened user mandate includes broader compatibility; publishing the current group extension does not mark every row complete. Device QA is excluded from this mandate.

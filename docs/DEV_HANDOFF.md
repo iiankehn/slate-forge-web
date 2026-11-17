@@ -1,3 +1,5 @@
+> Active development: recovered section page-number restart batch is continued but **not merged or published**. See [SECTION_RESTARTS.md](SECTION_RESTARTS.md) for scope and verification status. PR #42 remains live. Windows recovery is off the task list.
+
 # Slate Forge Web — DEV remote-computer handoff
 
 > **Continuation update:** DEV/Windows boot repair is deferred by the user. Continue in the hosted workspace, solo, with verification on GitHub. PR #42 is merged and published; its current release status is in [SECTION_NUMBERING.md](SECTION_NUMBERING.md). The transfer snapshot below records the earlier handoff, not a claim that DEV boots or has been configured.
